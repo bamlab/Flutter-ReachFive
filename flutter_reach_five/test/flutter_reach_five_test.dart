@@ -7,7 +7,6 @@
 
 import 'package:flutter_reach_five/flutter_reach_five.dart';
 import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platform_interface.dart';
-import 'package:flutter_reach_five_platform_interface/info.g.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
@@ -27,25 +26,40 @@ void main() {
       FlutterReachFivePlatform.instance = flutterReachFivePlatform;
     });
 
-    group('search', () {
-      test('returns correct name when platform implementation exists',
-          () async {
-        final infos = Infos(info1: 'info1', info2: 'info2');
-        void onSearch() {}
+    group('initialize', () {
+      test('returns correct reachFive instance', () async {
+        const reachFiveConfig = ReachFiveConfig(
+          domain: 'domain',
+          clientId: 'clientId',
+          scheme: 'scheme',
+        );
 
+        registerFallbackValue(
+          ReachFiveConfigConverter.toInterface(reachFiveConfig),
+        );
         when(
-          () => flutterReachFivePlatform.search(onSearch),
-        ).thenAnswer((_) async => infos);
+          () => flutterReachFivePlatform.initialize(
+            any(),
+          ),
+        ).thenAnswer(
+          (_) async => ReachFiveConfigConverter.toInterface(reachFiveConfig),
+        );
 
-        final actualPlatformName = await search(onSearch);
+        final reachFive = await ReachFiveManager.initialize(
+          reachFiveConfig,
+        );
 
         expect(
-          actualPlatformName.info1,
-          infos.info1,
+          reachFive.config.domain,
+          reachFiveConfig.domain,
         );
         expect(
-          actualPlatformName.info2,
-          infos.info2,
+          reachFive.config.clientId,
+          reachFiveConfig.clientId,
+        );
+        expect(
+          reachFive.config.scheme,
+          reachFiveConfig.scheme,
         );
       });
     });

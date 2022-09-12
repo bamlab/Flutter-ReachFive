@@ -7,7 +7,7 @@
 
 import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:flutter/services.dart';
-import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platform_interface.dart';
+import 'package:flutter_reach_five_platform_interface/src/flutter_reach_five_platform.dart';
 
 /// An implementation of [FlutterReachFivePlatform] that uses method channels.
 class MethodChannelFlutterReachFive extends FlutterReachFivePlatform {

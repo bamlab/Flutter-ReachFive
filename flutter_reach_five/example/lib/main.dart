@@ -27,34 +27,43 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  SuperInfos? superInfos;
+  ReachFive? reachFive;
 
   @override
   Widget build(BuildContext context) {
+    final reachFive = this.reachFive;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Flutter Reach Five Example')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (superInfos != null)
-              Text('${superInfos?.info1} + ${superInfos?.info2}'),
+            if (reachFive != null)
+              Text(
+                // ignore: lines_longer_than_80_chars
+                '${reachFive.config.domain} + ${reachFive.config.clientId} + ${reachFive.config.scheme}',
+              ),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () async {
-                if (superInfos != null) {
+                if (reachFive != null) {
                   setState(() {
-                    superInfos = null;
+                    this.reachFive = null;
                   });
                   return;
                 }
+
                 try {
-                  final result = await search(
-                    () => ScaffoldMessenger.of(context)
-                        .showSnackBar(const SnackBar(content: Text('Content'))),
+                  final result = await ReachFiveManager.initialize(
+                    const ReachFiveConfig(
+                      domain: 'domain',
+                      clientId: 'clientId',
+                      scheme: 'scheme',
+                    ),
                   );
                   setState(() {
-                    superInfos = result;
+                    this.reachFive = result;
                   });
                 } catch (error) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -65,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                   );
                 }
               },
-              child: Text(superInfos == null ? 'Get Infos' : 'Reset Infos'),
+              child: Text(reachFive == null ? 'Get Infos' : 'Reset Infos'),
             ),
           ],
         ),
