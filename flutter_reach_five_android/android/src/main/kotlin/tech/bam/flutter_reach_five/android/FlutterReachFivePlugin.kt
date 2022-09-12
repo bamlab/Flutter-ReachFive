@@ -2,32 +2,40 @@ package tech.bam.flutter_reach_five.android
 
 import android.content.Context
 import androidx.annotation.NonNull
+import co.reachfive.identity.sdk.core.ReachFive
+import co.reachfive.identity.sdk.core.models.SdkConfig
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 
-class FlutterReachFivePlugin : FlutterPlugin, Info.HostInfosApi
+class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
 {
     private var context: Context? = null
-    private var infosFlutterApi: Info.FLutterInfosApi? = null
+    private lateinit var reachFive: ReachFive
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        Info.HostInfosApi.setup(flutterPluginBinding.binaryMessenger, this)
-        infosFlutterApi = Info.FLutterInfosApi(flutterPluginBinding.binaryMessenger)
+        ReachFiveApi.ReachFiveHostApi.setup(flutterPluginBinding.binaryMessenger, this)
         context = flutterPluginBinding.applicationContext
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-        Info.HostInfosApi.setup(binding.binaryMessenger, null)
-        infosFlutterApi = null
+        ReachFiveApi.ReachFiveHostApi.setup(binding.binaryMessenger, null)
     }
 
-    override fun search(): Info.Infos {
-        val infos = Info.Infos()
-        infos.info1 = "info1"
-        infos.info2 = "info2"
+    override fun initialize(config: ReachFiveApi.ReachFiveConfigInterface): ReachFiveApi.ReachFiveConfigInterface {
+        this.reachFive = ReachFive(
+            sdkConfig = SdkConfig(
+                domain = config.domain,
+                clientId = config.clientId,
+                scheme = config.scheme
+            ),
+            providersCreators = listOf()
+        ).initialize({}, {})
 
-        infosFlutterApi?.onSearch{Info.FLutterInfosApi.Reply<Void>{}}
-
-        return infos
+        return ReachFiveApi.ReachFiveConfigInterface
+            .Builder()
+            .setDomain(reachFive.sdkConfig.domain)
+            .setClientId(reachFive.sdkConfig.clientId)
+            .setScheme(reachFive.sdkConfig.scheme)
+            .build()
     }
 }
