@@ -8,6 +8,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reach_five/flutter_reach_five.dart';
 
+const domain = 'YOUR_DOMAIN';
+const clientId = 'YOUR_CLIENT_ID';
+const scheme = 'YOUR_SCHEME';
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -57,11 +61,12 @@ class _HomePageState extends State<HomePage> {
                 try {
                   final result = await ReachFiveManager.initialize(
                     const ReachFiveConfig(
-                      domain: 'domain',
-                      clientId: 'clientId',
-                      scheme: 'scheme',
+                      domain: domain,
+                      clientId: clientId,
+                      scheme: scheme,
                     ),
                   );
+
                   setState(() {
                     this.reachFive = result;
                   });
@@ -74,7 +79,11 @@ class _HomePageState extends State<HomePage> {
                   );
                 }
               },
-              child: Text(reachFive == null ? 'Get Infos' : 'Reset Infos'),
+              child: Text(
+                reachFive == null
+                    ? 'Get Reach Five Config'
+                    : 'Reset Reach Five Config',
+              ),
             ),
           ],
         ),
