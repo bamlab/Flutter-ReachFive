@@ -37,24 +37,22 @@ class ReachFiveConfigConverter {
   /// convert a ReachFiveConfig to a ReachFiveConfigInterface
   static ReachFiveConfigInterface toInterface(
     ReachFiveConfig config,
-  ) {
-    return ReachFiveConfigInterface(
-      domain: config.domain,
-      clientId: config.clientId,
-      scheme: config.scheme,
-    );
-  }
+  ) =>
+      ReachFiveConfigInterface(
+        domain: config.domain,
+        clientId: config.clientId,
+        scheme: config.scheme,
+      );
 
   /// convert a ReachFiveConfigInterface to a ReachFiveConfig
   static ReachFiveConfig fromInterface(
     ReachFiveConfigInterface config,
-  ) {
-    return ReachFiveConfig(
-      domain: config.domain,
-      clientId: config.clientId,
-      scheme: config.scheme,
-    );
-  }
+  ) =>
+      ReachFiveConfig(
+        domain: config.domain,
+        clientId: config.clientId,
+        scheme: config.scheme,
+      );
 }
 
 /// ReachFive, class used to call every reachFive native sdk methods
