@@ -95,6 +95,11 @@ public class ReachFiveApi {
       return pigeonResult;
     }
   }
+
+  public interface Result<T> {
+    void success(T result);
+    void error(Throwable error);
+  }
   private static class ReachFiveHostApiCodec extends StandardMessageCodec {
     public static final ReachFiveHostApiCodec INSTANCE = new ReachFiveHostApiCodec();
     private ReachFiveHostApiCodec() {}
@@ -123,7 +128,7 @@ public class ReachFiveApi {
 
   /** Generated interface from Pigeon that represents a handler of messages from Flutter.*/
   public interface ReachFiveHostApi {
-    @NonNull ReachFiveConfigInterface initialize(@NonNull ReachFiveConfigInterface config);
+    void initialize(@NonNull ReachFiveConfigInterface config, Result<ReachFiveConfigInterface> result);
 
     /** The codec used by ReachFiveHostApi. */
     static MessageCodec<Object> getCodec() {
@@ -144,13 +149,23 @@ public class ReachFiveApi {
               if (configArg == null) {
                 throw new NullPointerException("configArg unexpectedly null.");
               }
-              ReachFiveConfigInterface output = api.initialize(configArg);
-              wrapped.put("result", output);
+              Result<ReachFiveConfigInterface> resultCallback = new Result<ReachFiveConfigInterface>() {
+                public void success(ReachFiveConfigInterface result) {
+                  wrapped.put("result", result);
+                  reply.reply(wrapped);
+                }
+                public void error(Throwable error) {
+                  wrapped.put("error", wrapError(error));
+                  reply.reply(wrapped);
+                }
+              };
+
+              api.initialize(configArg, resultCallback);
             }
             catch (Error | RuntimeException exception) {
               wrapped.put("error", wrapError(exception));
+              reply.reply(wrapped);
             }
-            reply.reply(wrapped);
           });
         } else {
           channel.setMessageHandler(null);
