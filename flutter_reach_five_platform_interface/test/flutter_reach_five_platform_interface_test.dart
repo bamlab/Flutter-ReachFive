@@ -5,16 +5,22 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import 'package:flutter/material.dart';
-import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platform_interface.dart';
-import 'package:flutter_reach_five_platform_interface/info.g.dart';
+import 'package:flutter_reach_five_platform_interface/src/flutter_reach_five_platform.dart';
+import 'package:flutter_reach_five_platform_interface/src/reach_five.g.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class FlutterReachFiveMock extends FlutterReachFivePlatform {
-  static final mockSearchInfos = Infos(info1: 'info1', info2: 'info2');
+  static final mockReachFiveConfig = ReachFiveConfigInterface(
+    domain: 'domain',
+    clientId: 'clientId',
+    scheme: 'scheme',
+  );
 
   @override
-  Future<Infos?> search(VoidCallback onSearch) async => mockSearchInfos;
+  Future<ReachFiveConfigInterface> initialize(
+    ReachFiveConfigInterface config,
+  ) async =>
+      mockReachFiveConfig;
 }
 
 void main() {
@@ -27,13 +33,12 @@ void main() {
       FlutterReachFivePlatform.instance = flutterReachFivePlatform;
     });
 
-    group('getPlatformName', () {
-      test('returns correct name', () async {
-        void onSearch() {}
-
+    group('initialize', () {
+      test('returns correct reach five config', () async {
         expect(
-          await FlutterReachFivePlatform.instance.search(onSearch),
-          equals(FlutterReachFiveMock.mockSearchInfos),
+          await FlutterReachFivePlatform.instance
+              .initialize(FlutterReachFiveMock.mockReachFiveConfig),
+          equals(FlutterReachFiveMock.mockReachFiveConfig),
         );
       });
     });

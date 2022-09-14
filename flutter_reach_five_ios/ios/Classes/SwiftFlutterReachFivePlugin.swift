@@ -1,30 +1,42 @@
 import Flutter
 import UIKit
+import IdentitySdkCore
 
-public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, HostInfosApi {
+public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHostApi {
+    
+    var reachfive: ReachFive?
 
-  static var infosFlutterApi: FLutterInfosApi?
+    public static func register(with registrar: FlutterPluginRegistrar) {
+        let messenger : FlutterBinaryMessenger = registrar.messenger()
+        let api : ReachFiveHostApi & NSObjectProtocol = SwiftFlutterReachFivePlugin.init()
+        
+        ReachFiveHostApiSetup(messenger, api);
+        
+    }
 
-  public static func register(with registrar: FlutterPluginRegistrar) {
-    let messenger : FlutterBinaryMessenger = registrar.messenger()
-    let api : HostInfosApi & NSObjectProtocol = SwiftFlutterReachFivePlugin.init()
-    HostInfosApiSetup(messenger, api);
-    SwiftFlutterReachFivePlugin.infosFlutterApi =
-      FLutterInfosApi(binaryMessenger: registrar.messenger())
+    public func initializeConfig(_ config: ReachFiveConfigInterface, error: AutoreleasingUnsafeMutablePointer<FlutterError?>) -> ReachFiveConfigInterface? {
 
-  }
-
-    public func searchWithError(_ error: AutoreleasingUnsafeMutablePointer<FlutterError?>) -> Infos? {
-    let infos = Infos()
-    infos.info1 = "info1"
-    infos.info2 = "info2"
-
-        SwiftFlutterReachFivePlugin.infosFlutterApi?.onSearch(
-            completion: { (error: Error?) in
-     
-        })
-
-
-    return infos
-  }
+        reachfive = ReachFive(
+            sdkConfig: SdkConfig(
+                domain: config.domain,
+                clientId: config.clientId,
+                scheme: config.scheme
+            ),
+            providersCreators: [],
+            storage: nil
+        )
+        
+        reachfive?
+            .initialize()
+            .onSuccess { providers in }
+            .onFailure { error in }
+                
+        return ReachFiveConfigInterface.make(
+            withDomain: config.domain,
+            clientId: config.clientId,
+            scheme: config.scheme
+        )
+        
+    }
+    
 }
