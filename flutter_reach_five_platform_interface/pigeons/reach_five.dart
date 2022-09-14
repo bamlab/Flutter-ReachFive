@@ -26,7 +26,6 @@ class ReachFiveConfigInterface {
 }
 
 @HostApi()
-// ignore: one_member_abstracts
 abstract class ReachFiveHostApi {
   @async
   ReachFiveConfigInterface initialize(ReachFiveConfigInterface config);
