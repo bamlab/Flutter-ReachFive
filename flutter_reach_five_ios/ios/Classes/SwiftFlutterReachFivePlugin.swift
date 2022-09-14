@@ -14,7 +14,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
         
     }
 
-    public func initializeConfig(_ config: ReachFiveConfigInterface, error: AutoreleasingUnsafeMutablePointer<FlutterError?>) -> ReachFiveConfigInterface? {
+    public func initializeConfig(_ config: ReachFiveConfigInterface, completion: @escaping (ReachFiveConfigInterface?, FlutterError?) -> Void) {
 
         reachfive = ReachFive(
             sdkConfig: SdkConfig(
@@ -28,15 +28,26 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
         
         reachfive?
             .initialize()
-            .onSuccess { providers in }
-            .onFailure { error in }
-                
-        return ReachFiveConfigInterface.make(
-            withDomain: config.domain,
-            clientId: config.clientId,
-            scheme: config.scheme
-        )
-        
+            .onSuccess { providers in
+                completion(
+                    ReachFiveConfigInterface.make(
+                        withDomain: config.domain,
+                        clientId: config.clientId,
+                        scheme: config.scheme
+                    ),
+                    nil
+                )
+            }
+            .onFailure { error in
+                completion(
+                    nil,
+                    FlutterError(
+                        code: "null",
+                        message: error.message(),
+                        details: nil
+                    )
+                )
+            }
     }
     
 }
