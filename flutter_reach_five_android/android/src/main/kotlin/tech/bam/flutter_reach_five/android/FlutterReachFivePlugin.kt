@@ -21,7 +21,7 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
         ReachFiveApi.ReachFiveHostApi.setup(binding.binaryMessenger, null)
     }
 
-    override fun initialize(config: ReachFiveApi.ReachFiveConfigInterface): ReachFiveApi.ReachFiveConfigInterface {
+    override fun initialize(config: ReachFiveApi.ReachFiveConfigInterface, result: ReachFiveApi.Result<ReachFiveApi.ReachFiveConfigInterface>) {
         this.reachFive = ReachFive(
             sdkConfig = SdkConfig(
                 domain = config.domain,
@@ -29,13 +29,21 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
                 scheme = config.scheme
             ),
             providersCreators = listOf()
-        ).initialize({}, {})
+        ).initialize(
+            {
+                result.success(
+                    ReachFiveApi.ReachFiveConfigInterface
+                        .Builder()
+                        .setDomain(reachFive.sdkConfig.domain)
+                        .setClientId(reachFive.sdkConfig.clientId)
+                        .setScheme(reachFive.sdkConfig.scheme)
+                        .build()
+                )
+        }, {
+            result.error(it)
+            }
+        )
 
-        return ReachFiveApi.ReachFiveConfigInterface
-            .Builder()
-            .setDomain(reachFive.sdkConfig.domain)
-            .setClientId(reachFive.sdkConfig.clientId)
-            .setScheme(reachFive.sdkConfig.scheme)
-            .build()
+
     }
 }

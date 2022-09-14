@@ -25,8 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 NSObject<FlutterMessageCodec> *ReachFiveHostApiGetCodec(void);
 
 @protocol ReachFiveHostApi
-/// @return `nil` only when `error != nil`.
-- (nullable ReachFiveConfigInterface *)initializeConfig:(ReachFiveConfigInterface *)config error:(FlutterError *_Nullable *_Nonnull)error;
+- (void)initializeConfig:(ReachFiveConfigInterface *)config completion:(void(^)(ReachFiveConfigInterface *_Nullable, FlutterError *_Nullable))completion;
 @end
 
 extern void ReachFiveHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<ReachFiveHostApi> *_Nullable api);

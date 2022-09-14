@@ -70,13 +70,22 @@ class _HomePageState extends State<HomePage> {
                   setState(() {
                     this.reachFive = result;
                   });
+
+                  if (mounted) {
+                    showExampleSnackBar(
+                      context,
+                      message: 'Success',
+                      type: SnackbarType.success,
+                    );
+                  }
                 } catch (error) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      content: Text('$error'),
-                    ),
-                  );
+                  if (mounted) {
+                    showExampleSnackBar(
+                      context,
+                      message: error.toString(),
+                      type: SnackbarType.error,
+                    );
+                  }
                 }
               },
               child: Text(
@@ -90,4 +99,19 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+enum SnackbarType { success, error }
+
+void showExampleSnackBar(
+  BuildContext context, {
+  required String message,
+  required SnackbarType type,
+}) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      backgroundColor: type == SnackbarType.success ? Colors.green : Colors.red,
+      content: Text(message),
+    ),
+  );
 }
