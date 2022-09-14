@@ -13,7 +13,8 @@ import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platfor
 class FlutterReachFiveAndroid extends FlutterReachFivePlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
-  final methodChannel = const MethodChannel('flutter_reach_five_android');
+  final MethodChannel methodChannel =
+      const MethodChannel('flutter_reach_five_android');
 
   /// Registers this class as the default instance of [FlutterReachFivePlatform]
   static void registerWith() {
