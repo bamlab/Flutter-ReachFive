@@ -5,9 +5,10 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import 'package:flutter_reach_five_platform_interface/src/method_channel_flutter_reach_five.dart';
-import 'package:flutter_reach_five_platform_interface/src/reach_five.g.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+
+import 'method_channel_flutter_reach_five.dart';
+import 'reach_five.g.dart';
 
 /// The interface that implementations of flutter_reach_five must implement.
 ///
@@ -39,7 +40,8 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
   }
 
   /// Return Informations
-  Future<ReachFiveConfigInterface> initialize(ReachFiveConfigInterface config) {
-    return ReachFiveHostApi().initialize(config);
-  }
+  Future<ReachFiveConfigInterface> initialize(
+    ReachFiveConfigInterface config,
+  ) =>
+      ReachFiveHostApi().initialize(config);
 }
