@@ -2,9 +2,9 @@ import 'package:equatable/equatable.dart';
 
 import './address.dart';
 
-/// OpenIdUser class, contains the infos for a open id user
+/// [OpenIdUser] class, contains the infos for a open id user
 class OpenIdUser extends Equatable {
-  /// OpenIdUser default constructor
+  /// [OpenIdUser] default constructor
   const OpenIdUser({
     this.id,
     this.name,
@@ -75,7 +75,7 @@ class OpenIdUser extends Equatable {
   /// Is your user phoneNumber verified
   final bool? phoneNumberVerified;
 
-  /// Your user address
+  /// Your user [Address]
   final Address? address;
 
   /// Your user birthdate

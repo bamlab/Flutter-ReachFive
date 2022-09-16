@@ -2,10 +2,10 @@ import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platfor
 
 import '../models/reach_five_config.dart';
 
-/// Used to be the link between the ReachFiveConfigInterface
-/// and the ReachFiveConfig exported from this package
+/// Used to be the link between the [ReachFiveConfigInterface]
+/// and the [ReachFiveConfig] exported from this package
 class ReachFiveConfigConverter {
-  /// convert a ReachFiveConfig to a ReachFiveConfigInterface
+  /// convert a [ReachFiveConfig] to a [ReachFiveConfigInterface]
   static ReachFiveConfigInterface toInterface(
     ReachFiveConfig reachFiveConfig,
   ) =>
@@ -15,7 +15,7 @@ class ReachFiveConfigConverter {
         scheme: reachFiveConfig.scheme,
       );
 
-  /// convert a ReachFiveConfigInterface to a ReachFiveConfig
+  /// convert a [ReachFiveConfigInterface] to a [ReachFiveConfig]
   static ReachFiveConfig fromInterface(
     ReachFiveConfigInterface reachFiveConfigInterface,
   ) =>

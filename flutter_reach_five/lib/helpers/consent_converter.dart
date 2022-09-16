@@ -2,10 +2,10 @@ import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platfor
 
 import '../models/consent.dart';
 
-/// Used to be the link between the ConsentInterface
-/// and the Consent exported from this package
+/// Used to be the link between the [ConsentInterface]
+/// and the [Consent] exported from this package
 class ConsentConverter {
-  /// convert a Consent to a ConsentInterface
+  /// convert a [Consent] to a [ConsentInterface]
   static ConsentInterface toInterface(
     Consent consent,
   ) =>
@@ -15,7 +15,7 @@ class ConsentConverter {
         consentType: consent.consentType,
       );
 
-  /// convert a ConsentInterface to a Consent
+  /// convert a [ConsentInterface] to a [Consent]
   static Consent fromInterface(
     ConsentInterface consentInterface,
   ) =>

@@ -5,16 +5,16 @@ import '../models/reach_five_config.dart';
 import '../models/signup_request.dart';
 import 'reach_five_config_converter.dart';
 
-/// Used to be the link between a String
-/// and the ScopeValue exported from this package
+/// Used to be the link between a [String]
+/// and the [ScopeValue] exported from this package
 class ScopeValueConverter {
-  /// convert a ScopeValue to a String
+  /// convert a [ScopeValue] to a [String]
   static String toInterface(
     ScopeValue scopeValue,
   ) =>
       scopeValue.name;
 
-  /// convert a String to a ScopeValue?
+  /// convert a [String] to a [ScopeValue]?
   static ScopeValue? fromInterface(
     String scopeValueString,
   ) {
@@ -30,10 +30,10 @@ class ScopeValueConverter {
   }
 }
 
-/// Used to be the link between the SignupRequestInterface
-/// and the SignupRequest exported from this package
+/// Used to be the link between the [SignupRequestInterface]
+/// and the [SignupRequest] exported from this package
 class SignupRequestConverter {
-  /// convert a SignupRequest to a SignupRequestInterface
+  /// convert a [SignupRequest] to a [SignupRequestInterface]
   static SignupRequestInterface toInterface(
     ReachFiveConfig reachFiveConfig,
     SignupRequest signupRequest,
@@ -49,7 +49,7 @@ class SignupRequestConverter {
     );
   }
 
-  /// convert a SignupRequestInterface to a SignupRequest
+  /// convert a [SignupRequestInterface] to a [SignupRequest]
   static SignupRequest fromInterface(
     SignupRequestInterface signupRequestInterface,
   ) {

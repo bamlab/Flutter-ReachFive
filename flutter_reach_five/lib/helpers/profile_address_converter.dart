@@ -2,10 +2,10 @@ import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platfor
 
 import '../models/profile_address.dart';
 
-/// Used to be the link between the ProfileAddressTypeInterface
-/// and the ProfileAddressType exported from this package
+/// Used to be the link between the [ProfileAddressTypeInterface]
+/// and the [ProfileAddressType] exported from this package
 class ProfileAddressTypeConverter {
-  /// convert a ProfileAddressType to a ProfileAddressTypeInterface
+  /// convert a [ProfileAddressType] to a [ProfileAddressTypeInterface]
   static ProfileAddressTypeInterface toInterface(
     ProfileAddressType profileAddressType,
   ) {
@@ -17,7 +17,7 @@ class ProfileAddressTypeConverter {
     }
   }
 
-  /// convert a ProfileAddressTypeInterface to a ProfileAddressType
+  /// convert a [ProfileAddressTypeInterface] to a [ProfileAddressType]
   static ProfileAddressType fromInterface(
     ProfileAddressTypeInterface profileAddressTypeInterface,
   ) {
@@ -30,10 +30,10 @@ class ProfileAddressTypeConverter {
   }
 }
 
-/// Used to be the link between the ProfileAddressInterface
-/// and the ProfileAddress exported from this package
+/// Used to be the link between the [ProfileAddressInterface]
+/// and the [ProfileAddress] exported from this package
 class ProfileAddressConverter {
-  /// convert a ProfileAddress to a ProfileAddressInterface
+  /// convert a [ProfileAddress] to a [ProfileAddressInterface]
   static ProfileAddressInterface toInterface(
     ProfileAddress profileAddress,
   ) {
@@ -58,7 +58,7 @@ class ProfileAddressConverter {
     );
   }
 
-  /// convert a ProfileAddressInterface to a ProfileAddress
+  /// convert a [ProfileAddressInterface] to a [ProfileAddress]
   static ProfileAddress fromInterface(
     ProfileAddressInterface profileAddressInterface,
   ) {

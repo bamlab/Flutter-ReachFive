@@ -4,10 +4,10 @@ import '../models/profile_signup_request.dart';
 import 'consent_converter.dart';
 import 'profile_address_converter.dart';
 
-/// Used to be the link between the ProfileSignupRequestInterface
-/// and the ProfileSignupRequest exported from this package
+/// Used to be the link between the [ProfileSignupRequestInterface]
+/// and the [ProfileSignupRequest] exported from this package
 class ProfileSignupRequestConverter {
-  /// convert a ProfileSignupRequest to a ProfileSignupRequestInterface
+  /// convert a [ProfileSignupRequest] to a [ProfileSignupRequestInterface]
   static ProfileSignupRequestInterface toInterface(
     ProfileSignupRequest profileSignupRequest,
   ) {
@@ -43,7 +43,7 @@ class ProfileSignupRequestConverter {
     );
   }
 
-  /// convert a ProfileSignupRequestInterface to a ProfileSignupRequest
+  /// convert a [ProfileSignupRequestInterface] to a [ProfileSignupRequest]
   static ProfileSignupRequest fromInterface(
     ProfileSignupRequestInterface profileSignupRequestInterface,
   ) {

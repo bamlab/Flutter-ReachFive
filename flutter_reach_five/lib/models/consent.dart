@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 
-/// Consent class, contains the infos for a consent
+/// [Consent] class, contains the infos for a consent
 class Consent extends Equatable {
-  /// Consent default constructor
+  /// [Consent] default constructor
   const Consent({
     required this.granted,
     required this.date,

@@ -2,9 +2,9 @@ import 'package:equatable/equatable.dart';
 
 import './open_id_user.dart';
 
-/// AuthToken class, contains the infos of an authentication token
+/// [AuthToken] class, contains the infos of an authentication token
 class AuthToken extends Equatable {
-  /// AuthToken default constructor
+  /// [AuthToken] default constructor
   const AuthToken({
     required this.accessToken,
     this.idToken,
@@ -29,7 +29,7 @@ class AuthToken extends Equatable {
   /// When your token expires TODO: See to convert it in a DateTime
   final int? expiresIn;
 
-  /// Your user Informations linked to this token
+  /// Your [OpenIdUser] informations linked to this token
   final OpenIdUser? user;
 
   @override

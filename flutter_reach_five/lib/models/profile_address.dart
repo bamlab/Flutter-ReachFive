@@ -9,9 +9,9 @@ enum ProfileAddressType {
   delivery,
 }
 
-/// ProfileAddress class, contains the infos for the profile address
+/// [ProfileAddress] class, contains the infos for the profile address
 class ProfileAddress extends Equatable {
-  /// ProfileAddress default constructor
+  /// [ProfileAddress] default constructor
   const ProfileAddress({
     this.title,
     this.isDefault,

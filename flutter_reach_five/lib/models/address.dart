@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 
-/// Address class, contains the infos for an address
+/// [Address] class, contains the infos for an address
 class Address extends Equatable {
-  /// Address default constructor
+  /// [Address] default constructor
   const Address({
     this.formatted,
     this.streetAddress,

@@ -3,10 +3,10 @@ import 'package:equatable/equatable.dart';
 import 'consent.dart';
 import 'profile_address.dart';
 
-/// ProfileSignupRequest class, contains the infos for the profile
+/// [ProfileSignupRequest] class, contains the infos for the profile
 /// in a signUp request
 class ProfileSignupRequest extends Equatable {
-  /// ProfileSignupRequest default constructor
+  /// [ProfileSignupRequest] default constructor
   const ProfileSignupRequest({
     required this.password,
     required this.email,

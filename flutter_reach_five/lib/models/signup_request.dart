@@ -28,16 +28,16 @@ enum ScopeValue {
   /// Allows access to user events.
   events('events');
 
-  /// constructor of the ScopeValue enum
+  /// constructor of the [ScopeValue] enum
   const ScopeValue(this.name);
 
   /// Name of the enum scope value
   final String name;
 }
 
-/// SignupRequest class, contains the infos for a signup request
+/// [SignupRequest] class, contains the infos for a signup request
 class SignupRequest extends Equatable {
-  /// SignupRequest default constructor
+  /// [SignupRequest] default constructor
   const SignupRequest({
     required this.profile,
     this.redirectUrl,

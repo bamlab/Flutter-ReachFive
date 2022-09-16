@@ -9,16 +9,16 @@ import 'models/signup_request.dart';
 
 FlutterReachFivePlatform get _platform => FlutterReachFivePlatform.instance;
 
-/// ReachFive, class used to call every reachFive native sdk methods
+/// [ReachFive], class used to call every reachFive native sdk methods
 class ReachFive {
-  /// ReachFive default constructor
+  /// [ReachFive] default constructor
   const ReachFive(this.config);
 
-  /// ReachFive config, kept in memory here to be given in every
+  /// [ReachFive] config, kept in memory here to be given in every
   /// reachFive native sdk methods
   final ReachFiveConfig config;
 
-  /// Signup method
+  /// Create and authenticate a new user with the specified data.
   Future<AuthToken> signup(SignupRequest request) async {
     final authTokenInterface = await _platform.signup(
       SignupRequestConverter.toInterface(
@@ -32,7 +32,14 @@ class ReachFive {
     return authToken;
   }
 
-  /// RefreshAccessToken method
+  /// Obtain a new [AuthToken] once your access token has expired.
+  ///
+  /// * An expired access token (short-lived) can be renewed using a refresh token (long-lived).
+  /// * Refreshing access tokens using an expired refresh token fails and invalidates all refresh tokens issued previously, for this ReachFive client only.
+  /// * The profile must have been granted the `offline_access` scope at the last authentication to obtain a refresh token.
+  /// * For refresh token to be included in your [AuthToken], your client must be configured on the ReachFive Console to enforce PKCE and to enable refresh tokens.
+  ///
+  /// For more on refresh tokens, check out the [Refresh Tokens](https://developer.reachfive.com/docs/refresh-tokens.html) page.
   Future<AuthToken> refreshAccessToken(AuthToken authToken) async {
     final authTokenInterface = await _platform.refreshAccessToken(
       RefreshAccessTokenRequestInterface(
