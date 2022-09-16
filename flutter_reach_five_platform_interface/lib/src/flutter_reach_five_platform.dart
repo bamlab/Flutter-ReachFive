@@ -11,6 +11,7 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'method_channel_flutter_reach_five.dart';
 import 'reach_five.g.dart';
 
+/// {@template flutter_reach_five.flutterReachFivePlatform}
 /// The interface that implementations of flutter_reach_five must implement.
 ///
 /// Platform implementations should extend this class
@@ -19,6 +20,7 @@ import 'reach_five.g.dart';
 /// the default implementation, while platform implementations that `implements`
 /// this interface will be broken by newly added
 /// [FlutterReachFivePlatform] methods
+/// {@endtemplate}
 abstract class FlutterReachFivePlatform extends PlatformInterface {
   /// Constructs a FlutterReachFivePlatform.
   FlutterReachFivePlatform() : super(token: _token);
@@ -53,19 +55,19 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
     _reachFiveHostApi = newReachFiveHostApi;
   }
 
-  /// Initialize Reach Five instance
+  /// {@macro flutter_reach_five.reachFiveManager.initialize}
   Future<ReachFiveConfigInterface> initialize(
     ReachFiveConfigInterface config,
   ) =>
       reachFiveHostApi.initialize(config);
 
-  /// Signup method
+  /// {@macro flutter_reach_five.reachFive.signup}
   Future<AuthTokenInterface> signup(
     SignupRequestInterface request,
   ) =>
       reachFiveHostApi.signup(request);
 
-  /// Refresh access token method
+  /// {@macro flutter_reach_five.reachFive.refreshAccessToken}
   Future<AuthTokenInterface> refreshAccessToken(
     RefreshAccessTokenRequestInterface request,
   ) =>

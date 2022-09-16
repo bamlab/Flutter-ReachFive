@@ -9,16 +9,22 @@ import 'models/signup_request.dart';
 
 FlutterReachFivePlatform get _platform => FlutterReachFivePlatform.instance;
 
+/// {@template flutter_reach_five.reachFive}
 /// [ReachFive], class used to call every reachFive native sdk methods
+/// {@endtemplate}
 class ReachFive {
   /// [ReachFive] default constructor
   const ReachFive(this.config);
 
+  /// @template flutter_reach_five.reachFive.config}
   /// [ReachFive] config, kept in memory here to be given in every
   /// reachFive native sdk methods
+  /// {@endtemplate}
   final ReachFiveConfig config;
 
+  /// {@template flutter_reach_five.reachFive.signup}
   /// Create and authenticate a new user with the specified data.
+  /// {@endtemplate}
   Future<AuthToken> signup(SignupRequest request) async {
     final authTokenInterface = await _platform.signup(
       SignupRequestConverter.toInterface(
@@ -32,6 +38,7 @@ class ReachFive {
     return authToken;
   }
 
+  /// {@template flutter_reach_five.reachFive.refreshAccessToken}
   /// Obtain a new [AuthToken] once your access token has expired.
   ///
   /// * An expired access token (short-lived) can be renewed using a refresh token (long-lived).
@@ -40,6 +47,7 @@ class ReachFive {
   /// * For refresh token to be included in your [AuthToken], your client must be configured on the ReachFive Console to enforce PKCE and to enable refresh tokens.
   ///
   /// For more on refresh tokens, check out the [Refresh Tokens](https://developer.reachfive.com/docs/refresh-tokens.html) page.
+  /// {@endtemplate}
   Future<AuthToken> refreshAccessToken(AuthToken authToken) async {
     final authTokenInterface = await _platform.refreshAccessToken(
       RefreshAccessTokenRequestInterface(
@@ -52,9 +60,13 @@ class ReachFive {
   }
 }
 
+/// {@template flutter_reach_five.reachFiveManager}
 /// ReachFiveManager, class used to initialize each instance of ReachFive
+/// {@endtemplate}
 class ReachFiveManager {
+  /// {@template flutter_reach_five.reachFiveManager.initialize}
   /// initialize function used to create an instance of ReachFive
+  /// {@endtemplate}
   static Future<ReachFive> initialize(ReachFiveConfig config) async {
     final reachFiveConfig = await _platform.initialize(
       ReachFiveConfigInterface(
