@@ -11,8 +11,26 @@ class ScopeValueConverter {
   /// convert a ScopeValue to a String
   static String toInterface(
     ScopeValue scopeValue,
-  ) =>
-      scopeValue.name;
+  ) {
+    switch (scopeValue) {
+      case ScopeValue.openid:
+        return 'openid';
+      case ScopeValue.address:
+        return 'address';
+      case ScopeValue.email:
+        return 'email';
+      case ScopeValue.phone:
+        return 'phone';
+      case ScopeValue.offlineAccess:
+        return 'offline_access';
+      case ScopeValue.profile:
+        return 'profile';
+      case ScopeValue.fullWrite:
+        return 'full_write';
+      case ScopeValue.events:
+        return 'events';
+    }
+  }
 
   /// convert a String to a ScopeValue?
   static ScopeValue? fromInterface(
@@ -21,18 +39,30 @@ class ScopeValueConverter {
     switch (scopeValueString) {
       case 'openid':
         return ScopeValue.openid;
+      case 'address':
+        return ScopeValue.address;
       case 'email':
         return ScopeValue.email;
+      case 'phone':
+        return ScopeValue.phone;
+      case 'offline_access':
+        return ScopeValue.offlineAccess;
+      case 'profile':
+        return ScopeValue.profile;
+      case 'full_write':
+        return ScopeValue.fullWrite;
+      case 'events':
+        return ScopeValue.events;
       default:
         return null;
     }
   }
 }
 
-/// Used to be the link between the SignUpRequestInterface
-/// and the SignUpRequest exported from this package
+/// Used to be the link between the SignupRequestInterface
+/// and the SignupRequest exported from this package
 class SignupRequestConverter {
-  /// convert a SignUpRequest to a SignupRequestInterface
+  /// convert a SignupRequest to a SignupRequestInterface
   static SignupRequestInterface toInterface(
     ReachFiveConfig reachFiveConfig,
     SignupRequest signupRequest,
@@ -48,7 +78,7 @@ class SignupRequestConverter {
     );
   }
 
-  /// convert a SignupRequestInterface to a SignUpRequest
+  /// convert a SignupRequestInterface to a SignupRequest
   static SignupRequest fromInterface(
     SignupRequestInterface signupRequestInterface,
   ) {

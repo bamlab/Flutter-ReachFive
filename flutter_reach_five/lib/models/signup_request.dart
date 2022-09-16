@@ -2,14 +2,32 @@ import 'profile_signup_request.dart';
 
 /// Enum for the differents values of a scope
 enum ScopeValue {
-  /// openid
+  /// Used to ask for an ID token. If no ID token exists, this is not returned.
   openid,
 
-  /// email
+  /// Accesses geographical information (postal address, region, geolocation, etc.).
+  address,
+
+  /// Accesses email information (email addresses and their verification statuses).
   email,
+
+  /// Access to phone information (phone numbers and their verification statuses).
+  phone,
+
+  /// Allows right to request refresh tokens.
+  offlineAccess,
+
+  /// Accesses user’s personal information (gender, age, profile picture, etc.).
+  profile,
+
+  /// Allows the privilege to update anything on the user’s profile.
+  fullWrite,
+
+  /// Allows access to user events.
+  events,
 }
 
-/// SignupRequest class, contains the infos for a signUp request
+/// SignupRequest class, contains the infos for a signup request
 class SignupRequest {
   /// SignupRequest default constructor
   const SignupRequest({
