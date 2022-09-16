@@ -5,6 +5,7 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import 'package:flutter/foundation.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'method_channel_flutter_reach_five.dart';
@@ -39,19 +40,34 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
     _instance = instance;
   }
 
+  static ReachFiveHostApi _reachFiveHostApi = ReachFiveHostApi();
+
+  /// The default instance of [ReachFiveHostApi] to use
+  ReachFiveHostApi get reachFiveHostApi => _reachFiveHostApi;
+
+  /// You can use this to set another instance of [ReachFiveHostApi] to use
+  ///
+  /// This only for a test usage
+  @visibleForTesting
+  set reachFiveHostApi(ReachFiveHostApi newReachFiveHostApi) {
+    _reachFiveHostApi = newReachFiveHostApi;
+  }
+
   /// Initialize Reach Five instance
   Future<ReachFiveConfigInterface> initialize(
     ReachFiveConfigInterface config,
   ) =>
-      ReachFiveHostApi().initialize(config);
+      reachFiveHostApi.initialize(config);
 
   /// Signup method
-  Future<AuthTokenInterface> signup(SignupRequestInterface request) =>
-      ReachFiveHostApi().signup(request);
+  Future<AuthTokenInterface> signup(
+    SignupRequestInterface request,
+  ) =>
+      reachFiveHostApi.signup(request);
 
-  /// Refresh access token
+  /// Refresh access token method
   Future<AuthTokenInterface> refreshAccessToken(
     RefreshAccessTokenRequestInterface request,
   ) =>
-      ReachFiveHostApi().refreshAccessToken(request);
+      reachFiveHostApi.refreshAccessToken(request);
 }
