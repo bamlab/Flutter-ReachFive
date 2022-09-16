@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.annotation.NonNull
 import co.reachfive.identity.sdk.core.ReachFive
 import co.reachfive.identity.sdk.core.models.SdkConfig
-
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 
 class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
@@ -40,10 +39,24 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
                         .build()
                 )
         }, {
-            result.error(it)
+                    error -> result.error(error)
             }
         )
+    }
 
-
+    override fun signup(
+        request: ReachFiveApi.SignupRequestInterface,
+        result: ReachFiveApi.Result<ReachFiveApi.AuthTokenInterface>?
+    ) {
+        val signupRequest = Converters.signupRequestFromInterface(request.profile)
+        
+        this.reachFive.signup(
+            profile = signupRequest,
+            scope = request.scope?.toList() ?: listOf(),
+            success = { authToken ->
+                result?.success(Converters.authTokenToInterface(authToken))
+            },
+            failure = { error -> result?.error(error)}
+        )
     }
 }
