@@ -11,51 +11,22 @@ class ScopeValueConverter {
   /// convert a ScopeValue to a String
   static String toInterface(
     ScopeValue scopeValue,
-  ) {
-    switch (scopeValue) {
-      case ScopeValue.openid:
-        return 'openid';
-      case ScopeValue.address:
-        return 'address';
-      case ScopeValue.email:
-        return 'email';
-      case ScopeValue.phone:
-        return 'phone';
-      case ScopeValue.offlineAccess:
-        return 'offline_access';
-      case ScopeValue.profile:
-        return 'profile';
-      case ScopeValue.fullWrite:
-        return 'full_write';
-      case ScopeValue.events:
-        return 'events';
-    }
-  }
+  ) =>
+      scopeValue.name;
 
   /// convert a String to a ScopeValue?
   static ScopeValue? fromInterface(
     String scopeValueString,
   ) {
-    switch (scopeValueString) {
-      case 'openid':
-        return ScopeValue.openid;
-      case 'address':
-        return ScopeValue.address;
-      case 'email':
-        return ScopeValue.email;
-      case 'phone':
-        return ScopeValue.phone;
-      case 'offline_access':
-        return ScopeValue.offlineAccess;
-      case 'profile':
-        return ScopeValue.profile;
-      case 'full_write':
-        return ScopeValue.fullWrite;
-      case 'events':
-        return ScopeValue.events;
-      default:
-        return null;
-    }
+    const scopeValues = ScopeValue.values;
+
+    final scopeValueIndex = scopeValues
+        .indexWhere((scopeValue) => scopeValue.name == scopeValueString);
+
+    final scopeValue =
+        scopeValueIndex != -1 ? scopeValues[scopeValueIndex] : null;
+
+    return scopeValue;
   }
 }
 

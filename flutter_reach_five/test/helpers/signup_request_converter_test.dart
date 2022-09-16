@@ -6,6 +6,22 @@ import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platfor
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  group('$ScopeValueConverter', () {
+    test('toInterface method', () async {
+      expect(
+        ScopeValueConverter.toInterface(ScopeValue.fullWrite),
+        'full_write',
+      );
+    });
+
+    test('fromInterface method', () async {
+      expect(
+        ScopeValueConverter.fromInterface('full_write'),
+        ScopeValue.fullWrite,
+      );
+    });
+  });
+
   group('$SignupRequestConverter', () {
     test('toInterface method', () async {
       expect(
