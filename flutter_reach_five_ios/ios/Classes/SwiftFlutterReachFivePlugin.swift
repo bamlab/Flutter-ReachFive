@@ -50,4 +50,33 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
             }
     }
     
+    public func signupRequest(_ request: SignupRequestInterface, completion: @escaping (AuthTokenInterface?, FlutterError?) -> Void) {        
+        let signupRequest = Converters.signupRequestFromInterface(
+            profileSignupRequestInterface: request.profile
+        )
+        
+        reachfive?.signup(
+            profile: signupRequest,
+            redirectUrl: request.redirectUrl
+        ).onSuccess(
+            callback: { authToken in
+                completion(
+                    Converters.authTokenToInterface(authToken: authToken),
+                    nil
+                )
+            }
+        ).onFailure(
+            callback: { error in
+                completion(
+                    nil,
+                    FlutterError(
+                        code: "null",
+                        message: error.message(),
+                        details: nil
+                    )
+                )
+            }
+        )
+    }
+    
 }
