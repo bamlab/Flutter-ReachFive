@@ -18,6 +18,9 @@ linter:
     # False positive for custom enum-like classes (such as Flutter's "Colors")
     avoid_classes_with_only_static_members: false
 
+    # Not needed right now, maybe re-activate it later
+    flutter_style_todos: false
+
     # false positive
     one_member_abstracts: false
 
