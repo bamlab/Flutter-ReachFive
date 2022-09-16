@@ -6,10 +6,10 @@ void main() {
   group('$SignupRequest', () {
     test('instances with same fields are equal', () async {
       const firstInstance = SignupRequest(
-        profile: ProfileSignupRequest(email: 'email', password: 'password'),
+        profile: ProfileSignupRequest(password: 'password'),
       );
       const secondInstance = SignupRequest(
-        profile: ProfileSignupRequest(email: 'email', password: 'password'),
+        profile: ProfileSignupRequest(password: 'password'),
       );
 
       expect(firstInstance == secondInstance, isTrue);
@@ -17,10 +17,10 @@ void main() {
 
     test('instances with differents fields are not equal', () async {
       const firstInstance = SignupRequest(
-        profile: ProfileSignupRequest(email: 'email1', password: 'password'),
+        profile: ProfileSignupRequest(password: 'password1'),
       );
       const secondInstance = SignupRequest(
-        profile: ProfileSignupRequest(email: 'email2', password: 'password'),
+        profile: ProfileSignupRequest(password: 'password2'),
       );
 
       expect(firstInstance == secondInstance, isFalse);

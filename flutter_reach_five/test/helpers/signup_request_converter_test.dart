@@ -32,7 +32,7 @@ void main() {
             scheme: 'scheme',
           ),
           const SignupRequest(
-            profile: ProfileSignupRequest(password: 'password', email: 'email'),
+            profile: ProfileSignupRequest(password: 'password'),
             scope: [ScopeValue.events],
           ),
         ),
@@ -49,10 +49,7 @@ void main() {
               clientId: 'clientId',
               scheme: 'scheme',
             ),
-            profile: ProfileSignupRequestInterface(
-              password: 'password',
-              email: 'email',
-            ),
+            profile: ProfileSignupRequestInterface(password: 'password'),
             scope: ['events'],
           ),
         ),

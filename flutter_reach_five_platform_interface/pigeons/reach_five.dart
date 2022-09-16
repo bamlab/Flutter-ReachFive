@@ -96,7 +96,7 @@ class ProfileSignupRequestInterface {
   });
 
   final String password;
-  final String email;
+  final String? email;
   final String? phoneNumber;
   final String? givenName;
   final String? middleName;

@@ -53,10 +53,7 @@ void main() {
         );
         final request = SignupRequestInterface(
           config: config,
-          profile: ProfileSignupRequestInterface(
-            email: 'email',
-            password: 'password',
-          ),
+          profile: ProfileSignupRequestInterface(password: 'password'),
         );
         final authToken = AuthTokenInterface(accessToken: 'accessToken');
 

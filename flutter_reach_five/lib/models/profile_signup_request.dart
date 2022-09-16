@@ -9,7 +9,7 @@ class ProfileSignupRequest extends Equatable {
   /// [ProfileSignupRequest] default constructor
   const ProfileSignupRequest({
     required this.password,
-    required this.email,
+    this.email,
     this.phoneNumber,
     this.givenName,
     this.middleName,
@@ -34,9 +34,15 @@ class ProfileSignupRequest extends Equatable {
   final String password;
 
   /// The user email
-  final String email;
+  ///
+  /// Used to identify the user
+  /// If not provided, a phoneNumber must be given
+  final String? email;
 
   /// The user phoneNumber
+  ///
+  /// Used to identify the user
+  /// If not provided, an email must be given
   final String? phoneNumber;
 
   /// The user givenName

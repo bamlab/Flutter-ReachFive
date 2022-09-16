@@ -205,7 +205,7 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 
 @implementation ProfileSignupRequestInterface
 + (instancetype)makeWithPassword:(NSString *)password
-    email:(NSString *)email
+    email:(nullable NSString *)email
     phoneNumber:(nullable NSString *)phoneNumber
     givenName:(nullable NSString *)givenName
     middleName:(nullable NSString *)middleName
@@ -252,7 +252,6 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
   pigeonResult.password = GetNullableObject(dict, @"password");
   NSAssert(pigeonResult.password != nil, @"");
   pigeonResult.email = GetNullableObject(dict, @"email");
-  NSAssert(pigeonResult.email != nil, @"");
   pigeonResult.phoneNumber = GetNullableObject(dict, @"phoneNumber");
   pigeonResult.givenName = GetNullableObject(dict, @"givenName");
   pigeonResult.middleName = GetNullableObject(dict, @"middleName");

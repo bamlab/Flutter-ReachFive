@@ -78,7 +78,7 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithPassword:(NSString *)password
-    email:(NSString *)email
+    email:(nullable NSString *)email
     phoneNumber:(nullable NSString *)phoneNumber
     givenName:(nullable NSString *)givenName
     middleName:(nullable NSString *)middleName
@@ -98,7 +98,7 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
     consents:(nullable NSDictionary<NSString *, ConsentInterface *> *)consents
     liteOnly:(nullable NSNumber *)liteOnly;
 @property(nonatomic, copy) NSString * password;
-@property(nonatomic, copy) NSString * email;
+@property(nonatomic, copy, nullable) NSString * email;
 @property(nonatomic, copy, nullable) NSString * phoneNumber;
 @property(nonatomic, copy, nullable) NSString * givenName;
 @property(nonatomic, copy, nullable) NSString * middleName;

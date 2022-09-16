@@ -401,12 +401,9 @@ public class ReachFiveApi {
       this.password = setterArg;
     }
 
-    private @NonNull String email;
-    public @NonNull String getEmail() { return email; }
-    public void setEmail(@NonNull String setterArg) {
-      if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"email\" is null.");
-      }
+    private @Nullable String email;
+    public @Nullable String getEmail() { return email; }
+    public void setEmail(@Nullable String setterArg) {
       this.email = setterArg;
     }
 
@@ -527,7 +524,7 @@ public class ReachFiveApi {
         return this;
       }
       private @Nullable String email;
-      public @NonNull Builder setEmail(@NonNull String setterArg) {
+      public @NonNull Builder setEmail(@Nullable String setterArg) {
         this.email = setterArg;
         return this;
       }

@@ -68,7 +68,7 @@ void main() {
           accessToken: 'accessToken',
         );
         const signupRequest = SignupRequest(
-          profile: ProfileSignupRequest(email: 'email', password: 'password'),
+          profile: ProfileSignupRequest(password: 'password'),
         );
 
         registerFallbackValue(

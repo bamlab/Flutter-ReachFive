@@ -11,7 +11,6 @@ void main() {
       expect(
         ProfileSignupRequestConverter.toInterface(
           const ProfileSignupRequest(
-            email: 'email',
             password: 'password',
             addresses: [ProfileAddress()],
             consents: <String, Consent>{
@@ -27,7 +26,6 @@ void main() {
       expect(
         ProfileSignupRequestConverter.fromInterface(
           ProfileSignupRequestInterface(
-            email: 'email',
             password: 'password',
             addresses: [ProfileAddressInterface()],
             consents: <String, ConsentInterface>{

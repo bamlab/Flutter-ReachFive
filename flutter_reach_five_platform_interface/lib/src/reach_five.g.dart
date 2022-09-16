@@ -144,7 +144,7 @@ class ConsentInterface {
 class ProfileSignupRequestInterface {
   ProfileSignupRequestInterface({
     required this.password,
-    required this.email,
+    this.email,
     this.phoneNumber,
     this.givenName,
     this.middleName,
@@ -166,7 +166,7 @@ class ProfileSignupRequestInterface {
   });
 
   String password;
-  String email;
+  String? email;
   String? phoneNumber;
   String? givenName;
   String? middleName;
@@ -215,7 +215,7 @@ class ProfileSignupRequestInterface {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
     return ProfileSignupRequestInterface(
       password: pigeonMap['password']! as String,
-      email: pigeonMap['email']! as String,
+      email: pigeonMap['email'] as String?,
       phoneNumber: pigeonMap['phoneNumber'] as String?,
       givenName: pigeonMap['givenName'] as String?,
       middleName: pigeonMap['middleName'] as String?,
