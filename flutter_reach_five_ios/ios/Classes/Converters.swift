@@ -22,6 +22,28 @@ public class Converters {
             )
         }
     
+    static public func authTokenFromInterface(
+            authTokenInterface: AuthTokenInterface
+        ) -> AuthToken {
+            
+            let expriresIn = authTokenInterface.expiresIn as? Int
+            
+            let user = authTokenInterface.user != nil
+            ? openIdUserFromInterface(
+                openIdUserInterface: authTokenInterface.user!
+            )
+            : nil
+            
+            return AuthToken(
+                idToken: authTokenInterface.idToken,
+                accessToken: authTokenInterface.accessToken,
+                refreshToken: authTokenInterface.refreshToken,
+                tokenType: authTokenInterface.tokenType,
+                expiresIn: expriresIn,
+                user: user
+            )
+        }
+    
     static public func openIdUserToInterface(
             openIdUser: OpenIdUser
         ) -> OpenIdUserInterface {
@@ -57,17 +79,73 @@ public class Converters {
             )
         }
     
+    static public func openIdUserFromInterface(
+        openIdUserInterface: OpenIdUserInterface
+        ) -> OpenIdUser {
+            
+            let emailVerified = openIdUserInterface.emailVerified as? Bool
+            
+            let phoneNumberVerified = openIdUserInterface.phoneNumberVerified as? Bool
+            
+            let address = openIdUserInterface.address != nil
+            ? addressFromInterface(
+                addressInterface: openIdUserInterface.address!
+            )
+            : nil
+            
+            return OpenIdUser(
+                id: openIdUserInterface.id,
+                name: openIdUserInterface.name,
+                preferredUsername: openIdUserInterface.preferredUsername,
+                givenName: openIdUserInterface.givenName,
+                familyName: openIdUserInterface.familyName,
+                middleName: openIdUserInterface.middleName,
+                nickname: openIdUserInterface.nickname,
+                picture: openIdUserInterface.picture,
+                website: openIdUserInterface.website,
+                email: openIdUserInterface.email,
+                emailVerified: emailVerified,
+                gender: openIdUserInterface.gender,
+                zoneinfo: openIdUserInterface.zoneinfo,
+                locale: openIdUserInterface.locale,
+                phoneNumber: openIdUserInterface.phoneNumber,
+                phoneNumberVerified: phoneNumberVerified,
+                address: address
+            )
+        }
+    
     static public func addressToInterface(
             address: ProfileAddress
         ) -> AddressInterface {
             
             return AddressInterface.make(
-                withFormatted: nil,
+                withFormatted: address.raw,
                 streetAddress: address.streetAddress,
                 locality: address.locality,
                 region: address.region,
                 postalCode: address.postalCode,
                 country: address.country
+            )
+        }
+    
+    static public func addressFromInterface(
+            addressInterface: AddressInterface
+        ) -> ProfileAddress {
+            
+            return ProfileAddress(
+                title: nil,
+                isDefault: nil,
+                addressType: nil,
+                streetAddress: addressInterface.streetAddress,
+                locality: addressInterface.locality,
+                region: addressInterface.region,
+                postalCode: addressInterface.postalCode,
+                country: addressInterface.country,
+                raw: addressInterface.formatted,
+                deliveryNote: nil,
+                recipient: nil,
+                company: nil,
+                phoneNumber: nil
             )
         }
     

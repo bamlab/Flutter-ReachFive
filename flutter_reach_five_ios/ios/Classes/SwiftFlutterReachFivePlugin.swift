@@ -79,4 +79,33 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
         )
     }
     
+    public func refreshAccessTokenRequest(_ request: RefreshAccessTokenRequestInterface, completion: @escaping (AuthTokenInterface?, FlutterError?) -> Void) {
+        
+        let authToken = Converters.authTokenFromInterface(
+            authTokenInterface: request.authToken
+        )
+        
+        reachfive?.refreshAccessToken(
+            authToken: authToken
+        ).onSuccess(
+            callback: { authToken in
+                completion(
+                    Converters.authTokenToInterface(authToken: authToken),
+                    nil
+                )
+            }
+        ).onFailure(
+            callback: { error in
+                completion(
+                    nil,
+                    FlutterError(
+                        code: "null",
+                        message: error.message(),
+                        details: nil
+                    )
+                )
+            }
+        )
+    }
+    
 }
