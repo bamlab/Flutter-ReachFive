@@ -18,7 +18,7 @@ class ReachFive {
   /// reachFive native sdk methods
   final ReachFiveConfig config;
 
-  /// Sign up method
+  /// Signup method
   Future<AuthToken> signup(SignupRequest request) async {
     final authTokenInterface = await _platform.signup(
       SignupRequestConverter.toInterface(
@@ -30,6 +30,18 @@ class ReachFive {
     final authToken = AuthTokenConverter.fromInterface(authTokenInterface);
 
     return authToken;
+  }
+
+  /// RefreshAccessToken method
+  Future<AuthToken> refreshAccessToken(AuthToken authToken) async {
+    final authTokenInterface = await _platform.refreshAccessToken(
+      RefreshAccessTokenRequestInterface(
+        authToken: AuthTokenConverter.toInterface(authToken),
+        config: ReachFiveConfigConverter.toInterface(config),
+      ),
+    );
+
+    return AuthTokenConverter.fromInterface(authTokenInterface);
   }
 }
 
