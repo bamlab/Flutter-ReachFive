@@ -1,3 +1,5 @@
+import 'package:equatable/equatable.dart';
+
 import 'profile_signup_request.dart';
 
 /// Enum for the differents values of a scope
@@ -28,7 +30,7 @@ enum ScopeValue {
 }
 
 /// SignupRequest class, contains the infos for a signup request
-class SignupRequest {
+class SignupRequest extends Equatable {
   /// SignupRequest default constructor
   const SignupRequest({
     required this.profile,
@@ -44,4 +46,11 @@ class SignupRequest {
 
   /// The scope values you want to get in your authToken's user
   final List<ScopeValue>? scope;
+
+  @override
+  List<Object?> get props => [
+        profile,
+        redirectUrl,
+        scope,
+      ];
 }

@@ -1,7 +1,9 @@
+import 'package:equatable/equatable.dart';
+
 import './address.dart';
 
 /// OpenIdUser class, contains the infos for a open id user
-class OpenIdUser {
+class OpenIdUser extends Equatable {
   /// OpenIdUser default constructor
   const OpenIdUser({
     this.id,
@@ -81,4 +83,27 @@ class OpenIdUser {
 
   /// Your user externalId
   final String? externalId;
+
+  @override
+  List<Object?> get props => [
+        id,
+        name,
+        preferredUsername,
+        givenName,
+        familyName,
+        middleName,
+        nickname,
+        picture,
+        website,
+        email,
+        emailVerified,
+        gender,
+        zoneinfo,
+        locale,
+        phoneNumber,
+        phoneNumberVerified,
+        address,
+        birthdate,
+        externalId,
+      ];
 }

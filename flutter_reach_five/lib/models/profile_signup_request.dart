@@ -1,9 +1,11 @@
+import 'package:equatable/equatable.dart';
+
 import 'consent.dart';
 import 'profile_address.dart';
 
 /// ProfileSignupRequest class, contains the infos for the profile
 /// in a signUp request
-class ProfileSignupRequest {
+class ProfileSignupRequest extends Equatable {
   /// ProfileSignupRequest default constructor
   const ProfileSignupRequest({
     required this.password,
@@ -87,4 +89,28 @@ class ProfileSignupRequest {
 
   /// TODO: find exactly what's this option do
   final bool? liteOnly;
+
+  @override
+  List<Object?> get props => [
+        password,
+        email,
+        phoneNumber,
+        givenName,
+        middleName,
+        familyName,
+        name,
+        nickname,
+        birthdate,
+        profileURL,
+        picture,
+        username,
+        gender,
+        company,
+        addresses,
+        locale,
+        bio,
+        customFields,
+        consents,
+        liteOnly,
+      ];
 }

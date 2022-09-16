@@ -1,5 +1,7 @@
+import 'package:equatable/equatable.dart';
+
 /// Consent class, contains the infos for a consent
-class Consent {
+class Consent extends Equatable {
   /// Consent default constructor
   const Consent({
     required this.granted,
@@ -15,4 +17,11 @@ class Consent {
 
   /// The consent type TODO: Find out if we can use a enum for that
   final String? consentType;
+
+  @override
+  List<Object?> get props => [
+        granted,
+        date,
+        consentType,
+      ];
 }

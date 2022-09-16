@@ -1,3 +1,5 @@
+import 'package:equatable/equatable.dart';
+
 /// Enum for the type of your profile address
 enum ProfileAddressType {
   /// billing address type
@@ -8,7 +10,7 @@ enum ProfileAddressType {
 }
 
 /// ProfileAddress class, contains the infos for the profile address
-class ProfileAddress {
+class ProfileAddress extends Equatable {
   /// ProfileAddress default constructor
   const ProfileAddress({
     this.title,
@@ -64,4 +66,21 @@ class ProfileAddress {
 
   /// A phone number linked to the address
   final String? phoneNumber;
+
+  @override
+  List<Object?> get props => [
+        title,
+        isDefault,
+        addressType,
+        streetAddress,
+        locality,
+        region,
+        postalCode,
+        country,
+        raw,
+        deliveryNote,
+        recipient,
+        company,
+        phoneNumber,
+      ];
 }

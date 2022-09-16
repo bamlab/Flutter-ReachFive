@@ -1,5 +1,7 @@
+import 'package:equatable/equatable.dart';
+
 /// Address class, contains the infos for an address
-class Address {
+class Address extends Equatable {
   /// Address default constructor
   const Address({
     this.formatted,
@@ -27,4 +29,14 @@ class Address {
 
   /// the address country
   final String? country;
+
+  @override
+  List<Object?> get props => [
+        formatted,
+        streetAddress,
+        locality,
+        region,
+        postalCode,
+        country,
+      ];
 }

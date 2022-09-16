@@ -1,7 +1,9 @@
+import 'package:equatable/equatable.dart';
+
 import './open_id_user.dart';
 
 /// AuthToken class, contains the infos of an authentication token
-class AuthToken {
+class AuthToken extends Equatable {
   /// AuthToken default constructor
   const AuthToken({
     required this.accessToken,
@@ -29,4 +31,14 @@ class AuthToken {
 
   /// Your user Informations linked to this token
   final OpenIdUser? user;
+
+  @override
+  List<Object?> get props => [
+        accessToken,
+        idToken,
+        refreshToken,
+        tokenType,
+        expiresIn,
+        user,
+      ];
 }

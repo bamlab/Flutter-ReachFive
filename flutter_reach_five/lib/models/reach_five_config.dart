@@ -1,6 +1,8 @@
+import 'package:equatable/equatable.dart';
+
 /// ReachFiveConfig class, contains the infos for
 /// a ReachFive config
-class ReachFiveConfig {
+class ReachFiveConfig extends Equatable {
   /// ReachFiveConfig default constructor
   const ReachFiveConfig({
     required this.domain,
@@ -16,4 +18,11 @@ class ReachFiveConfig {
 
   /// scheme of your reachFive api
   final String scheme;
+
+  @override
+  List<Object?> get props => [
+        domain,
+        clientId,
+        scheme,
+      ];
 }
