@@ -45,7 +45,13 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
   ) =>
       ReachFiveHostApi().initialize(config);
 
-  /// Sign up method
+  /// Signup method
   Future<AuthTokenInterface> signup(SignupRequestInterface request) =>
       ReachFiveHostApi().signup(request);
+
+  /// Refresh access token
+  Future<AuthTokenInterface> refreshAccessToken(
+    RefreshAccessTokenRequestInterface request,
+  ) =>
+      ReachFiveHostApi().refreshAccessToken(request);
 }
