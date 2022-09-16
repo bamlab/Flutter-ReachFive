@@ -211,6 +211,16 @@ class AuthTokenInterface {
   final OpenIdUserInterface? user;
 }
 
+class RefreshAccessTokenRequestInterface {
+  const RefreshAccessTokenRequestInterface({
+    required this.config,
+    required this.authToken,
+  });
+
+  final ReachFiveConfigInterface config;
+  final AuthTokenInterface authToken;
+}
+
 @HostApi()
 abstract class ReachFiveHostApi {
   @async
@@ -218,4 +228,9 @@ abstract class ReachFiveHostApi {
 
   @async
   AuthTokenInterface signup(SignupRequestInterface request);
+
+  @async
+  AuthTokenInterface refreshAccessToken(
+    RefreshAccessTokenRequestInterface request,
+  );
 }

@@ -1326,6 +1326,62 @@ public class ReachFiveApi {
     }
   }
 
+  /** Generated class from Pigeon that represents data sent in messages. */
+  public static class RefreshAccessTokenRequestInterface {
+    private @NonNull ReachFiveConfigInterface config;
+    public @NonNull ReachFiveConfigInterface getConfig() { return config; }
+    public void setConfig(@NonNull ReachFiveConfigInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"config\" is null.");
+      }
+      this.config = setterArg;
+    }
+
+    private @NonNull AuthTokenInterface authToken;
+    public @NonNull AuthTokenInterface getAuthToken() { return authToken; }
+    public void setAuthToken(@NonNull AuthTokenInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"authToken\" is null.");
+      }
+      this.authToken = setterArg;
+    }
+
+    /** Constructor is private to enforce null safety; use Builder. */
+    private RefreshAccessTokenRequestInterface() {}
+    public static final class Builder {
+      private @Nullable ReachFiveConfigInterface config;
+      public @NonNull Builder setConfig(@NonNull ReachFiveConfigInterface setterArg) {
+        this.config = setterArg;
+        return this;
+      }
+      private @Nullable AuthTokenInterface authToken;
+      public @NonNull Builder setAuthToken(@NonNull AuthTokenInterface setterArg) {
+        this.authToken = setterArg;
+        return this;
+      }
+      public @NonNull RefreshAccessTokenRequestInterface build() {
+        RefreshAccessTokenRequestInterface pigeonReturn = new RefreshAccessTokenRequestInterface();
+        pigeonReturn.setConfig(config);
+        pigeonReturn.setAuthToken(authToken);
+        return pigeonReturn;
+      }
+    }
+    @NonNull Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("config", (config == null) ? null : config.toMap());
+      toMapResult.put("authToken", (authToken == null) ? null : authToken.toMap());
+      return toMapResult;
+    }
+    static @NonNull RefreshAccessTokenRequestInterface fromMap(@NonNull Map<String, Object> map) {
+      RefreshAccessTokenRequestInterface pigeonResult = new RefreshAccessTokenRequestInterface();
+      Object config = map.get("config");
+      pigeonResult.setConfig((config == null) ? null : ReachFiveConfigInterface.fromMap((Map)config));
+      Object authToken = map.get("authToken");
+      pigeonResult.setAuthToken((authToken == null) ? null : AuthTokenInterface.fromMap((Map)authToken));
+      return pigeonResult;
+    }
+  }
+
   public interface Result<T> {
     void success(T result);
     void error(Throwable error);
@@ -1358,6 +1414,9 @@ public class ReachFiveApi {
           return ReachFiveConfigInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)135:         
+          return RefreshAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+        
+        case (byte)136:         
           return SignupRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         default:        
@@ -1395,8 +1454,12 @@ public class ReachFiveApi {
         stream.write(134);
         writeValue(stream, ((ReachFiveConfigInterface) value).toMap());
       } else 
-      if (value instanceof SignupRequestInterface) {
+      if (value instanceof RefreshAccessTokenRequestInterface) {
         stream.write(135);
+        writeValue(stream, ((RefreshAccessTokenRequestInterface) value).toMap());
+      } else 
+      if (value instanceof SignupRequestInterface) {
+        stream.write(136);
         writeValue(stream, ((SignupRequestInterface) value).toMap());
       } else 
 {
@@ -1409,6 +1472,7 @@ public class ReachFiveApi {
   public interface ReachFiveHostApi {
     void initialize(@NonNull ReachFiveConfigInterface config, Result<ReachFiveConfigInterface> result);
     void signup(@NonNull SignupRequestInterface request, Result<AuthTokenInterface> result);
+    void refreshAccessToken(@NonNull RefreshAccessTokenRequestInterface request, Result<AuthTokenInterface> result);
 
     /** The codec used by ReachFiveHostApi. */
     static MessageCodec<Object> getCodec() {
@@ -1475,6 +1539,40 @@ public class ReachFiveApi {
               };
 
               api.signup(requestArg, resultCallback);
+            }
+            catch (Error | RuntimeException exception) {
+              wrapped.put("error", wrapError(exception));
+              reply.reply(wrapped);
+            }
+          });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(binaryMessenger, "dev.flutter.pigeon.ReachFiveHostApi.refreshAccessToken", getCodec());
+        if (api != null) {
+          channel.setMessageHandler((message, reply) -> {
+            Map<String, Object> wrapped = new HashMap<>();
+            try {
+              ArrayList<Object> args = (ArrayList<Object>)message;
+              RefreshAccessTokenRequestInterface requestArg = (RefreshAccessTokenRequestInterface)args.get(0);
+              if (requestArg == null) {
+                throw new NullPointerException("requestArg unexpectedly null.");
+              }
+              Result<AuthTokenInterface> resultCallback = new Result<AuthTokenInterface>() {
+                public void success(AuthTokenInterface result) {
+                  wrapped.put("result", result);
+                  reply.reply(wrapped);
+                }
+                public void error(Throwable error) {
+                  wrapped.put("error", wrapError(error));
+                  reply.reply(wrapped);
+                }
+              };
+
+              api.refreshAccessToken(requestArg, resultCallback);
             }
             catch (Error | RuntimeException exception) {
               wrapped.put("error", wrapError(exception));

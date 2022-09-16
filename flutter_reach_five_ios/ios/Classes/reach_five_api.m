@@ -71,6 +71,11 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (nullable AuthTokenInterface *)nullableFromMap:(NSDictionary *)dict;
 - (NSDictionary *)toMap;
 @end
+@interface RefreshAccessTokenRequestInterface ()
++ (RefreshAccessTokenRequestInterface *)fromMap:(NSDictionary *)dict;
++ (nullable RefreshAccessTokenRequestInterface *)nullableFromMap:(NSDictionary *)dict;
+- (NSDictionary *)toMap;
+@end
 
 @implementation ReachFiveConfigInterface
 + (instancetype)makeWithDomain:(NSString *)domain
@@ -498,6 +503,31 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 }
 @end
 
+@implementation RefreshAccessTokenRequestInterface
++ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
+    authToken:(AuthTokenInterface *)authToken {
+  RefreshAccessTokenRequestInterface* pigeonResult = [[RefreshAccessTokenRequestInterface alloc] init];
+  pigeonResult.config = config;
+  pigeonResult.authToken = authToken;
+  return pigeonResult;
+}
++ (RefreshAccessTokenRequestInterface *)fromMap:(NSDictionary *)dict {
+  RefreshAccessTokenRequestInterface *pigeonResult = [[RefreshAccessTokenRequestInterface alloc] init];
+  pigeonResult.config = [ReachFiveConfigInterface nullableFromMap:GetNullableObject(dict, @"config")];
+  NSAssert(pigeonResult.config != nil, @"");
+  pigeonResult.authToken = [AuthTokenInterface nullableFromMap:GetNullableObject(dict, @"authToken")];
+  NSAssert(pigeonResult.authToken != nil, @"");
+  return pigeonResult;
+}
++ (nullable RefreshAccessTokenRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [RefreshAccessTokenRequestInterface fromMap:dict] : nil; }
+- (NSDictionary *)toMap {
+  return @{
+    @"config" : (self.config ? [self.config toMap] : [NSNull null]),
+    @"authToken" : (self.authToken ? [self.authToken toMap] : [NSNull null]),
+  };
+}
+@end
+
 @interface ReachFiveHostApiCodecReader : FlutterStandardReader
 @end
 @implementation ReachFiveHostApiCodecReader
@@ -526,6 +556,9 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
       return [ReachFiveConfigInterface fromMap:[self readValue]];
     
     case 135:     
+      return [RefreshAccessTokenRequestInterface fromMap:[self readValue]];
+    
+    case 136:     
       return [SignupRequestInterface fromMap:[self readValue]];
     
     default:    
@@ -568,8 +601,12 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
     [self writeByte:134];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[SignupRequestInterface class]]) {
+  if ([value isKindOfClass:[RefreshAccessTokenRequestInterface class]]) {
     [self writeByte:135];
+    [self writeValue:[value toMap]];
+  } else 
+  if ([value isKindOfClass:[SignupRequestInterface class]]) {
+    [self writeByte:136];
     [self writeValue:[value toMap]];
   } else 
 {
@@ -633,6 +670,26 @@ void ReachFiveHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<
         NSArray *args = message;
         SignupRequestInterface *arg_request = GetNullableObjectAtIndex(args, 0);
         [api signupRequest:arg_request completion:^(AuthTokenInterface *_Nullable output, FlutterError *_Nullable error) {
+          callback(wrapResult(output, error));
+        }];
+      }];
+    }
+    else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.ReachFiveHostApi.refreshAccessToken"
+        binaryMessenger:binaryMessenger
+        codec:ReachFiveHostApiGetCodec()        ];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(refreshAccessTokenRequest:completion:)], @"ReachFiveHostApi api (%@) doesn't respond to @selector(refreshAccessTokenRequest:completion:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray *args = message;
+        RefreshAccessTokenRequestInterface *arg_request = GetNullableObjectAtIndex(args, 0);
+        [api refreshAccessTokenRequest:arg_request completion:^(AuthTokenInterface *_Nullable output, FlutterError *_Nullable error) {
           callback(wrapResult(output, error));
         }];
       }];

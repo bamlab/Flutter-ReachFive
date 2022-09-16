@@ -21,6 +21,7 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 @class AddressInterface;
 @class OpenIdUserInterface;
 @class AuthTokenInterface;
+@class RefreshAccessTokenRequestInterface;
 
 @interface ReachFiveConfigInterface : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
@@ -204,12 +205,22 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 @property(nonatomic, strong, nullable) OpenIdUserInterface * user;
 @end
 
+@interface RefreshAccessTokenRequestInterface : NSObject
+/// `init` unavailable to enforce nonnull fields, see the `make` class method.
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
+    authToken:(AuthTokenInterface *)authToken;
+@property(nonatomic, strong) ReachFiveConfigInterface * config;
+@property(nonatomic, strong) AuthTokenInterface * authToken;
+@end
+
 /// The codec used by ReachFiveHostApi.
 NSObject<FlutterMessageCodec> *ReachFiveHostApiGetCodec(void);
 
 @protocol ReachFiveHostApi
 - (void)initializeConfig:(ReachFiveConfigInterface *)config completion:(void(^)(ReachFiveConfigInterface *_Nullable, FlutterError *_Nullable))completion;
 - (void)signupRequest:(SignupRequestInterface *)request completion:(void(^)(AuthTokenInterface *_Nullable, FlutterError *_Nullable))completion;
+- (void)refreshAccessTokenRequest:(RefreshAccessTokenRequestInterface *)request completion:(void(^)(AuthTokenInterface *_Nullable, FlutterError *_Nullable))completion;
 @end
 
 extern void ReachFiveHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<ReachFiveHostApi> *_Nullable api);

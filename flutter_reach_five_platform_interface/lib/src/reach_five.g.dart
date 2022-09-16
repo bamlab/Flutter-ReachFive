@@ -453,6 +453,31 @@ class AuthTokenInterface {
   }
 }
 
+class RefreshAccessTokenRequestInterface {
+  RefreshAccessTokenRequestInterface({
+    required this.config,
+    required this.authToken,
+  });
+
+  ReachFiveConfigInterface config;
+  AuthTokenInterface authToken;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['config'] = config.encode();
+    pigeonMap['authToken'] = authToken.encode();
+    return pigeonMap;
+  }
+
+  static RefreshAccessTokenRequestInterface decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return RefreshAccessTokenRequestInterface(
+      config: ReachFiveConfigInterface.decode(pigeonMap['config']!),
+      authToken: AuthTokenInterface.decode(pigeonMap['authToken']!),
+    );
+  }
+}
+
 class _ReachFiveHostApiCodec extends StandardMessageCodec {
   const _ReachFiveHostApiCodec();
   @override
@@ -478,8 +503,11 @@ class _ReachFiveHostApiCodec extends StandardMessageCodec {
     } else if (value is ReachFiveConfigInterface) {
       buffer.putUint8(134);
       writeValue(buffer, value.encode());
-    } else if (value is SignupRequestInterface) {
+    } else if (value is RefreshAccessTokenRequestInterface) {
       buffer.putUint8(135);
+      writeValue(buffer, value.encode());
+    } else if (value is SignupRequestInterface) {
+      buffer.putUint8(136);
       writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
@@ -511,6 +539,9 @@ class _ReachFiveHostApiCodec extends StandardMessageCodec {
         return ReachFiveConfigInterface.decode(readValue(buffer)!);
 
       case 135:
+        return RefreshAccessTokenRequestInterface.decode(readValue(buffer)!);
+
+      case 136:
         return SignupRequestInterface.decode(readValue(buffer)!);
 
       default:
@@ -563,6 +594,36 @@ class ReachFiveHostApi {
   Future<AuthTokenInterface> signup(SignupRequestInterface arg_request) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.ReachFiveHostApi.signup', codec,
+        binaryMessenger: _binaryMessenger);
+    final Map<Object?, Object?>? replyMap =
+        await channel.send(<Object?>[arg_request]) as Map<Object?, Object?>?;
+    if (replyMap == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyMap['error'] != null) {
+      final Map<Object?, Object?> error =
+          (replyMap['error'] as Map<Object?, Object?>?)!;
+      throw PlatformException(
+        code: (error['code'] as String?)!,
+        message: error['message'] as String?,
+        details: error['details'],
+      );
+    } else if (replyMap['result'] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (replyMap['result'] as AuthTokenInterface?)!;
+    }
+  }
+
+  Future<AuthTokenInterface> refreshAccessToken(
+      RefreshAccessTokenRequestInterface arg_request) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.ReachFiveHostApi.refreshAccessToken', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_request]) as Map<Object?, Object?>?;
