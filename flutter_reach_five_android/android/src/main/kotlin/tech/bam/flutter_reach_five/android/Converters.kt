@@ -22,6 +22,21 @@ class Converters {
                 .build()
         }
 
+        fun authTokenFromInterface(
+            authTokenInterface: ReachFiveApi.AuthTokenInterface
+        ): AuthToken {
+            val user = authTokenInterface.user
+
+            return AuthToken(
+                idToken = authTokenInterface.idToken,
+                accessToken = authTokenInterface.accessToken,
+                refreshToken = authTokenInterface.refreshToken,
+                tokenType = authTokenInterface.tokenType,
+                expiresIn = authTokenInterface.expiresIn?.toInt(),
+                user = if(user != null) openIdUserFromInterface(user) else null
+            )
+        }
+
         fun openIdUserToInterface(
             openIdUser: OpenIdUser
         ): ReachFiveApi.OpenIdUserInterface {
@@ -54,6 +69,34 @@ class Converters {
                 .build()
         }
 
+        fun openIdUserFromInterface(
+            openIdUserInterface: ReachFiveApi.OpenIdUserInterface
+        ): OpenIdUser {
+            val address = openIdUserInterface.address
+
+            return OpenIdUser(
+                id = openIdUserInterface.id,
+                name = openIdUserInterface.name,
+                preferredUsername = openIdUserInterface.preferredUsername,
+                givenName = openIdUserInterface.givenName,
+                familyName = openIdUserInterface.familyName,
+                middleName = openIdUserInterface.middleName,
+                nickname = openIdUserInterface.nickname,
+                picture = openIdUserInterface.picture,
+                website = openIdUserInterface.website,
+                email = openIdUserInterface.email,
+                emailVerified = openIdUserInterface.emailVerified,
+                gender = openIdUserInterface.gender,
+                zoneinfo = openIdUserInterface.zoneinfo,
+                locale = openIdUserInterface.locale,
+                phoneNumber = openIdUserInterface.phoneNumber,
+                phoneNumberVerified = openIdUserInterface.phoneNumberVerified,
+                address = if (address != null) addressFromInterface(address) else null,
+                birthdate = openIdUserInterface.birthdate,
+                externalId = openIdUserInterface.externalId
+            )
+        }
+
         fun addressToInterface(
             address: Address
         ): ReachFiveApi.AddressInterface {
@@ -66,6 +109,19 @@ class Converters {
                 .setPostalCode(address.postalCode)
                 .setCountry(address.country)
                 .build()
+        }
+
+        fun addressFromInterface(
+            addressInterface: ReachFiveApi.AddressInterface
+        ): Address {
+            return Address(
+                formatted = addressInterface.formatted,
+                streetAddress = addressInterface.streetAddress,
+                locality = addressInterface.locality,
+                region = addressInterface.region,
+                postalCode = addressInterface.postalCode,
+                country = addressInterface.country,
+            )
         }
 
         fun signupRequestFromInterface(

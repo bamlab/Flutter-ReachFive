@@ -59,4 +59,19 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
             failure = { error -> result?.error(error)}
         )
     }
+
+    override fun refreshAccessToken(
+        request: ReachFiveApi.RefreshAccessTokenRequestInterface,
+        result: ReachFiveApi.Result<ReachFiveApi.AuthTokenInterface>?
+    ) {
+        val authToken = request.authToken
+
+        this.reachFive.refreshAccessToken(
+            authToken = Converters.authTokenFromInterface(authToken),
+            success = { authToken ->
+                result?.success(Converters.authTokenToInterface(authToken))
+            },
+            failure = { error -> result?.error(error)}
+        )
+    }
 }
