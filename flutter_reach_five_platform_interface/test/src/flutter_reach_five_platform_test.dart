@@ -91,6 +91,16 @@ void main() {
       });
     });
 
+    group('logout', () {
+      test('execute reach five host api logout method', () async {
+        when(mockReachFiveHostApi.logout).thenAnswer((_) async {});
+
+        await FlutterReachFivePlatform.instance.logout();
+
+        verify(mockReachFiveHostApi.logout).called(1);
+      });
+    });
+
     group('refreshAccessToken', () {
       test('returns correct auth token', () async {
         final config = ReachFiveConfigInterface(
