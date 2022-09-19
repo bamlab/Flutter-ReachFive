@@ -3,7 +3,6 @@ import 'package:flutter_reach_five/flutter_reach_five.dart';
 
 import '../const.dart';
 import '../widgets/custom_text_field.dart';
-import '../widgets/signup_button.dart';
 import '../widgets/snackbar.dart';
 
 class LoginWithPasswordMethod extends StatefulWidget {
@@ -84,6 +83,7 @@ class LoginWithPasswordMethodState extends State<LoginWithPasswordMethod> {
   @override
   Widget build(BuildContext context) {
     final authToken = widget.authToken;
+    final isButtonDisabled = areInteractionsDisabled || authToken != null;
 
     return ListView(
       children: [
@@ -103,12 +103,15 @@ class LoginWithPasswordMethodState extends State<LoginWithPasswordMethod> {
           Text('password : $password'),
         ],
         const SizedBox(height: 32),
-        SignupButton(
-          isDisabled: areInteractionsDisabled || authToken != null,
-          setAuthToken: () async => signupToReachFive(widget.reachFive),
-          label: authToken == null
-              ? 'Login with your password'
-              : "You're already logged in",
+        ElevatedButton(
+          onPressed: !isButtonDisabled
+              ? () async => signupToReachFive(widget.reachFive)
+              : null,
+          child: Text(
+            authToken == null
+                ? 'Login with your password'
+                : "You're already logged in",
+          ),
         ),
       ],
     );

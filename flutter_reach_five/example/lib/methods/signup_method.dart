@@ -3,7 +3,6 @@ import 'package:flutter_reach_five/flutter_reach_five.dart';
 
 import '../const.dart';
 import '../widgets/custom_text_field.dart';
-import '../widgets/signup_button.dart';
 import '../widgets/snackbar.dart';
 
 class SignupMethod extends StatefulWidget {
@@ -108,6 +107,7 @@ class SignupMethodState extends State<SignupMethod> {
   @override
   Widget build(BuildContext context) {
     final authToken = widget.authToken;
+    final isButtonDisabled = areInteractionsDisabled || authToken != null;
 
     return ListView(
       children: [
@@ -155,10 +155,12 @@ class SignupMethodState extends State<SignupMethod> {
           Text('name : $nickname'),
         ],
         const SizedBox(height: 32),
-        SignupButton(
-          isDisabled: areInteractionsDisabled || authToken != null,
-          setAuthToken: () async => signupToReachFive(widget.reachFive),
-          label: authToken == null ? 'Sign up' : "You're already signed in",
+        ElevatedButton(
+          onPressed: !isButtonDisabled
+              ? () async => signupToReachFive(widget.reachFive)
+              : null,
+          child:
+              Text(authToken == null ? 'Sign up' : "You're already signed in"),
         ),
       ],
     );
