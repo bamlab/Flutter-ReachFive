@@ -1,9 +1,11 @@
 import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platform_interface.dart';
 
 import 'helpers/auth_token.dart';
+import 'helpers/login_with_password_request_converter.dart';
 import 'helpers/reach_five_config_converter.dart';
 import 'helpers/signup_request_converter.dart';
 import 'models/auth_token.dart';
+import 'models/login_with_password_request.dart';
 import 'models/reach_five_config.dart';
 import 'models/signup_request.dart';
 
@@ -37,6 +39,29 @@ class ReachFive {
 
     return authToken;
   }
+
+  /// {@template flutter_reach_five.reachFive.loginWithPassword}
+  /// Login an user by providing an identifier (email or phoneNumber) and a password
+  /// {@endtemplate}
+  Future<AuthToken> loginWithPassword(LoginWithPasswordRequest request) async {
+    final authTokenInterface = await _platform.loginWithPassword(
+      LoginWithPasswordRequestConverter.toInterface(
+        config,
+        request,
+      ),
+    );
+
+    final authToken = AuthTokenConverter.fromInterface(authTokenInterface);
+
+    return authToken;
+  }
+
+  /// {@template flutter_reach_five.reachFive.logout}
+  /// Logout your user from your session (and every providers)
+  ///
+  /// To invalidate all active usertokens, use the [Revoke refresh token](https://developer.reachfive.com/openapi/identity.html#operation/revokeToken) endpoint
+  /// {@endtemplate}
+  Future<void> logout() => _platform.logout();
 
   /// {@template flutter_reach_five.reachFive.refreshAccessToken}
   /// Obtain a new [AuthToken] once your access token has expired.

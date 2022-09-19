@@ -26,7 +26,7 @@ scripts:
        - Note: you can also rely on your IDEs Dart Analysis / Issues window.
          
   generate:pigeon:
-    run: melos exec -- "flutter pub run pigeon --input ./pigeons/reach_five.dart"
+    run: melos exec -- "flutter pub run pigeon --input ./pigeons/reach_five.dart && flutter format lib test"
     select-package:
       file-exists: "pigeons/reach_five.dart"
          

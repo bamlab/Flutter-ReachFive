@@ -1,5 +1,6 @@
 import 'package:flutter_reach_five/flutter_reach_five.dart';
 import 'package:flutter_reach_five/helpers/auth_token.dart';
+import 'package:flutter_reach_five/helpers/login_with_password_request_converter.dart';
 import 'package:flutter_reach_five/helpers/reach_five_config_converter.dart';
 import 'package:flutter_reach_five/helpers/signup_request_converter.dart';
 import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platform_interface.dart';
@@ -86,6 +87,62 @@ void main() {
           authToken,
           signupAuthToken,
         );
+      });
+    });
+
+    group('loginWithPassword', () {
+      test('returns correct auth token instance', () async {
+        const reachFive = ReachFive(
+          ReachFiveConfig(
+            domain: 'domain',
+            clientId: 'clientId',
+            scheme: 'scheme',
+          ),
+        );
+        const authToken = AuthToken(
+          accessToken: 'accessToken',
+        );
+        const loginWithPasswordRequest = LoginWithPasswordRequest(
+          password: 'password',
+        );
+
+        registerFallbackValue(
+          LoginWithPasswordRequestConverter.toInterface(
+            reachFive.config,
+            loginWithPasswordRequest,
+          ),
+        );
+        when(
+          () => flutterReachFivePlatform.loginWithPassword(any()),
+        ).thenAnswer(
+          (_) async => AuthTokenConverter.toInterface(authToken),
+        );
+
+        final loginWithPasswordAuthToken =
+            await reachFive.loginWithPassword(loginWithPasswordRequest);
+
+        expect(
+          authToken,
+          loginWithPasswordAuthToken,
+        );
+      });
+    });
+
+    group('logout', () {
+      test('call logout method', () async {
+        const reachFive = ReachFive(
+          ReachFiveConfig(
+            domain: 'domain',
+            clientId: 'clientId',
+            scheme: 'scheme',
+          ),
+        );
+
+        when(flutterReachFivePlatform.logout).thenAnswer((_) async {});
+
+        await reachFive.logout();
+
+        verify(flutterReachFivePlatform.logout).called(1);
       });
     });
 

@@ -5,8 +5,8 @@ import '../const.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/snackbar.dart';
 
-class SignupMethod extends StatefulWidget {
-  const SignupMethod({
+class LoginWithPasswordMethod extends StatefulWidget {
+  const LoginWithPasswordMethod({
     required this.reachFive,
     required this.authToken,
     required this.setAuthToken,
@@ -18,18 +18,15 @@ class SignupMethod extends StatefulWidget {
   final void Function(AuthToken authToken) setAuthToken;
 
   @override
-  State<SignupMethod> createState() => SignupMethodState();
+  State<LoginWithPasswordMethod> createState() =>
+      LoginWithPasswordMethodState();
 }
 
-class SignupMethodState extends State<SignupMethod> {
+class LoginWithPasswordMethodState extends State<LoginWithPasswordMethod> {
   bool areInteractionsDisabled = false;
 
   String email = initialEmail;
   String password = initialPassword;
-  String familyName = initialFamilyName;
-  String givenName = initialGivenName;
-  String middleName = initialMiddleName;
-  String nickname = initialNickame;
 
   void setEmail(String newEmail) => setState(() {
         email = newEmail;
@@ -39,38 +36,16 @@ class SignupMethodState extends State<SignupMethod> {
         password = newPassword;
       });
 
-  void setFamilyName(String newFamilyName) => setState(() {
-        familyName = newFamilyName;
-      });
-
-  void setGivenName(String newGivenName) => setState(() {
-        givenName = newGivenName;
-      });
-
-  void setMiddleName(String newMiddleName) => setState(() {
-        middleName = newMiddleName;
-      });
-
-  void setNickname(String newNickname) => setState(() {
-        nickname = newNickname;
-      });
-
   Future<void> signupToReachFive(ReachFive reachFive) async {
     setState(() {
       areInteractionsDisabled = true;
     });
 
     try {
-      final result = await reachFive.signup(
-        SignupRequest(
-          profile: ProfileSignupRequest(
-            password: password,
-            email: email,
-            familyName: familyName,
-            givenName: givenName,
-            middleName: middleName,
-            nickname: nickname,
-          ),
+      final result = await reachFive.loginWithPassword(
+        LoginWithPasswordRequest(
+          email: email,
+          password: password,
           scope: const [
             ScopeValue.openid,
             ScopeValue.email,
@@ -85,11 +60,12 @@ class SignupMethodState extends State<SignupMethod> {
       if (mounted) {
         showExampleSnackBar(
           context,
-          message: 'Success - Signup',
+          message: 'Success - LoginWithPassword',
           type: SnackbarType.success,
         );
       }
     } catch (error) {
+      print(error);
       if (mounted) {
         showExampleSnackBar(
           context,
@@ -121,46 +97,21 @@ class SignupMethodState extends State<SignupMethod> {
             value: password,
             setValue: setPassword,
           ),
-          const SizedBox(height: 16),
-          CustomTextField(
-            value: familyName,
-            setValue: setFamilyName,
-          ),
-          const SizedBox(height: 16),
-          CustomTextField(
-            value: givenName,
-            setValue: setGivenName,
-          ),
-          const SizedBox(height: 16),
-          CustomTextField(
-            value: middleName,
-            setValue: setMiddleName,
-          ),
-          const SizedBox(height: 16),
-          CustomTextField(
-            value: nickname,
-            setValue: setNickname,
-          ),
         ] else ...[
           Text('email : $email'),
           const SizedBox(height: 16),
           Text('password : $password'),
-          const SizedBox(height: 16),
-          Text('name : $familyName'),
-          const SizedBox(height: 16),
-          Text('name : $givenName'),
-          const SizedBox(height: 16),
-          Text('name : $middleName'),
-          const SizedBox(height: 16),
-          Text('name : $nickname'),
         ],
         const SizedBox(height: 32),
         ElevatedButton(
           onPressed: !isButtonDisabled
               ? () async => signupToReachFive(widget.reachFive)
               : null,
-          child:
-              Text(authToken == null ? 'Sign up' : "You're already signed in"),
+          child: Text(
+            authToken == null
+                ? 'Login with your password'
+                : "You're already logged in",
+          ),
         ),
       ],
     );

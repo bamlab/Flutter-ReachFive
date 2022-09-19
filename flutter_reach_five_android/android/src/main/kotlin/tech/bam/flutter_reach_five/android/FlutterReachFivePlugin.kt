@@ -60,6 +60,31 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
         )
     }
 
+    override fun loginWithPassword(
+        request: ReachFiveApi.LoginWithPasswordRequestInterface,
+        result: ReachFiveApi.Result<ReachFiveApi.AuthTokenInterface>?
+    ) {
+        this.reachFive.loginWithPassword(
+            email = request.email,
+            phoneNumber = request.phoneNumber,
+            password = request.password,
+            scope = request.scope?.toList() ?: listOf(),
+            success = { authToken ->
+                result?.success(Converters.authTokenToInterface(authToken))
+            },
+            failure = { error -> result?.error(error)}
+        )
+    }
+
+    override fun logout(result: ReachFiveApi.Result<Void>?) {
+        this.reachFive.logout(
+            success = {
+                result?.success(null)
+            },
+            failure = { error -> result?.error(error)}
+        )
+    }
+
     override fun refreshAccessToken(
         request: ReachFiveApi.RefreshAccessTokenRequestInterface,
         result: ReachFiveApi.Result<ReachFiveApi.AuthTokenInterface>?

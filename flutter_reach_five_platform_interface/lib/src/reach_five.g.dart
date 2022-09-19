@@ -453,6 +453,43 @@ class AuthTokenInterface {
   }
 }
 
+class LoginWithPasswordRequestInterface {
+  LoginWithPasswordRequestInterface({
+    required this.config,
+    this.email,
+    this.phoneNumber,
+    required this.password,
+    this.scope,
+  });
+
+  ReachFiveConfigInterface config;
+  String? email;
+  String? phoneNumber;
+  String password;
+  List<String?>? scope;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['config'] = config.encode();
+    pigeonMap['email'] = email;
+    pigeonMap['phoneNumber'] = phoneNumber;
+    pigeonMap['password'] = password;
+    pigeonMap['scope'] = scope;
+    return pigeonMap;
+  }
+
+  static LoginWithPasswordRequestInterface decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return LoginWithPasswordRequestInterface(
+      config: ReachFiveConfigInterface.decode(pigeonMap['config']!),
+      email: pigeonMap['email'] as String?,
+      phoneNumber: pigeonMap['phoneNumber'] as String?,
+      password: pigeonMap['password']! as String,
+      scope: (pigeonMap['scope'] as List<Object?>?)?.cast<String?>(),
+    );
+  }
+}
+
 class RefreshAccessTokenRequestInterface {
   RefreshAccessTokenRequestInterface({
     required this.config,
@@ -491,23 +528,26 @@ class _ReachFiveHostApiCodec extends StandardMessageCodec {
     } else if (value is ConsentInterface) {
       buffer.putUint8(130);
       writeValue(buffer, value.encode());
-    } else if (value is OpenIdUserInterface) {
+    } else if (value is LoginWithPasswordRequestInterface) {
       buffer.putUint8(131);
       writeValue(buffer, value.encode());
-    } else if (value is ProfileAddressInterface) {
+    } else if (value is OpenIdUserInterface) {
       buffer.putUint8(132);
       writeValue(buffer, value.encode());
-    } else if (value is ProfileSignupRequestInterface) {
+    } else if (value is ProfileAddressInterface) {
       buffer.putUint8(133);
       writeValue(buffer, value.encode());
-    } else if (value is ReachFiveConfigInterface) {
+    } else if (value is ProfileSignupRequestInterface) {
       buffer.putUint8(134);
       writeValue(buffer, value.encode());
-    } else if (value is RefreshAccessTokenRequestInterface) {
+    } else if (value is ReachFiveConfigInterface) {
       buffer.putUint8(135);
       writeValue(buffer, value.encode());
-    } else if (value is SignupRequestInterface) {
+    } else if (value is RefreshAccessTokenRequestInterface) {
       buffer.putUint8(136);
+      writeValue(buffer, value.encode());
+    } else if (value is SignupRequestInterface) {
+      buffer.putUint8(137);
       writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
@@ -527,21 +567,24 @@ class _ReachFiveHostApiCodec extends StandardMessageCodec {
         return ConsentInterface.decode(readValue(buffer)!);
 
       case 131:
-        return OpenIdUserInterface.decode(readValue(buffer)!);
+        return LoginWithPasswordRequestInterface.decode(readValue(buffer)!);
 
       case 132:
-        return ProfileAddressInterface.decode(readValue(buffer)!);
+        return OpenIdUserInterface.decode(readValue(buffer)!);
 
       case 133:
-        return ProfileSignupRequestInterface.decode(readValue(buffer)!);
+        return ProfileAddressInterface.decode(readValue(buffer)!);
 
       case 134:
-        return ReachFiveConfigInterface.decode(readValue(buffer)!);
+        return ProfileSignupRequestInterface.decode(readValue(buffer)!);
 
       case 135:
-        return RefreshAccessTokenRequestInterface.decode(readValue(buffer)!);
+        return ReachFiveConfigInterface.decode(readValue(buffer)!);
 
       case 136:
+        return RefreshAccessTokenRequestInterface.decode(readValue(buffer)!);
+
+      case 137:
         return SignupRequestInterface.decode(readValue(buffer)!);
 
       default:
@@ -617,6 +660,60 @@ class ReachFiveHostApi {
       );
     } else {
       return (replyMap['result'] as AuthTokenInterface?)!;
+    }
+  }
+
+  Future<AuthTokenInterface> loginWithPassword(
+      LoginWithPasswordRequestInterface arg_request) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.ReachFiveHostApi.loginWithPassword', codec,
+        binaryMessenger: _binaryMessenger);
+    final Map<Object?, Object?>? replyMap =
+        await channel.send(<Object?>[arg_request]) as Map<Object?, Object?>?;
+    if (replyMap == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyMap['error'] != null) {
+      final Map<Object?, Object?> error =
+          (replyMap['error'] as Map<Object?, Object?>?)!;
+      throw PlatformException(
+        code: (error['code'] as String?)!,
+        message: error['message'] as String?,
+        details: error['details'],
+      );
+    } else if (replyMap['result'] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (replyMap['result'] as AuthTokenInterface?)!;
+    }
+  }
+
+  Future<void> logout() async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.ReachFiveHostApi.logout', codec,
+        binaryMessenger: _binaryMessenger);
+    final Map<Object?, Object?>? replyMap =
+        await channel.send(null) as Map<Object?, Object?>?;
+    if (replyMap == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyMap['error'] != null) {
+      final Map<Object?, Object?> error =
+          (replyMap['error'] as Map<Object?, Object?>?)!;
+      throw PlatformException(
+        code: (error['code'] as String?)!,
+        message: error['message'] as String?,
+        details: error['details'],
+      );
+    } else {
+      return;
     }
   }
 

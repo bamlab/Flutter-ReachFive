@@ -21,6 +21,7 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 @class AddressInterface;
 @class OpenIdUserInterface;
 @class AuthTokenInterface;
+@class LoginWithPasswordRequestInterface;
 @class RefreshAccessTokenRequestInterface;
 
 @interface ReachFiveConfigInterface : NSObject
@@ -205,6 +206,21 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 @property(nonatomic, strong, nullable) OpenIdUserInterface * user;
 @end
 
+@interface LoginWithPasswordRequestInterface : NSObject
+/// `init` unavailable to enforce nonnull fields, see the `make` class method.
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
+    email:(nullable NSString *)email
+    phoneNumber:(nullable NSString *)phoneNumber
+    password:(NSString *)password
+    scope:(nullable NSArray<NSString *> *)scope;
+@property(nonatomic, strong) ReachFiveConfigInterface * config;
+@property(nonatomic, copy, nullable) NSString * email;
+@property(nonatomic, copy, nullable) NSString * phoneNumber;
+@property(nonatomic, copy) NSString * password;
+@property(nonatomic, strong, nullable) NSArray<NSString *> * scope;
+@end
+
 @interface RefreshAccessTokenRequestInterface : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
 - (instancetype)init NS_UNAVAILABLE;
@@ -220,6 +236,8 @@ NSObject<FlutterMessageCodec> *ReachFiveHostApiGetCodec(void);
 @protocol ReachFiveHostApi
 - (void)initializeConfig:(ReachFiveConfigInterface *)config completion:(void(^)(ReachFiveConfigInterface *_Nullable, FlutterError *_Nullable))completion;
 - (void)signupRequest:(SignupRequestInterface *)request completion:(void(^)(AuthTokenInterface *_Nullable, FlutterError *_Nullable))completion;
+- (void)loginWithPasswordRequest:(LoginWithPasswordRequestInterface *)request completion:(void(^)(AuthTokenInterface *_Nullable, FlutterError *_Nullable))completion;
+- (void)logoutWithCompletion:(void(^)(FlutterError *_Nullable))completion;
 - (void)refreshAccessTokenRequest:(RefreshAccessTokenRequestInterface *)request completion:(void(^)(AuthTokenInterface *_Nullable, FlutterError *_Nullable))completion;
 @end
 

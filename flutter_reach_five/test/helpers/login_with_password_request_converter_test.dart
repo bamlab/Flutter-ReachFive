@@ -1,41 +1,41 @@
 import 'package:flutter_reach_five/flutter_reach_five.dart';
-import 'package:flutter_reach_five/helpers/signup_request_converter.dart';
+import 'package:flutter_reach_five/helpers/login_with_password_request_converter.dart';
 import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('$SignupRequestConverter', () {
+  group('$LoginWithPasswordRequestConverter', () {
     test('toInterface method', () async {
       expect(
-        SignupRequestConverter.toInterface(
+        LoginWithPasswordRequestConverter.toInterface(
           const ReachFiveConfig(
             domain: 'domain',
             clientId: 'clientId',
             scheme: 'scheme',
           ),
-          const SignupRequest(
-            profile: ProfileSignupRequest(password: 'password'),
+          const LoginWithPasswordRequest(
+            password: 'password',
             scope: [ScopeValue.events],
           ),
         ),
-        isInstanceOf<SignupRequestInterface>(),
+        isInstanceOf<LoginWithPasswordRequestInterface>(),
       );
     });
 
     test('fromInterface method', () async {
       expect(
-        SignupRequestConverter.fromInterface(
-          SignupRequestInterface(
+        LoginWithPasswordRequestConverter.fromInterface(
+          LoginWithPasswordRequestInterface(
             config: ReachFiveConfigInterface(
               domain: 'domain',
               clientId: 'clientId',
               scheme: 'scheme',
             ),
-            profile: ProfileSignupRequestInterface(password: 'password'),
+            password: 'password',
             scope: ['events'],
           ),
         ),
-        isInstanceOf<SignupRequest>(),
+        isInstanceOf<LoginWithPasswordRequest>(),
       );
     });
   });

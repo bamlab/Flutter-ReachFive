@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reach_five/flutter_reach_five.dart';
 
 import '../const.dart';
-import '../widgets/config_button.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/snackbar.dart';
 
@@ -79,6 +78,9 @@ class _InitializeMethodState extends State<InitializeMethod> {
 
   @override
   Widget build(BuildContext context) {
+    final isButtonDisabled =
+        areInteractionsDisabled || widget.reachFive != null;
+
     return ListView(
       children: [
         if (widget.reachFive == null) ...[
@@ -104,12 +106,13 @@ class _InitializeMethodState extends State<InitializeMethod> {
           Text('scheme :$scheme'),
         ],
         const SizedBox(height: 32),
-        ConfigButton(
-          isDisabled: areInteractionsDisabled || widget.reachFive != null,
-          setConfig: initializeReachFive,
-          label: widget.reachFive == null
-              ? 'Get Reach Five Config'
-              : 'Here is your Reach Five Config',
+        ElevatedButton(
+          onPressed: !isButtonDisabled ? initializeReachFive : null,
+          child: Text(
+            widget.reachFive == null
+                ? 'Get Reach Five Config'
+                : 'Reach Five is already initialized',
+          ),
         ),
       ],
     );
