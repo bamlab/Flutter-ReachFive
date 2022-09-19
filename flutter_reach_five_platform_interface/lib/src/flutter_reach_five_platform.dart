@@ -5,11 +5,13 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import 'package:flutter/foundation.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'method_channel_flutter_reach_five.dart';
 import 'reach_five.g.dart';
 
+/// {@template flutter_reach_five.flutterReachFivePlatform}
 /// The interface that implementations of flutter_reach_five must implement.
 ///
 /// Platform implementations should extend this class
@@ -18,6 +20,7 @@ import 'reach_five.g.dart';
 /// the default implementation, while platform implementations that `implements`
 /// this interface will be broken by newly added
 /// [FlutterReachFivePlatform] methods
+/// {@endtemplate}
 abstract class FlutterReachFivePlatform extends PlatformInterface {
   /// Constructs a FlutterReachFivePlatform.
   FlutterReachFivePlatform() : super(token: _token);
@@ -39,9 +42,34 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  /// Return Informations
+  static ReachFiveHostApi _reachFiveHostApi = ReachFiveHostApi();
+
+  /// The default instance of [ReachFiveHostApi] to use
+  ReachFiveHostApi get reachFiveHostApi => _reachFiveHostApi;
+
+  /// You can use this to set another instance of [ReachFiveHostApi] to use
+  ///
+  /// This only for a test usage
+  @visibleForTesting
+  set reachFiveHostApi(ReachFiveHostApi newReachFiveHostApi) {
+    _reachFiveHostApi = newReachFiveHostApi;
+  }
+
+  /// {@macro flutter_reach_five.reachFiveManager.initialize}
   Future<ReachFiveConfigInterface> initialize(
     ReachFiveConfigInterface config,
   ) =>
-      ReachFiveHostApi().initialize(config);
+      reachFiveHostApi.initialize(config);
+
+  /// {@macro flutter_reach_five.reachFive.signup}
+  Future<AuthTokenInterface> signup(
+    SignupRequestInterface request,
+  ) =>
+      reachFiveHostApi.signup(request);
+
+  /// {@macro flutter_reach_five.reachFive.refreshAccessToken}
+  Future<AuthTokenInterface> refreshAccessToken(
+    RefreshAccessTokenRequestInterface request,
+  ) =>
+      reachFiveHostApi.refreshAccessToken(request);
 }
