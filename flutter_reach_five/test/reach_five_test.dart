@@ -3,7 +3,6 @@ import 'package:flutter_reach_five/helpers/auth_token.dart';
 import 'package:flutter_reach_five/helpers/login_with_password_request_converter.dart';
 import 'package:flutter_reach_five/helpers/reach_five_config_converter.dart';
 import 'package:flutter_reach_five/helpers/signup_request_converter.dart';
-import 'package:flutter_reach_five/models/login_with_password_request.dart';
 import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -126,6 +125,24 @@ void main() {
           authToken,
           loginWithPasswordAuthToken,
         );
+      });
+    });
+
+    group('logout', () {
+      test('call logout method', () async {
+        const reachFive = ReachFive(
+          ReachFiveConfig(
+            domain: 'domain',
+            clientId: 'clientId',
+            scheme: 'scheme',
+          ),
+        );
+
+        when(flutterReachFivePlatform.logout).thenAnswer((_) async {});
+
+        await reachFive.logout();
+
+        verify(flutterReachFivePlatform.logout).called(1);
       });
     });
 

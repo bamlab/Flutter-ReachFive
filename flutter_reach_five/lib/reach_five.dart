@@ -56,6 +56,13 @@ class ReachFive {
     return authToken;
   }
 
+  /// {@template flutter_reach_five.reachFive.logout}
+  /// Logout your user from your session (and every providers)
+  ///
+  /// To invalidate all active usertokens, use the [Revoke refresh token](https://developer.reachfive.com/openapi/identity.html#operation/revokeToken) endpoint
+  /// {@endtemplate}
+  Future<void> logout() => _platform.logout();
+
   /// {@template flutter_reach_five.reachFive.refreshAccessToken}
   /// Obtain a new [AuthToken] once your access token has expired.
   ///
