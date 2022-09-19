@@ -109,6 +109,25 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
         )
     }
     
+    public func logout(completion: @escaping (FlutterError?) -> Void) {
+        reachfive?.logout().onSuccess(
+            callback: { _ in
+                completion(nil)
+            }
+        ).onFailure(
+            callback: { error in
+                completion(
+                    FlutterError(
+                        code: "null",
+                        message: error.message(),
+                        details: nil
+                    )
+                )
+            }
+        )
+    }
+    
+    
     public func refreshAccessTokenRequest(_ request: RefreshAccessTokenRequestInterface, completion: @escaping (AuthTokenInterface?, FlutterError?) -> Void) {
         
         let authToken = Converters.authTokenFromInterface(
