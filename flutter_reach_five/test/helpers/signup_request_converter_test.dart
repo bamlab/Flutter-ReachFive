@@ -1,27 +1,9 @@
+import 'package:flutter_reach_five/flutter_reach_five.dart';
 import 'package:flutter_reach_five/helpers/signup_request_converter.dart';
-import 'package:flutter_reach_five/models/profile_signup_request.dart';
-import 'package:flutter_reach_five/models/reach_five_config.dart';
-import 'package:flutter_reach_five/models/signup_request.dart';
 import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('$ScopeValueConverter', () {
-    test('toInterface method', () async {
-      expect(
-        ScopeValueConverter.toInterface(ScopeValue.fullWrite),
-        'full_write',
-      );
-    });
-
-    test('fromInterface method', () async {
-      expect(
-        ScopeValueConverter.fromInterface('full_write'),
-        ScopeValue.fullWrite,
-      );
-    });
-  });
-
   group('$SignupRequestConverter', () {
     test('toInterface method', () async {
       expect(
