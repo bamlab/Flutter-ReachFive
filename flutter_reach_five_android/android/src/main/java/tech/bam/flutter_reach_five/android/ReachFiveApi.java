@@ -1578,6 +1578,7 @@ public class ReachFiveApi {
     void initialize(@NonNull ReachFiveConfigInterface config, Result<ReachFiveConfigInterface> result);
     void signup(@NonNull SignupRequestInterface request, Result<AuthTokenInterface> result);
     void loginWithPassword(@NonNull LoginWithPasswordRequestInterface request, Result<AuthTokenInterface> result);
+    void logout(Result<Void> result);
     void refreshAccessToken(@NonNull RefreshAccessTokenRequestInterface request, Result<AuthTokenInterface> result);
 
     /** The codec used by ReachFiveHostApi. */
@@ -1679,6 +1680,35 @@ public class ReachFiveApi {
               };
 
               api.loginWithPassword(requestArg, resultCallback);
+            }
+            catch (Error | RuntimeException exception) {
+              wrapped.put("error", wrapError(exception));
+              reply.reply(wrapped);
+            }
+          });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(binaryMessenger, "dev.flutter.pigeon.ReachFiveHostApi.logout", getCodec());
+        if (api != null) {
+          channel.setMessageHandler((message, reply) -> {
+            Map<String, Object> wrapped = new HashMap<>();
+            try {
+              Result<Void> resultCallback = new Result<Void>() {
+                public void success(Void result) {
+                  wrapped.put("result", null);
+                  reply.reply(wrapped);
+                }
+                public void error(Throwable error) {
+                  wrapped.put("error", wrapError(error));
+                  reply.reply(wrapped);
+                }
+              };
+
+              api.logout(resultCallback);
             }
             catch (Error | RuntimeException exception) {
               wrapped.put("error", wrapError(exception));

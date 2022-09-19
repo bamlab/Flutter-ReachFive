@@ -251,6 +251,9 @@ abstract class ReachFiveHostApi {
   );
 
   @async
+  void logout();
+
+  @async
   AuthTokenInterface refreshAccessToken(
     RefreshAccessTokenRequestInterface request,
   );

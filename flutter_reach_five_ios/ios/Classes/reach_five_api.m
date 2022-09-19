@@ -749,6 +749,24 @@ void ReachFiveHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<
   {
     FlutterBasicMessageChannel *channel =
       [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.ReachFiveHostApi.logout"
+        binaryMessenger:binaryMessenger
+        codec:ReachFiveHostApiGetCodec()        ];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(logoutWithCompletion:)], @"ReachFiveHostApi api (%@) doesn't respond to @selector(logoutWithCompletion:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        [api logoutWithCompletion:^(FlutterError *_Nullable error) {
+          callback(wrapResult(nil, error));
+        }];
+      }];
+    }
+    else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
         initWithName:@"dev.flutter.pigeon.ReachFiveHostApi.refreshAccessToken"
         binaryMessenger:binaryMessenger
         codec:ReachFiveHostApiGetCodec()        ];
