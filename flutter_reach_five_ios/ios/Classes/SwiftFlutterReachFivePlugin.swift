@@ -3,7 +3,7 @@ import UIKit
 import IdentitySdkCore
 
 public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHostApi {
-    
+
     var reachfive: ReachFive?
 
     public static func register(with registrar: FlutterPluginRegistrar) {
@@ -57,7 +57,37 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
         
         reachfive?.signup(
             profile: signupRequest,
-            redirectUrl: request.redirectUrl
+            redirectUrl: request.redirectUrl,
+            scope: request.scope
+        ).onSuccess(
+            callback: { authToken in
+                completion(
+                    Converters.authTokenToInterface(authToken: authToken),
+                    nil
+                )
+            }
+        ).onFailure(
+            callback: { error in
+                completion(
+                    nil,
+                    FlutterError(
+                        code: "null",
+                        message: error.message(),
+                        details: nil
+                    )
+                )
+            }
+        )
+    }
+    
+    public func login(withPasswordRequest request: LoginWithPasswordRequestInterface, completion: @escaping (AuthTokenInterface?, FlutterError?) -> Void) {
+        
+        
+        reachfive?.loginWithPassword(
+            email: request.email,
+            phoneNumber: request.phoneNumber,
+            password: request.password,
+            scope: request.scope
         ).onSuccess(
             callback: { authToken in
                 completion(
