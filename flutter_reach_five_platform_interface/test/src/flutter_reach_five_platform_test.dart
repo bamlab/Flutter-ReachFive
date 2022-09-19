@@ -67,6 +67,30 @@ void main() {
       });
     });
 
+    group('loginWithPassword', () {
+      test('returns correct auth token', () async {
+        final config = ReachFiveConfigInterface(
+          domain: 'domain',
+          clientId: 'clientId',
+          scheme: 'scheme',
+        );
+        final authToken = AuthTokenInterface(accessToken: 'accessToken');
+        final request = LoginWithPasswordRequestInterface(
+          config: config,
+          email: 'email',
+          password: 'password',
+        );
+
+        when(() => mockReachFiveHostApi.loginWithPassword(request))
+            .thenAnswer((_) async => authToken);
+
+        final receivedAuthToken =
+            await FlutterReachFivePlatform.instance.loginWithPassword(request);
+
+        expect(authToken, receivedAuthToken);
+      });
+    });
+
     group('refreshAccessToken', () {
       test('returns correct auth token', () async {
         final config = ReachFiveConfigInterface(
