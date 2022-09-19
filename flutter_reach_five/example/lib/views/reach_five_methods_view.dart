@@ -3,6 +3,7 @@ import 'package:flutter_reach_five/flutter_reach_five.dart';
 
 import '../methods/initialize_method.dart';
 import '../methods/login_with_password_method.dart';
+import '../methods/logout_method.dart';
 import '../methods/refresh_access_token_method.dart';
 import '../methods/signup_method.dart';
 
@@ -10,6 +11,7 @@ enum ReachFiveMethod {
   initialize,
   signup,
   loginWithPassword,
+  logout,
   refreshAccessToken,
 }
 
@@ -37,6 +39,10 @@ class _ReachFiveMethodsViewState extends State<ReachFiveMethodsView> {
 
   void setAuthToken(AuthToken newAuthToken) => setState(() {
         authToken = newAuthToken;
+      });
+
+  void resetAuthToken() => setState(() {
+        authToken = null;
       });
 
   @override
@@ -70,6 +76,7 @@ class _ReachFiveMethodsViewState extends State<ReachFiveMethodsView> {
               setReachFive: setReachFive,
               authToken: authToken,
               setAuthToken: setAuthToken,
+              resetAuthToken: resetAuthToken,
             ),
           ),
         ],
@@ -85,6 +92,7 @@ class _ReachFiveMethodView extends StatelessWidget {
     required this.setReachFive,
     required this.authToken,
     required this.setAuthToken,
+    required this.resetAuthToken,
   });
 
   final ReachFiveMethod reachFiveMethod;
@@ -94,6 +102,7 @@ class _ReachFiveMethodView extends StatelessWidget {
 
   final AuthToken? authToken;
   final void Function(AuthToken) setAuthToken;
+  final void Function() resetAuthToken;
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +134,14 @@ class _ReachFiveMethodView extends StatelessWidget {
           );
         }
         return const Text('You should initialize Reach Five first');
+      case ReachFiveMethod.logout:
+        if (reachFive != null && authToken != null) {
+          return LogoutMethod(
+            reachFive: reachFive,
+            resetAuthToken: resetAuthToken,
+          );
+        }
+        return const Text('You should login or signup first');
       case ReachFiveMethod.refreshAccessToken:
         if (reachFive != null && authToken != null) {
           return RefreshAccessTokenMethod(
