@@ -211,6 +211,22 @@ class AuthTokenInterface {
   final OpenIdUserInterface? user;
 }
 
+class LoginWithPasswordRequestInterface {
+  const LoginWithPasswordRequestInterface({
+    required this.config,
+    required this.email,
+    required this.phoneNumber,
+    required this.password,
+    required this.scope,
+  });
+
+  final ReachFiveConfigInterface config;
+  final String? email;
+  final String? phoneNumber;
+  final String password;
+  final List<String?>? scope;
+}
+
 class RefreshAccessTokenRequestInterface {
   const RefreshAccessTokenRequestInterface({
     required this.config,
@@ -228,6 +244,11 @@ abstract class ReachFiveHostApi {
 
   @async
   AuthTokenInterface signup(SignupRequestInterface request);
+
+  @async
+  AuthTokenInterface loginWithPassword(
+    LoginWithPasswordRequestInterface request,
+  );
 
   @async
   AuthTokenInterface refreshAccessToken(

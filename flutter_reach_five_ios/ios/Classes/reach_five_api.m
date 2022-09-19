@@ -71,6 +71,11 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (nullable AuthTokenInterface *)nullableFromMap:(NSDictionary *)dict;
 - (NSDictionary *)toMap;
 @end
+@interface LoginWithPasswordRequestInterface ()
++ (LoginWithPasswordRequestInterface *)fromMap:(NSDictionary *)dict;
++ (nullable LoginWithPasswordRequestInterface *)nullableFromMap:(NSDictionary *)dict;
+- (NSDictionary *)toMap;
+@end
 @interface RefreshAccessTokenRequestInterface ()
 + (RefreshAccessTokenRequestInterface *)fromMap:(NSDictionary *)dict;
 + (nullable RefreshAccessTokenRequestInterface *)nullableFromMap:(NSDictionary *)dict;
@@ -502,6 +507,43 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 }
 @end
 
+@implementation LoginWithPasswordRequestInterface
++ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
+    email:(nullable NSString *)email
+    phoneNumber:(nullable NSString *)phoneNumber
+    password:(NSString *)password
+    scope:(nullable NSArray<NSString *> *)scope {
+  LoginWithPasswordRequestInterface* pigeonResult = [[LoginWithPasswordRequestInterface alloc] init];
+  pigeonResult.config = config;
+  pigeonResult.email = email;
+  pigeonResult.phoneNumber = phoneNumber;
+  pigeonResult.password = password;
+  pigeonResult.scope = scope;
+  return pigeonResult;
+}
++ (LoginWithPasswordRequestInterface *)fromMap:(NSDictionary *)dict {
+  LoginWithPasswordRequestInterface *pigeonResult = [[LoginWithPasswordRequestInterface alloc] init];
+  pigeonResult.config = [ReachFiveConfigInterface nullableFromMap:GetNullableObject(dict, @"config")];
+  NSAssert(pigeonResult.config != nil, @"");
+  pigeonResult.email = GetNullableObject(dict, @"email");
+  pigeonResult.phoneNumber = GetNullableObject(dict, @"phoneNumber");
+  pigeonResult.password = GetNullableObject(dict, @"password");
+  NSAssert(pigeonResult.password != nil, @"");
+  pigeonResult.scope = GetNullableObject(dict, @"scope");
+  return pigeonResult;
+}
++ (nullable LoginWithPasswordRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [LoginWithPasswordRequestInterface fromMap:dict] : nil; }
+- (NSDictionary *)toMap {
+  return @{
+    @"config" : (self.config ? [self.config toMap] : [NSNull null]),
+    @"email" : (self.email ?: [NSNull null]),
+    @"phoneNumber" : (self.phoneNumber ?: [NSNull null]),
+    @"password" : (self.password ?: [NSNull null]),
+    @"scope" : (self.scope ?: [NSNull null]),
+  };
+}
+@end
+
 @implementation RefreshAccessTokenRequestInterface
 + (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
     authToken:(AuthTokenInterface *)authToken {
@@ -543,21 +585,24 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
       return [ConsentInterface fromMap:[self readValue]];
     
     case 131:     
-      return [OpenIdUserInterface fromMap:[self readValue]];
+      return [LoginWithPasswordRequestInterface fromMap:[self readValue]];
     
     case 132:     
-      return [ProfileAddressInterface fromMap:[self readValue]];
+      return [OpenIdUserInterface fromMap:[self readValue]];
     
     case 133:     
-      return [ProfileSignupRequestInterface fromMap:[self readValue]];
+      return [ProfileAddressInterface fromMap:[self readValue]];
     
     case 134:     
-      return [ReachFiveConfigInterface fromMap:[self readValue]];
+      return [ProfileSignupRequestInterface fromMap:[self readValue]];
     
     case 135:     
-      return [RefreshAccessTokenRequestInterface fromMap:[self readValue]];
+      return [ReachFiveConfigInterface fromMap:[self readValue]];
     
     case 136:     
+      return [RefreshAccessTokenRequestInterface fromMap:[self readValue]];
+    
+    case 137:     
       return [SignupRequestInterface fromMap:[self readValue]];
     
     default:    
@@ -584,28 +629,32 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
     [self writeByte:130];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[OpenIdUserInterface class]]) {
+  if ([value isKindOfClass:[LoginWithPasswordRequestInterface class]]) {
     [self writeByte:131];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ProfileAddressInterface class]]) {
+  if ([value isKindOfClass:[OpenIdUserInterface class]]) {
     [self writeByte:132];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ProfileSignupRequestInterface class]]) {
+  if ([value isKindOfClass:[ProfileAddressInterface class]]) {
     [self writeByte:133];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ReachFiveConfigInterface class]]) {
+  if ([value isKindOfClass:[ProfileSignupRequestInterface class]]) {
     [self writeByte:134];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[RefreshAccessTokenRequestInterface class]]) {
+  if ([value isKindOfClass:[ReachFiveConfigInterface class]]) {
     [self writeByte:135];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[SignupRequestInterface class]]) {
+  if ([value isKindOfClass:[RefreshAccessTokenRequestInterface class]]) {
     [self writeByte:136];
+    [self writeValue:[value toMap]];
+  } else 
+  if ([value isKindOfClass:[SignupRequestInterface class]]) {
+    [self writeByte:137];
     [self writeValue:[value toMap]];
   } else 
 {
@@ -669,6 +718,26 @@ void ReachFiveHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<
         NSArray *args = message;
         SignupRequestInterface *arg_request = GetNullableObjectAtIndex(args, 0);
         [api signupRequest:arg_request completion:^(AuthTokenInterface *_Nullable output, FlutterError *_Nullable error) {
+          callback(wrapResult(output, error));
+        }];
+      }];
+    }
+    else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.ReachFiveHostApi.loginWithPassword"
+        binaryMessenger:binaryMessenger
+        codec:ReachFiveHostApiGetCodec()        ];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(loginWithPasswordRequest:completion:)], @"ReachFiveHostApi api (%@) doesn't respond to @selector(loginWithPasswordRequest:completion:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray *args = message;
+        LoginWithPasswordRequestInterface *arg_request = GetNullableObjectAtIndex(args, 0);
+        [api loginWithPasswordRequest:arg_request completion:^(AuthTokenInterface *_Nullable output, FlutterError *_Nullable error) {
           callback(wrapResult(output, error));
         }];
       }];
