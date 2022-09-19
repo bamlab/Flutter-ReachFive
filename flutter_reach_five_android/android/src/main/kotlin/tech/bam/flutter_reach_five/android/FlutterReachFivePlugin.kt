@@ -76,6 +76,15 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
         )
     }
 
+    override fun logout(result: ReachFiveApi.Result<Void>?) {
+        this.reachFive.logout(
+            success = {
+                result?.success(null)
+            },
+            failure = { error -> result?.error(error)}
+        )
+    }
+
     override fun refreshAccessToken(
         request: ReachFiveApi.RefreshAccessTokenRequestInterface,
         result: ReachFiveApi.Result<ReachFiveApi.AuthTokenInterface>?
