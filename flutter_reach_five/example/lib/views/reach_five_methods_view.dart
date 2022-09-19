@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reach_five/flutter_reach_five.dart';
 
 import '../methods/initialize_method.dart';
+import '../methods/login_with_password_method.dart';
 import '../methods/refresh_access_token_method.dart';
 import '../methods/signup_method.dart';
 
 enum ReachFiveMethod {
   initialize,
   signup,
+  loginWithPassword,
   refreshAccessToken,
 }
 
@@ -114,6 +116,15 @@ class _ReachFiveMethodView extends StatelessWidget {
           );
         }
         return const Text('You should initialize Reach Five first');
+      case ReachFiveMethod.loginWithPassword:
+        if (reachFive != null) {
+          return LoginWithPasswordMethod(
+            reachFive: reachFive,
+            authToken: authToken,
+            setAuthToken: setAuthToken,
+          );
+        }
+        return const Text('You should initialize Reach Five first');
       case ReachFiveMethod.refreshAccessToken:
         if (reachFive != null && authToken != null) {
           return RefreshAccessTokenMethod(
@@ -122,7 +133,7 @@ class _ReachFiveMethodView extends StatelessWidget {
             setAuthToken: setAuthToken,
           );
         }
-        return const Text('You should signup first');
+        return const Text('You should login or signup first');
     }
   }
 }
