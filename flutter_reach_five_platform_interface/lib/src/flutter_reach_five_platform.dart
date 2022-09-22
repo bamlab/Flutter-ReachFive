@@ -77,8 +77,14 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
   Future<void> logout() => reachFiveHostApi.logout();
 
   /// {@macro flutter_reach_five.reachFive.refreshAccessToken}
-  Future<AuthTokenInterface> refreshAccessToken(
-    RefreshAccessTokenRequestInterface request,
-  ) =>
-      reachFiveHostApi.refreshAccessToken(request);
+  Future<AuthTokenInterface> refreshAccessToken({
+    required ReachFiveConfigInterface config,
+    required AuthTokenInterface authToken,
+  }) =>
+      reachFiveHostApi.refreshAccessToken(
+        RefreshAccessTokenRequestInterface(
+          config: config,
+          authToken: authToken,
+        ),
+      );
 }

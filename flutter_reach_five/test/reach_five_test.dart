@@ -163,13 +163,14 @@ void main() {
         );
 
         registerFallbackValue(
-          RefreshAccessTokenRequestInterface(
-            config: ReachFiveConfigConverter.toInterface(reachFive.config),
-            authToken: AuthTokenConverter.toInterface(firstAuthToken),
-          ),
+          ReachFiveConfigConverter.toInterface(reachFive.config),
         );
+        registerFallbackValue(AuthTokenConverter.toInterface(firstAuthToken));
         when(
-          () => flutterReachFivePlatform.refreshAccessToken(any()),
+          () => flutterReachFivePlatform.refreshAccessToken(
+            config: any(named: 'config'),
+            authToken: any(named: 'authToken'),
+          ),
         ).thenAnswer(
           (_) async => AuthTokenConverter.toInterface(secondAuthToken),
         );

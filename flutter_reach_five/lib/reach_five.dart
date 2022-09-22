@@ -75,10 +75,8 @@ class ReachFive {
   /// {@endtemplate}
   Future<AuthToken> refreshAccessToken(AuthToken authToken) async {
     final authTokenInterface = await _platform.refreshAccessToken(
-      RefreshAccessTokenRequestInterface(
-        authToken: AuthTokenConverter.toInterface(authToken),
-        config: ReachFiveConfigConverter.toInterface(config),
-      ),
+      config: ReachFiveConfigConverter.toInterface(config),
+      authToken: AuthTokenConverter.toInterface(authToken),
     );
 
     return AuthTokenConverter.fromInterface(authTokenInterface);

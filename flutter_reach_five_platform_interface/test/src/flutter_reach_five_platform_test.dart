@@ -110,19 +110,21 @@ void main() {
         );
         final firstAuthToken =
             AuthTokenInterface(accessToken: 'firstAccessToken');
-        final request = RefreshAccessTokenRequestInterface(
-          authToken: firstAuthToken,
-          config: config,
-        );
 
         final secondAuthToken =
             AuthTokenInterface(accessToken: 'firstAccessToken');
 
-        when(() => mockReachFiveHostApi.refreshAccessToken(request))
+        registerFallbackValue(
+          RefreshAccessTokenRequestInterface(
+            authToken: firstAuthToken,
+            config: config,
+          ),
+        );
+        when(() => mockReachFiveHostApi.refreshAccessToken(any()))
             .thenAnswer((_) async => secondAuthToken);
 
-        final receivedAuthToken =
-            await FlutterReachFivePlatform.instance.refreshAccessToken(request);
+        final receivedAuthToken = await FlutterReachFivePlatform.instance
+            .refreshAccessToken(config: config, authToken: firstAuthToken);
 
         expect(secondAuthToken, receivedAuthToken);
       });
