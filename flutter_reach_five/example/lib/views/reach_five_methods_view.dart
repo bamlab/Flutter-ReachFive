@@ -138,6 +138,7 @@ class _ReachFiveMethodView extends StatelessWidget {
         if (reachFive != null && authToken != null) {
           return LogoutMethod(
             reachFive: reachFive,
+            authToken: authToken,
             resetAuthToken: resetAuthToken,
           );
         }

@@ -6,11 +6,13 @@ import '../widgets/snackbar.dart';
 class LogoutMethod extends StatefulWidget {
   const LogoutMethod({
     required this.reachFive,
+    required this.authToken,
     required this.resetAuthToken,
     super.key,
   });
 
   final ReachFive reachFive;
+  final AuthToken authToken;
   final void Function() resetAuthToken;
 
   @override
@@ -28,7 +30,9 @@ class LogoutMethodState extends State<LogoutMethod> {
     });
 
     try {
-      await reachFive.logout();
+      await reachFive.logout(
+        authToken: widget.authToken,
+      );
       widget.resetAuthToken();
       if (mounted) {
         showExampleSnackBar(
