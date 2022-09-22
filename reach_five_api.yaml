@@ -1,0 +1,645 @@
+openapi: 3.0.0
+servers:
+  - url: https://YOUR_DOMAIN
+    description: Server URL
+tags:
+  - name: Authentication
+    description: |
+      Some endpoints in the Identity API require an access token.
+
+      Such tokens are obtained by calling [/oauth/token](#operation/retrieveAccessToken) endpoint.
+      with your `client_id`, `client_secret`, `username`, and `password`.
+
+      ```
+      POST https://YOUR_DOMAIN/oauth/token
+      {
+        "grant_type": "password",
+        "client_id": "CLIENT_ID",
+        "client_secret": "CLIENT_SECRET",
+        "username": "{{email}}",
+        "password": "{{password}}",
+        "scope": "{{space-separated list of scopes}}"
+        "redirect_uri": "{{redirect_uri}}",
+      }
+      ```
+
+      Required scopes are listed next to each endpoint.
+
+      # Security Schemes
+
+      <SecurityDefinitions>
+  - name: Login/Signup
+  - name: SSO
+  - name: User Profile
+  - name: Phone number
+  - name: Email
+  - name: MFA
+    x-displayName: "Multi-factor Authentication"
+    description: |
+      Multi-factor Authentication (MFA) requires users to provide two or more verification factors to get access to a resource such as an application, online account, or when making a payment.
+      It is an important component of a strong customer identity and access management policy particularly when payments are involved.
+
+      > **The Step Up Flow**
+      > - [startPhoneNumberRegistration](#operation/startPhoneNumberRegistration)
+      > - [verifyPhoneNumberRegistration](#operation/verifyPhoneNumberRegistration)
+      
+      **OR**
+      
+      > - [startEmailRegistration](#operation/startEmailRegistration)
+      > - [verifyEmailRegistration](#operation/verifyEmailRegistration)
+
+      **THEN**
+
+      > - [listCredentials](#operation/listCredentials) -- ensures MFA credentials are present on a user profile
+      > - [stepup](#operation/stepup)
+      > - [startPasswordlessFlow MFA](#operation/startPasswordlessFlow)
+      > - [verifyPasswordlessPost MFA](#operation/verifyPasswordlessPost)
+  - name: Password
+  - name: Passwordless
+  - name: FIDO
+  - name: Events
+  - name: Grants
+    x-displayName: "Grants"
+    description: |
+      View and manage authorizations to third-party sites.
+
+      **Note**: Users must be connected with a first-party access token. Otherwise, see the [Management API](https://developer.reachfive.com/api/management.html#tag/Grants).
+  - name: AuthDescription
+    x-displayName: "Overview"
+    description: |-
+      Some endpoints in the Identity API require an access token.
+
+      Such tokens are obtained by calling [/oauth/token](#operation/retrieveAccessToken) endpoint.
+      with your `client_id`, `client_secret`, `username`, and `password`.
+
+      ```
+      POST https://YOUR_DOMAIN/oauth/token
+      {
+        "grant_type": "password",
+        "client_id": "CLIENT_ID",
+        "client_secret": "CLIENT_SECRET",
+        "username": "{{email}}",
+        "password": "{{password}}",
+        "scope": "{{space-separated list of scopes}}"
+        "redirect_uri": "{{redirect_uri}}",
+      }
+      ```
+
+      Required scopes are listed next to each endpoint.
+x-tagGroups:
+  - name: Authentication
+    tags:
+      - AuthDescription
+      - OAuth
+      - Login/Signup
+      - Passwordless
+      - FIDO2
+      - MFA
+  - name: User management
+    tags:
+      - Email
+      - Grants
+      - Password
+      - Phone number
+      - User Profile
+  - name: Miscellaneous
+    tags:
+      - Events
+info:
+  description: |
+    # Introduction
+    Welcome to the documentation reference for the ReachFive REST Identity API!
+
+    This API is documented in **OpenAPI standard**, and rendered using [ReDoc](https://github.com/Redocly/redoc).
+
+    If something is missing, incorrect, or unclear, reach us at <documentation@reach5.co>.
+
+
+    # Environment
+    Endpoints are available at `https://{YOUR_DOMAIN}{ENDPOINT}`.
+
+    Find how to obtain your ReachFive domain [here](https://developer.reachfive.com/docs/console.html#access-your-reachfive-console).
+
+    # First and third-party clients
+
+    Except if you want to implement OpenID as a Service (OaaS), **always** use first-party clients.
+
+    In the context of OaaS, third-party clients are used to make calls to:
+
+    - [/oauth/authorize](#operation/authorizeUser)
+    - [/oauth/token](#operation/retrieveAccessToken)
+
+    They **cannot** be used with other endpoints.
+
+    If you to call any other endpoint with a third-party client, you will get this error:
+
+    ```
+    {
+      "error_id": "9z8h7JmIHU",
+      "error_description": "Not a first party identity client",
+      "error_message_key": "error.client.notFirstParty",
+      "error": "unauthorized_client",
+      "error_user_msg": "Not a first party identity client"
+    }
+    ```
+
+    # Errors
+
+    The API uses standard HTTP status codes to indicate the success or failure of the API call.
+
+    |Code   |Notes                                                                                           |
+    |-------|------------------------------------------------------------------------------------------------|
+    |`2xx`  | Success codes; indicates the request worked as expected.                                  |
+    |`4xx`  | Error codes; indicates a client (user) error and more information is provided. See the example below.       |
+    |`5xx`  | Server error codes; indicates an error with one of ReachFive's servers.                        |
+
+    The error body is JSON and contains the following fields:
+
+    ```
+    {
+        "error_id": "2hNBbvYecw",
+        "error_description": "Invalid email or password",
+        "error_message_key": "error.invalidEmailOrPassword",
+        "error": "invalid_grant",
+        "error_user_msg": "Invalid email or password"
+    }
+    ```
+
+    - `error_id` is the auto-generated ID of the error.
+    - `error_description` is the default error description.
+    - `error_message_key` is the unique key that can be used to bind specific behaviors on other services. This also acts as the `i18n` translation key.
+    - `error` is the error type. See the Error Types table below for more details.
+    - `error_user_msg` is a user-friendly error message that should be used in the UI. This can be overriden in certain configurations.
+
+    |Error Type|
+    |----------|
+    |`server_error`|
+    |`invalid_request`|
+    |`invalid_state`|
+    |`invalid_grant`|
+    |`invalid_scope`|
+    |`insufficient_scope`|
+    |`access_denied`|
+    |`origin_not_allowed`|
+    |`ip_address_not_allowed`|
+    |`missing_config`|
+    |`invalid_config`|
+    |`resource_not_found`|
+    |`temporarily_unavailable`|
+    |`unsupported_grant_type`|
+    |`unsupported_algorithm`|
+    |`invalid_client`|
+    |`unauthorized_client`|
+    |`login_required`|
+    |`email_already_exists`|
+    |`external_id_already_exists`|
+    |`phone_number_already_exists`|
+    |`lite_profile_invalid_identifiers`|
+    |`lite_profile_missing_profile`|
+    |`password_too_weak`|
+    |`rate_limit_reached`|
+    |`webhook_host_unreachable`|
+    |`webhook_invalid_response`|
+
+    **Tip**: For more information, see the individual endpoints.
+
+    # Security Schemes
+    <SecurityDefinitions />
+  version: 'latest'
+  title: ReachFive Identity API
+  termsOfService: https://www.reachfive.com/terms-policies
+  contact:
+    name: Email
+    email: documentation@reach5.co
+    # url: http://www.reachfive.com/contact
+  x-logo:
+    url: _images/identity-api.png
+    altText: OpenAPI Specification
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+# externalDocs:
+#   description: Find out how to create Github repo for your OpenAPI spec.
+#   url: https://github.com/Rebilly/generator-openapi-repo
+
+# list of Identity Endpoints: https://app.asana.com/0/1142049698926411/1145782625194938 (as of 2.20)
+
+paths:
+  /oauth/revoke:
+    post:
+      summary: Revoke a token
+      tags:
+        - OAuth
+      description: |
+        Use this endpoint to invalidate (revoke) a refresh or access token.
+
+        - **refresh_token**: When a refresh token is revoked, all the tokens associated with the user and `client_id` are revoked.
+        - **access_token**: When an access token is revoked, only the tokens associated with the same specific grant are revoked.
+      operationId: revokeToken
+      requestBody:
+        description: ''
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  description: Your client ID.
+                  type: string
+                  example: slNIt...yKzQM
+                client_secret:
+                  description: Your client Secret. Required if your Client's authorization method is POST.
+                  type: string
+                  example: dYEa3...3z2m2
+                token:
+                  description: |
+                    The Token to revoke.
+
+                    > **Note**: This can be either an `access_token` or a `refresh_token`.
+                  type: string
+                  example: XpcgV...5sSY5
+                token_type_hint:
+                  description: |
+                    An optional string where you can hint at what type of token to differentiate between access and refresh.
+
+                    > **Note**: The only meaningful values are `access_token` and `refresh_token`.
+                  type: string
+                  example: access_token
+              required:
+                - client_id
+                - client_secret
+                - token
+      responses:
+        '204':
+          description: No Content.
+      x-codeSamples:
+        - lang: 'cURL'
+          source: |
+            curl --request POST \
+              --url https://DOMAIN/oauth/revoke \
+              --header 'Content-Type: application/json' \
+              --data '{
+                  "client_id": "slNIt...yKzQM",
+                  "client_secret": "dYEa3...3z2m2",
+                  "token": "XpcgV...5sSY5"
+            }'
+        # - lang: 'HTTP'
+        #   source: |
+        #     POST /oauth/revoke HTTP/1.1
+        #     Host: https://YOUR_DOMAIN
+        #     Content-Type: application/json
+        # - lang: 'JavaScript'
+        #   source: |
+        #     var request = require("request");
+
+        #     var options = { method: 'POST',
+        #       url: 'https://YOUR_DOMAIN/oauth/revoke',
+        #       headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        #       form:
+        #       { client_id: 'YOUR_CLIENT_ID',
+        #         client_secret: 'YOUR_CLIENT_SECRET',
+        #         refresh_token: 'REFRESH_TOKEN_TO_REVOKE' }
+        #       };
+
+        #     request(options, function (error, response, body) {
+        #       if (error) throw new Error(error);
+
+        #       console.log(body);
+        #     });
+  /identity/v1/mfa/credentials/emails:
+    delete:
+      summary: Delete an MFA credential (email)
+      tags:
+        - MFA
+      security:
+        - OAuth2:
+          - 'mfa'  
+      description: |
+        Delete the email that has been added as an MFA credential (second factor).
+        
+        > **Note**: You must have a fresh access token (issued in the last 5 minutes) to use this endpoint.
+
+        > **Stepup**: The access token must contain the `mfa` `amr` if you want to delete the credential. This means you need to do a [stepup operation](#operation/stepup) before you can delete the credential. 
+      operationId: deleteEmailCredential
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+      responses:
+        '204':
+          description: Deleted the email for use as MFA credential from the user profile.
+      x-codeSamples:
+      - lang: 'cURL'
+        source: |
+          curl --request DELETE \
+            --url https://YOUR_DOMAIN/identity/v1/mfa/credentials/emails \
+            --header 'Authorization: Bearer eyJ0eX...ll4Q2NT' \  
+  /identity/v1/mfa/credentials/phone-numbers:
+    delete:
+      summary: Delete an MFA credential (phone number)
+      tags:
+        - MFA
+      security:
+        - OAuth2:
+          - 'mfa'  
+      description: |
+        Delete the phone number that has been added as an MFA credential (second factor).
+        
+        **Note**: You must have a fresh access token (issued in the last 5 minutes) to use this endpoint.
+      operationId: deletePhoneNumberCredential
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                  phone_number:
+                    description: The phone number used as a second factor. It doesn't have to be the same than the identifier.
+                    type: string
+                    example: "+33612345678"
+              required:
+               - phone_number  
+      responses:
+        '204':
+          description: Delete the MFA credential from the user profile.
+      x-codeSamples:
+      - lang: 'cURL'
+        source: |
+          curl --request DELETE \
+            --url https://YOUR_DOMAIN/identity/v1/mfa/credentials/phone-numbers \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer eyJ0eX...ll4Q2NT' \
+            --data '{
+                "phone_number": "+33612345678"
+            }'        
+  /identity/v1/webauthn/registration/{id}:
+    delete:
+      security:
+        - OAuth2:
+          - 'none'
+      summary: Delete a credential of a user
+      tags:
+        - FIDO2
+      description: |
+        Delete a specific user's registered crendential.
+
+        **Note**: The access token must have been generated in the **last 5 minutes**,. The authentication token will contain the ReachFive client ID and the user's identifier.
+
+        **Warning**: The WebAuthn feature must be activated for your ReachFive account.
+      operationId: deleteCredential
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            example: AValy7JUf5YjmYBdgP_xv5ZNJfyy0MNz8gHDJI6jQfqONDVfTza7Eq-ICNk6vcBKVT2NOavKTMRSiTjduwN7dAs_EcF3j9Zadb5EIBYq3KZgUw==
+          description: The identifier of the credential.
+      responses:
+        '204':
+          description: No content - No credential found for the user
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Technical error code
+                  error_description:
+                    type: string
+                    description: Source of error
+                  error_id:
+                    type: string
+                    description: Generated error ID
+                  error_message_key:
+                    type: string
+                    description: Message error
+                  error_user_msg:
+                    type: string
+                    description: User-friendly message error
+              examples:
+                Access token missing:
+                  value: {
+                    "error": "invalid_request",
+                    "error_description": "Access token missing",
+                    "error_id": "nikHDzD0gt",
+                    "error_message_key": "error.accessToken.missing",
+                    "error_user_msg": "Access token missing"
+                  }
+                Access token is not fresh enough.:
+                  value: {
+                    "error": "invalid_grant",
+                    "error_description": "Access token is not fresh enough.",
+                    "error_id": "4BfgB3uaVc",
+                    "error_message_key": "error.accessToken.freshness",
+                    "error_user_msg": "Access token is not fresh enough."
+                  }
+        '403':
+          description: Forbidden - WebAuthn feature must be enabled
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Technical error code
+                  error_description:
+                    type: string
+                    description: Source of error
+                  error_id:
+                    type: string
+                    description: Generated error ID
+                  error_message_key:
+                    type: string
+                    description: Message error
+                  error_user_msg:
+                    type: string
+                    description: User-friendly message error
+              example:
+                {
+                  "error_id": "6wqEIKLK3L",
+                  "error": "error.webauthn.featureDisabled",
+                  "error_description": "The Webauthn must be enabled to register access WebAuthn functionalities"
+                }
+      x-codeSamples:
+      - lang: 'cURL'
+        source: |
+          curl --request POST \
+            --url https://YOUR_DOMAIN/identity/v1/webauthn/credentials \
+            --header 'Content-Type: application/json' \
+            --header 'Authorization: Bearer eyJ0eX...ll4Q2NT'-
+components:
+  responses:
+    303redirect:
+      description: |
+        **Valid Code**: The user now begins a classic code or implicit flow from this point and is redirected to the specified `redirect_uri` with an access token.
+
+        **Invalid Code**: The user is redirected to the specified `redirect_uri` where the error response is present as a *query parameter*. **Example**: `<redirect_uri>?error=invalid_grant&error_description=Invalid+Verification+Code&error_message_key=error.invalidVerificationCode`.
+  schemas:
+    ProfileFields:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email
+          example: theGreatest@example.com
+        phone_number:
+          type: string
+          description: The user's phone number.
+          example: "353875550001"
+        external_id:
+          type: string
+          description: External ID
+          example: "saEK39..23KADKd2"
+        email_verified:
+          type: boolean
+          description: '`true` if the email has been verified.'
+          example: true
+        phone_number_verified:
+          type: boolean
+          description: '`true` if the phone number has been verified.'
+          example: true
+        given_name:
+          type: string
+          description: Given name(s) or first name(s).
+          example: Thierry
+        middle_name:
+          type: string
+          description: Middle name(s).
+          example: Jose
+        family_name:
+          type: string
+          description: Surname(s) or last name(s).
+          example: Rodriguez
+        name:
+          type: string
+          description: Full user name.
+          example: Thierry Jose Rodriguez
+        nickname:
+          type: string
+          description: Casual name that may or may not be the same as the `given_name`.
+          example: Dumpy
+        username:
+          type: string
+          description: Username
+          example: DumpyMan4200
+        birthdate:
+          type: string
+          description: User’s birthdate, represented as an ISO 8601 YYYY-MM-DD format.
+          example: 1989-12-30
+        gender:
+          type: string
+          description: User’s gender.
+          enum:
+            - female
+            - male
+            - other
+          example: male
+        addresses:
+          type: object
+          description: User postal addresses.
+        picture:
+          type: string
+          description: URL to the profile picture
+        company:
+          type: string
+          description: User company name.
+          example: The Hat Company
+        custom_fields:
+          type: object
+          description: Custom fields.
+        consents:
+          type: object
+          description: Consents.
+  parameters:
+    Authorization:
+      name: Authorization
+      in: header
+      schema:
+        type: string
+      required: true
+      description: Bearer `{token}` for a valid OAuth token.
+    access_token:
+      name: Authorization
+      in: header
+      schema:
+        type: string
+      description: | 
+        Bearer `{access_token}` for a valid OAuth token. *(3)*
+        
+        > **Note**: The `access_token` is not required if you are passing the `tkn` as part of the request body or are using an active SSO session by passing the session cookie. 
+      example: 1pz032..32Ld0a
+    fields:
+      name: fields
+      in: query
+      description: |
+        Fields to retrieve in the response.
+
+        **Note**: See the [user profile object](https://developer.reachfive.com/docs/models-user-profile.html#the-user-profile-object) for a full list of fields to query.
+      schema:
+        type: array
+        items:
+          type: string
+      explode: false
+      example: [name,email,gender,emails.unverified] # https://github.com/Redocly/redoc/issues/1010
+      allowReserved: true # https://github.com/Redocly/redoc/issues/1010
+    Authorization_optional:
+      name: Authorization
+      in: header
+      schema:
+        type: string
+      required: false
+      description: Bearer `{token}` for a valid OAuth token.
+#     limitParam:
+#     in: query
+#     name: limit
+#     required: false
+#     schema:
+#       type: integer
+#       minimum: 1
+#       maximum: 50
+#       default: 20
+#     description: The numbers of items to return.
+#   requestBodies:
+  securitySchemes:
+    OpenID:
+      type: openIdConnect
+      openIdConnectUrl: https://YOUR_DOMAIN/.well-known/openid-configuration
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: /oauth/authorize
+          tokenUrl: /oauth/token
+          refreshUrl: /oauth/token # optional
+          scopes:
+            none: No particular scope is required.
+            openid: Used to ask for an ID token.
+            profile: Access to most personal information (gender, age, profile picture, etc).
+            email: Access to email information (email addresses and their verification status).
+            phone: Access to phone information (phone numbers and their verification status).
+            address: Access to geographical information (postal address, region, geolocalisation, etc).
+            events: Access to user events.
+            full_write: |
+              Ability to update any information on the profile. Not available to third-party clients.
+            offline_access: Ability to request refresh tokens.
+            mfa: Ability to implement MFA flow.
+        implicit:
+          authorizationUrl: /oauth/authorize
+          scopes:
+            none: No particular scope is required.
+            openid: Used to ask for an ID token.
+            profile: Access to email information (email addresses and their verification status).
+            email: Access to phone information (phone numbers and their verification status).
+            phone: Access to geographical information (postal address, region, geolocalisation, etc).
+            address: Access to most personal information (gender, age, profile picture, etc).
+            events: Access to user events.
+            full_write: |
+              Ability to update any information on the profile. Not available to third-party clients.
+            offline_access: Ability to request refresh tokens.
