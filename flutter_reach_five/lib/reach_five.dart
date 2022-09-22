@@ -13,7 +13,7 @@ FlutterReachFivePlatform get _platform => FlutterReachFivePlatform.instance;
 /// {@endtemplate}
 class ReachFive {
   /// [ReachFive] default constructor
-  const ReachFive(this.config);
+  const ReachFive({required this.config});
 
   /// @template flutter_reach_five.reachFive.config}
   /// [ReachFive] config, kept in memory here to be given in every
@@ -107,7 +107,7 @@ class ReachFiveManager {
     );
 
     return ReachFive(
-      ReachFiveConfigConverter.fromInterface(reachFiveConfig),
+      config: ReachFiveConfigConverter.fromInterface(reachFiveConfig),
     );
   }
 }

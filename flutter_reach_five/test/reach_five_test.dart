@@ -59,7 +59,7 @@ void main() {
     group('signup', () {
       test('returns correct auth token instance', () async {
         const reachFive = ReachFive(
-          ReachFiveConfig(
+          config: ReachFiveConfig(
             domain: 'domain',
             clientId: 'clientId',
             scheme: 'scheme',
@@ -110,7 +110,7 @@ void main() {
     group('loginWithPassword', () {
       test('returns correct auth token instance', () async {
         const reachFive = ReachFive(
-          ReachFiveConfig(
+          config: ReachFiveConfig(
             domain: 'domain',
             clientId: 'clientId',
             scheme: 'scheme',
@@ -160,7 +160,7 @@ void main() {
     group('logout', () {
       test('call logout method', () async {
         const reachFive = ReachFive(
-          ReachFiveConfig(
+          config: ReachFiveConfig(
             domain: 'domain',
             clientId: 'clientId',
             scheme: 'scheme',
@@ -178,7 +178,7 @@ void main() {
     group('refreshAccessToken', () {
       test('returns correct auth token instance', () async {
         const reachFive = ReachFive(
-          ReachFiveConfig(
+          config: ReachFiveConfig(
             domain: 'domain',
             clientId: 'clientId',
             scheme: 'scheme',
