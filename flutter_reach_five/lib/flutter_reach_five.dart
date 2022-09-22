@@ -9,5 +9,4 @@ export 'models/profile_address.dart';
 export 'models/profile_signup_request.dart';
 export 'models/reach_five_config.dart';
 export 'models/scope_value.dart';
-export 'models/signup_request.dart';
 export 'reach_five.dart';

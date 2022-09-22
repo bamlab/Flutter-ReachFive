@@ -1,8 +1,9 @@
 import 'package:flutter_reach_five/flutter_reach_five.dart';
 import 'package:flutter_reach_five/helpers/auth_token.dart';
 import 'package:flutter_reach_five/helpers/login_with_password_request_converter.dart';
+import 'package:flutter_reach_five/helpers/profile_signup_request_converter.dart';
 import 'package:flutter_reach_five/helpers/reach_five_config_converter.dart';
-import 'package:flutter_reach_five/helpers/signup_request_converter.dart';
+import 'package:flutter_reach_five/helpers/scope_value_converter.dart';
 import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -65,23 +66,40 @@ void main() {
             scheme: 'scheme',
           ),
         );
+        const profile = ProfileSignupRequest(password: 'password');
+        const redirectUrl = 'redirectUrl';
+        const scope = [ScopeValue.address];
+
         const authToken = AuthToken(
           accessToken: 'accessToken',
         );
-        const signupRequest = SignupRequest(
-          profile: ProfileSignupRequest(password: 'password'),
-        );
 
         registerFallbackValue(
-          SignupRequestConverter.toInterface(reachFive.config, signupRequest),
+          ReachFiveConfigConverter.toInterface(reachFive.config),
+        );
+        registerFallbackValue(
+          ProfileSignupRequestConverter.toInterface(profile),
+        );
+        registerFallbackValue(redirectUrl);
+        registerFallbackValue(
+          scope.map(ScopeValueConverter.toInterface).toList(),
         );
         when(
-          () => flutterReachFivePlatform.signup(any()),
+          () => flutterReachFivePlatform.signup(
+            config: any(named: 'config'),
+            profile: any(named: 'profile'),
+            redirectUrl: any(named: 'redirectUrl'),
+            scope: any(named: 'scope'),
+          ),
         ).thenAnswer(
           (_) async => AuthTokenConverter.toInterface(authToken),
         );
 
-        final signupAuthToken = await reachFive.signup(signupRequest);
+        final signupAuthToken = await reachFive.signup(
+          profile: profile,
+          redirectUrl: redirectUrl,
+          scope: scope,
+        );
 
         expect(
           authToken,

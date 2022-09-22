@@ -62,10 +62,20 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
       reachFiveHostApi.initialize(config);
 
   /// {@macro flutter_reach_five.reachFive.signup}
-  Future<AuthTokenInterface> signup(
-    SignupRequestInterface request,
-  ) =>
-      reachFiveHostApi.signup(request);
+  Future<AuthTokenInterface> signup({
+    required ReachFiveConfigInterface config,
+    required ProfileSignupRequestInterface profile,
+    String? redirectUrl,
+    List<String>? scope,
+  }) =>
+      reachFiveHostApi.signup(
+        SignupRequestInterface(
+          config: config,
+          profile: profile,
+          redirectUrl: redirectUrl,
+          scope: scope,
+        ),
+      );
 
   /// {@macro flutter_reach_five.reachFive.loginWithPassword}
   Future<AuthTokenInterface> loginWithPassword(

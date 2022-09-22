@@ -51,17 +51,24 @@ void main() {
           clientId: 'clientId',
           scheme: 'scheme',
         );
-        final request = SignupRequestInterface(
-          config: config,
-          profile: ProfileSignupRequestInterface(password: 'password'),
-        );
+        final profile = ProfileSignupRequestInterface(password: 'password');
+
         final authToken = AuthTokenInterface(accessToken: 'accessToken');
 
-        when(() => mockReachFiveHostApi.signup(request))
+        registerFallbackValue(
+          SignupRequestInterface(
+            config: config,
+            profile: profile,
+          ),
+        );
+        when(() => mockReachFiveHostApi.signup(any()))
             .thenAnswer((_) async => authToken);
 
         final receivedAuthToken =
-            await FlutterReachFivePlatform.instance.signup(request);
+            await FlutterReachFivePlatform.instance.signup(
+          config: config,
+          profile: profile,
+        );
 
         expect(authToken, receivedAuthToken);
       });

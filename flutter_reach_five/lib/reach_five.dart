@@ -1,13 +1,11 @@
 import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platform_interface.dart';
 
+import 'flutter_reach_five.dart';
 import 'helpers/auth_token.dart';
 import 'helpers/login_with_password_request_converter.dart';
+import 'helpers/profile_signup_request_converter.dart';
 import 'helpers/reach_five_config_converter.dart';
-import 'helpers/signup_request_converter.dart';
-import 'models/auth_token.dart';
-import 'models/login_with_password_request.dart';
-import 'models/reach_five_config.dart';
-import 'models/signup_request.dart';
+import 'helpers/scope_value_converter.dart';
 
 FlutterReachFivePlatform get _platform => FlutterReachFivePlatform.instance;
 
@@ -27,12 +25,16 @@ class ReachFive {
   /// {@template flutter_reach_five.reachFive.signup}
   /// Create and authenticate a new user with the specified data.
   /// {@endtemplate}
-  Future<AuthToken> signup(SignupRequest request) async {
+  Future<AuthToken> signup({
+    required ProfileSignupRequest profile,
+    String? redirectUrl,
+    List<ScopeValue>? scope,
+  }) async {
     final authTokenInterface = await _platform.signup(
-      SignupRequestConverter.toInterface(
-        config,
-        request,
-      ),
+      config: ReachFiveConfigConverter.toInterface(config),
+      profile: ProfileSignupRequestConverter.toInterface(profile),
+      redirectUrl: redirectUrl,
+      scope: scope?.map(ScopeValueConverter.toInterface).toList(),
     );
 
     final authToken = AuthTokenConverter.fromInterface(authTokenInterface);
