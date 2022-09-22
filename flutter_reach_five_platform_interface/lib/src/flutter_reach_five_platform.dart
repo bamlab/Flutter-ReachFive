@@ -78,10 +78,22 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
       );
 
   /// {@macro flutter_reach_five.reachFive.loginWithPassword}
-  Future<AuthTokenInterface> loginWithPassword(
-    LoginWithPasswordRequestInterface request,
-  ) =>
-      reachFiveHostApi.loginWithPassword(request);
+  Future<AuthTokenInterface> loginWithPassword({
+    required ReachFiveConfigInterface config,
+    required String password,
+    String? email,
+    String? phoneNumber,
+    List<String>? scope,
+  }) =>
+      reachFiveHostApi.loginWithPassword(
+        LoginWithPasswordRequestInterface(
+          config: config,
+          password: password,
+          email: email,
+          phoneNumber: phoneNumber,
+          scope: scope,
+        ),
+      );
 
   /// {@macro flutter_reach_five.reachFive.logout}
   Future<void> logout() => reachFiveHostApi.logout();

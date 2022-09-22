@@ -1,6 +1,5 @@
 import 'package:flutter_reach_five/flutter_reach_five.dart';
 import 'package:flutter_reach_five/helpers/auth_token.dart';
-import 'package:flutter_reach_five/helpers/login_with_password_request_converter.dart';
 import 'package:flutter_reach_five/helpers/profile_signup_request_converter.dart';
 import 'package:flutter_reach_five/helpers/reach_five_config_converter.dart';
 import 'package:flutter_reach_five/helpers/scope_value_converter.dart';
@@ -117,27 +116,39 @@ void main() {
             scheme: 'scheme',
           ),
         );
+        const email = 'email';
+        const password = 'password';
+        const scope = [ScopeValue.events];
+
         const authToken = AuthToken(
           accessToken: 'accessToken',
         );
-        const loginWithPasswordRequest = LoginWithPasswordRequest(
-          password: 'password',
-        );
 
         registerFallbackValue(
-          LoginWithPasswordRequestConverter.toInterface(
-            reachFive.config,
-            loginWithPasswordRequest,
-          ),
+          ReachFiveConfigConverter.toInterface(reachFive.config),
+        );
+        registerFallbackValue(password);
+        registerFallbackValue(email);
+        registerFallbackValue(
+          scope.map(ScopeValueConverter.toInterface).toList(),
         );
         when(
-          () => flutterReachFivePlatform.loginWithPassword(any()),
+          () => flutterReachFivePlatform.loginWithPassword(
+            config: any(named: 'config'),
+            password: any(named: 'password'),
+            email: any(named: 'email'),
+            phoneNumber: any(named: 'phoneNumber'),
+            scope: any(named: 'scope'),
+          ),
         ).thenAnswer(
           (_) async => AuthTokenConverter.toInterface(authToken),
         );
 
-        final loginWithPasswordAuthToken =
-            await reachFive.loginWithPassword(loginWithPasswordRequest);
+        final loginWithPasswordAuthToken = await reachFive.loginWithPassword(
+          password: password,
+          email: email,
+          scope: scope,
+        );
 
         expect(
           authToken,

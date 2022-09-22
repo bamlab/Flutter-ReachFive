@@ -2,7 +2,6 @@ import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platfor
 
 import 'flutter_reach_five.dart';
 import 'helpers/auth_token.dart';
-import 'helpers/login_with_password_request_converter.dart';
 import 'helpers/profile_signup_request_converter.dart';
 import 'helpers/reach_five_config_converter.dart';
 import 'helpers/scope_value_converter.dart';
@@ -45,12 +44,18 @@ class ReachFive {
   /// {@template flutter_reach_five.reachFive.loginWithPassword}
   /// Login an user by providing an identifier (email or phoneNumber) and a password
   /// {@endtemplate}
-  Future<AuthToken> loginWithPassword(LoginWithPasswordRequest request) async {
+  Future<AuthToken> loginWithPassword({
+    required String password,
+    String? email,
+    String? phoneNumber,
+    List<ScopeValue>? scope,
+  }) async {
     final authTokenInterface = await _platform.loginWithPassword(
-      LoginWithPasswordRequestConverter.toInterface(
-        config,
-        request,
-      ),
+      config: ReachFiveConfigConverter.toInterface(config),
+      password: password,
+      email: email,
+      phoneNumber: phoneNumber,
+      scope: scope?.map(ScopeValueConverter.toInterface).toList(),
     );
 
     final authToken = AuthTokenConverter.fromInterface(authTokenInterface);
