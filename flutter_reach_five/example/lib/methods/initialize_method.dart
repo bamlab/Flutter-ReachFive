@@ -45,7 +45,7 @@ class _InitializeMethodState extends State<InitializeMethod> {
 
     try {
       final result = await ReachFiveManager.initialize(
-        ReachFiveConfig(
+        config: ReachFiveConfig(
           domain: domain,
           clientId: clientId,
           scheme: scheme,

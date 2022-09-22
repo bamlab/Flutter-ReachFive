@@ -97,7 +97,7 @@ class ReachFiveManager {
   /// {@template flutter_reach_five.reachFiveManager.initialize}
   /// initialize function used to create an instance of ReachFive
   /// {@endtemplate}
-  static Future<ReachFive> initialize(ReachFiveConfig config) async {
+  static Future<ReachFive> initialize({required ReachFiveConfig config}) async {
     final reachFiveConfig = await _platform.initialize(
       ReachFiveConfigInterface(
         domain: config.domain,

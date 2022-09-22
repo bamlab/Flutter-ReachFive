@@ -46,7 +46,7 @@ void main() {
         );
 
         final reachFive = await ReachFiveManager.initialize(
-          reachFiveConfig,
+          config: reachFiveConfig,
         );
 
         expect(
