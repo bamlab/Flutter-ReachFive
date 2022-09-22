@@ -1,15 +1,22 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_reach_five/flutter_reach_five.dart';
 import 'package:flutter_reach_five/helpers/auth_token.dart';
 import 'package:flutter_reach_five/helpers/profile_signup_request_converter.dart';
 import 'package:flutter_reach_five/helpers/reach_five_config_converter.dart';
 import 'package:flutter_reach_five/helpers/scope_value_converter.dart';
+import 'package:flutter_reach_five/models/revoke_token_type.dart';
 import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:reach_five_repo/reach_five_repo.dart';
 
 mixin PlatformInterfaceMockMixin on Mock implements MockPlatformInterfaceMixin {
 }
+
+class MockReackFiveRepo extends Mock implements ReachFiveRepo {}
+
+class MockOAuthApi extends Mock implements OAuthApi {}
 
 class MockFlutterReachFivePlatform extends Mock
     with PlatformInterfaceMockMixin
@@ -20,10 +27,17 @@ void main() {
 
   group('FlutterReachFive', () {
     late FlutterReachFivePlatform flutterReachFivePlatform;
+    late MockReackFiveRepo mockReachFiveRepo;
+    late MockOAuthApi mockOAuthApi;
 
     setUp(() {
       flutterReachFivePlatform = MockFlutterReachFivePlatform();
       FlutterReachFivePlatform.instance = flutterReachFivePlatform;
+
+      mockReachFiveRepo = MockReackFiveRepo();
+      mockOAuthApi = MockOAuthApi();
+
+      when(mockReachFiveRepo.getOAuthApi).thenReturn(mockOAuthApi);
     });
 
     group('initialize', () {
@@ -58,12 +72,13 @@ void main() {
 
     group('signup', () {
       test('returns correct auth token instance', () async {
-        const reachFive = ReachFive(
-          config: ReachFiveConfig(
+        final reachFive = ReachFive(
+          config: const ReachFiveConfig(
             domain: 'domain',
             clientId: 'clientId',
             scheme: 'scheme',
           ),
+          repo: mockReachFiveRepo,
         );
         const profile = ProfileSignupRequest(password: 'password');
         const redirectUrl = 'redirectUrl';
@@ -109,12 +124,13 @@ void main() {
 
     group('loginWithPassword', () {
       test('returns correct auth token instance', () async {
-        const reachFive = ReachFive(
-          config: ReachFiveConfig(
+        final reachFive = ReachFive(
+          config: const ReachFiveConfig(
             domain: 'domain',
             clientId: 'clientId',
             scheme: 'scheme',
           ),
+          repo: mockReachFiveRepo,
         );
         const email = 'email';
         const password = 'password';
@@ -159,17 +175,45 @@ void main() {
 
     group('logout', () {
       test('call logout method', () async {
-        const reachFive = ReachFive(
-          config: ReachFiveConfig(
+        const config = ReachFiveConfig(
+          domain: 'domain',
+          clientId: 'clientId',
+          scheme: 'scheme',
+        );
+        final reachFive = ReachFive(
+          config: const ReachFiveConfig(
             domain: 'domain',
             clientId: 'clientId',
             scheme: 'scheme',
           ),
+          repo: mockReachFiveRepo,
+        );
+
+        registerFallbackValue(
+          RevokeTokenRequest(
+            (requestTokenRequestBuilder) => requestTokenRequestBuilder
+              ..clientId = config.clientId
+              ..clientSecret = ''
+              ..token = 'token'
+              ..tokenTypeHint = 'Bearer',
+          ),
+        );
+        when(
+          () => mockOAuthApi.revokeToken(
+            revokeTokenRequest: any(named: 'revokeTokenRequest'),
+          ),
+        ).thenAnswer(
+          (_) async => Response(requestOptions: RequestOptions(path: 'path')),
         );
 
         when(flutterReachFivePlatform.logout).thenAnswer((_) async {});
 
-        await reachFive.logout();
+        await reachFive.logout(
+          authToken: const AuthToken(
+            accessToken: 'accessToken',
+            refreshToken: 'refreshToken',
+          ),
+        );
 
         verify(flutterReachFivePlatform.logout).called(1);
       });
@@ -177,12 +221,13 @@ void main() {
 
     group('refreshAccessToken', () {
       test('returns correct auth token instance', () async {
-        const reachFive = ReachFive(
-          config: ReachFiveConfig(
+        final reachFive = ReachFive(
+          config: const ReachFiveConfig(
             domain: 'domain',
             clientId: 'clientId',
             scheme: 'scheme',
           ),
+          repo: mockReachFiveRepo,
         );
         const firstAuthToken = AuthToken(
           accessToken: 'firstAccessToken',
@@ -211,6 +256,51 @@ void main() {
           secondAuthToken,
           refreshAccessTokenAuthToken,
         );
+      });
+    });
+
+    group('revokeToken', () {
+      test('launch revokeToken api call ', () async {
+        const config = ReachFiveConfig(
+          domain: 'domain',
+          clientId: 'clientId',
+          scheme: 'scheme',
+        );
+        final reachFive = ReachFive(
+          config: config,
+          repo: mockReachFiveRepo,
+        );
+
+        registerFallbackValue(
+          RevokeTokenRequest(
+            (requestTokenRequestBuilder) => requestTokenRequestBuilder
+              ..clientId = config.clientId
+              ..clientSecret = ''
+              ..token = 'token'
+              ..tokenTypeHint = 'Bearer',
+          ),
+        );
+        when(
+          () => mockOAuthApi.revokeToken(
+            revokeTokenRequest: any(named: 'revokeTokenRequest'),
+          ),
+        ).thenAnswer(
+          (_) async => Response(requestOptions: RequestOptions(path: 'path')),
+        );
+
+        await reachFive.revokeToken(
+          authToken: const AuthToken(
+            refreshToken: 'refreshToken',
+            accessToken: 'accessToken',
+          ),
+          revokeTokenType: RevokeTokenType.access,
+        );
+
+        verify(
+          () => mockOAuthApi.revokeToken(
+            revokeTokenRequest: any(named: 'revokeTokenRequest'),
+          ),
+        ).called(1);
       });
     });
   });
