@@ -62,22 +62,20 @@ class SignupMethodState extends State<SignupMethod> {
 
     try {
       final result = await reachFive.signup(
-        SignupRequest(
-          profile: ProfileSignupRequest(
-            password: password,
-            email: email,
-            familyName: familyName,
-            givenName: givenName,
-            middleName: middleName,
-            nickname: nickname,
-          ),
-          scope: const [
-            ScopeValue.openid,
-            ScopeValue.email,
-            ScopeValue.offlineAccess,
-            ScopeValue.profile,
-          ],
+        profile: ProfileSignupRequest(
+          password: password,
+          email: email,
+          familyName: familyName,
+          givenName: givenName,
+          middleName: middleName,
+          nickname: nickname,
         ),
+        scope: const [
+          ScopeValue.openid,
+          ScopeValue.email,
+          ScopeValue.offlineAccess,
+          ScopeValue.profile,
+        ],
       );
 
       widget.setAuthToken(result);

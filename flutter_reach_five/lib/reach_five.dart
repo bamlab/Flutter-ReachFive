@@ -1,13 +1,14 @@
+import 'package:built_value/serializer.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platform_interface.dart';
+import 'package:reach_five_repo/reach_five_repo.dart';
 
+import 'flutter_reach_five.dart';
 import 'helpers/auth_token.dart';
-import 'helpers/login_with_password_request_converter.dart';
+import 'helpers/profile_signup_request_converter.dart';
 import 'helpers/reach_five_config_converter.dart';
-import 'helpers/signup_request_converter.dart';
-import 'models/auth_token.dart';
-import 'models/login_with_password_request.dart';
-import 'models/reach_five_config.dart';
-import 'models/signup_request.dart';
+import 'helpers/scope_value_converter.dart';
+import 'models/revoke_token_type.dart';
 
 FlutterReachFivePlatform get _platform => FlutterReachFivePlatform.instance;
 
@@ -16,7 +17,10 @@ FlutterReachFivePlatform get _platform => FlutterReachFivePlatform.instance;
 /// {@endtemplate}
 class ReachFive {
   /// [ReachFive] default constructor
-  const ReachFive(this.config);
+  const ReachFive({
+    required this.config,
+    required this.repo,
+  });
 
   /// @template flutter_reach_five.reachFive.config}
   /// [ReachFive] config, kept in memory here to be given in every
@@ -24,15 +28,31 @@ class ReachFive {
   /// {@endtemplate}
   final ReachFiveConfig config;
 
+  /// @template flutter_reach_five.reachFive.repo}
+  /// [ReachFiveRepo] instance, kept in memory here to be create
+  /// every api linked to it
+  /// {@endtemplate}
+  final ReachFiveRepo repo;
+
+  /// @template flutter_reach_five.reachFive.oAuthApi}
+  /// [OAuthApi] instance from [repo] to be given in every
+  /// reachFive api methods that needs it
+  /// {@endtemplate}
+  OAuthApi get oAuthApi => repo.getOAuthApi();
+
   /// {@template flutter_reach_five.reachFive.signup}
   /// Create and authenticate a new user with the specified data.
   /// {@endtemplate}
-  Future<AuthToken> signup(SignupRequest request) async {
+  Future<AuthToken> signup({
+    required ProfileSignupRequest profile,
+    String? redirectUrl,
+    List<ScopeValue>? scope,
+  }) async {
     final authTokenInterface = await _platform.signup(
-      SignupRequestConverter.toInterface(
-        config,
-        request,
-      ),
+      config: ReachFiveConfigConverter.toInterface(config),
+      profile: ProfileSignupRequestConverter.toInterface(profile),
+      redirectUrl: redirectUrl,
+      scope: scope?.map(ScopeValueConverter.toInterface).toList(),
     );
 
     final authToken = AuthTokenConverter.fromInterface(authTokenInterface);
@@ -43,12 +63,18 @@ class ReachFive {
   /// {@template flutter_reach_five.reachFive.loginWithPassword}
   /// Login an user by providing an identifier (email or phoneNumber) and a password
   /// {@endtemplate}
-  Future<AuthToken> loginWithPassword(LoginWithPasswordRequest request) async {
+  Future<AuthToken> loginWithPassword({
+    required String password,
+    String? email,
+    String? phoneNumber,
+    List<ScopeValue>? scope,
+  }) async {
     final authTokenInterface = await _platform.loginWithPassword(
-      LoginWithPasswordRequestConverter.toInterface(
-        config,
-        request,
-      ),
+      config: ReachFiveConfigConverter.toInterface(config),
+      password: password,
+      email: email,
+      phoneNumber: phoneNumber,
+      scope: scope?.map(ScopeValueConverter.toInterface).toList(),
     );
 
     final authToken = AuthTokenConverter.fromInterface(authTokenInterface);
@@ -59,9 +85,22 @@ class ReachFive {
   /// {@template flutter_reach_five.reachFive.logout}
   /// Logout your user from your session (and every providers)
   ///
-  /// To invalidate all active usertokens, use the [Revoke refresh token](https://developer.reachfive.com/openapi/identity.html#operation/revokeToken) endpoint
+  /// If you give an [authToken] in the prop, it can also revoke your
+  /// refreshToken and all associated access token by using [revokeToken]
   /// {@endtemplate}
-  Future<void> logout() => _platform.logout();
+  Future<void> logout({
+    AuthToken? authToken,
+    String? clientSecret,
+  }) async {
+    if (authToken != null) {
+      await revokeToken(
+        authToken: authToken,
+        revokeTokenType: RevokeTokenType.refresh,
+        clientSecret: clientSecret,
+      );
+    }
+    await _platform.logout();
+  }
 
   /// {@template flutter_reach_five.reachFive.refreshAccessToken}
   /// Obtain a new [AuthToken] once your access token has expired.
@@ -75,13 +114,52 @@ class ReachFive {
   /// {@endtemplate}
   Future<AuthToken> refreshAccessToken(AuthToken authToken) async {
     final authTokenInterface = await _platform.refreshAccessToken(
-      RefreshAccessTokenRequestInterface(
-        authToken: AuthTokenConverter.toInterface(authToken),
-        config: ReachFiveConfigConverter.toInterface(config),
-      ),
+      config: ReachFiveConfigConverter.toInterface(config),
+      authToken: AuthTokenConverter.toInterface(authToken),
     );
 
     return AuthTokenConverter.fromInterface(authTokenInterface);
+  }
+
+  /// {@template flutter_reach_five.reachFive.revokeRefreshToken}
+  /// Revoke an [AuthToken] refreshToken or accessToken depending on
+  /// the [revokeTokenType] for an user and a clientId
+  ///
+  /// clientSecret is necessary only if your client's authorization method is POST
+  ///
+  /// See the ReachFive doc for [Revoke refresh token](https://developer.reachfive.com/openapi/identity.html#operation/revokeToken) endpoint
+  /// {@endtemplate}
+  Future<void> revokeToken({
+    required AuthToken authToken,
+    required RevokeTokenType revokeTokenType,
+    String? clientSecret,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    bool Function(int?)? validateStatus,
+    void Function(int, int)? onSendProgress,
+    void Function(int, int)? onReceiveProgress,
+  }) async {
+    final revokeTokenRequest = RevokeTokenRequest((revokeTokenRequestBuilder) {
+      revokeTokenRequestBuilder
+        ..clientId = config.clientId
+        ..token = revokeTokenType.map(
+          refresh: authToken.refreshToken,
+          access: authToken.accessToken,
+        )
+        ..tokenTypeHint = authToken.tokenType
+        ..clientSecret = clientSecret ?? '';
+    });
+
+    await oAuthApi.revokeToken(
+      revokeTokenRequest: revokeTokenRequest,
+      cancelToken: cancelToken,
+      headers: headers,
+      extra: extra,
+      validateStatus: validateStatus,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
   }
 }
 
@@ -92,7 +170,13 @@ class ReachFiveManager {
   /// {@template flutter_reach_five.reachFiveManager.initialize}
   /// initialize function used to create an instance of ReachFive
   /// {@endtemplate}
-  static Future<ReachFive> initialize(ReachFiveConfig config) async {
+  static Future<ReachFive> initialize({
+    required ReachFiveConfig config,
+    Dio? dio,
+    Serializers? serializers,
+    String? domainPathOverride,
+    List<Interceptor>? interceptors,
+  }) async {
     final reachFiveConfig = await _platform.initialize(
       ReachFiveConfigInterface(
         domain: config.domain,
@@ -101,8 +185,18 @@ class ReachFiveManager {
       ),
     );
 
+    final basePathOverride = domainPathOverride ?? 'https://${config.domain}';
+
+    final reachFiveRepo = ReachFiveRepo(
+      dio: dio,
+      serializers: serializers,
+      basePathOverride: basePathOverride,
+      interceptors: interceptors,
+    );
+
     return ReachFive(
-      ReachFiveConfigConverter.fromInterface(reachFiveConfig),
+      config: ReachFiveConfigConverter.fromInterface(reachFiveConfig),
+      repo: reachFiveRepo,
     );
   }
 }

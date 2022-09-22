@@ -16,6 +16,8 @@ flutter:
         default_package: flutter_reach_five_ios
 
 dependencies:
+  built_value: ^8.4.1
+  dio: ^4.0.6
   equatable: ^2.0.5
   flutter:
     sdk: flutter
@@ -25,6 +27,8 @@ dependencies:
     path: ../flutter_reach_five_ios
   flutter_reach_five_platform_interface:
     path: ../flutter_reach_five_platform_interface
+  reach_five_repo:
+    path: ../reach_five_repo
 
 dev_dependencies:
   analyzer: ^4.7.0

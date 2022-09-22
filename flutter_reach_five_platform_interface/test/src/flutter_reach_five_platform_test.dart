@@ -51,17 +51,24 @@ void main() {
           clientId: 'clientId',
           scheme: 'scheme',
         );
-        final request = SignupRequestInterface(
-          config: config,
-          profile: ProfileSignupRequestInterface(password: 'password'),
-        );
+        final profile = ProfileSignupRequestInterface(password: 'password');
+
         final authToken = AuthTokenInterface(accessToken: 'accessToken');
 
-        when(() => mockReachFiveHostApi.signup(request))
+        registerFallbackValue(
+          SignupRequestInterface(
+            config: config,
+            profile: profile,
+          ),
+        );
+        when(() => mockReachFiveHostApi.signup(any()))
             .thenAnswer((_) async => authToken);
 
         final receivedAuthToken =
-            await FlutterReachFivePlatform.instance.signup(request);
+            await FlutterReachFivePlatform.instance.signup(
+          config: config,
+          profile: profile,
+        );
 
         expect(authToken, receivedAuthToken);
       });
@@ -74,18 +81,27 @@ void main() {
           clientId: 'clientId',
           scheme: 'scheme',
         );
-        final authToken = AuthTokenInterface(accessToken: 'accessToken');
-        final request = LoginWithPasswordRequestInterface(
-          config: config,
-          email: 'email',
-          password: 'password',
-        );
+        const email = 'email';
+        const password = 'password';
 
-        when(() => mockReachFiveHostApi.loginWithPassword(request))
+        final authToken = AuthTokenInterface(accessToken: 'accessToken');
+
+        registerFallbackValue(
+          LoginWithPasswordRequestInterface(
+            config: config,
+            email: email,
+            password: password,
+          ),
+        );
+        when(() => mockReachFiveHostApi.loginWithPassword(any()))
             .thenAnswer((_) async => authToken);
 
         final receivedAuthToken =
-            await FlutterReachFivePlatform.instance.loginWithPassword(request);
+            await FlutterReachFivePlatform.instance.loginWithPassword(
+          config: config,
+          email: email,
+          password: password,
+        );
 
         expect(authToken, receivedAuthToken);
       });
@@ -110,19 +126,21 @@ void main() {
         );
         final firstAuthToken =
             AuthTokenInterface(accessToken: 'firstAccessToken');
-        final request = RefreshAccessTokenRequestInterface(
-          authToken: firstAuthToken,
-          config: config,
-        );
 
         final secondAuthToken =
             AuthTokenInterface(accessToken: 'firstAccessToken');
 
-        when(() => mockReachFiveHostApi.refreshAccessToken(request))
+        registerFallbackValue(
+          RefreshAccessTokenRequestInterface(
+            authToken: firstAuthToken,
+            config: config,
+          ),
+        );
+        when(() => mockReachFiveHostApi.refreshAccessToken(any()))
             .thenAnswer((_) async => secondAuthToken);
 
-        final receivedAuthToken =
-            await FlutterReachFivePlatform.instance.refreshAccessToken(request);
+        final receivedAuthToken = await FlutterReachFivePlatform.instance
+            .refreshAccessToken(config: config, authToken: firstAuthToken);
 
         expect(secondAuthToken, receivedAuthToken);
       });

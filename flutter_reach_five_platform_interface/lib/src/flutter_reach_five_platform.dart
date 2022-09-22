@@ -62,23 +62,51 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
       reachFiveHostApi.initialize(config);
 
   /// {@macro flutter_reach_five.reachFive.signup}
-  Future<AuthTokenInterface> signup(
-    SignupRequestInterface request,
-  ) =>
-      reachFiveHostApi.signup(request);
+  Future<AuthTokenInterface> signup({
+    required ReachFiveConfigInterface config,
+    required ProfileSignupRequestInterface profile,
+    String? redirectUrl,
+    List<String>? scope,
+  }) =>
+      reachFiveHostApi.signup(
+        SignupRequestInterface(
+          config: config,
+          profile: profile,
+          redirectUrl: redirectUrl,
+          scope: scope,
+        ),
+      );
 
   /// {@macro flutter_reach_five.reachFive.loginWithPassword}
-  Future<AuthTokenInterface> loginWithPassword(
-    LoginWithPasswordRequestInterface request,
-  ) =>
-      reachFiveHostApi.loginWithPassword(request);
+  Future<AuthTokenInterface> loginWithPassword({
+    required ReachFiveConfigInterface config,
+    required String password,
+    String? email,
+    String? phoneNumber,
+    List<String>? scope,
+  }) =>
+      reachFiveHostApi.loginWithPassword(
+        LoginWithPasswordRequestInterface(
+          config: config,
+          password: password,
+          email: email,
+          phoneNumber: phoneNumber,
+          scope: scope,
+        ),
+      );
 
   /// {@macro flutter_reach_five.reachFive.logout}
   Future<void> logout() => reachFiveHostApi.logout();
 
   /// {@macro flutter_reach_five.reachFive.refreshAccessToken}
-  Future<AuthTokenInterface> refreshAccessToken(
-    RefreshAccessTokenRequestInterface request,
-  ) =>
-      reachFiveHostApi.refreshAccessToken(request);
+  Future<AuthTokenInterface> refreshAccessToken({
+    required ReachFiveConfigInterface config,
+    required AuthTokenInterface authToken,
+  }) =>
+      reachFiveHostApi.refreshAccessToken(
+        RefreshAccessTokenRequestInterface(
+          config: config,
+          authToken: authToken,
+        ),
+      );
 }

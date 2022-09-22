@@ -43,16 +43,14 @@ class LoginWithPasswordMethodState extends State<LoginWithPasswordMethod> {
 
     try {
       final result = await reachFive.loginWithPassword(
-        LoginWithPasswordRequest(
-          email: email,
-          password: password,
-          scope: const [
-            ScopeValue.openid,
-            ScopeValue.email,
-            ScopeValue.offlineAccess,
-            ScopeValue.profile,
-          ],
-        ),
+        email: email,
+        password: password,
+        scope: const [
+          ScopeValue.openid,
+          ScopeValue.email,
+          ScopeValue.offlineAccess,
+          ScopeValue.profile,
+        ],
       );
 
       widget.setAuthToken(result);
