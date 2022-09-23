@@ -99,7 +99,9 @@ class ReachFive {
         clientSecret: clientSecret,
       );
     }
-    await _platform.logout();
+    await _platform.logout(
+      config: ReachFiveConfigConverter.toInterface(config),
+    );
   }
 
   /// {@template flutter_reach_five.reachFive.refreshAccessToken}
