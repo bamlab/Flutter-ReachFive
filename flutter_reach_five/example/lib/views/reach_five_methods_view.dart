@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reach_five/flutter_reach_five.dart';
 
+import '../const.dart';
 import '../methods/initialize_method.dart';
 import '../methods/login_with_password_method.dart';
 import '../methods/logout_method.dart';
@@ -16,7 +17,12 @@ enum ReachFiveMethod {
 }
 
 class ReachFiveMethodsView extends StatefulWidget {
-  const ReachFiveMethodsView({super.key});
+  const ReachFiveMethodsView({
+    required this.dataSet,
+    super.key,
+  });
+
+  final DataSet dataSet;
 
   @override
   State<ReachFiveMethodsView> createState() => _ReachFiveMethodsViewState();
@@ -71,6 +77,7 @@ class _ReachFiveMethodsViewState extends State<ReachFiveMethodsView> {
           ),
           Expanded(
             child: _ReachFiveMethodView(
+              dataSet: widget.dataSet,
               reachFiveMethod: selectedReachFiveMethod,
               reachFive: reachFive,
               setReachFive: setReachFive,
@@ -87,6 +94,7 @@ class _ReachFiveMethodsViewState extends State<ReachFiveMethodsView> {
 
 class _ReachFiveMethodView extends StatelessWidget {
   const _ReachFiveMethodView({
+    required this.dataSet,
     required this.reachFiveMethod,
     required this.reachFive,
     required this.setReachFive,
@@ -94,6 +102,8 @@ class _ReachFiveMethodView extends StatelessWidget {
     required this.setAuthToken,
     required this.resetAuthToken,
   });
+
+  final DataSet dataSet;
 
   final ReachFiveMethod reachFiveMethod;
 
@@ -113,12 +123,14 @@ class _ReachFiveMethodView extends StatelessWidget {
     switch (reachFiveMethod) {
       case ReachFiveMethod.initialize:
         return InitializeMethod(
+          dataSet: dataSet,
           reachFive: reachFive,
           setReachFive: setReachFive,
         );
       case ReachFiveMethod.signup:
         if (reachFive != null) {
           return SignupMethod(
+            dataSet: dataSet,
             reachFive: reachFive,
             authToken: authToken,
             setAuthToken: setAuthToken,
@@ -128,6 +140,7 @@ class _ReachFiveMethodView extends StatelessWidget {
       case ReachFiveMethod.loginWithPassword:
         if (reachFive != null) {
           return LoginWithPasswordMethod(
+            dataSet: dataSet,
             reachFive: reachFive,
             authToken: authToken,
             setAuthToken: setAuthToken,

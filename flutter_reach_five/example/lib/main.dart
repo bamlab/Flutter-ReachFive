@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'const.dart';
 import 'views/reach_five_methods_view.dart';
 
 void main() => runApp(const MyApp());
@@ -12,7 +13,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Flutter Reach Five Example')),
-        body: const ReachFiveMethodsView(),
+        body: ReachFiveMethodsView(
+          dataSet: DataSets.firstDataSet,
+        ),
       ),
     );
   }
