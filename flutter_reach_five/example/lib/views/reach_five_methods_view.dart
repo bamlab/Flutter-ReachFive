@@ -28,7 +28,11 @@ class ReachFiveMethodsView extends StatefulWidget {
   State<ReachFiveMethodsView> createState() => _ReachFiveMethodsViewState();
 }
 
-class _ReachFiveMethodsViewState extends State<ReachFiveMethodsView> {
+class _ReachFiveMethodsViewState extends State<ReachFiveMethodsView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   var selectedReachFiveMethod = ReachFiveMethod.initialize;
 
   void setSelectedReachFiveMethod(ReachFiveMethod newSelectedReachFiveMethod) =>
@@ -53,6 +57,8 @@ class _ReachFiveMethodsViewState extends State<ReachFiveMethodsView> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     final reachFive = this.reachFive;
     final authToken = this.authToken;
 

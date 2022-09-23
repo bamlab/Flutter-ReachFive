@@ -1,6 +1,9 @@
 abstract class DataSet {
   const DataSet();
 
+  /// Your data set name
+  String get name;
+
   /// Your reach five domain
   String get initialDomain;
 
@@ -31,6 +34,10 @@ abstract class DataSet {
 
 class _FirstDataSet extends DataSet {
   const _FirstDataSet();
+
+  /// Your data set name
+  @override
+  String get name => 'My First Instance Data Set';
 
   /// Your reach five domain
   @override
@@ -71,6 +78,10 @@ class _FirstDataSet extends DataSet {
 
 class _SecondDataSet extends DataSet {
   const _SecondDataSet();
+
+  /// Your data set name
+  @override
+  String get name => 'My Second Instance Data Set';
 
   /// Your reach five domain
   @override
