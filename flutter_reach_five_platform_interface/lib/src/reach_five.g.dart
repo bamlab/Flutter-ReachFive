@@ -693,12 +693,12 @@ class ReachFiveHostApi {
     }
   }
 
-  Future<void> logout() async {
+  Future<void> logout(ReachFiveConfigInterface arg_config) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.ReachFiveHostApi.logout', codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
-        await channel.send(null) as Map<Object?, Object?>?;
+        await channel.send(<Object?>[arg_config]) as Map<Object?, Object?>?;
     if (replyMap == null) {
       throw PlatformException(
         code: 'channel-error',

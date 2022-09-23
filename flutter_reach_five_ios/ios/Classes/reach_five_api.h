@@ -237,7 +237,7 @@ NSObject<FlutterMessageCodec> *ReachFiveHostApiGetCodec(void);
 - (void)initializeConfig:(ReachFiveConfigInterface *)config completion:(void(^)(ReachFiveConfigInterface *_Nullable, FlutterError *_Nullable))completion;
 - (void)signupRequest:(SignupRequestInterface *)request completion:(void(^)(AuthTokenInterface *_Nullable, FlutterError *_Nullable))completion;
 - (void)loginWithPasswordRequest:(LoginWithPasswordRequestInterface *)request completion:(void(^)(AuthTokenInterface *_Nullable, FlutterError *_Nullable))completion;
-- (void)logoutWithCompletion:(void(^)(FlutterError *_Nullable))completion;
+- (void)logoutConfig:(ReachFiveConfigInterface *)config completion:(void(^)(FlutterError *_Nullable))completion;
 - (void)refreshAccessTokenRequest:(RefreshAccessTokenRequestInterface *)request completion:(void(^)(AuthTokenInterface *_Nullable, FlutterError *_Nullable))completion;
 @end
 

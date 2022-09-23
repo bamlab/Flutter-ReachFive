@@ -1578,7 +1578,7 @@ public class ReachFiveApi {
     void initialize(@NonNull ReachFiveConfigInterface config, Result<ReachFiveConfigInterface> result);
     void signup(@NonNull SignupRequestInterface request, Result<AuthTokenInterface> result);
     void loginWithPassword(@NonNull LoginWithPasswordRequestInterface request, Result<AuthTokenInterface> result);
-    void logout(Result<Void> result);
+    void logout(@NonNull ReachFiveConfigInterface config, Result<Void> result);
     void refreshAccessToken(@NonNull RefreshAccessTokenRequestInterface request, Result<AuthTokenInterface> result);
 
     /** The codec used by ReachFiveHostApi. */
@@ -1697,6 +1697,11 @@ public class ReachFiveApi {
           channel.setMessageHandler((message, reply) -> {
             Map<String, Object> wrapped = new HashMap<>();
             try {
+              ArrayList<Object> args = (ArrayList<Object>)message;
+              ReachFiveConfigInterface configArg = (ReachFiveConfigInterface)args.get(0);
+              if (configArg == null) {
+                throw new NullPointerException("configArg unexpectedly null.");
+              }
               Result<Void> resultCallback = new Result<Void>() {
                 public void success(Void result) {
                   wrapped.put("result", null);
@@ -1708,7 +1713,7 @@ public class ReachFiveApi {
                 }
               };
 
-              api.logout(resultCallback);
+              api.logout(configArg, resultCallback);
             }
             catch (Error | RuntimeException exception) {
               wrapped.put("error", wrapError(exception));
