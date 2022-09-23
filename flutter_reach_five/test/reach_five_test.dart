@@ -206,7 +206,10 @@ void main() {
           (_) async => Response(requestOptions: RequestOptions(path: 'path')),
         );
 
-        when(flutterReachFivePlatform.logout).thenAnswer((_) async {});
+        registerFallbackValue(ReachFiveConfigConverter.toInterface(config));
+        when(
+          () => flutterReachFivePlatform.logout(config: any(named: 'config')),
+        ).thenAnswer((_) async {});
 
         await reachFive.logout(
           authToken: const AuthToken(
@@ -215,7 +218,9 @@ void main() {
           ),
         );
 
-        verify(flutterReachFivePlatform.logout).called(1);
+        verify(
+          () => flutterReachFivePlatform.logout(config: any(named: 'config')),
+        ).called(1);
       });
     });
 

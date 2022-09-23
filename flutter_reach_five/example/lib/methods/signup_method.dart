@@ -7,12 +7,14 @@ import '../widgets/snackbar.dart';
 
 class SignupMethod extends StatefulWidget {
   const SignupMethod({
+    required this.dataSet,
     required this.reachFive,
     required this.authToken,
     required this.setAuthToken,
     super.key,
   });
 
+  final DataSet dataSet;
   final ReachFive reachFive;
   final AuthToken? authToken;
   final void Function(AuthToken authToken) setAuthToken;
@@ -24,12 +26,12 @@ class SignupMethod extends StatefulWidget {
 class SignupMethodState extends State<SignupMethod> {
   bool areInteractionsDisabled = false;
 
-  String email = initialEmail;
-  String password = initialPassword;
-  String familyName = initialFamilyName;
-  String givenName = initialGivenName;
-  String middleName = initialMiddleName;
-  String nickname = initialNickame;
+  late String email = widget.dataSet.initialEmail;
+  late String password = widget.dataSet.initialPassword;
+  late String familyName = widget.dataSet.initialFamilyName;
+  late String givenName = widget.dataSet.initialGivenName;
+  late String middleName = widget.dataSet.initialMiddleName;
+  late String nickname = widget.dataSet.initialNickame;
 
   void setEmail(String newEmail) => setState(() {
         email = newEmail;
@@ -83,7 +85,7 @@ class SignupMethodState extends State<SignupMethod> {
       if (mounted) {
         showExampleSnackBar(
           context,
-          message: 'Success - Signup',
+          message: 'Success - Signup - ${widget.dataSet.name}',
           type: SnackbarType.success,
         );
       }

@@ -753,9 +753,11 @@ void ReachFiveHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<
         binaryMessenger:binaryMessenger
         codec:ReachFiveHostApiGetCodec()        ];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(logoutWithCompletion:)], @"ReachFiveHostApi api (%@) doesn't respond to @selector(logoutWithCompletion:)", api);
+      NSCAssert([api respondsToSelector:@selector(logoutConfig:completion:)], @"ReachFiveHostApi api (%@) doesn't respond to @selector(logoutConfig:completion:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
-        [api logoutWithCompletion:^(FlutterError *_Nullable error) {
+        NSArray *args = message;
+        ReachFiveConfigInterface *arg_config = GetNullableObjectAtIndex(args, 0);
+        [api logoutConfig:arg_config completion:^(FlutterError *_Nullable error) {
           callback(wrapResult(nil, error));
         }];
       }];

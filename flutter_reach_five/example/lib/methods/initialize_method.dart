@@ -7,11 +7,13 @@ import '../widgets/snackbar.dart';
 
 class InitializeMethod extends StatefulWidget {
   const InitializeMethod({
+    required this.dataSet,
     required this.reachFive,
     required this.setReachFive,
     super.key,
   });
 
+  final DataSet dataSet;
   final ReachFive? reachFive;
   final void Function(ReachFive reachFive) setReachFive;
 
@@ -22,9 +24,9 @@ class InitializeMethod extends StatefulWidget {
 class _InitializeMethodState extends State<InitializeMethod> {
   bool areInteractionsDisabled = false;
 
-  String domain = initialDomain;
-  String clientId = initialClientId;
-  String scheme = initialScheme;
+  late String domain = widget.dataSet.initialDomain;
+  late String clientId = widget.dataSet.initialClientId;
+  late String scheme = widget.dataSet.initialScheme;
 
   void setDomain(String newDomain) => setState(() {
         domain = newDomain;
@@ -57,7 +59,7 @@ class _InitializeMethodState extends State<InitializeMethod> {
       if (mounted) {
         showExampleSnackBar(
           context,
-          message: 'Success - Initialization',
+          message: 'Success - Initialization - ${widget.dataSet.name}',
           type: SnackbarType.success,
         );
       }

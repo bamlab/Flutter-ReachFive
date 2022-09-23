@@ -109,11 +109,18 @@ void main() {
 
     group('logout', () {
       test('execute reach five host api logout method', () async {
-        when(mockReachFiveHostApi.logout).thenAnswer((_) async {});
+        final config = ReachFiveConfigInterface(
+          domain: 'domain',
+          clientId: 'clientId',
+          scheme: 'scheme',
+        );
 
-        await FlutterReachFivePlatform.instance.logout();
+        when(() => mockReachFiveHostApi.logout(config))
+            .thenAnswer((_) async {});
 
-        verify(mockReachFiveHostApi.logout).called(1);
+        await FlutterReachFivePlatform.instance.logout(config: config);
+
+        verify(() => mockReachFiveHostApi.logout(config)).called(1);
       });
     });
 

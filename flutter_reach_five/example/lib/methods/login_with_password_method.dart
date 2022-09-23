@@ -7,12 +7,14 @@ import '../widgets/snackbar.dart';
 
 class LoginWithPasswordMethod extends StatefulWidget {
   const LoginWithPasswordMethod({
+    required this.dataSet,
     required this.reachFive,
     required this.authToken,
     required this.setAuthToken,
     super.key,
   });
 
+  final DataSet dataSet;
   final ReachFive reachFive;
   final AuthToken? authToken;
   final void Function(AuthToken authToken) setAuthToken;
@@ -25,8 +27,8 @@ class LoginWithPasswordMethod extends StatefulWidget {
 class LoginWithPasswordMethodState extends State<LoginWithPasswordMethod> {
   bool areInteractionsDisabled = false;
 
-  String email = initialEmail;
-  String password = initialPassword;
+  late String email = widget.dataSet.initialEmail;
+  late String password = widget.dataSet.initialPassword;
 
   void setEmail(String newEmail) => setState(() {
         email = newEmail;
@@ -58,7 +60,7 @@ class LoginWithPasswordMethodState extends State<LoginWithPasswordMethod> {
       if (mounted) {
         showExampleSnackBar(
           context,
-          message: 'Success - LoginWithPassword',
+          message: 'Success - LoginWithPassword - ${widget.dataSet.name}',
           type: SnackbarType.success,
         );
       }
