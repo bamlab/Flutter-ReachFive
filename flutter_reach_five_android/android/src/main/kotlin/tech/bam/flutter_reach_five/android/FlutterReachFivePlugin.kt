@@ -9,7 +9,7 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
 {
     private var context: Context? = null
-    private lateinit var reachFive: ReachFive
+    private var reachFiveInstances = mutableMapOf<String, ReachFive>()
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         ReachFiveApi.ReachFiveHostApi.setup(flutterPluginBinding.binaryMessenger, this)
@@ -20,16 +20,25 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
         ReachFiveApi.ReachFiveHostApi.setup(binding.binaryMessenger, null)
     }
 
+    private fun getReachFiveInstanceKey(reachFiveConfig: ReachFiveApi.ReachFiveConfigInterface): String {
+        return reachFiveConfig.domain + reachFiveConfig.clientId + reachFiveConfig.scheme
+    }
+
     override fun initialize(config: ReachFiveApi.ReachFiveConfigInterface, result: ReachFiveApi.Result<ReachFiveApi.ReachFiveConfigInterface>) {
-        this.reachFive = ReachFive(
+        val reachFive = ReachFive(
             sdkConfig = SdkConfig(
                 domain = config.domain,
                 clientId = config.clientId,
                 scheme = config.scheme
             ),
             providersCreators = listOf()
-        ).initialize(
+        )
+
+        val reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveConfig = config)
+
+        reachFive.initialize(
             {
+                this.reachFiveInstances[reachFiveInstanceKey] = reachFive
                 result.success(
                     ReachFiveApi.ReachFiveConfigInterface
                         .Builder()
@@ -48,9 +57,17 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
         request: ReachFiveApi.SignupRequestInterface,
         result: ReachFiveApi.Result<ReachFiveApi.AuthTokenInterface>?
     ) {
+        val reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveConfig = request.config)
+        val reachFive = reachFiveInstances[reachFiveInstanceKey]
+
+        if (reachFive == null) {
+            result?.error(Error("ReachFive instance has not been initialized"))
+            return
+        }
+
         val signupRequest = Converters.signupRequestFromInterface(request.profile)
-        
-        this.reachFive.signup(
+
+        reachFive.signup(
             profile = signupRequest,
             scope = request.scope?.toList() ?: listOf(),
             success = { authToken ->
@@ -64,7 +81,15 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
         request: ReachFiveApi.LoginWithPasswordRequestInterface,
         result: ReachFiveApi.Result<ReachFiveApi.AuthTokenInterface>?
     ) {
-        this.reachFive.loginWithPassword(
+        val reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveConfig = request.config)
+        val reachFive = reachFiveInstances[reachFiveInstanceKey]
+
+        if (reachFive == null) {
+            result?.error(Error("ReachFive instance has not been initialized"))
+            return
+        }
+
+        reachFive.loginWithPassword(
             email = request.email,
             phoneNumber = request.phoneNumber,
             password = request.password,
@@ -76,8 +101,19 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
         )
     }
 
-    override fun logout(result: ReachFiveApi.Result<Void>?) {
-        this.reachFive.logout(
+    override fun logout(
+        config: ReachFiveApi.ReachFiveConfigInterface,
+        result: ReachFiveApi.Result<Void>?
+    ) {
+        val reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveConfig = config)
+        val reachFive = reachFiveInstances[reachFiveInstanceKey]
+
+        if (reachFive == null) {
+            result?.error(Error("ReachFive instance has not been initialized"))
+            return
+        }
+
+        reachFive.logout(
             success = {
                 result?.success(null)
             },
@@ -89,9 +125,17 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
         request: ReachFiveApi.RefreshAccessTokenRequestInterface,
         result: ReachFiveApi.Result<ReachFiveApi.AuthTokenInterface>?
     ) {
+        val reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveConfig = request.config)
+        val reachFive = reachFiveInstances[reachFiveInstanceKey]
+
+        if (reachFive == null) {
+            result?.error(Error("ReachFive instance has not been initialized"))
+            return
+        }
+
         val authToken = request.authToken
 
-        this.reachFive.refreshAccessToken(
+        reachFive.refreshAccessToken(
             authToken = Converters.authTokenFromInterface(authToken),
             success = { authToken ->
                 result?.success(Converters.authTokenToInterface(authToken))
