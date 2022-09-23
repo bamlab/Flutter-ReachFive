@@ -59,7 +59,7 @@ class _InitializeMethodState extends State<InitializeMethod> {
       if (mounted) {
         showExampleSnackBar(
           context,
-          message: 'Success - Initialization',
+          message: 'Success - Initialization - ${widget.dataSet.name}',
           type: SnackbarType.success,
         );
       }

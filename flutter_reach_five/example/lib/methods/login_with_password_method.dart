@@ -60,7 +60,7 @@ class LoginWithPasswordMethodState extends State<LoginWithPasswordMethod> {
       if (mounted) {
         showExampleSnackBar(
           context,
-          message: 'Success - LoginWithPassword',
+          message: 'Success - LoginWithPassword - ${widget.dataSet.name}',
           type: SnackbarType.success,
         );
       }

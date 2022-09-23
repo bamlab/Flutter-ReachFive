@@ -156,6 +156,7 @@ class _ReachFiveMethodView extends StatelessWidget {
       case ReachFiveMethod.logout:
         if (reachFive != null && authToken != null) {
           return LogoutMethod(
+            dataSet: dataSet,
             reachFive: reachFive,
             authToken: authToken,
             resetAuthToken: resetAuthToken,
@@ -165,6 +166,7 @@ class _ReachFiveMethodView extends StatelessWidget {
       case ReachFiveMethod.refreshAccessToken:
         if (reachFive != null && authToken != null) {
           return RefreshAccessTokenMethod(
+            dataSet: dataSet,
             reachFive: reachFive,
             authToken: authToken,
             setAuthToken: setAuthToken,

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reach_five/flutter_reach_five.dart';
 
+import '../const.dart';
 import '../widgets/snackbar.dart';
 
 class RefreshAccessTokenMethod extends StatefulWidget {
   const RefreshAccessTokenMethod({
+    required this.dataSet,
     required this.reachFive,
     required this.authToken,
     required this.setAuthToken,
     super.key,
   });
 
+  final DataSet dataSet;
   final ReachFive reachFive;
   final AuthToken authToken;
   final void Function(AuthToken authToken) setAuthToken;
@@ -39,7 +42,7 @@ class RefreshAccessTokenMethodState extends State<RefreshAccessTokenMethod> {
       if (mounted) {
         showExampleSnackBar(
           context,
-          message: 'Success - Refresh Access Token',
+          message: 'Success - Refresh Access Token - ${widget.dataSet.name}',
           type: SnackbarType.success,
         );
       }

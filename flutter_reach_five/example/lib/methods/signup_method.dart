@@ -85,7 +85,7 @@ class SignupMethodState extends State<SignupMethod> {
       if (mounted) {
         showExampleSnackBar(
           context,
-          message: 'Success - Signup',
+          message: 'Success - Signup - ${widget.dataSet.name}',
           type: SnackbarType.success,
         );
       }
