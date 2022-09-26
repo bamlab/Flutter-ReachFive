@@ -112,4 +112,20 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
           authToken: authToken,
         ),
       );
+
+  /// {@macro flutter_reach_five.reachFive.requestPasswordReset}
+  Future<void> requestPasswordReset({
+    required ReachFiveConfigInterface config,
+    String? email,
+    String? phoneNumber,
+    String? redirectUrl,
+  }) =>
+      reachFiveHostApi.requestPasswordReset(
+        RequestPasswordResetRequestInterface(
+          config: config,
+          email: email,
+          phoneNumber: phoneNumber,
+          redirectUrl: redirectUrl,
+        ),
+      );
 }

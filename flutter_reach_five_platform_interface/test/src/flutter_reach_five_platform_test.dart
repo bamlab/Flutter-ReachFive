@@ -152,5 +152,34 @@ void main() {
         expect(secondAuthToken, receivedAuthToken);
       });
     });
+
+    group('requestPasswordReset', () {
+      test('execute reach five host api requestPasswordReset method', () async {
+        final config = ReachFiveConfigInterface(
+          domain: 'domain',
+          clientId: 'clientId',
+          scheme: 'scheme',
+        );
+
+        final request = RequestPasswordResetRequestInterface(
+          config: config,
+          email: 'email',
+          redirectUrl: 'redirectUrl',
+        );
+
+        registerFallbackValue(request);
+        when(() => mockReachFiveHostApi.requestPasswordReset(any()))
+            .thenAnswer((_) async {});
+
+        await FlutterReachFivePlatform.instance.requestPasswordReset(
+          config: config,
+          email: request.email,
+          redirectUrl: request.redirectUrl,
+        );
+
+        verify(() => mockReachFiveHostApi.requestPasswordReset(any()))
+            .called(1);
+      });
+    });
   });
 }
