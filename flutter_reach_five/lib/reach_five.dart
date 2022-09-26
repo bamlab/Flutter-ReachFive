@@ -179,6 +179,59 @@ class ReachFive {
         phoneNumber: phoneNumber,
         redirectUrl: redirectUrl,
       );
+
+  /// {@template flutter_reach_five.reachFive.updatePassword}
+  /// Make request for password reset
+  ///
+  /// You can choose between a [UpdatePasswordRequestWithAccessToken]
+  /// that require a authToken and your oldPassword
+  ///
+  /// or a [UpdatePasswordRequestWithFreshAccessToken]
+  /// that need a authToken with an access token from less than 5 minutes ago
+  ///
+  /// or a [UpdatePasswordRequestWithEmail]
+  /// that need your email and a verification code
+  ///
+  /// or a [UpdatePasswordRequestWithPhoneNumber]
+  /// that need your phone number and a verification code
+  /// {@endtemplate}
+  Future<void> updatePassword(
+    UpdatePasswordRequest updatePasswordRequest,
+  ) async {
+    await updatePasswordRequest.map<Future<void>>(
+      withAccessToken: (updatePasswordRequestWithAccessToken) =>
+          _platform.updatePasswordWithAccessToken(
+        config: ReachFiveConfigConverter.toInterface(config),
+        authToken: AuthTokenConverter.toInterface(
+          updatePasswordRequestWithAccessToken.authToken,
+        ),
+        oldPassword: updatePasswordRequestWithAccessToken.oldPassword,
+        newPassword: updatePasswordRequestWithAccessToken.newPassword,
+      ),
+      withFreshAccessToken: (updatePasswordRequestWithFreshAccessToken) =>
+          _platform.updatePasswordWithFreshAccessToken(
+        config: ReachFiveConfigConverter.toInterface(config),
+        freshAuthToken: AuthTokenConverter.toInterface(
+          updatePasswordRequestWithFreshAccessToken.freshAuthToken,
+        ),
+        newPassword: updatePasswordRequestWithFreshAccessToken.newPassword,
+      ),
+      withEmail: (updatePasswordRequestWithEmail) =>
+          _platform.updatePasswordWithEmail(
+        config: ReachFiveConfigConverter.toInterface(config),
+        email: updatePasswordRequestWithEmail.email,
+        verificationCode: updatePasswordRequestWithEmail.verificationCode,
+        newPassword: updatePasswordRequestWithEmail.newPassword,
+      ),
+      withPhoneNumber: (updatePasswordRequestWithPhoneNumber) =>
+          _platform.updatePasswordWithPhoneNumber(
+        config: ReachFiveConfigConverter.toInterface(config),
+        phoneNumber: updatePasswordRequestWithPhoneNumber.phoneNumber,
+        verificationCode: updatePasswordRequestWithPhoneNumber.verificationCode,
+        newPassword: updatePasswordRequestWithPhoneNumber.newPassword,
+      ),
+    );
+  }
 }
 
 /// {@template flutter_reach_five.reachFiveManager}
