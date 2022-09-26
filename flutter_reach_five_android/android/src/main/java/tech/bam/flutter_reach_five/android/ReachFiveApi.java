@@ -1563,6 +1563,356 @@ public class ReachFiveApi {
     }
   }
 
+  /** Generated class from Pigeon that represents data sent in messages. */
+  public static class UpdatePasswordWithAccessTokenRequestInterface {
+    private @NonNull ReachFiveConfigInterface config;
+    public @NonNull ReachFiveConfigInterface getConfig() { return config; }
+    public void setConfig(@NonNull ReachFiveConfigInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"config\" is null.");
+      }
+      this.config = setterArg;
+    }
+
+    private @NonNull AuthTokenInterface authToken;
+    public @NonNull AuthTokenInterface getAuthToken() { return authToken; }
+    public void setAuthToken(@NonNull AuthTokenInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"authToken\" is null.");
+      }
+      this.authToken = setterArg;
+    }
+
+    private @NonNull String oldPassword;
+    public @NonNull String getOldPassword() { return oldPassword; }
+    public void setOldPassword(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"oldPassword\" is null.");
+      }
+      this.oldPassword = setterArg;
+    }
+
+    private @NonNull String password;
+    public @NonNull String getPassword() { return password; }
+    public void setPassword(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"password\" is null.");
+      }
+      this.password = setterArg;
+    }
+
+    /** Constructor is private to enforce null safety; use Builder. */
+    private UpdatePasswordWithAccessTokenRequestInterface() {}
+    public static final class Builder {
+      private @Nullable ReachFiveConfigInterface config;
+      public @NonNull Builder setConfig(@NonNull ReachFiveConfigInterface setterArg) {
+        this.config = setterArg;
+        return this;
+      }
+      private @Nullable AuthTokenInterface authToken;
+      public @NonNull Builder setAuthToken(@NonNull AuthTokenInterface setterArg) {
+        this.authToken = setterArg;
+        return this;
+      }
+      private @Nullable String oldPassword;
+      public @NonNull Builder setOldPassword(@NonNull String setterArg) {
+        this.oldPassword = setterArg;
+        return this;
+      }
+      private @Nullable String password;
+      public @NonNull Builder setPassword(@NonNull String setterArg) {
+        this.password = setterArg;
+        return this;
+      }
+      public @NonNull UpdatePasswordWithAccessTokenRequestInterface build() {
+        UpdatePasswordWithAccessTokenRequestInterface pigeonReturn = new UpdatePasswordWithAccessTokenRequestInterface();
+        pigeonReturn.setConfig(config);
+        pigeonReturn.setAuthToken(authToken);
+        pigeonReturn.setOldPassword(oldPassword);
+        pigeonReturn.setPassword(password);
+        return pigeonReturn;
+      }
+    }
+    @NonNull Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("config", (config == null) ? null : config.toMap());
+      toMapResult.put("authToken", (authToken == null) ? null : authToken.toMap());
+      toMapResult.put("oldPassword", oldPassword);
+      toMapResult.put("password", password);
+      return toMapResult;
+    }
+    static @NonNull UpdatePasswordWithAccessTokenRequestInterface fromMap(@NonNull Map<String, Object> map) {
+      UpdatePasswordWithAccessTokenRequestInterface pigeonResult = new UpdatePasswordWithAccessTokenRequestInterface();
+      Object config = map.get("config");
+      pigeonResult.setConfig((config == null) ? null : ReachFiveConfigInterface.fromMap((Map)config));
+      Object authToken = map.get("authToken");
+      pigeonResult.setAuthToken((authToken == null) ? null : AuthTokenInterface.fromMap((Map)authToken));
+      Object oldPassword = map.get("oldPassword");
+      pigeonResult.setOldPassword((String)oldPassword);
+      Object password = map.get("password");
+      pigeonResult.setPassword((String)password);
+      return pigeonResult;
+    }
+  }
+
+  /** Generated class from Pigeon that represents data sent in messages. */
+  public static class UpdatePasswordWithFreshAccessTokenRequestInterface {
+    private @NonNull ReachFiveConfigInterface config;
+    public @NonNull ReachFiveConfigInterface getConfig() { return config; }
+    public void setConfig(@NonNull ReachFiveConfigInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"config\" is null.");
+      }
+      this.config = setterArg;
+    }
+
+    private @NonNull AuthTokenInterface freshAuthToken;
+    public @NonNull AuthTokenInterface getFreshAuthToken() { return freshAuthToken; }
+    public void setFreshAuthToken(@NonNull AuthTokenInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"freshAuthToken\" is null.");
+      }
+      this.freshAuthToken = setterArg;
+    }
+
+    private @NonNull String password;
+    public @NonNull String getPassword() { return password; }
+    public void setPassword(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"password\" is null.");
+      }
+      this.password = setterArg;
+    }
+
+    /** Constructor is private to enforce null safety; use Builder. */
+    private UpdatePasswordWithFreshAccessTokenRequestInterface() {}
+    public static final class Builder {
+      private @Nullable ReachFiveConfigInterface config;
+      public @NonNull Builder setConfig(@NonNull ReachFiveConfigInterface setterArg) {
+        this.config = setterArg;
+        return this;
+      }
+      private @Nullable AuthTokenInterface freshAuthToken;
+      public @NonNull Builder setFreshAuthToken(@NonNull AuthTokenInterface setterArg) {
+        this.freshAuthToken = setterArg;
+        return this;
+      }
+      private @Nullable String password;
+      public @NonNull Builder setPassword(@NonNull String setterArg) {
+        this.password = setterArg;
+        return this;
+      }
+      public @NonNull UpdatePasswordWithFreshAccessTokenRequestInterface build() {
+        UpdatePasswordWithFreshAccessTokenRequestInterface pigeonReturn = new UpdatePasswordWithFreshAccessTokenRequestInterface();
+        pigeonReturn.setConfig(config);
+        pigeonReturn.setFreshAuthToken(freshAuthToken);
+        pigeonReturn.setPassword(password);
+        return pigeonReturn;
+      }
+    }
+    @NonNull Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("config", (config == null) ? null : config.toMap());
+      toMapResult.put("freshAuthToken", (freshAuthToken == null) ? null : freshAuthToken.toMap());
+      toMapResult.put("password", password);
+      return toMapResult;
+    }
+    static @NonNull UpdatePasswordWithFreshAccessTokenRequestInterface fromMap(@NonNull Map<String, Object> map) {
+      UpdatePasswordWithFreshAccessTokenRequestInterface pigeonResult = new UpdatePasswordWithFreshAccessTokenRequestInterface();
+      Object config = map.get("config");
+      pigeonResult.setConfig((config == null) ? null : ReachFiveConfigInterface.fromMap((Map)config));
+      Object freshAuthToken = map.get("freshAuthToken");
+      pigeonResult.setFreshAuthToken((freshAuthToken == null) ? null : AuthTokenInterface.fromMap((Map)freshAuthToken));
+      Object password = map.get("password");
+      pigeonResult.setPassword((String)password);
+      return pigeonResult;
+    }
+  }
+
+  /** Generated class from Pigeon that represents data sent in messages. */
+  public static class UpdatePasswordWithEmailRequestInterface {
+    private @NonNull ReachFiveConfigInterface config;
+    public @NonNull ReachFiveConfigInterface getConfig() { return config; }
+    public void setConfig(@NonNull ReachFiveConfigInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"config\" is null.");
+      }
+      this.config = setterArg;
+    }
+
+    private @NonNull String email;
+    public @NonNull String getEmail() { return email; }
+    public void setEmail(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"email\" is null.");
+      }
+      this.email = setterArg;
+    }
+
+    private @NonNull String verificationCode;
+    public @NonNull String getVerificationCode() { return verificationCode; }
+    public void setVerificationCode(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"verificationCode\" is null.");
+      }
+      this.verificationCode = setterArg;
+    }
+
+    private @NonNull String password;
+    public @NonNull String getPassword() { return password; }
+    public void setPassword(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"password\" is null.");
+      }
+      this.password = setterArg;
+    }
+
+    /** Constructor is private to enforce null safety; use Builder. */
+    private UpdatePasswordWithEmailRequestInterface() {}
+    public static final class Builder {
+      private @Nullable ReachFiveConfigInterface config;
+      public @NonNull Builder setConfig(@NonNull ReachFiveConfigInterface setterArg) {
+        this.config = setterArg;
+        return this;
+      }
+      private @Nullable String email;
+      public @NonNull Builder setEmail(@NonNull String setterArg) {
+        this.email = setterArg;
+        return this;
+      }
+      private @Nullable String verificationCode;
+      public @NonNull Builder setVerificationCode(@NonNull String setterArg) {
+        this.verificationCode = setterArg;
+        return this;
+      }
+      private @Nullable String password;
+      public @NonNull Builder setPassword(@NonNull String setterArg) {
+        this.password = setterArg;
+        return this;
+      }
+      public @NonNull UpdatePasswordWithEmailRequestInterface build() {
+        UpdatePasswordWithEmailRequestInterface pigeonReturn = new UpdatePasswordWithEmailRequestInterface();
+        pigeonReturn.setConfig(config);
+        pigeonReturn.setEmail(email);
+        pigeonReturn.setVerificationCode(verificationCode);
+        pigeonReturn.setPassword(password);
+        return pigeonReturn;
+      }
+    }
+    @NonNull Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("config", (config == null) ? null : config.toMap());
+      toMapResult.put("email", email);
+      toMapResult.put("verificationCode", verificationCode);
+      toMapResult.put("password", password);
+      return toMapResult;
+    }
+    static @NonNull UpdatePasswordWithEmailRequestInterface fromMap(@NonNull Map<String, Object> map) {
+      UpdatePasswordWithEmailRequestInterface pigeonResult = new UpdatePasswordWithEmailRequestInterface();
+      Object config = map.get("config");
+      pigeonResult.setConfig((config == null) ? null : ReachFiveConfigInterface.fromMap((Map)config));
+      Object email = map.get("email");
+      pigeonResult.setEmail((String)email);
+      Object verificationCode = map.get("verificationCode");
+      pigeonResult.setVerificationCode((String)verificationCode);
+      Object password = map.get("password");
+      pigeonResult.setPassword((String)password);
+      return pigeonResult;
+    }
+  }
+
+  /** Generated class from Pigeon that represents data sent in messages. */
+  public static class UpdatePasswordWithPhoneNumberRequestInterface {
+    private @NonNull ReachFiveConfigInterface config;
+    public @NonNull ReachFiveConfigInterface getConfig() { return config; }
+    public void setConfig(@NonNull ReachFiveConfigInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"config\" is null.");
+      }
+      this.config = setterArg;
+    }
+
+    private @NonNull String phoneNumber;
+    public @NonNull String getPhoneNumber() { return phoneNumber; }
+    public void setPhoneNumber(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"phoneNumber\" is null.");
+      }
+      this.phoneNumber = setterArg;
+    }
+
+    private @NonNull String verificationCode;
+    public @NonNull String getVerificationCode() { return verificationCode; }
+    public void setVerificationCode(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"verificationCode\" is null.");
+      }
+      this.verificationCode = setterArg;
+    }
+
+    private @NonNull String password;
+    public @NonNull String getPassword() { return password; }
+    public void setPassword(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"password\" is null.");
+      }
+      this.password = setterArg;
+    }
+
+    /** Constructor is private to enforce null safety; use Builder. */
+    private UpdatePasswordWithPhoneNumberRequestInterface() {}
+    public static final class Builder {
+      private @Nullable ReachFiveConfigInterface config;
+      public @NonNull Builder setConfig(@NonNull ReachFiveConfigInterface setterArg) {
+        this.config = setterArg;
+        return this;
+      }
+      private @Nullable String phoneNumber;
+      public @NonNull Builder setPhoneNumber(@NonNull String setterArg) {
+        this.phoneNumber = setterArg;
+        return this;
+      }
+      private @Nullable String verificationCode;
+      public @NonNull Builder setVerificationCode(@NonNull String setterArg) {
+        this.verificationCode = setterArg;
+        return this;
+      }
+      private @Nullable String password;
+      public @NonNull Builder setPassword(@NonNull String setterArg) {
+        this.password = setterArg;
+        return this;
+      }
+      public @NonNull UpdatePasswordWithPhoneNumberRequestInterface build() {
+        UpdatePasswordWithPhoneNumberRequestInterface pigeonReturn = new UpdatePasswordWithPhoneNumberRequestInterface();
+        pigeonReturn.setConfig(config);
+        pigeonReturn.setPhoneNumber(phoneNumber);
+        pigeonReturn.setVerificationCode(verificationCode);
+        pigeonReturn.setPassword(password);
+        return pigeonReturn;
+      }
+    }
+    @NonNull Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("config", (config == null) ? null : config.toMap());
+      toMapResult.put("phoneNumber", phoneNumber);
+      toMapResult.put("verificationCode", verificationCode);
+      toMapResult.put("password", password);
+      return toMapResult;
+    }
+    static @NonNull UpdatePasswordWithPhoneNumberRequestInterface fromMap(@NonNull Map<String, Object> map) {
+      UpdatePasswordWithPhoneNumberRequestInterface pigeonResult = new UpdatePasswordWithPhoneNumberRequestInterface();
+      Object config = map.get("config");
+      pigeonResult.setConfig((config == null) ? null : ReachFiveConfigInterface.fromMap((Map)config));
+      Object phoneNumber = map.get("phoneNumber");
+      pigeonResult.setPhoneNumber((String)phoneNumber);
+      Object verificationCode = map.get("verificationCode");
+      pigeonResult.setVerificationCode((String)verificationCode);
+      Object password = map.get("password");
+      pigeonResult.setPassword((String)password);
+      return pigeonResult;
+    }
+  }
+
   public interface Result<T> {
     void success(T result);
     void error(Throwable error);
@@ -1605,6 +1955,18 @@ public class ReachFiveApi {
         
         case (byte)138:         
           return SignupRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+        
+        case (byte)139:         
+          return UpdatePasswordWithAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+        
+        case (byte)140:         
+          return UpdatePasswordWithEmailRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+        
+        case (byte)141:         
+          return UpdatePasswordWithFreshAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+        
+        case (byte)142:         
+          return UpdatePasswordWithPhoneNumberRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         default:        
           return super.readValueOfType(type, buffer);
@@ -1657,6 +2019,22 @@ public class ReachFiveApi {
         stream.write(138);
         writeValue(stream, ((SignupRequestInterface) value).toMap());
       } else 
+      if (value instanceof UpdatePasswordWithAccessTokenRequestInterface) {
+        stream.write(139);
+        writeValue(stream, ((UpdatePasswordWithAccessTokenRequestInterface) value).toMap());
+      } else 
+      if (value instanceof UpdatePasswordWithEmailRequestInterface) {
+        stream.write(140);
+        writeValue(stream, ((UpdatePasswordWithEmailRequestInterface) value).toMap());
+      } else 
+      if (value instanceof UpdatePasswordWithFreshAccessTokenRequestInterface) {
+        stream.write(141);
+        writeValue(stream, ((UpdatePasswordWithFreshAccessTokenRequestInterface) value).toMap());
+      } else 
+      if (value instanceof UpdatePasswordWithPhoneNumberRequestInterface) {
+        stream.write(142);
+        writeValue(stream, ((UpdatePasswordWithPhoneNumberRequestInterface) value).toMap());
+      } else 
 {
         super.writeValue(stream, value);
       }
@@ -1671,6 +2049,10 @@ public class ReachFiveApi {
     void logout(@NonNull ReachFiveConfigInterface config, Result<Void> result);
     void refreshAccessToken(@NonNull RefreshAccessTokenRequestInterface request, Result<AuthTokenInterface> result);
     void requestPasswordReset(@NonNull RequestPasswordResetRequestInterface request, Result<Void> result);
+    void updatePasswordWithAccessToken(@NonNull UpdatePasswordWithAccessTokenRequestInterface request, Result<Void> result);
+    void updatePasswordWithFreshAccessToken(@NonNull UpdatePasswordWithFreshAccessTokenRequestInterface request, Result<Void> result);
+    void updatePasswordWithEmail(@NonNull UpdatePasswordWithEmailRequestInterface request, Result<Void> result);
+    void updatePasswordWithPhoneNumber(@NonNull UpdatePasswordWithPhoneNumberRequestInterface request, Result<Void> result);
 
     /** The codec used by ReachFiveHostApi. */
     static MessageCodec<Object> getCodec() {
@@ -1873,6 +2255,142 @@ public class ReachFiveApi {
               };
 
               api.requestPasswordReset(requestArg, resultCallback);
+            }
+            catch (Error | RuntimeException exception) {
+              wrapped.put("error", wrapError(exception));
+              reply.reply(wrapped);
+            }
+          });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(binaryMessenger, "dev.flutter.pigeon.ReachFiveHostApi.updatePasswordWithAccessToken", getCodec());
+        if (api != null) {
+          channel.setMessageHandler((message, reply) -> {
+            Map<String, Object> wrapped = new HashMap<>();
+            try {
+              ArrayList<Object> args = (ArrayList<Object>)message;
+              UpdatePasswordWithAccessTokenRequestInterface requestArg = (UpdatePasswordWithAccessTokenRequestInterface)args.get(0);
+              if (requestArg == null) {
+                throw new NullPointerException("requestArg unexpectedly null.");
+              }
+              Result<Void> resultCallback = new Result<Void>() {
+                public void success(Void result) {
+                  wrapped.put("result", null);
+                  reply.reply(wrapped);
+                }
+                public void error(Throwable error) {
+                  wrapped.put("error", wrapError(error));
+                  reply.reply(wrapped);
+                }
+              };
+
+              api.updatePasswordWithAccessToken(requestArg, resultCallback);
+            }
+            catch (Error | RuntimeException exception) {
+              wrapped.put("error", wrapError(exception));
+              reply.reply(wrapped);
+            }
+          });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(binaryMessenger, "dev.flutter.pigeon.ReachFiveHostApi.updatePasswordWithFreshAccessToken", getCodec());
+        if (api != null) {
+          channel.setMessageHandler((message, reply) -> {
+            Map<String, Object> wrapped = new HashMap<>();
+            try {
+              ArrayList<Object> args = (ArrayList<Object>)message;
+              UpdatePasswordWithFreshAccessTokenRequestInterface requestArg = (UpdatePasswordWithFreshAccessTokenRequestInterface)args.get(0);
+              if (requestArg == null) {
+                throw new NullPointerException("requestArg unexpectedly null.");
+              }
+              Result<Void> resultCallback = new Result<Void>() {
+                public void success(Void result) {
+                  wrapped.put("result", null);
+                  reply.reply(wrapped);
+                }
+                public void error(Throwable error) {
+                  wrapped.put("error", wrapError(error));
+                  reply.reply(wrapped);
+                }
+              };
+
+              api.updatePasswordWithFreshAccessToken(requestArg, resultCallback);
+            }
+            catch (Error | RuntimeException exception) {
+              wrapped.put("error", wrapError(exception));
+              reply.reply(wrapped);
+            }
+          });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(binaryMessenger, "dev.flutter.pigeon.ReachFiveHostApi.updatePasswordWithEmail", getCodec());
+        if (api != null) {
+          channel.setMessageHandler((message, reply) -> {
+            Map<String, Object> wrapped = new HashMap<>();
+            try {
+              ArrayList<Object> args = (ArrayList<Object>)message;
+              UpdatePasswordWithEmailRequestInterface requestArg = (UpdatePasswordWithEmailRequestInterface)args.get(0);
+              if (requestArg == null) {
+                throw new NullPointerException("requestArg unexpectedly null.");
+              }
+              Result<Void> resultCallback = new Result<Void>() {
+                public void success(Void result) {
+                  wrapped.put("result", null);
+                  reply.reply(wrapped);
+                }
+                public void error(Throwable error) {
+                  wrapped.put("error", wrapError(error));
+                  reply.reply(wrapped);
+                }
+              };
+
+              api.updatePasswordWithEmail(requestArg, resultCallback);
+            }
+            catch (Error | RuntimeException exception) {
+              wrapped.put("error", wrapError(exception));
+              reply.reply(wrapped);
+            }
+          });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(binaryMessenger, "dev.flutter.pigeon.ReachFiveHostApi.updatePasswordWithPhoneNumber", getCodec());
+        if (api != null) {
+          channel.setMessageHandler((message, reply) -> {
+            Map<String, Object> wrapped = new HashMap<>();
+            try {
+              ArrayList<Object> args = (ArrayList<Object>)message;
+              UpdatePasswordWithPhoneNumberRequestInterface requestArg = (UpdatePasswordWithPhoneNumberRequestInterface)args.get(0);
+              if (requestArg == null) {
+                throw new NullPointerException("requestArg unexpectedly null.");
+              }
+              Result<Void> resultCallback = new Result<Void>() {
+                public void success(Void result) {
+                  wrapped.put("result", null);
+                  reply.reply(wrapped);
+                }
+                public void error(Throwable error) {
+                  wrapped.put("error", wrapError(error));
+                  reply.reply(wrapped);
+                }
+              };
+
+              api.updatePasswordWithPhoneNumber(requestArg, resultCallback);
             }
             catch (Error | RuntimeException exception) {
               wrapped.put("error", wrapError(exception));

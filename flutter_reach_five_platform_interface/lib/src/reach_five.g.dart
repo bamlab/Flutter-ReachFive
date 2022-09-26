@@ -548,6 +548,135 @@ class RequestPasswordResetRequestInterface {
   }
 }
 
+class UpdatePasswordWithAccessTokenRequestInterface {
+  UpdatePasswordWithAccessTokenRequestInterface({
+    required this.config,
+    required this.authToken,
+    required this.oldPassword,
+    required this.password,
+  });
+
+  ReachFiveConfigInterface config;
+  AuthTokenInterface authToken;
+  String oldPassword;
+  String password;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['config'] = config.encode();
+    pigeonMap['authToken'] = authToken.encode();
+    pigeonMap['oldPassword'] = oldPassword;
+    pigeonMap['password'] = password;
+    return pigeonMap;
+  }
+
+  static UpdatePasswordWithAccessTokenRequestInterface decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return UpdatePasswordWithAccessTokenRequestInterface(
+      config: ReachFiveConfigInterface.decode(pigeonMap['config']!),
+      authToken: AuthTokenInterface.decode(pigeonMap['authToken']!),
+      oldPassword: pigeonMap['oldPassword']! as String,
+      password: pigeonMap['password']! as String,
+    );
+  }
+}
+
+class UpdatePasswordWithFreshAccessTokenRequestInterface {
+  UpdatePasswordWithFreshAccessTokenRequestInterface({
+    required this.config,
+    required this.freshAuthToken,
+    required this.password,
+  });
+
+  ReachFiveConfigInterface config;
+  AuthTokenInterface freshAuthToken;
+  String password;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['config'] = config.encode();
+    pigeonMap['freshAuthToken'] = freshAuthToken.encode();
+    pigeonMap['password'] = password;
+    return pigeonMap;
+  }
+
+  static UpdatePasswordWithFreshAccessTokenRequestInterface decode(
+      Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return UpdatePasswordWithFreshAccessTokenRequestInterface(
+      config: ReachFiveConfigInterface.decode(pigeonMap['config']!),
+      freshAuthToken: AuthTokenInterface.decode(pigeonMap['freshAuthToken']!),
+      password: pigeonMap['password']! as String,
+    );
+  }
+}
+
+class UpdatePasswordWithEmailRequestInterface {
+  UpdatePasswordWithEmailRequestInterface({
+    required this.config,
+    required this.email,
+    required this.verificationCode,
+    required this.password,
+  });
+
+  ReachFiveConfigInterface config;
+  String email;
+  String verificationCode;
+  String password;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['config'] = config.encode();
+    pigeonMap['email'] = email;
+    pigeonMap['verificationCode'] = verificationCode;
+    pigeonMap['password'] = password;
+    return pigeonMap;
+  }
+
+  static UpdatePasswordWithEmailRequestInterface decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return UpdatePasswordWithEmailRequestInterface(
+      config: ReachFiveConfigInterface.decode(pigeonMap['config']!),
+      email: pigeonMap['email']! as String,
+      verificationCode: pigeonMap['verificationCode']! as String,
+      password: pigeonMap['password']! as String,
+    );
+  }
+}
+
+class UpdatePasswordWithPhoneNumberRequestInterface {
+  UpdatePasswordWithPhoneNumberRequestInterface({
+    required this.config,
+    required this.phoneNumber,
+    required this.verificationCode,
+    required this.password,
+  });
+
+  ReachFiveConfigInterface config;
+  String phoneNumber;
+  String verificationCode;
+  String password;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['config'] = config.encode();
+    pigeonMap['phoneNumber'] = phoneNumber;
+    pigeonMap['verificationCode'] = verificationCode;
+    pigeonMap['password'] = password;
+    return pigeonMap;
+  }
+
+  static UpdatePasswordWithPhoneNumberRequestInterface decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return UpdatePasswordWithPhoneNumberRequestInterface(
+      config: ReachFiveConfigInterface.decode(pigeonMap['config']!),
+      phoneNumber: pigeonMap['phoneNumber']! as String,
+      verificationCode: pigeonMap['verificationCode']! as String,
+      password: pigeonMap['password']! as String,
+    );
+  }
+}
+
 class _ReachFiveHostApiCodec extends StandardMessageCodec {
   const _ReachFiveHostApiCodec();
   @override
@@ -584,6 +713,18 @@ class _ReachFiveHostApiCodec extends StandardMessageCodec {
       writeValue(buffer, value.encode());
     } else if (value is SignupRequestInterface) {
       buffer.putUint8(138);
+      writeValue(buffer, value.encode());
+    } else if (value is UpdatePasswordWithAccessTokenRequestInterface) {
+      buffer.putUint8(139);
+      writeValue(buffer, value.encode());
+    } else if (value is UpdatePasswordWithEmailRequestInterface) {
+      buffer.putUint8(140);
+      writeValue(buffer, value.encode());
+    } else if (value is UpdatePasswordWithFreshAccessTokenRequestInterface) {
+      buffer.putUint8(141);
+      writeValue(buffer, value.encode());
+    } else if (value is UpdatePasswordWithPhoneNumberRequestInterface) {
+      buffer.putUint8(142);
       writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
@@ -625,6 +766,22 @@ class _ReachFiveHostApiCodec extends StandardMessageCodec {
 
       case 138:
         return SignupRequestInterface.decode(readValue(buffer)!);
+
+      case 139:
+        return UpdatePasswordWithAccessTokenRequestInterface.decode(
+            readValue(buffer)!);
+
+      case 140:
+        return UpdatePasswordWithEmailRequestInterface.decode(
+            readValue(buffer)!);
+
+      case 141:
+        return UpdatePasswordWithFreshAccessTokenRequestInterface.decode(
+            readValue(buffer)!);
+
+      case 142:
+        return UpdatePasswordWithPhoneNumberRequestInterface.decode(
+            readValue(buffer)!);
 
       default:
         return super.readValueOfType(type, buffer);
@@ -790,6 +947,109 @@ class ReachFiveHostApi {
       RequestPasswordResetRequestInterface arg_request) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.ReachFiveHostApi.requestPasswordReset', codec,
+        binaryMessenger: _binaryMessenger);
+    final Map<Object?, Object?>? replyMap =
+        await channel.send(<Object?>[arg_request]) as Map<Object?, Object?>?;
+    if (replyMap == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyMap['error'] != null) {
+      final Map<Object?, Object?> error =
+          (replyMap['error'] as Map<Object?, Object?>?)!;
+      throw PlatformException(
+        code: (error['code'] as String?)!,
+        message: error['message'] as String?,
+        details: error['details'],
+      );
+    } else {
+      return;
+    }
+  }
+
+  Future<void> updatePasswordWithAccessToken(
+      UpdatePasswordWithAccessTokenRequestInterface arg_request) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.ReachFiveHostApi.updatePasswordWithAccessToken',
+        codec,
+        binaryMessenger: _binaryMessenger);
+    final Map<Object?, Object?>? replyMap =
+        await channel.send(<Object?>[arg_request]) as Map<Object?, Object?>?;
+    if (replyMap == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyMap['error'] != null) {
+      final Map<Object?, Object?> error =
+          (replyMap['error'] as Map<Object?, Object?>?)!;
+      throw PlatformException(
+        code: (error['code'] as String?)!,
+        message: error['message'] as String?,
+        details: error['details'],
+      );
+    } else {
+      return;
+    }
+  }
+
+  Future<void> updatePasswordWithFreshAccessToken(
+      UpdatePasswordWithFreshAccessTokenRequestInterface arg_request) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.ReachFiveHostApi.updatePasswordWithFreshAccessToken',
+        codec,
+        binaryMessenger: _binaryMessenger);
+    final Map<Object?, Object?>? replyMap =
+        await channel.send(<Object?>[arg_request]) as Map<Object?, Object?>?;
+    if (replyMap == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyMap['error'] != null) {
+      final Map<Object?, Object?> error =
+          (replyMap['error'] as Map<Object?, Object?>?)!;
+      throw PlatformException(
+        code: (error['code'] as String?)!,
+        message: error['message'] as String?,
+        details: error['details'],
+      );
+    } else {
+      return;
+    }
+  }
+
+  Future<void> updatePasswordWithEmail(
+      UpdatePasswordWithEmailRequestInterface arg_request) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.ReachFiveHostApi.updatePasswordWithEmail', codec,
+        binaryMessenger: _binaryMessenger);
+    final Map<Object?, Object?>? replyMap =
+        await channel.send(<Object?>[arg_request]) as Map<Object?, Object?>?;
+    if (replyMap == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyMap['error'] != null) {
+      final Map<Object?, Object?> error =
+          (replyMap['error'] as Map<Object?, Object?>?)!;
+      throw PlatformException(
+        code: (error['code'] as String?)!,
+        message: error['message'] as String?,
+        details: error['details'],
+      );
+    } else {
+      return;
+    }
+  }
+
+  Future<void> updatePasswordWithPhoneNumber(
+      UpdatePasswordWithPhoneNumberRequestInterface arg_request) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.ReachFiveHostApi.updatePasswordWithPhoneNumber',
+        codec,
         binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_request]) as Map<Object?, Object?>?;

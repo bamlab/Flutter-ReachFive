@@ -251,6 +251,60 @@ class RequestPasswordResetRequestInterface {
   final String? redirectUrl;
 }
 
+class UpdatePasswordWithAccessTokenRequestInterface {
+  const UpdatePasswordWithAccessTokenRequestInterface({
+    required this.config,
+    required this.authToken,
+    required this.oldPassword,
+    required this.password,
+  });
+
+  final ReachFiveConfigInterface config;
+  final AuthTokenInterface authToken;
+  final String oldPassword;
+  final String password;
+}
+
+class UpdatePasswordWithFreshAccessTokenRequestInterface {
+  const UpdatePasswordWithFreshAccessTokenRequestInterface({
+    required this.config,
+    required this.freshAuthToken,
+    required this.password,
+  });
+
+  final ReachFiveConfigInterface config;
+  final AuthTokenInterface freshAuthToken;
+  final String password;
+}
+
+class UpdatePasswordWithEmailRequestInterface {
+  const UpdatePasswordWithEmailRequestInterface({
+    required this.config,
+    required this.email,
+    required this.verificationCode,
+    required this.password,
+  });
+
+  final ReachFiveConfigInterface config;
+  final String email;
+  final String verificationCode;
+  final String password;
+}
+
+class UpdatePasswordWithPhoneNumberRequestInterface {
+  const UpdatePasswordWithPhoneNumberRequestInterface({
+    required this.config,
+    required this.phoneNumber,
+    required this.verificationCode,
+    required this.password,
+  });
+
+  final ReachFiveConfigInterface config;
+  final String phoneNumber;
+  final String verificationCode;
+  final String password;
+}
+
 @HostApi()
 abstract class ReachFiveHostApi {
   @async
@@ -274,4 +328,24 @@ abstract class ReachFiveHostApi {
 
   @async
   void requestPasswordReset(RequestPasswordResetRequestInterface request);
+
+  @async
+  void updatePasswordWithAccessToken(
+    UpdatePasswordWithAccessTokenRequestInterface request,
+  );
+
+  @async
+  void updatePasswordWithFreshAccessToken(
+    UpdatePasswordWithFreshAccessTokenRequestInterface request,
+  );
+
+  @async
+  void updatePasswordWithEmail(
+    UpdatePasswordWithEmailRequestInterface request,
+  );
+
+  @async
+  void updatePasswordWithPhoneNumber(
+    UpdatePasswordWithPhoneNumberRequestInterface request,
+  );
 }

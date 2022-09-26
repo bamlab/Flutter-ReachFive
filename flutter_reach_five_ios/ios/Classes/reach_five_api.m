@@ -86,6 +86,26 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (nullable RequestPasswordResetRequestInterface *)nullableFromMap:(NSDictionary *)dict;
 - (NSDictionary *)toMap;
 @end
+@interface UpdatePasswordWithAccessTokenRequestInterface ()
++ (UpdatePasswordWithAccessTokenRequestInterface *)fromMap:(NSDictionary *)dict;
++ (nullable UpdatePasswordWithAccessTokenRequestInterface *)nullableFromMap:(NSDictionary *)dict;
+- (NSDictionary *)toMap;
+@end
+@interface UpdatePasswordWithFreshAccessTokenRequestInterface ()
++ (UpdatePasswordWithFreshAccessTokenRequestInterface *)fromMap:(NSDictionary *)dict;
++ (nullable UpdatePasswordWithFreshAccessTokenRequestInterface *)nullableFromMap:(NSDictionary *)dict;
+- (NSDictionary *)toMap;
+@end
+@interface UpdatePasswordWithEmailRequestInterface ()
++ (UpdatePasswordWithEmailRequestInterface *)fromMap:(NSDictionary *)dict;
++ (nullable UpdatePasswordWithEmailRequestInterface *)nullableFromMap:(NSDictionary *)dict;
+- (NSDictionary *)toMap;
+@end
+@interface UpdatePasswordWithPhoneNumberRequestInterface ()
++ (UpdatePasswordWithPhoneNumberRequestInterface *)fromMap:(NSDictionary *)dict;
++ (nullable UpdatePasswordWithPhoneNumberRequestInterface *)nullableFromMap:(NSDictionary *)dict;
+- (NSDictionary *)toMap;
+@end
 
 @implementation ReachFiveConfigInterface
 + (instancetype)makeWithDomain:(NSString *)domain
@@ -606,6 +626,141 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 }
 @end
 
+@implementation UpdatePasswordWithAccessTokenRequestInterface
++ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
+    authToken:(AuthTokenInterface *)authToken
+    oldPassword:(NSString *)oldPassword
+    password:(NSString *)password {
+  UpdatePasswordWithAccessTokenRequestInterface* pigeonResult = [[UpdatePasswordWithAccessTokenRequestInterface alloc] init];
+  pigeonResult.config = config;
+  pigeonResult.authToken = authToken;
+  pigeonResult.oldPassword = oldPassword;
+  pigeonResult.password = password;
+  return pigeonResult;
+}
++ (UpdatePasswordWithAccessTokenRequestInterface *)fromMap:(NSDictionary *)dict {
+  UpdatePasswordWithAccessTokenRequestInterface *pigeonResult = [[UpdatePasswordWithAccessTokenRequestInterface alloc] init];
+  pigeonResult.config = [ReachFiveConfigInterface nullableFromMap:GetNullableObject(dict, @"config")];
+  NSAssert(pigeonResult.config != nil, @"");
+  pigeonResult.authToken = [AuthTokenInterface nullableFromMap:GetNullableObject(dict, @"authToken")];
+  NSAssert(pigeonResult.authToken != nil, @"");
+  pigeonResult.oldPassword = GetNullableObject(dict, @"oldPassword");
+  NSAssert(pigeonResult.oldPassword != nil, @"");
+  pigeonResult.password = GetNullableObject(dict, @"password");
+  NSAssert(pigeonResult.password != nil, @"");
+  return pigeonResult;
+}
++ (nullable UpdatePasswordWithAccessTokenRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [UpdatePasswordWithAccessTokenRequestInterface fromMap:dict] : nil; }
+- (NSDictionary *)toMap {
+  return @{
+    @"config" : (self.config ? [self.config toMap] : [NSNull null]),
+    @"authToken" : (self.authToken ? [self.authToken toMap] : [NSNull null]),
+    @"oldPassword" : (self.oldPassword ?: [NSNull null]),
+    @"password" : (self.password ?: [NSNull null]),
+  };
+}
+@end
+
+@implementation UpdatePasswordWithFreshAccessTokenRequestInterface
++ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
+    freshAuthToken:(AuthTokenInterface *)freshAuthToken
+    password:(NSString *)password {
+  UpdatePasswordWithFreshAccessTokenRequestInterface* pigeonResult = [[UpdatePasswordWithFreshAccessTokenRequestInterface alloc] init];
+  pigeonResult.config = config;
+  pigeonResult.freshAuthToken = freshAuthToken;
+  pigeonResult.password = password;
+  return pigeonResult;
+}
++ (UpdatePasswordWithFreshAccessTokenRequestInterface *)fromMap:(NSDictionary *)dict {
+  UpdatePasswordWithFreshAccessTokenRequestInterface *pigeonResult = [[UpdatePasswordWithFreshAccessTokenRequestInterface alloc] init];
+  pigeonResult.config = [ReachFiveConfigInterface nullableFromMap:GetNullableObject(dict, @"config")];
+  NSAssert(pigeonResult.config != nil, @"");
+  pigeonResult.freshAuthToken = [AuthTokenInterface nullableFromMap:GetNullableObject(dict, @"freshAuthToken")];
+  NSAssert(pigeonResult.freshAuthToken != nil, @"");
+  pigeonResult.password = GetNullableObject(dict, @"password");
+  NSAssert(pigeonResult.password != nil, @"");
+  return pigeonResult;
+}
++ (nullable UpdatePasswordWithFreshAccessTokenRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [UpdatePasswordWithFreshAccessTokenRequestInterface fromMap:dict] : nil; }
+- (NSDictionary *)toMap {
+  return @{
+    @"config" : (self.config ? [self.config toMap] : [NSNull null]),
+    @"freshAuthToken" : (self.freshAuthToken ? [self.freshAuthToken toMap] : [NSNull null]),
+    @"password" : (self.password ?: [NSNull null]),
+  };
+}
+@end
+
+@implementation UpdatePasswordWithEmailRequestInterface
++ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
+    email:(NSString *)email
+    verificationCode:(NSString *)verificationCode
+    password:(NSString *)password {
+  UpdatePasswordWithEmailRequestInterface* pigeonResult = [[UpdatePasswordWithEmailRequestInterface alloc] init];
+  pigeonResult.config = config;
+  pigeonResult.email = email;
+  pigeonResult.verificationCode = verificationCode;
+  pigeonResult.password = password;
+  return pigeonResult;
+}
++ (UpdatePasswordWithEmailRequestInterface *)fromMap:(NSDictionary *)dict {
+  UpdatePasswordWithEmailRequestInterface *pigeonResult = [[UpdatePasswordWithEmailRequestInterface alloc] init];
+  pigeonResult.config = [ReachFiveConfigInterface nullableFromMap:GetNullableObject(dict, @"config")];
+  NSAssert(pigeonResult.config != nil, @"");
+  pigeonResult.email = GetNullableObject(dict, @"email");
+  NSAssert(pigeonResult.email != nil, @"");
+  pigeonResult.verificationCode = GetNullableObject(dict, @"verificationCode");
+  NSAssert(pigeonResult.verificationCode != nil, @"");
+  pigeonResult.password = GetNullableObject(dict, @"password");
+  NSAssert(pigeonResult.password != nil, @"");
+  return pigeonResult;
+}
++ (nullable UpdatePasswordWithEmailRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [UpdatePasswordWithEmailRequestInterface fromMap:dict] : nil; }
+- (NSDictionary *)toMap {
+  return @{
+    @"config" : (self.config ? [self.config toMap] : [NSNull null]),
+    @"email" : (self.email ?: [NSNull null]),
+    @"verificationCode" : (self.verificationCode ?: [NSNull null]),
+    @"password" : (self.password ?: [NSNull null]),
+  };
+}
+@end
+
+@implementation UpdatePasswordWithPhoneNumberRequestInterface
++ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
+    phoneNumber:(NSString *)phoneNumber
+    verificationCode:(NSString *)verificationCode
+    password:(NSString *)password {
+  UpdatePasswordWithPhoneNumberRequestInterface* pigeonResult = [[UpdatePasswordWithPhoneNumberRequestInterface alloc] init];
+  pigeonResult.config = config;
+  pigeonResult.phoneNumber = phoneNumber;
+  pigeonResult.verificationCode = verificationCode;
+  pigeonResult.password = password;
+  return pigeonResult;
+}
++ (UpdatePasswordWithPhoneNumberRequestInterface *)fromMap:(NSDictionary *)dict {
+  UpdatePasswordWithPhoneNumberRequestInterface *pigeonResult = [[UpdatePasswordWithPhoneNumberRequestInterface alloc] init];
+  pigeonResult.config = [ReachFiveConfigInterface nullableFromMap:GetNullableObject(dict, @"config")];
+  NSAssert(pigeonResult.config != nil, @"");
+  pigeonResult.phoneNumber = GetNullableObject(dict, @"phoneNumber");
+  NSAssert(pigeonResult.phoneNumber != nil, @"");
+  pigeonResult.verificationCode = GetNullableObject(dict, @"verificationCode");
+  NSAssert(pigeonResult.verificationCode != nil, @"");
+  pigeonResult.password = GetNullableObject(dict, @"password");
+  NSAssert(pigeonResult.password != nil, @"");
+  return pigeonResult;
+}
++ (nullable UpdatePasswordWithPhoneNumberRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [UpdatePasswordWithPhoneNumberRequestInterface fromMap:dict] : nil; }
+- (NSDictionary *)toMap {
+  return @{
+    @"config" : (self.config ? [self.config toMap] : [NSNull null]),
+    @"phoneNumber" : (self.phoneNumber ?: [NSNull null]),
+    @"verificationCode" : (self.verificationCode ?: [NSNull null]),
+    @"password" : (self.password ?: [NSNull null]),
+  };
+}
+@end
+
 @interface ReachFiveHostApiCodecReader : FlutterStandardReader
 @end
 @implementation ReachFiveHostApiCodecReader
@@ -644,6 +799,18 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
     
     case 138:     
       return [SignupRequestInterface fromMap:[self readValue]];
+    
+    case 139:     
+      return [UpdatePasswordWithAccessTokenRequestInterface fromMap:[self readValue]];
+    
+    case 140:     
+      return [UpdatePasswordWithEmailRequestInterface fromMap:[self readValue]];
+    
+    case 141:     
+      return [UpdatePasswordWithFreshAccessTokenRequestInterface fromMap:[self readValue]];
+    
+    case 142:     
+      return [UpdatePasswordWithPhoneNumberRequestInterface fromMap:[self readValue]];
     
     default:    
       return [super readValueOfType:type];
@@ -699,6 +866,22 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
   } else 
   if ([value isKindOfClass:[SignupRequestInterface class]]) {
     [self writeByte:138];
+    [self writeValue:[value toMap]];
+  } else 
+  if ([value isKindOfClass:[UpdatePasswordWithAccessTokenRequestInterface class]]) {
+    [self writeByte:139];
+    [self writeValue:[value toMap]];
+  } else 
+  if ([value isKindOfClass:[UpdatePasswordWithEmailRequestInterface class]]) {
+    [self writeByte:140];
+    [self writeValue:[value toMap]];
+  } else 
+  if ([value isKindOfClass:[UpdatePasswordWithFreshAccessTokenRequestInterface class]]) {
+    [self writeByte:141];
+    [self writeValue:[value toMap]];
+  } else 
+  if ([value isKindOfClass:[UpdatePasswordWithPhoneNumberRequestInterface class]]) {
+    [self writeByte:142];
     [self writeValue:[value toMap]];
   } else 
 {
@@ -842,6 +1025,86 @@ void ReachFiveHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<
         NSArray *args = message;
         RequestPasswordResetRequestInterface *arg_request = GetNullableObjectAtIndex(args, 0);
         [api requestPasswordResetRequest:arg_request completion:^(FlutterError *_Nullable error) {
+          callback(wrapResult(nil, error));
+        }];
+      }];
+    }
+    else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.ReachFiveHostApi.updatePasswordWithAccessToken"
+        binaryMessenger:binaryMessenger
+        codec:ReachFiveHostApiGetCodec()        ];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(updatePasswordWithAccessTokenRequest:completion:)], @"ReachFiveHostApi api (%@) doesn't respond to @selector(updatePasswordWithAccessTokenRequest:completion:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray *args = message;
+        UpdatePasswordWithAccessTokenRequestInterface *arg_request = GetNullableObjectAtIndex(args, 0);
+        [api updatePasswordWithAccessTokenRequest:arg_request completion:^(FlutterError *_Nullable error) {
+          callback(wrapResult(nil, error));
+        }];
+      }];
+    }
+    else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.ReachFiveHostApi.updatePasswordWithFreshAccessToken"
+        binaryMessenger:binaryMessenger
+        codec:ReachFiveHostApiGetCodec()        ];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(updatePasswordWithFreshAccessTokenRequest:completion:)], @"ReachFiveHostApi api (%@) doesn't respond to @selector(updatePasswordWithFreshAccessTokenRequest:completion:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray *args = message;
+        UpdatePasswordWithFreshAccessTokenRequestInterface *arg_request = GetNullableObjectAtIndex(args, 0);
+        [api updatePasswordWithFreshAccessTokenRequest:arg_request completion:^(FlutterError *_Nullable error) {
+          callback(wrapResult(nil, error));
+        }];
+      }];
+    }
+    else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.ReachFiveHostApi.updatePasswordWithEmail"
+        binaryMessenger:binaryMessenger
+        codec:ReachFiveHostApiGetCodec()        ];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(updatePasswordWithEmailRequest:completion:)], @"ReachFiveHostApi api (%@) doesn't respond to @selector(updatePasswordWithEmailRequest:completion:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray *args = message;
+        UpdatePasswordWithEmailRequestInterface *arg_request = GetNullableObjectAtIndex(args, 0);
+        [api updatePasswordWithEmailRequest:arg_request completion:^(FlutterError *_Nullable error) {
+          callback(wrapResult(nil, error));
+        }];
+      }];
+    }
+    else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.ReachFiveHostApi.updatePasswordWithPhoneNumber"
+        binaryMessenger:binaryMessenger
+        codec:ReachFiveHostApiGetCodec()        ];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(updatePasswordWithPhoneNumberRequest:completion:)], @"ReachFiveHostApi api (%@) doesn't respond to @selector(updatePasswordWithPhoneNumberRequest:completion:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray *args = message;
+        UpdatePasswordWithPhoneNumberRequestInterface *arg_request = GetNullableObjectAtIndex(args, 0);
+        [api updatePasswordWithPhoneNumberRequest:arg_request completion:^(FlutterError *_Nullable error) {
           callback(wrapResult(nil, error));
         }];
       }];
