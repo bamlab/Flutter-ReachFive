@@ -81,6 +81,11 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (nullable RefreshAccessTokenRequestInterface *)nullableFromMap:(NSDictionary *)dict;
 - (NSDictionary *)toMap;
 @end
+@interface RequestPasswordResetRequestInterface ()
++ (RequestPasswordResetRequestInterface *)fromMap:(NSDictionary *)dict;
++ (nullable RequestPasswordResetRequestInterface *)nullableFromMap:(NSDictionary *)dict;
+- (NSDictionary *)toMap;
+@end
 
 @implementation ReachFiveConfigInterface
 + (instancetype)makeWithDomain:(NSString *)domain
@@ -569,6 +574,38 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 }
 @end
 
+@implementation RequestPasswordResetRequestInterface
++ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
+    email:(nullable NSString *)email
+    phoneNumber:(nullable NSString *)phoneNumber
+    redirectUrl:(nullable NSString *)redirectUrl {
+  RequestPasswordResetRequestInterface* pigeonResult = [[RequestPasswordResetRequestInterface alloc] init];
+  pigeonResult.config = config;
+  pigeonResult.email = email;
+  pigeonResult.phoneNumber = phoneNumber;
+  pigeonResult.redirectUrl = redirectUrl;
+  return pigeonResult;
+}
++ (RequestPasswordResetRequestInterface *)fromMap:(NSDictionary *)dict {
+  RequestPasswordResetRequestInterface *pigeonResult = [[RequestPasswordResetRequestInterface alloc] init];
+  pigeonResult.config = [ReachFiveConfigInterface nullableFromMap:GetNullableObject(dict, @"config")];
+  NSAssert(pigeonResult.config != nil, @"");
+  pigeonResult.email = GetNullableObject(dict, @"email");
+  pigeonResult.phoneNumber = GetNullableObject(dict, @"phoneNumber");
+  pigeonResult.redirectUrl = GetNullableObject(dict, @"redirectUrl");
+  return pigeonResult;
+}
++ (nullable RequestPasswordResetRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [RequestPasswordResetRequestInterface fromMap:dict] : nil; }
+- (NSDictionary *)toMap {
+  return @{
+    @"config" : (self.config ? [self.config toMap] : [NSNull null]),
+    @"email" : (self.email ?: [NSNull null]),
+    @"phoneNumber" : (self.phoneNumber ?: [NSNull null]),
+    @"redirectUrl" : (self.redirectUrl ?: [NSNull null]),
+  };
+}
+@end
+
 @interface ReachFiveHostApiCodecReader : FlutterStandardReader
 @end
 @implementation ReachFiveHostApiCodecReader
@@ -603,6 +640,9 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
       return [RefreshAccessTokenRequestInterface fromMap:[self readValue]];
     
     case 137:     
+      return [RequestPasswordResetRequestInterface fromMap:[self readValue]];
+    
+    case 138:     
       return [SignupRequestInterface fromMap:[self readValue]];
     
     default:    
@@ -653,8 +693,12 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
     [self writeByte:136];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[SignupRequestInterface class]]) {
+  if ([value isKindOfClass:[RequestPasswordResetRequestInterface class]]) {
     [self writeByte:137];
+    [self writeValue:[value toMap]];
+  } else 
+  if ([value isKindOfClass:[SignupRequestInterface class]]) {
+    [self writeByte:138];
     [self writeValue:[value toMap]];
   } else 
 {
@@ -779,6 +823,26 @@ void ReachFiveHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<
         RefreshAccessTokenRequestInterface *arg_request = GetNullableObjectAtIndex(args, 0);
         [api refreshAccessTokenRequest:arg_request completion:^(AuthTokenInterface *_Nullable output, FlutterError *_Nullable error) {
           callback(wrapResult(output, error));
+        }];
+      }];
+    }
+    else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.ReachFiveHostApi.requestPasswordReset"
+        binaryMessenger:binaryMessenger
+        codec:ReachFiveHostApiGetCodec()        ];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(requestPasswordResetRequest:completion:)], @"ReachFiveHostApi api (%@) doesn't respond to @selector(requestPasswordResetRequest:completion:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray *args = message;
+        RequestPasswordResetRequestInterface *arg_request = GetNullableObjectAtIndex(args, 0);
+        [api requestPasswordResetRequest:arg_request completion:^(FlutterError *_Nullable error) {
+          callback(wrapResult(nil, error));
         }];
       }];
     }

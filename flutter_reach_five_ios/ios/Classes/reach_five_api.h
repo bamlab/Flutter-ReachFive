@@ -23,6 +23,7 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 @class AuthTokenInterface;
 @class LoginWithPasswordRequestInterface;
 @class RefreshAccessTokenRequestInterface;
+@class RequestPasswordResetRequestInterface;
 
 @interface ReachFiveConfigInterface : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
@@ -230,6 +231,19 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 @property(nonatomic, strong) AuthTokenInterface * authToken;
 @end
 
+@interface RequestPasswordResetRequestInterface : NSObject
+/// `init` unavailable to enforce nonnull fields, see the `make` class method.
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
+    email:(nullable NSString *)email
+    phoneNumber:(nullable NSString *)phoneNumber
+    redirectUrl:(nullable NSString *)redirectUrl;
+@property(nonatomic, strong) ReachFiveConfigInterface * config;
+@property(nonatomic, copy, nullable) NSString * email;
+@property(nonatomic, copy, nullable) NSString * phoneNumber;
+@property(nonatomic, copy, nullable) NSString * redirectUrl;
+@end
+
 /// The codec used by ReachFiveHostApi.
 NSObject<FlutterMessageCodec> *ReachFiveHostApiGetCodec(void);
 
@@ -239,6 +253,7 @@ NSObject<FlutterMessageCodec> *ReachFiveHostApiGetCodec(void);
 - (void)loginWithPasswordRequest:(LoginWithPasswordRequestInterface *)request completion:(void(^)(AuthTokenInterface *_Nullable, FlutterError *_Nullable))completion;
 - (void)logoutConfig:(ReachFiveConfigInterface *)config completion:(void(^)(FlutterError *_Nullable))completion;
 - (void)refreshAccessTokenRequest:(RefreshAccessTokenRequestInterface *)request completion:(void(^)(AuthTokenInterface *_Nullable, FlutterError *_Nullable))completion;
+- (void)requestPasswordResetRequest:(RequestPasswordResetRequestInterface *)request completion:(void(^)(FlutterError *_Nullable))completion;
 @end
 
 extern void ReachFiveHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<ReachFiveHostApi> *_Nullable api);

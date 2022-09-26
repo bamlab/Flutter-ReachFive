@@ -237,6 +237,20 @@ class RefreshAccessTokenRequestInterface {
   final AuthTokenInterface authToken;
 }
 
+class RequestPasswordResetRequestInterface {
+  const RequestPasswordResetRequestInterface({
+    required this.config,
+    required this.email,
+    required this.phoneNumber,
+    required this.redirectUrl,
+  });
+
+  final ReachFiveConfigInterface config;
+  final String? email;
+  final String? phoneNumber;
+  final String? redirectUrl;
+}
+
 @HostApi()
 abstract class ReachFiveHostApi {
   @async
@@ -257,4 +271,7 @@ abstract class ReachFiveHostApi {
   AuthTokenInterface refreshAccessToken(
     RefreshAccessTokenRequestInterface request,
   );
+
+  @async
+  void requestPasswordReset(RequestPasswordResetRequestInterface request);
 }
