@@ -123,13 +123,13 @@ class ReachFive {
     return AuthTokenConverter.fromInterface(authTokenInterface);
   }
 
-  /// {@template flutter_reach_five.reachFive.revokeRefreshToken}
+  /// {@template flutter_reach_five.reachFive.revokeToken}
   /// Revoke an [AuthToken] refreshToken or accessToken depending on
   /// the [revokeTokenType] for an user and a clientId
   ///
   /// clientSecret is necessary only if your client's authorization method is POST
   ///
-  /// See the ReachFive doc for [Revoke refresh token](https://developer.reachfive.com/openapi/identity.html#operation/revokeToken) endpoint
+  /// See the ReachFive doc for [Revoke token](https://developer.reachfive.com/openapi/identity.html#operation/revokeToken) endpoint
   /// {@endtemplate}
   Future<void> revokeToken({
     required AuthToken authToken,
@@ -163,6 +163,22 @@ class ReachFive {
       onReceiveProgress: onReceiveProgress,
     );
   }
+
+  /// {@template flutter_reach_five.reachFive.requestPasswordReset}
+  /// Make request for password reset
+  /// You can personnalize the sent mail/SMS in the reachFive console
+  /// {@endtemplate}
+  Future<void> requestPasswordReset({
+    String? email,
+    String? phoneNumber,
+    String? redirectUrl,
+  }) =>
+      _platform.requestPasswordReset(
+        config: ReachFiveConfigConverter.toInterface(config),
+        email: email,
+        phoneNumber: phoneNumber,
+        redirectUrl: redirectUrl,
+      );
 }
 
 /// {@template flutter_reach_five.reachFiveManager}

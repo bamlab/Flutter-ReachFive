@@ -181,11 +181,7 @@ void main() {
           scheme: 'scheme',
         );
         final reachFive = ReachFive(
-          config: const ReachFiveConfig(
-            domain: 'domain',
-            clientId: 'clientId',
-            scheme: 'scheme',
-          ),
+          config: config,
           repo: mockReachFiveRepo,
         );
 
@@ -304,6 +300,45 @@ void main() {
         verify(
           () => mockOAuthApi.revokeToken(
             revokeTokenRequest: any(named: 'revokeTokenRequest'),
+          ),
+        ).called(1);
+      });
+    });
+
+    group('requestPasswordReset', () {
+      test('call requestPasswordReset method', () async {
+        const config = ReachFiveConfig(
+          domain: 'domain',
+          clientId: 'clientId',
+          scheme: 'scheme',
+        );
+        final reachFive = ReachFive(
+          config: config,
+          repo: mockReachFiveRepo,
+        );
+
+        const email = 'email';
+        const redirectUrl = 'redirectUrl';
+
+        registerFallbackValue(ReachFiveConfigConverter.toInterface(config));
+        when(
+          () => flutterReachFivePlatform.requestPasswordReset(
+            config: any(named: 'config'),
+            email: email,
+            redirectUrl: redirectUrl,
+          ),
+        ).thenAnswer((_) async {});
+
+        await reachFive.requestPasswordReset(
+          email: email,
+          redirectUrl: redirectUrl,
+        );
+
+        verify(
+          () => flutterReachFivePlatform.requestPasswordReset(
+            config: any(named: 'config'),
+            email: email,
+            redirectUrl: redirectUrl,
           ),
         ).called(1);
       });
