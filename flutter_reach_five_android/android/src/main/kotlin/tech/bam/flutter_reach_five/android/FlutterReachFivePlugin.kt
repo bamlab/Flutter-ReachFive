@@ -150,4 +150,25 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
             failure = { error -> result?.error(error)}
         )
     }
+
+    override fun requestPasswordReset(
+        request: ReachFiveApi.RequestPasswordResetRequestInterface,
+        result: ReachFiveApi.Result<Void>?
+    ) {
+        val reachFive: ReachFive
+        try {
+            reachFive = getReachFiveInstance(reachFiveConfig = request.config)
+        } catch (error: Error) {
+            result?.error(error)
+            return
+        }
+        
+        reachFive.requestPasswordReset(
+            email = request.email,
+            phoneNumber = request.phoneNumber,
+            redirectUrl = request.redirectUrl,
+            success = { result?.success(null)},
+            failure = {error -> result?.error(error)}
+        )
+    }
 }
