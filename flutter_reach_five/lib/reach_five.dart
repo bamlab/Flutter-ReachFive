@@ -123,13 +123,13 @@ class ReachFive {
     return AuthTokenConverter.fromInterface(authTokenInterface);
   }
 
-  /// {@template flutter_reach_five.reachFive.revokeRefreshToken}
+  /// {@template flutter_reach_five.reachFive.revokeToken}
   /// Revoke an [AuthToken] refreshToken or accessToken depending on
   /// the [revokeTokenType] for an user and a clientId
   ///
   /// clientSecret is necessary only if your client's authorization method is POST
   ///
-  /// See the ReachFive doc for [Revoke refresh token](https://developer.reachfive.com/openapi/identity.html#operation/revokeToken) endpoint
+  /// See the ReachFive doc for [Revoke token](https://developer.reachfive.com/openapi/identity.html#operation/revokeToken) endpoint
   /// {@endtemplate}
   Future<void> revokeToken({
     required AuthToken authToken,
@@ -161,6 +161,75 @@ class ReachFive {
       validateStatus: validateStatus,
       onSendProgress: onSendProgress,
       onReceiveProgress: onReceiveProgress,
+    );
+  }
+
+  /// {@template flutter_reach_five.reachFive.requestPasswordReset}
+  /// Make request for password reset
+  /// You can personnalize the sent mail/SMS in the reachFive console
+  /// {@endtemplate}
+  Future<void> requestPasswordReset({
+    String? email,
+    String? phoneNumber,
+    String? redirectUrl,
+  }) =>
+      _platform.requestPasswordReset(
+        config: ReachFiveConfigConverter.toInterface(config),
+        email: email,
+        phoneNumber: phoneNumber,
+        redirectUrl: redirectUrl,
+      );
+
+  /// {@template flutter_reach_five.reachFive.updatePassword}
+  /// Make request for password reset
+  ///
+  /// You can choose between a [UpdatePasswordRequestWithAccessToken]
+  /// that require a authToken and your oldPassword
+  ///
+  /// or a [UpdatePasswordRequestWithFreshAccessToken]
+  /// that need a authToken with an access token from less than 5 minutes ago
+  ///
+  /// or a [UpdatePasswordRequestWithEmail]
+  /// that need your email and a verification code
+  ///
+  /// or a [UpdatePasswordRequestWithPhoneNumber]
+  /// that need your phone number and a verification code
+  /// {@endtemplate}
+  Future<void> updatePassword(
+    UpdatePasswordRequest updatePasswordRequest,
+  ) async {
+    await updatePasswordRequest.map<Future<void>>(
+      withAccessToken: (updatePasswordRequestWithAccessToken) =>
+          _platform.updatePasswordWithAccessToken(
+        config: ReachFiveConfigConverter.toInterface(config),
+        authToken: AuthTokenConverter.toInterface(
+          updatePasswordRequestWithAccessToken.authToken,
+        ),
+        oldPassword: updatePasswordRequestWithAccessToken.oldPassword,
+        newPassword: updatePasswordRequestWithAccessToken.newPassword,
+      ),
+      withFreshAccessToken: (updatePasswordRequestWithFreshAccessToken) =>
+          _platform.updatePasswordWithFreshAccessToken(
+        config: ReachFiveConfigConverter.toInterface(config),
+        freshAuthToken: AuthTokenConverter.toInterface(
+          updatePasswordRequestWithFreshAccessToken.freshAuthToken,
+        ),
+        newPassword: updatePasswordRequestWithFreshAccessToken.newPassword,
+      ),
+      withEmail: (updatePasswordRequestWithEmail) =>
+          _platform.updatePasswordWithEmail(
+        config: ReachFiveConfigConverter.toInterface(config),
+        email: updatePasswordRequestWithEmail.email,
+        verificationCode: updatePasswordRequestWithEmail.verificationCode,
+        newPassword: updatePasswordRequestWithEmail.newPassword,
+      ),
+      withPhoneNumber: (updatePasswordRequestWithPhoneNumber) =>
+          _platform.updatePasswordWithPhoneNumber(
+        config: ReachFiveConfigConverter.toInterface(config),
+        phoneNumber: updatePasswordRequestWithPhoneNumber.phoneNumber,
+        verificationCode: updatePasswordRequestWithPhoneNumber.verificationCode,
+        newPassword: updatePasswordRequestWithPhoneNumber.newPassword,
+      ),
     );
   }
 }

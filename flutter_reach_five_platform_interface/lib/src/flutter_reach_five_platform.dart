@@ -112,4 +112,82 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
           authToken: authToken,
         ),
       );
+
+  /// {@macro flutter_reach_five.reachFive.requestPasswordReset}
+  Future<void> requestPasswordReset({
+    required ReachFiveConfigInterface config,
+    String? email,
+    String? phoneNumber,
+    String? redirectUrl,
+  }) =>
+      reachFiveHostApi.requestPasswordReset(
+        RequestPasswordResetRequestInterface(
+          config: config,
+          email: email,
+          phoneNumber: phoneNumber,
+          redirectUrl: redirectUrl,
+        ),
+      );
+
+  /// {@macro flutter_reach_five.reachFive.updatePassword}
+  Future<void> updatePasswordWithAccessToken({
+    required ReachFiveConfigInterface config,
+    required AuthTokenInterface authToken,
+    required String oldPassword,
+    required String newPassword,
+  }) =>
+      reachFiveHostApi.updatePasswordWithAccessToken(
+        UpdatePasswordWithAccessTokenRequestInterface(
+          config: config,
+          authToken: authToken,
+          oldPassword: oldPassword,
+          password: newPassword,
+        ),
+      );
+
+  /// {@macro flutter_reach_five.reachFive.updatePassword}
+  Future<void> updatePasswordWithFreshAccessToken({
+    required ReachFiveConfigInterface config,
+    required AuthTokenInterface freshAuthToken,
+    required String newPassword,
+  }) =>
+      reachFiveHostApi.updatePasswordWithFreshAccessToken(
+        UpdatePasswordWithFreshAccessTokenRequestInterface(
+          config: config,
+          freshAuthToken: freshAuthToken,
+          password: newPassword,
+        ),
+      );
+
+  /// {@macro flutter_reach_five.reachFive.updatePassword}
+  Future<void> updatePasswordWithEmail({
+    required ReachFiveConfigInterface config,
+    required String email,
+    required String verificationCode,
+    required String newPassword,
+  }) =>
+      reachFiveHostApi.updatePasswordWithEmail(
+        UpdatePasswordWithEmailRequestInterface(
+          config: config,
+          email: email,
+          verificationCode: verificationCode,
+          password: newPassword,
+        ),
+      );
+
+  /// {@macro flutter_reach_five.reachFive.updatePassword}
+  Future<void> updatePasswordWithPhoneNumber({
+    required ReachFiveConfigInterface config,
+    required String phoneNumber,
+    required String verificationCode,
+    required String newPassword,
+  }) =>
+      reachFiveHostApi.updatePasswordWithPhoneNumber(
+        UpdatePasswordWithPhoneNumberRequestInterface(
+          config: config,
+          phoneNumber: phoneNumber,
+          verificationCode: verificationCode,
+          password: newPassword,
+        ),
+      );
 }

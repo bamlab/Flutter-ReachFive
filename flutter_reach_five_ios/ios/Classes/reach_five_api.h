@@ -23,6 +23,11 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 @class AuthTokenInterface;
 @class LoginWithPasswordRequestInterface;
 @class RefreshAccessTokenRequestInterface;
+@class RequestPasswordResetRequestInterface;
+@class UpdatePasswordWithAccessTokenRequestInterface;
+@class UpdatePasswordWithFreshAccessTokenRequestInterface;
+@class UpdatePasswordWithEmailRequestInterface;
+@class UpdatePasswordWithPhoneNumberRequestInterface;
 
 @interface ReachFiveConfigInterface : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
@@ -230,6 +235,69 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 @property(nonatomic, strong) AuthTokenInterface * authToken;
 @end
 
+@interface RequestPasswordResetRequestInterface : NSObject
+/// `init` unavailable to enforce nonnull fields, see the `make` class method.
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
+    email:(nullable NSString *)email
+    phoneNumber:(nullable NSString *)phoneNumber
+    redirectUrl:(nullable NSString *)redirectUrl;
+@property(nonatomic, strong) ReachFiveConfigInterface * config;
+@property(nonatomic, copy, nullable) NSString * email;
+@property(nonatomic, copy, nullable) NSString * phoneNumber;
+@property(nonatomic, copy, nullable) NSString * redirectUrl;
+@end
+
+@interface UpdatePasswordWithAccessTokenRequestInterface : NSObject
+/// `init` unavailable to enforce nonnull fields, see the `make` class method.
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
+    authToken:(AuthTokenInterface *)authToken
+    oldPassword:(NSString *)oldPassword
+    password:(NSString *)password;
+@property(nonatomic, strong) ReachFiveConfigInterface * config;
+@property(nonatomic, strong) AuthTokenInterface * authToken;
+@property(nonatomic, copy) NSString * oldPassword;
+@property(nonatomic, copy) NSString * password;
+@end
+
+@interface UpdatePasswordWithFreshAccessTokenRequestInterface : NSObject
+/// `init` unavailable to enforce nonnull fields, see the `make` class method.
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
+    freshAuthToken:(AuthTokenInterface *)freshAuthToken
+    password:(NSString *)password;
+@property(nonatomic, strong) ReachFiveConfigInterface * config;
+@property(nonatomic, strong) AuthTokenInterface * freshAuthToken;
+@property(nonatomic, copy) NSString * password;
+@end
+
+@interface UpdatePasswordWithEmailRequestInterface : NSObject
+/// `init` unavailable to enforce nonnull fields, see the `make` class method.
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
+    email:(NSString *)email
+    verificationCode:(NSString *)verificationCode
+    password:(NSString *)password;
+@property(nonatomic, strong) ReachFiveConfigInterface * config;
+@property(nonatomic, copy) NSString * email;
+@property(nonatomic, copy) NSString * verificationCode;
+@property(nonatomic, copy) NSString * password;
+@end
+
+@interface UpdatePasswordWithPhoneNumberRequestInterface : NSObject
+/// `init` unavailable to enforce nonnull fields, see the `make` class method.
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
+    phoneNumber:(NSString *)phoneNumber
+    verificationCode:(NSString *)verificationCode
+    password:(NSString *)password;
+@property(nonatomic, strong) ReachFiveConfigInterface * config;
+@property(nonatomic, copy) NSString * phoneNumber;
+@property(nonatomic, copy) NSString * verificationCode;
+@property(nonatomic, copy) NSString * password;
+@end
+
 /// The codec used by ReachFiveHostApi.
 NSObject<FlutterMessageCodec> *ReachFiveHostApiGetCodec(void);
 
@@ -239,6 +307,11 @@ NSObject<FlutterMessageCodec> *ReachFiveHostApiGetCodec(void);
 - (void)loginWithPasswordRequest:(LoginWithPasswordRequestInterface *)request completion:(void(^)(AuthTokenInterface *_Nullable, FlutterError *_Nullable))completion;
 - (void)logoutConfig:(ReachFiveConfigInterface *)config completion:(void(^)(FlutterError *_Nullable))completion;
 - (void)refreshAccessTokenRequest:(RefreshAccessTokenRequestInterface *)request completion:(void(^)(AuthTokenInterface *_Nullable, FlutterError *_Nullable))completion;
+- (void)requestPasswordResetRequest:(RequestPasswordResetRequestInterface *)request completion:(void(^)(FlutterError *_Nullable))completion;
+- (void)updatePasswordWithAccessTokenRequest:(UpdatePasswordWithAccessTokenRequestInterface *)request completion:(void(^)(FlutterError *_Nullable))completion;
+- (void)updatePasswordWithFreshAccessTokenRequest:(UpdatePasswordWithFreshAccessTokenRequestInterface *)request completion:(void(^)(FlutterError *_Nullable))completion;
+- (void)updatePasswordWithEmailRequest:(UpdatePasswordWithEmailRequestInterface *)request completion:(void(^)(FlutterError *_Nullable))completion;
+- (void)updatePasswordWithPhoneNumberRequest:(UpdatePasswordWithPhoneNumberRequestInterface *)request completion:(void(^)(FlutterError *_Nullable))completion;
 @end
 
 extern void ReachFiveHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<ReachFiveHostApi> *_Nullable api);
