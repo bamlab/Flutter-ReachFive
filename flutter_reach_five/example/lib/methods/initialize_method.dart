@@ -88,16 +88,19 @@ class _InitializeMethodState extends State<InitializeMethod> {
         if (widget.reachFive == null) ...[
           CustomTextField(
             value: domain,
+            hintText: 'domain',
             setValue: setDomain,
           ),
           const SizedBox(height: 16),
           CustomTextField(
             value: clientId,
+            hintText: 'clientId',
             setValue: setClientId,
           ),
           const SizedBox(height: 16),
           CustomTextField(
             value: scheme,
+            hintText: 'scheme',
             setValue: setScheme,
           ),
         ] else ...[

@@ -78,11 +78,13 @@ class UpdatePasswordMethodState extends State<UpdatePasswordMethod> {
       children: [
         CustomTextField(
           value: verificationCode,
+          hintText: 'verificationCode',
           setValue: setVerificationCode,
         ),
         const SizedBox(height: 16),
         CustomTextField(
           value: newPassword,
+          hintText: 'newPassword',
           setValue: setNewPassword,
         ),
         const SizedBox(height: 32),

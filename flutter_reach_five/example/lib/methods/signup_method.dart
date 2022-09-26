@@ -114,31 +114,37 @@ class SignupMethodState extends State<SignupMethod> {
         if (authToken == null) ...[
           CustomTextField(
             value: email,
+            hintText: 'email',
             setValue: setEmail,
           ),
           const SizedBox(height: 16),
           CustomTextField(
             value: password,
+            hintText: 'password',
             setValue: setPassword,
           ),
           const SizedBox(height: 16),
           CustomTextField(
             value: familyName,
+            hintText: 'familyName',
             setValue: setFamilyName,
           ),
           const SizedBox(height: 16),
           CustomTextField(
             value: givenName,
+            hintText: 'givenName',
             setValue: setGivenName,
           ),
           const SizedBox(height: 16),
           CustomTextField(
             value: middleName,
+            hintText: 'middleName',
             setValue: setMiddleName,
           ),
           const SizedBox(height: 16),
           CustomTextField(
             value: nickname,
+            hintText: 'nickname',
             setValue: setNickname,
           ),
         ] else ...[

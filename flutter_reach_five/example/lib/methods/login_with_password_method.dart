@@ -90,11 +90,13 @@ class LoginWithPasswordMethodState extends State<LoginWithPasswordMethod> {
         if (authToken == null) ...[
           CustomTextField(
             value: email,
+            hintText: 'email',
             setValue: setEmail,
           ),
           const SizedBox(height: 16),
           CustomTextField(
             value: password,
+            hintText: 'password',
             setValue: setPassword,
           ),
         ] else ...[
