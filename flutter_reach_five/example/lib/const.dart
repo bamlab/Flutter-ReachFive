@@ -30,6 +30,9 @@ abstract class DataSet {
 
   /// Your reach five account nickname
   String get initialNickame;
+
+  /// Your reach five redirectUrl
+  String get initialRedirectUrl;
 }
 
 class _FirstDataSet extends DataSet {
@@ -74,6 +77,10 @@ class _FirstDataSet extends DataSet {
   /// Your reach five account nickname
   @override
   String get initialNickame => 'MyFirstInstanceUserNickname';
+
+  /// Your reach five redirectUrl
+  @override
+  String get initialRedirectUrl => '';
 }
 
 class _SecondDataSet extends DataSet {
@@ -118,6 +125,10 @@ class _SecondDataSet extends DataSet {
   /// Your reach five account nickname
   @override
   String get initialNickame => 'MySecondInstanceUserNickname';
+
+  /// Your reach five redirectUrl
+  @override
+  String get initialRedirectUrl => '';
 }
 
 class DataSets {
