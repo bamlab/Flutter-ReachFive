@@ -1,6 +1,3 @@
-import 'package:reach_five_repo/src/model/delete_credential401_response.dart';
-import 'package:reach_five_repo/src/model/delete_phone_number_credential_request.dart';
-import 'package:reach_five_repo/src/model/profile_fields.dart';
 import 'package:reach_five_repo/src/model/revoke_token_request.dart';
 
 final _regList = RegExp(r'^List<(.*)>$');
@@ -22,15 +19,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return (valueString == 'true' || valueString == '1') as ReturnType;
     case 'double':
       return (value is double ? value : double.parse('$value')) as ReturnType;
-    case 'DeleteCredential401Response':
-      return DeleteCredential401Response.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'DeletePhoneNumberCredentialRequest':
-      return DeletePhoneNumberCredentialRequest.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
-    case 'ProfileFields':
-      return ProfileFields.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
     case 'RevokeTokenRequest':
       return RevokeTokenRequest.fromJson(value as Map<String, dynamic>)
           as ReturnType;

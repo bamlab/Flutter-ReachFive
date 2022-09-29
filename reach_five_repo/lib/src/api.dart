@@ -7,8 +7,6 @@ import 'package:reach_five_repo/src/auth/api_key_auth.dart';
 import 'package:reach_five_repo/src/auth/basic_auth.dart';
 import 'package:reach_five_repo/src/auth/bearer_auth.dart';
 import 'package:reach_five_repo/src/auth/oauth.dart';
-import 'package:reach_five_repo/src/api/fido2_api.dart';
-import 'package:reach_five_repo/src/api/mfa_api.dart';
 import 'package:reach_five_repo/src/api/o_auth_api.dart';
 
 class ReachFiveRepo {
@@ -70,18 +68,6 @@ class ReachFiveRepo {
               as ApiKeyAuthInterceptor)
           .apiKeys[name] = apiKey;
     }
-  }
-
-  /// Get FIDO2Api instance, base route and serializer can be overridden by a given but be careful,
-  /// by doing that all interceptors will not be executed
-  FIDO2Api getFIDO2Api() {
-    return FIDO2Api(dio);
-  }
-
-  /// Get MFAApi instance, base route and serializer can be overridden by a given but be careful,
-  /// by doing that all interceptors will not be executed
-  MFAApi getMFAApi() {
-    return MFAApi(dio);
   }
 
   /// Get OAuthApi instance, base route and serializer can be overridden by a given but be careful,

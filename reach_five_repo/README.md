@@ -144,14 +144,13 @@ Please follow the [installation procedure](#installation--usage) and then run th
 import 'package:reach_five_repo/reach_five_repo.dart';
 
 
-final api = ReachFiveRepo().getFIDO2Api();
-final String authorization = authorization_example; // String | Bearer `{token}` for a valid OAuth token.
-final String id = AValy7JUf5YjmYBdgP_xv5ZNJfyy0MNz8gHDJI6jQfqONDVfTza7Eq-ICNk6vcBKVT2NOavKTMRSiTjduwN7dAs_EcF3j9Zadb5EIBYq3KZgUw==; // String | The identifier of the credential.
+final api = ReachFiveRepo().getOAuthApi();
+final RevokeTokenRequest revokeTokenRequest = ; // RevokeTokenRequest | 
 
 try {
-    api.deleteCredential(authorization, id);
+    api.revokeToken(revokeTokenRequest);
 } catch on DioError (e) {
-    print("Exception when calling FIDO2Api->deleteCredential: $e\n");
+    print("Exception when calling OAuthApi->revokeToken: $e\n");
 }
 
 ```
@@ -162,55 +161,17 @@ All URIs are relative to *https://YOUR_DOMAIN*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-[*FIDO2Api*](doc/FIDO2Api.md) | [**deleteCredential**](doc/FIDO2Api.md#deletecredential) | **DELETE** /identity/v1/webauthn/registration/{id} | Delete a credential of a user
-[*MFAApi*](doc/MFAApi.md) | [**deleteEmailCredential**](doc/MFAApi.md#deleteemailcredential) | **DELETE** /identity/v1/mfa/credentials/emails | Delete an MFA credential (email)
-[*MFAApi*](doc/MFAApi.md) | [**deletePhoneNumberCredential**](doc/MFAApi.md#deletephonenumbercredential) | **DELETE** /identity/v1/mfa/credentials/phone-numbers | Delete an MFA credential (phone number)
 [*OAuthApi*](doc/OAuthApi.md) | [**revokeToken**](doc/OAuthApi.md#revoketoken) | **POST** /oauth/revoke | Revoke a token
 
 
 ## Documentation For Models
 
- - [DeleteCredential401Response](doc/DeleteCredential401Response.md)
- - [DeletePhoneNumberCredentialRequest](doc/DeletePhoneNumberCredentialRequest.md)
- - [ProfileFields](doc/ProfileFields.md)
  - [RevokeTokenRequest](doc/RevokeTokenRequest.md)
 
 
 ## Documentation For Authorization
 
-
-## OAuth2
-
-- **Type**: OAuth
-- **Flow**: implicit
-- **Authorization URL**: /oauth/authorize
-- **Scopes**: 
- - **none**: No particular scope is required.
- - **openid**: Used to ask for an ID token.
- - **profile**: Access to email information (email addresses and their verification status).
- - **email**: Access to phone information (phone numbers and their verification status).
- - **phone**: Access to geographical information (postal address, region, geolocalisation, etc).
- - **address**: Access to most personal information (gender, age, profile picture, etc).
- - **events**: Access to user events.
- - **full_write**: Ability to update any information on the profile. Not available to third-party clients. 
- - **offline_access**: Ability to request refresh tokens.
-
-## OAuth2
-
-- **Type**: OAuth
-- **Flow**: accessCode
-- **Authorization URL**: /oauth/authorize
-- **Scopes**: 
- - **none**: No particular scope is required.
- - **openid**: Used to ask for an ID token.
- - **profile**: Access to most personal information (gender, age, profile picture, etc).
- - **email**: Access to email information (email addresses and their verification status).
- - **phone**: Access to phone information (phone numbers and their verification status).
- - **address**: Access to geographical information (postal address, region, geolocalisation, etc).
- - **events**: Access to user events.
- - **full_write**: Ability to update any information on the profile. Not available to third-party clients. 
- - **offline_access**: Ability to request refresh tokens.
- - **mfa**: Ability to implement MFA flow.
+ All endpoints do not require authorization.
 
 
 ## Author
