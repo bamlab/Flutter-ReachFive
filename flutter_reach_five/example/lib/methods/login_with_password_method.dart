@@ -65,7 +65,6 @@ class LoginWithPasswordMethodState extends State<LoginWithPasswordMethod> {
         );
       }
     } catch (error) {
-      print(error);
       if (mounted) {
         showExampleSnackBar(
           context,

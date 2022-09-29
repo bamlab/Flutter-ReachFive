@@ -55,7 +55,6 @@ class UpdatePasswordMethodState extends State<UpdatePasswordMethod> {
         );
       }
     } catch (error) {
-      print(error);
       if (mounted) {
         showExampleSnackBar(
           context,

@@ -42,7 +42,6 @@ class RequestPasswordResetMethodState
         );
       }
     } catch (error) {
-      print(error);
       if (mounted) {
         showExampleSnackBar(
           context,
