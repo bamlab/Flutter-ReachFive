@@ -6,8 +6,6 @@ export 'package:reach_five_repo/src/api.dart';
 export 'package:reach_five_repo/src/auth/api_key_auth.dart';
 export 'package:reach_five_repo/src/auth/basic_auth.dart';
 export 'package:reach_five_repo/src/auth/oauth.dart';
-export 'package:reach_five_repo/src/serializers.dart';
-export 'package:reach_five_repo/src/model/date.dart';
 
 export 'package:reach_five_repo/src/api/fido2_api.dart';
 export 'package:reach_five_repo/src/api/mfa_api.dart';

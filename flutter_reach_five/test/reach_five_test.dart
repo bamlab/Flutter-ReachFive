@@ -175,6 +175,13 @@ void main() {
 
     group('logout', () {
       test('call logout method', () async {
+        const authToken = AuthToken(
+          accessToken: 'accessToken',
+          refreshToken: 'refreshToken',
+          tokenType: 'Bearer',
+        );
+        const clientSecret = 'clientSecret';
+
         const config = ReachFiveConfig(
           domain: 'domain',
           clientId: 'clientId',
@@ -185,19 +192,15 @@ void main() {
           repo: mockReachFiveRepo,
         );
 
-        registerFallbackValue(
-          RevokeTokenRequest(
-            (requestTokenRequestBuilder) => requestTokenRequestBuilder
-              ..clientId = config.clientId
-              ..clientSecret = ''
-              ..token = 'token'
-              ..tokenTypeHint = 'Bearer',
-          ),
+        final request = RevokeTokenRequest(
+          clientId: config.clientId,
+          clientSecret: clientSecret,
+          token: authToken.refreshToken!,
+          tokenTypeHint: authToken.tokenType,
         );
+
         when(
-          () => mockOAuthApi.revokeToken(
-            revokeTokenRequest: any(named: 'revokeTokenRequest'),
-          ),
+          () => mockOAuthApi.revokeToken(revokeTokenRequest: request),
         ).thenAnswer(
           (_) async => Response(requestOptions: RequestOptions(path: 'path')),
         );
@@ -208,12 +211,13 @@ void main() {
         ).thenAnswer((_) async {});
 
         await reachFive.logout(
-          authToken: const AuthToken(
-            accessToken: 'accessToken',
-            refreshToken: 'refreshToken',
-          ),
+          authToken: authToken,
+          clientSecret: clientSecret,
         );
 
+        verify(
+          () => mockOAuthApi.revokeToken(revokeTokenRequest: request),
+        ).called(1);
         verify(
           () => flutterReachFivePlatform.logout(config: any(named: 'config')),
         ).called(1);
@@ -262,6 +266,13 @@ void main() {
 
     group('revokeToken', () {
       test('launch revokeToken api call ', () async {
+        const authToken = AuthToken(
+          accessToken: 'accessToken',
+          refreshToken: 'refreshToken',
+          tokenType: 'Bearer',
+        );
+        const clientSecret = 'clientSecret';
+
         const config = ReachFiveConfig(
           domain: 'domain',
           clientId: 'clientId',
@@ -272,35 +283,27 @@ void main() {
           repo: mockReachFiveRepo,
         );
 
-        registerFallbackValue(
-          RevokeTokenRequest(
-            (requestTokenRequestBuilder) => requestTokenRequestBuilder
-              ..clientId = config.clientId
-              ..clientSecret = ''
-              ..token = 'token'
-              ..tokenTypeHint = 'Bearer',
-          ),
+        final request = RevokeTokenRequest(
+          clientId: config.clientId,
+          clientSecret: clientSecret,
+          token: authToken.accessToken,
+          tokenTypeHint: authToken.tokenType,
         );
+
         when(
-          () => mockOAuthApi.revokeToken(
-            revokeTokenRequest: any(named: 'revokeTokenRequest'),
-          ),
+          () => mockOAuthApi.revokeToken(revokeTokenRequest: request),
         ).thenAnswer(
           (_) async => Response(requestOptions: RequestOptions(path: 'path')),
         );
 
         await reachFive.revokeToken(
-          authToken: const AuthToken(
-            refreshToken: 'refreshToken',
-            accessToken: 'accessToken',
-          ),
+          authToken: authToken,
           revokeTokenType: RevokeTokenType.access,
+          clientSecret: clientSecret,
         );
 
         verify(
-          () => mockOAuthApi.revokeToken(
-            revokeTokenRequest: any(named: 'revokeTokenRequest'),
-          ),
+          () => mockOAuthApi.revokeToken(revokeTokenRequest: request),
         ).called(1);
       });
     });

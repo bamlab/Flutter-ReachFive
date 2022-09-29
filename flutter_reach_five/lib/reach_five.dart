@@ -1,4 +1,3 @@
-import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platform_interface.dart';
 import 'package:reach_five_repo/reach_five_repo.dart';
@@ -142,16 +141,15 @@ class ReachFive {
     void Function(int, int)? onSendProgress,
     void Function(int, int)? onReceiveProgress,
   }) async {
-    final revokeTokenRequest = RevokeTokenRequest((revokeTokenRequestBuilder) {
-      revokeTokenRequestBuilder
-        ..clientId = config.clientId
-        ..token = revokeTokenType.map(
-          refresh: authToken.refreshToken,
-          access: authToken.accessToken,
-        )
-        ..tokenTypeHint = authToken.tokenType
-        ..clientSecret = clientSecret ?? '';
-    });
+    final revokeTokenRequest = RevokeTokenRequest(
+      clientId: config.clientId,
+      clientSecret: clientSecret ?? '',
+      token: revokeTokenType.map(
+        refresh: authToken.refreshToken ?? '',
+        access: authToken.accessToken,
+      ),
+      tokenTypeHint: authToken.tokenType,
+    );
 
     await oAuthApi.revokeToken(
       revokeTokenRequest: revokeTokenRequest,
@@ -244,7 +242,6 @@ class ReachFiveManager {
   static Future<ReachFive> initialize({
     required ReachFiveConfig config,
     Dio? dio,
-    Serializers? serializers,
     String? domainPathOverride,
     List<Interceptor>? interceptors,
   }) async {
@@ -260,7 +257,6 @@ class ReachFiveManager {
 
     final reachFiveRepo = ReachFiveRepo(
       dio: dio,
-      serializers: serializers,
       basePathOverride: basePathOverride,
       interceptors: interceptors,
     );

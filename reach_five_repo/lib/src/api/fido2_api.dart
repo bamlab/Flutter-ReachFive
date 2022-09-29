@@ -4,15 +4,14 @@
 
 import 'dart:async';
 
-import 'package:built_value/serializer.dart';
+// ignore: unused_import
+import 'dart:convert';
 import 'package:dio/dio.dart';
 
 class FIDO2Api {
   final Dio _dio;
 
-  final Serializers _serializers;
-
-  const FIDO2Api(this._dio, this._serializers);
+  const FIDO2Api(this._dio);
 
   /// Delete a credential of a user
   /// Delete a specific user&#39;s registered crendential.  **Note**: The access token must have been generated in the **last 5 minutes**,. The authentication token will contain the ReachFive client ID and the user&#39;s identifier.  **Warning**: The WebAuthn feature must be activated for your ReachFive account.

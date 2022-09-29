@@ -4,7 +4,8 @@
 
 import 'dart:async';
 
-import 'package:built_value/serializer.dart';
+// ignore: unused_import
+import 'dart:convert';
 import 'package:dio/dio.dart';
 
 import 'package:reach_five_repo/src/model/delete_phone_number_credential_request.dart';
@@ -12,9 +13,7 @@ import 'package:reach_five_repo/src/model/delete_phone_number_credential_request
 class MFAApi {
   final Dio _dio;
 
-  final Serializers _serializers;
-
-  const MFAApi(this._dio, this._serializers);
+  const MFAApi(this._dio);
 
   /// Delete an MFA credential (email)
   /// Delete the email that has been added as an MFA credential (second factor).  &gt; **Note**: You must have a fresh access token (issued in the last 5 minutes) to use this endpoint.  &gt; **Stepup**: The access token must contain the &#x60;mfa&#x60; &#x60;amr&#x60; if you want to delete the credential. This means you need to do a [stepup operation](#operation/stepup) before you can delete the credential.
@@ -125,11 +124,7 @@ class MFAApi {
     dynamic _bodyData;
 
     try {
-      const _type = FullType(DeletePhoneNumberCredentialRequest);
-      _bodyData = deletePhoneNumberCredentialRequest == null
-          ? null
-          : _serializers.serialize(deletePhoneNumberCredentialRequest,
-              specifiedType: _type);
+      _bodyData = jsonEncode(deletePhoneNumberCredentialRequest);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _options.compose(

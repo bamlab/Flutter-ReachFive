@@ -3,8 +3,6 @@
 //
 
 import 'package:dio/dio.dart';
-import 'package:built_value/serializer.dart';
-import 'package:reach_five_repo/src/serializers.dart';
 import 'package:reach_five_repo/src/auth/api_key_auth.dart';
 import 'package:reach_five_repo/src/auth/basic_auth.dart';
 import 'package:reach_five_repo/src/auth/bearer_auth.dart';
@@ -17,15 +15,11 @@ class ReachFiveRepo {
   static const String basePath = r'https://YOUR_DOMAIN';
 
   final Dio dio;
-  final Serializers serializers;
-
   ReachFiveRepo({
     Dio? dio,
-    Serializers? serializers,
     String? basePathOverride,
     List<Interceptor>? interceptors,
-  })  : this.serializers = serializers ?? standardSerializers,
-        this.dio = dio ??
+  }) : this.dio = dio ??
             Dio(BaseOptions(
               baseUrl: basePathOverride ?? basePath,
               connectTimeout: 5000,
@@ -81,18 +75,18 @@ class ReachFiveRepo {
   /// Get FIDO2Api instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   FIDO2Api getFIDO2Api() {
-    return FIDO2Api(dio, serializers);
+    return FIDO2Api(dio);
   }
 
   /// Get MFAApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   MFAApi getMFAApi() {
-    return MFAApi(dio, serializers);
+    return MFAApi(dio);
   }
 
   /// Get OAuthApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   OAuthApi getOAuthApi() {
-    return OAuthApi(dio, serializers);
+    return OAuthApi(dio);
   }
 }

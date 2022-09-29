@@ -21,11 +21,11 @@ Name | Type | Description | Notes
 **username** | **String** | Username | [optional] 
 **birthdate** | **String** | User’s birthdate, represented as an ISO 8601 YYYY-MM-DD format. | [optional] 
 **gender** | **String** | User’s gender. | [optional] 
-**addresses** | [**JsonObject**](.md) | User postal addresses. | [optional] 
+**addresses** | **Object** | User postal addresses. | [optional] 
 **picture** | **String** | URL to the profile picture | [optional] 
 **company** | **String** | User company name. | [optional] 
-**customFields** | [**JsonObject**](.md) | Custom fields. | [optional] 
-**consents** | [**JsonObject**](.md) | Consents. | [optional] 
+**customFields** | **Object** | Custom fields. | [optional] 
+**consents** | **Object** | Consents. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
