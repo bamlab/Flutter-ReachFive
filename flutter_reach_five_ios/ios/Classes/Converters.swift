@@ -196,21 +196,28 @@ public class Converters {
             )
         }
     
+    static public func addressTypeFromInterface(
+                addressTypeInterface: ProfileAddressTypeInterface
+            ) -> String? {
+                switch addressTypeInterface {
+                case ProfileAddressTypeInterface.billing:
+                    return "billing"
+                case ProfileAddressTypeInterface.delivery:
+                    return "delivery"
+                @unknown default:
+                    return nil
+                }
+            }
+    
     static public func profileAddressFromInterface(
             profileAddressInterface: ProfileAddressInterface
         ) -> ProfileAddress {
             
             let isDefault = profileAddressInterface.isDefault as? Bool
             
-            var addressType: String?
-            switch profileAddressInterface.addressType {
-            case ProfileAddressTypeInterface.billing:
-                addressType = "billing"
-            case ProfileAddressTypeInterface.delivery:
-                addressType = "delivery"
-            default:
-                addressType = nil
-            }
+            let addressType = addressTypeFromInterface(
+                addressTypeInterface: profileAddressInterface.addressType
+            )
         
             return ProfileAddress(
                 title: profileAddressInterface.title,
