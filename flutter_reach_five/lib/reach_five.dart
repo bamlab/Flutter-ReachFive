@@ -5,9 +5,8 @@ import 'package:reach_five_repo/reach_five_repo.dart';
 import 'flutter_reach_five.dart';
 import 'helpers/auth_token.dart';
 import 'helpers/profile_signup_request_converter.dart';
-import 'helpers/reach_five_config_converter.dart';
+import 'helpers/reach_five_key_converter.dart';
 import 'helpers/scope_value_converter.dart';
-import 'models/revoke_token_type.dart';
 
 FlutterReachFivePlatform get _platform => FlutterReachFivePlatform.instance;
 
@@ -17,15 +16,17 @@ FlutterReachFivePlatform get _platform => FlutterReachFivePlatform.instance;
 class ReachFive {
   /// [ReachFive] default constructor
   const ReachFive({
-    required this.config,
+    required this.reachFiveKey,
     required this.repo,
   });
 
-  /// @template flutter_reach_five.reachFive.config}
-  /// [ReachFive] config, kept in memory here to be given in every
+  /// @template flutter_reach_five.reachFive.reachFiveKey}
+  /// [ReachFive] instance key, kept in memory here to be given in every
   /// reachFive native sdk methods
+  /// It allows us to select the correct instance in the native part
+  /// and to have multi-instance of reachFive
   /// {@endtemplate}
-  final ReachFiveConfig config;
+  final ReachFiveKey reachFiveKey;
 
   /// @template flutter_reach_five.reachFive.repo}
   /// [ReachFiveRepo] instance, kept in memory here to be create
@@ -48,7 +49,7 @@ class ReachFive {
     List<ScopeValue>? scope,
   }) async {
     final authTokenInterface = await _platform.signup(
-      config: ReachFiveConfigConverter.toInterface(config),
+      reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
       profile: ProfileSignupRequestConverter.toInterface(profile),
       redirectUrl: redirectUrl,
       scope: scope?.map(ScopeValueConverter.toInterface).toList(),
@@ -69,7 +70,7 @@ class ReachFive {
     List<ScopeValue>? scope,
   }) async {
     final authTokenInterface = await _platform.loginWithPassword(
-      config: ReachFiveConfigConverter.toInterface(config),
+      reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
       password: password,
       email: email,
       phoneNumber: phoneNumber,
@@ -99,7 +100,7 @@ class ReachFive {
       );
     }
     await _platform.logout(
-      config: ReachFiveConfigConverter.toInterface(config),
+      reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
     );
   }
 
@@ -115,7 +116,7 @@ class ReachFive {
   /// {@endtemplate}
   Future<AuthToken> refreshAccessToken(AuthToken authToken) async {
     final authTokenInterface = await _platform.refreshAccessToken(
-      config: ReachFiveConfigConverter.toInterface(config),
+      reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
       authToken: AuthTokenConverter.toInterface(authToken),
     );
 
@@ -142,7 +143,7 @@ class ReachFive {
     void Function(int, int)? onReceiveProgress,
   }) async {
     final revokeTokenRequest = RevokeTokenRequest(
-      clientId: config.clientId,
+      clientId: reachFiveKey.sdkConfig.clientId,
       clientSecret: clientSecret ?? '',
       token: revokeTokenType.map(
         refresh: authToken.refreshToken ?? '',
@@ -172,7 +173,7 @@ class ReachFive {
     String? redirectUrl,
   }) =>
       _platform.requestPasswordReset(
-        config: ReachFiveConfigConverter.toInterface(config),
+        reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
         email: email,
         phoneNumber: phoneNumber,
         redirectUrl: redirectUrl,
@@ -199,7 +200,7 @@ class ReachFive {
     await updatePasswordRequest.map<Future<void>>(
       withAccessToken: (updatePasswordRequestWithAccessToken) =>
           _platform.updatePasswordWithAccessToken(
-        config: ReachFiveConfigConverter.toInterface(config),
+        reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
         authToken: AuthTokenConverter.toInterface(
           updatePasswordRequestWithAccessToken.authToken,
         ),
@@ -208,7 +209,7 @@ class ReachFive {
       ),
       withFreshAccessToken: (updatePasswordRequestWithFreshAccessToken) =>
           _platform.updatePasswordWithFreshAccessToken(
-        config: ReachFiveConfigConverter.toInterface(config),
+        reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
         freshAuthToken: AuthTokenConverter.toInterface(
           updatePasswordRequestWithFreshAccessToken.freshAuthToken,
         ),
@@ -216,14 +217,14 @@ class ReachFive {
       ),
       withEmail: (updatePasswordRequestWithEmail) =>
           _platform.updatePasswordWithEmail(
-        config: ReachFiveConfigConverter.toInterface(config),
+        reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
         email: updatePasswordRequestWithEmail.email,
         verificationCode: updatePasswordRequestWithEmail.verificationCode,
         newPassword: updatePasswordRequestWithEmail.newPassword,
       ),
       withPhoneNumber: (updatePasswordRequestWithPhoneNumber) =>
           _platform.updatePasswordWithPhoneNumber(
-        config: ReachFiveConfigConverter.toInterface(config),
+        reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
         phoneNumber: updatePasswordRequestWithPhoneNumber.phoneNumber,
         verificationCode: updatePasswordRequestWithPhoneNumber.verificationCode,
         newPassword: updatePasswordRequestWithPhoneNumber.newPassword,
@@ -240,20 +241,21 @@ class ReachFiveManager {
   /// initialize function used to create an instance of ReachFive
   /// {@endtemplate}
   static Future<ReachFive> initialize({
-    required ReachFiveConfig config,
+    required SdkConfig sdkConfig,
     Dio? dio,
     String? domainPathOverride,
     List<Interceptor>? interceptors,
   }) async {
-    final reachFiveConfig = await _platform.initialize(
-      ReachFiveConfigInterface(
-        domain: config.domain,
-        clientId: config.clientId,
-        scheme: config.scheme,
+    final reachFiveConfigInterface = await _platform.initialize(
+      ReachFiveKeyConverter.toInterface(
+        ReachFiveKey(
+          sdkConfig: sdkConfig,
+        ),
       ),
     );
 
-    final basePathOverride = domainPathOverride ?? 'https://${config.domain}';
+    final basePathOverride =
+        domainPathOverride ?? 'https://${sdkConfig.domain}';
 
     final reachFiveRepo = ReachFiveRepo(
       dio: dio,
@@ -262,7 +264,9 @@ class ReachFiveManager {
     );
 
     return ReachFive(
-      config: ReachFiveConfigConverter.fromInterface(reachFiveConfig),
+      reachFiveKey: ReachFiveKeyConverter.fromInterface(
+        reachFiveConfigInterface.reachFiveKey,
+      ),
       repo: reachFiveRepo,
     );
   }
