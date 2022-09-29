@@ -159,14 +159,20 @@ class Converters {
             )
         }
 
-        fun profileAddressFromInterface(
-            profileAddressInterface: ReachFiveApi.ProfileAddressInterface
-        ): ProfileAddress {
-            val addressType = when (profileAddressInterface.addressType) {
+        fun addressTypeFromInterface(
+            addressTypeInterface: ReachFiveApi.ProfileAddressTypeInterface?
+        ): ProfileAddressType? {
+            return when (addressTypeInterface) {
                 ReachFiveApi.ProfileAddressTypeInterface.BILLING -> ProfileAddressType.billing
                 ReachFiveApi.ProfileAddressTypeInterface.DELIVERY -> ProfileAddressType.delivery
                 null -> null
             }
+        }
+
+        fun profileAddressFromInterface(
+            profileAddressInterface: ReachFiveApi.ProfileAddressInterface
+        ): ProfileAddress {
+            val addressType = addressTypeFromInterface(profileAddressInterface.addressType)
 
             return ProfileAddress(
                 title = profileAddressInterface.title,
