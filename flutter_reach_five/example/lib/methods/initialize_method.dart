@@ -80,12 +80,12 @@ class _InitializeMethodState extends State<InitializeMethod> {
 
   @override
   Widget build(BuildContext context) {
-    final isButtonDisabled =
-        areInteractionsDisabled || widget.reachFive != null;
+    final reachFive = widget.reachFive;
+    final isButtonDisabled = areInteractionsDisabled || reachFive != null;
 
     return ListView(
       children: [
-        if (widget.reachFive == null) ...[
+        if (reachFive == null) ...[
           CustomTextField(
             value: domain,
             hintText: 'domain',
@@ -104,17 +104,17 @@ class _InitializeMethodState extends State<InitializeMethod> {
             setValue: setScheme,
           ),
         ] else ...[
-          Text('domain :$domain'),
+          Text('domain :${reachFive.reachFiveKey.sdkConfig.domain}'),
           const SizedBox(height: 16),
-          Text('clientId :$clientId'),
+          Text('clientId :${reachFive.reachFiveKey.sdkConfig.clientId}'),
           const SizedBox(height: 16),
-          Text('scheme :$scheme'),
+          Text('scheme :${reachFive.reachFiveKey.sdkConfig.scheme}'),
         ],
         const SizedBox(height: 32),
         ElevatedButton(
           onPressed: !isButtonDisabled ? initializeReachFive : null,
           child: Text(
-            widget.reachFive == null
+            reachFive == null
                 ? 'Get Reach Five Config'
                 : 'Reach Five is already initialized',
           ),
