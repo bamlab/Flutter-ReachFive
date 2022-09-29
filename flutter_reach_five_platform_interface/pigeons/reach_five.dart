@@ -13,8 +13,8 @@ import 'package:pigeon/pigeon.dart';
     objcSourceOut: '../flutter_reach_five_ios/ios/Classes/reach_five_api.m',
   ),
 )
-class ReachFiveConfigInterface {
-  const ReachFiveConfigInterface({
+class SdkConfigInterface {
+  const SdkConfigInterface({
     required this.domain,
     required this.clientId,
     required this.scheme,
@@ -23,6 +23,22 @@ class ReachFiveConfigInterface {
   final String domain;
   final String clientId;
   final String scheme;
+}
+
+class ReachFiveKeyInterface {
+  const ReachFiveKeyInterface({
+    required this.sdkConfig,
+  });
+
+  final SdkConfigInterface sdkConfig;
+}
+
+class ReachFiveConfigInterface {
+  const ReachFiveConfigInterface({
+    required this.reachFiveKey,
+  });
+
+  final ReachFiveKeyInterface reachFiveKey;
 }
 
 enum ProfileAddressTypeInterface { billing, delivery }
@@ -119,13 +135,13 @@ class ProfileSignupRequestInterface {
 
 class SignupRequestInterface {
   const SignupRequestInterface({
-    required this.config,
+    required this.reachFiveKey,
     required this.profile,
     required this.redirectUrl,
     required this.scope,
   });
 
-  final ReachFiveConfigInterface config;
+  final ReachFiveKeyInterface reachFiveKey;
   final ProfileSignupRequestInterface profile;
   final String? redirectUrl;
   final List<String?>? scope;
@@ -213,14 +229,14 @@ class AuthTokenInterface {
 
 class LoginWithPasswordRequestInterface {
   const LoginWithPasswordRequestInterface({
-    required this.config,
+    required this.reachFiveKey,
     required this.email,
     required this.phoneNumber,
     required this.password,
     required this.scope,
   });
 
-  final ReachFiveConfigInterface config;
+  final ReachFiveKeyInterface reachFiveKey;
   final String? email;
   final String? phoneNumber;
   final String password;
@@ -229,23 +245,23 @@ class LoginWithPasswordRequestInterface {
 
 class RefreshAccessTokenRequestInterface {
   const RefreshAccessTokenRequestInterface({
-    required this.config,
+    required this.reachFiveKey,
     required this.authToken,
   });
 
-  final ReachFiveConfigInterface config;
+  final ReachFiveKeyInterface reachFiveKey;
   final AuthTokenInterface authToken;
 }
 
 class RequestPasswordResetRequestInterface {
   const RequestPasswordResetRequestInterface({
-    required this.config,
+    required this.reachFiveKey,
     required this.email,
     required this.phoneNumber,
     required this.redirectUrl,
   });
 
-  final ReachFiveConfigInterface config;
+  final ReachFiveKeyInterface reachFiveKey;
   final String? email;
   final String? phoneNumber;
   final String? redirectUrl;
@@ -253,13 +269,13 @@ class RequestPasswordResetRequestInterface {
 
 class UpdatePasswordWithAccessTokenRequestInterface {
   const UpdatePasswordWithAccessTokenRequestInterface({
-    required this.config,
+    required this.reachFiveKey,
     required this.authToken,
     required this.oldPassword,
     required this.password,
   });
 
-  final ReachFiveConfigInterface config;
+  final ReachFiveKeyInterface reachFiveKey;
   final AuthTokenInterface authToken;
   final String oldPassword;
   final String password;
@@ -267,25 +283,25 @@ class UpdatePasswordWithAccessTokenRequestInterface {
 
 class UpdatePasswordWithFreshAccessTokenRequestInterface {
   const UpdatePasswordWithFreshAccessTokenRequestInterface({
-    required this.config,
+    required this.reachFiveKey,
     required this.freshAuthToken,
     required this.password,
   });
 
-  final ReachFiveConfigInterface config;
+  final ReachFiveKeyInterface reachFiveKey;
   final AuthTokenInterface freshAuthToken;
   final String password;
 }
 
 class UpdatePasswordWithEmailRequestInterface {
   const UpdatePasswordWithEmailRequestInterface({
-    required this.config,
+    required this.reachFiveKey,
     required this.email,
     required this.verificationCode,
     required this.password,
   });
 
-  final ReachFiveConfigInterface config;
+  final ReachFiveKeyInterface reachFiveKey;
   final String email;
   final String verificationCode;
   final String password;
@@ -293,13 +309,13 @@ class UpdatePasswordWithEmailRequestInterface {
 
 class UpdatePasswordWithPhoneNumberRequestInterface {
   const UpdatePasswordWithPhoneNumberRequestInterface({
-    required this.config,
+    required this.reachFiveKey,
     required this.phoneNumber,
     required this.verificationCode,
     required this.password,
   });
 
-  final ReachFiveConfigInterface config;
+  final ReachFiveKeyInterface reachFiveKey;
   final String phoneNumber;
   final String verificationCode;
   final String password;
@@ -308,7 +324,7 @@ class UpdatePasswordWithPhoneNumberRequestInterface {
 @HostApi()
 abstract class ReachFiveHostApi {
   @async
-  ReachFiveConfigInterface initialize(ReachFiveConfigInterface config);
+  ReachFiveConfigInterface initialize(ReachFiveKeyInterface reachFiveKey);
 
   @async
   AuthTokenInterface signup(SignupRequestInterface request);
@@ -319,7 +335,7 @@ abstract class ReachFiveHostApi {
   );
 
   @async
-  void logout(ReachFiveConfigInterface config);
+  void logout(ReachFiveKeyInterface reachFiveKey);
 
   @async
   AuthTokenInterface refreshAccessToken(
