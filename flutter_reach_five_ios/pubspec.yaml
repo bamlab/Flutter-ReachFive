@@ -1,7 +1,6 @@
 name: flutter_reach_five_ios
 description: iOS implementation of the flutter_reach_five plugin
-version: 0.1.0+1
-publish_to: none
+version: 0.1.0
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
