@@ -20,16 +20,12 @@ dependencies:
   equatable: ^2.0.5
   flutter:
     sdk: flutter
-  flutter_reach_five_android:
-    path: ../flutter_reach_five_android
-  flutter_reach_five_ios:
-    path: ../flutter_reach_five_ios
-  flutter_reach_five_platform_interface:
-    path: ../flutter_reach_five_platform_interface
+  flutter_reach_five_android: ^0.1.0
+  flutter_reach_five_ios: ^0.1.0
+  flutter_reach_five_platform_interface: ^0.1.0
   freezed: ^2.1.0+1
   freezed_annotation: ^2.1.0
-  reach_five_repo:
-    path: ../reach_five_repo
+  reach_five_repo: ^0.1.0
 
 dev_dependencies:
   analyzer: ^4.7.0
