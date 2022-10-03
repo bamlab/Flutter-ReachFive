@@ -33,7 +33,7 @@ public class ReachFiveApi {
   }
 
   /** Generated class from Pigeon that represents data sent in messages. */
-  public static class ReachFiveConfigInterface {
+  public static class SdkConfigInterface {
     private @NonNull String domain;
     public @NonNull String getDomain() { return domain; }
     public void setDomain(@NonNull String setterArg) {
@@ -62,7 +62,7 @@ public class ReachFiveApi {
     }
 
     /** Constructor is private to enforce null safety; use Builder. */
-    private ReachFiveConfigInterface() {}
+    private SdkConfigInterface() {}
     public static final class Builder {
       private @Nullable String domain;
       public @NonNull Builder setDomain(@NonNull String setterArg) {
@@ -79,8 +79,8 @@ public class ReachFiveApi {
         this.scheme = setterArg;
         return this;
       }
-      public @NonNull ReachFiveConfigInterface build() {
-        ReachFiveConfigInterface pigeonReturn = new ReachFiveConfigInterface();
+      public @NonNull SdkConfigInterface build() {
+        SdkConfigInterface pigeonReturn = new SdkConfigInterface();
         pigeonReturn.setDomain(domain);
         pigeonReturn.setClientId(clientId);
         pigeonReturn.setScheme(scheme);
@@ -94,14 +94,90 @@ public class ReachFiveApi {
       toMapResult.put("scheme", scheme);
       return toMapResult;
     }
-    static @NonNull ReachFiveConfigInterface fromMap(@NonNull Map<String, Object> map) {
-      ReachFiveConfigInterface pigeonResult = new ReachFiveConfigInterface();
+    static @NonNull SdkConfigInterface fromMap(@NonNull Map<String, Object> map) {
+      SdkConfigInterface pigeonResult = new SdkConfigInterface();
       Object domain = map.get("domain");
       pigeonResult.setDomain((String)domain);
       Object clientId = map.get("clientId");
       pigeonResult.setClientId((String)clientId);
       Object scheme = map.get("scheme");
       pigeonResult.setScheme((String)scheme);
+      return pigeonResult;
+    }
+  }
+
+  /** Generated class from Pigeon that represents data sent in messages. */
+  public static class ReachFiveKeyInterface {
+    private @NonNull SdkConfigInterface sdkConfig;
+    public @NonNull SdkConfigInterface getSdkConfig() { return sdkConfig; }
+    public void setSdkConfig(@NonNull SdkConfigInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"sdkConfig\" is null.");
+      }
+      this.sdkConfig = setterArg;
+    }
+
+    /** Constructor is private to enforce null safety; use Builder. */
+    private ReachFiveKeyInterface() {}
+    public static final class Builder {
+      private @Nullable SdkConfigInterface sdkConfig;
+      public @NonNull Builder setSdkConfig(@NonNull SdkConfigInterface setterArg) {
+        this.sdkConfig = setterArg;
+        return this;
+      }
+      public @NonNull ReachFiveKeyInterface build() {
+        ReachFiveKeyInterface pigeonReturn = new ReachFiveKeyInterface();
+        pigeonReturn.setSdkConfig(sdkConfig);
+        return pigeonReturn;
+      }
+    }
+    @NonNull Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("sdkConfig", (sdkConfig == null) ? null : sdkConfig.toMap());
+      return toMapResult;
+    }
+    static @NonNull ReachFiveKeyInterface fromMap(@NonNull Map<String, Object> map) {
+      ReachFiveKeyInterface pigeonResult = new ReachFiveKeyInterface();
+      Object sdkConfig = map.get("sdkConfig");
+      pigeonResult.setSdkConfig((sdkConfig == null) ? null : SdkConfigInterface.fromMap((Map)sdkConfig));
+      return pigeonResult;
+    }
+  }
+
+  /** Generated class from Pigeon that represents data sent in messages. */
+  public static class ReachFiveConfigInterface {
+    private @NonNull ReachFiveKeyInterface reachFiveKey;
+    public @NonNull ReachFiveKeyInterface getReachFiveKey() { return reachFiveKey; }
+    public void setReachFiveKey(@NonNull ReachFiveKeyInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"reachFiveKey\" is null.");
+      }
+      this.reachFiveKey = setterArg;
+    }
+
+    /** Constructor is private to enforce null safety; use Builder. */
+    private ReachFiveConfigInterface() {}
+    public static final class Builder {
+      private @Nullable ReachFiveKeyInterface reachFiveKey;
+      public @NonNull Builder setReachFiveKey(@NonNull ReachFiveKeyInterface setterArg) {
+        this.reachFiveKey = setterArg;
+        return this;
+      }
+      public @NonNull ReachFiveConfigInterface build() {
+        ReachFiveConfigInterface pigeonReturn = new ReachFiveConfigInterface();
+        pigeonReturn.setReachFiveKey(reachFiveKey);
+        return pigeonReturn;
+      }
+    }
+    @NonNull Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("reachFiveKey", (reachFiveKey == null) ? null : reachFiveKey.toMap());
+      return toMapResult;
+    }
+    static @NonNull ReachFiveConfigInterface fromMap(@NonNull Map<String, Object> map) {
+      ReachFiveConfigInterface pigeonResult = new ReachFiveConfigInterface();
+      Object reachFiveKey = map.get("reachFiveKey");
+      pigeonResult.setReachFiveKey((reachFiveKey == null) ? null : ReachFiveKeyInterface.fromMap((Map)reachFiveKey));
       return pigeonResult;
     }
   }
@@ -715,13 +791,13 @@ public class ReachFiveApi {
 
   /** Generated class from Pigeon that represents data sent in messages. */
   public static class SignupRequestInterface {
-    private @NonNull ReachFiveConfigInterface config;
-    public @NonNull ReachFiveConfigInterface getConfig() { return config; }
-    public void setConfig(@NonNull ReachFiveConfigInterface setterArg) {
+    private @NonNull ReachFiveKeyInterface reachFiveKey;
+    public @NonNull ReachFiveKeyInterface getReachFiveKey() { return reachFiveKey; }
+    public void setReachFiveKey(@NonNull ReachFiveKeyInterface setterArg) {
       if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"config\" is null.");
+        throw new IllegalStateException("Nonnull field \"reachFiveKey\" is null.");
       }
-      this.config = setterArg;
+      this.reachFiveKey = setterArg;
     }
 
     private @NonNull ProfileSignupRequestInterface profile;
@@ -748,9 +824,9 @@ public class ReachFiveApi {
     /** Constructor is private to enforce null safety; use Builder. */
     private SignupRequestInterface() {}
     public static final class Builder {
-      private @Nullable ReachFiveConfigInterface config;
-      public @NonNull Builder setConfig(@NonNull ReachFiveConfigInterface setterArg) {
-        this.config = setterArg;
+      private @Nullable ReachFiveKeyInterface reachFiveKey;
+      public @NonNull Builder setReachFiveKey(@NonNull ReachFiveKeyInterface setterArg) {
+        this.reachFiveKey = setterArg;
         return this;
       }
       private @Nullable ProfileSignupRequestInterface profile;
@@ -770,7 +846,7 @@ public class ReachFiveApi {
       }
       public @NonNull SignupRequestInterface build() {
         SignupRequestInterface pigeonReturn = new SignupRequestInterface();
-        pigeonReturn.setConfig(config);
+        pigeonReturn.setReachFiveKey(reachFiveKey);
         pigeonReturn.setProfile(profile);
         pigeonReturn.setRedirectUrl(redirectUrl);
         pigeonReturn.setScope(scope);
@@ -779,7 +855,7 @@ public class ReachFiveApi {
     }
     @NonNull Map<String, Object> toMap() {
       Map<String, Object> toMapResult = new HashMap<>();
-      toMapResult.put("config", (config == null) ? null : config.toMap());
+      toMapResult.put("reachFiveKey", (reachFiveKey == null) ? null : reachFiveKey.toMap());
       toMapResult.put("profile", (profile == null) ? null : profile.toMap());
       toMapResult.put("redirectUrl", redirectUrl);
       toMapResult.put("scope", scope);
@@ -787,8 +863,8 @@ public class ReachFiveApi {
     }
     static @NonNull SignupRequestInterface fromMap(@NonNull Map<String, Object> map) {
       SignupRequestInterface pigeonResult = new SignupRequestInterface();
-      Object config = map.get("config");
-      pigeonResult.setConfig((config == null) ? null : ReachFiveConfigInterface.fromMap((Map)config));
+      Object reachFiveKey = map.get("reachFiveKey");
+      pigeonResult.setReachFiveKey((reachFiveKey == null) ? null : ReachFiveKeyInterface.fromMap((Map)reachFiveKey));
       Object profile = map.get("profile");
       pigeonResult.setProfile((profile == null) ? null : ProfileSignupRequestInterface.fromMap((Map)profile));
       Object redirectUrl = map.get("redirectUrl");
@@ -1325,13 +1401,13 @@ public class ReachFiveApi {
 
   /** Generated class from Pigeon that represents data sent in messages. */
   public static class LoginWithPasswordRequestInterface {
-    private @NonNull ReachFiveConfigInterface config;
-    public @NonNull ReachFiveConfigInterface getConfig() { return config; }
-    public void setConfig(@NonNull ReachFiveConfigInterface setterArg) {
+    private @NonNull ReachFiveKeyInterface reachFiveKey;
+    public @NonNull ReachFiveKeyInterface getReachFiveKey() { return reachFiveKey; }
+    public void setReachFiveKey(@NonNull ReachFiveKeyInterface setterArg) {
       if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"config\" is null.");
+        throw new IllegalStateException("Nonnull field \"reachFiveKey\" is null.");
       }
-      this.config = setterArg;
+      this.reachFiveKey = setterArg;
     }
 
     private @Nullable String email;
@@ -1364,9 +1440,9 @@ public class ReachFiveApi {
     /** Constructor is private to enforce null safety; use Builder. */
     private LoginWithPasswordRequestInterface() {}
     public static final class Builder {
-      private @Nullable ReachFiveConfigInterface config;
-      public @NonNull Builder setConfig(@NonNull ReachFiveConfigInterface setterArg) {
-        this.config = setterArg;
+      private @Nullable ReachFiveKeyInterface reachFiveKey;
+      public @NonNull Builder setReachFiveKey(@NonNull ReachFiveKeyInterface setterArg) {
+        this.reachFiveKey = setterArg;
         return this;
       }
       private @Nullable String email;
@@ -1391,7 +1467,7 @@ public class ReachFiveApi {
       }
       public @NonNull LoginWithPasswordRequestInterface build() {
         LoginWithPasswordRequestInterface pigeonReturn = new LoginWithPasswordRequestInterface();
-        pigeonReturn.setConfig(config);
+        pigeonReturn.setReachFiveKey(reachFiveKey);
         pigeonReturn.setEmail(email);
         pigeonReturn.setPhoneNumber(phoneNumber);
         pigeonReturn.setPassword(password);
@@ -1401,7 +1477,7 @@ public class ReachFiveApi {
     }
     @NonNull Map<String, Object> toMap() {
       Map<String, Object> toMapResult = new HashMap<>();
-      toMapResult.put("config", (config == null) ? null : config.toMap());
+      toMapResult.put("reachFiveKey", (reachFiveKey == null) ? null : reachFiveKey.toMap());
       toMapResult.put("email", email);
       toMapResult.put("phoneNumber", phoneNumber);
       toMapResult.put("password", password);
@@ -1410,8 +1486,8 @@ public class ReachFiveApi {
     }
     static @NonNull LoginWithPasswordRequestInterface fromMap(@NonNull Map<String, Object> map) {
       LoginWithPasswordRequestInterface pigeonResult = new LoginWithPasswordRequestInterface();
-      Object config = map.get("config");
-      pigeonResult.setConfig((config == null) ? null : ReachFiveConfigInterface.fromMap((Map)config));
+      Object reachFiveKey = map.get("reachFiveKey");
+      pigeonResult.setReachFiveKey((reachFiveKey == null) ? null : ReachFiveKeyInterface.fromMap((Map)reachFiveKey));
       Object email = map.get("email");
       pigeonResult.setEmail((String)email);
       Object phoneNumber = map.get("phoneNumber");
@@ -1426,13 +1502,13 @@ public class ReachFiveApi {
 
   /** Generated class from Pigeon that represents data sent in messages. */
   public static class RefreshAccessTokenRequestInterface {
-    private @NonNull ReachFiveConfigInterface config;
-    public @NonNull ReachFiveConfigInterface getConfig() { return config; }
-    public void setConfig(@NonNull ReachFiveConfigInterface setterArg) {
+    private @NonNull ReachFiveKeyInterface reachFiveKey;
+    public @NonNull ReachFiveKeyInterface getReachFiveKey() { return reachFiveKey; }
+    public void setReachFiveKey(@NonNull ReachFiveKeyInterface setterArg) {
       if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"config\" is null.");
+        throw new IllegalStateException("Nonnull field \"reachFiveKey\" is null.");
       }
-      this.config = setterArg;
+      this.reachFiveKey = setterArg;
     }
 
     private @NonNull AuthTokenInterface authToken;
@@ -1447,9 +1523,9 @@ public class ReachFiveApi {
     /** Constructor is private to enforce null safety; use Builder. */
     private RefreshAccessTokenRequestInterface() {}
     public static final class Builder {
-      private @Nullable ReachFiveConfigInterface config;
-      public @NonNull Builder setConfig(@NonNull ReachFiveConfigInterface setterArg) {
-        this.config = setterArg;
+      private @Nullable ReachFiveKeyInterface reachFiveKey;
+      public @NonNull Builder setReachFiveKey(@NonNull ReachFiveKeyInterface setterArg) {
+        this.reachFiveKey = setterArg;
         return this;
       }
       private @Nullable AuthTokenInterface authToken;
@@ -1459,21 +1535,21 @@ public class ReachFiveApi {
       }
       public @NonNull RefreshAccessTokenRequestInterface build() {
         RefreshAccessTokenRequestInterface pigeonReturn = new RefreshAccessTokenRequestInterface();
-        pigeonReturn.setConfig(config);
+        pigeonReturn.setReachFiveKey(reachFiveKey);
         pigeonReturn.setAuthToken(authToken);
         return pigeonReturn;
       }
     }
     @NonNull Map<String, Object> toMap() {
       Map<String, Object> toMapResult = new HashMap<>();
-      toMapResult.put("config", (config == null) ? null : config.toMap());
+      toMapResult.put("reachFiveKey", (reachFiveKey == null) ? null : reachFiveKey.toMap());
       toMapResult.put("authToken", (authToken == null) ? null : authToken.toMap());
       return toMapResult;
     }
     static @NonNull RefreshAccessTokenRequestInterface fromMap(@NonNull Map<String, Object> map) {
       RefreshAccessTokenRequestInterface pigeonResult = new RefreshAccessTokenRequestInterface();
-      Object config = map.get("config");
-      pigeonResult.setConfig((config == null) ? null : ReachFiveConfigInterface.fromMap((Map)config));
+      Object reachFiveKey = map.get("reachFiveKey");
+      pigeonResult.setReachFiveKey((reachFiveKey == null) ? null : ReachFiveKeyInterface.fromMap((Map)reachFiveKey));
       Object authToken = map.get("authToken");
       pigeonResult.setAuthToken((authToken == null) ? null : AuthTokenInterface.fromMap((Map)authToken));
       return pigeonResult;
@@ -1482,13 +1558,13 @@ public class ReachFiveApi {
 
   /** Generated class from Pigeon that represents data sent in messages. */
   public static class RequestPasswordResetRequestInterface {
-    private @NonNull ReachFiveConfigInterface config;
-    public @NonNull ReachFiveConfigInterface getConfig() { return config; }
-    public void setConfig(@NonNull ReachFiveConfigInterface setterArg) {
+    private @NonNull ReachFiveKeyInterface reachFiveKey;
+    public @NonNull ReachFiveKeyInterface getReachFiveKey() { return reachFiveKey; }
+    public void setReachFiveKey(@NonNull ReachFiveKeyInterface setterArg) {
       if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"config\" is null.");
+        throw new IllegalStateException("Nonnull field \"reachFiveKey\" is null.");
       }
-      this.config = setterArg;
+      this.reachFiveKey = setterArg;
     }
 
     private @Nullable String email;
@@ -1512,9 +1588,9 @@ public class ReachFiveApi {
     /** Constructor is private to enforce null safety; use Builder. */
     private RequestPasswordResetRequestInterface() {}
     public static final class Builder {
-      private @Nullable ReachFiveConfigInterface config;
-      public @NonNull Builder setConfig(@NonNull ReachFiveConfigInterface setterArg) {
-        this.config = setterArg;
+      private @Nullable ReachFiveKeyInterface reachFiveKey;
+      public @NonNull Builder setReachFiveKey(@NonNull ReachFiveKeyInterface setterArg) {
+        this.reachFiveKey = setterArg;
         return this;
       }
       private @Nullable String email;
@@ -1534,7 +1610,7 @@ public class ReachFiveApi {
       }
       public @NonNull RequestPasswordResetRequestInterface build() {
         RequestPasswordResetRequestInterface pigeonReturn = new RequestPasswordResetRequestInterface();
-        pigeonReturn.setConfig(config);
+        pigeonReturn.setReachFiveKey(reachFiveKey);
         pigeonReturn.setEmail(email);
         pigeonReturn.setPhoneNumber(phoneNumber);
         pigeonReturn.setRedirectUrl(redirectUrl);
@@ -1543,7 +1619,7 @@ public class ReachFiveApi {
     }
     @NonNull Map<String, Object> toMap() {
       Map<String, Object> toMapResult = new HashMap<>();
-      toMapResult.put("config", (config == null) ? null : config.toMap());
+      toMapResult.put("reachFiveKey", (reachFiveKey == null) ? null : reachFiveKey.toMap());
       toMapResult.put("email", email);
       toMapResult.put("phoneNumber", phoneNumber);
       toMapResult.put("redirectUrl", redirectUrl);
@@ -1551,8 +1627,8 @@ public class ReachFiveApi {
     }
     static @NonNull RequestPasswordResetRequestInterface fromMap(@NonNull Map<String, Object> map) {
       RequestPasswordResetRequestInterface pigeonResult = new RequestPasswordResetRequestInterface();
-      Object config = map.get("config");
-      pigeonResult.setConfig((config == null) ? null : ReachFiveConfigInterface.fromMap((Map)config));
+      Object reachFiveKey = map.get("reachFiveKey");
+      pigeonResult.setReachFiveKey((reachFiveKey == null) ? null : ReachFiveKeyInterface.fromMap((Map)reachFiveKey));
       Object email = map.get("email");
       pigeonResult.setEmail((String)email);
       Object phoneNumber = map.get("phoneNumber");
@@ -1565,13 +1641,13 @@ public class ReachFiveApi {
 
   /** Generated class from Pigeon that represents data sent in messages. */
   public static class UpdatePasswordWithAccessTokenRequestInterface {
-    private @NonNull ReachFiveConfigInterface config;
-    public @NonNull ReachFiveConfigInterface getConfig() { return config; }
-    public void setConfig(@NonNull ReachFiveConfigInterface setterArg) {
+    private @NonNull ReachFiveKeyInterface reachFiveKey;
+    public @NonNull ReachFiveKeyInterface getReachFiveKey() { return reachFiveKey; }
+    public void setReachFiveKey(@NonNull ReachFiveKeyInterface setterArg) {
       if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"config\" is null.");
+        throw new IllegalStateException("Nonnull field \"reachFiveKey\" is null.");
       }
-      this.config = setterArg;
+      this.reachFiveKey = setterArg;
     }
 
     private @NonNull AuthTokenInterface authToken;
@@ -1604,9 +1680,9 @@ public class ReachFiveApi {
     /** Constructor is private to enforce null safety; use Builder. */
     private UpdatePasswordWithAccessTokenRequestInterface() {}
     public static final class Builder {
-      private @Nullable ReachFiveConfigInterface config;
-      public @NonNull Builder setConfig(@NonNull ReachFiveConfigInterface setterArg) {
-        this.config = setterArg;
+      private @Nullable ReachFiveKeyInterface reachFiveKey;
+      public @NonNull Builder setReachFiveKey(@NonNull ReachFiveKeyInterface setterArg) {
+        this.reachFiveKey = setterArg;
         return this;
       }
       private @Nullable AuthTokenInterface authToken;
@@ -1626,7 +1702,7 @@ public class ReachFiveApi {
       }
       public @NonNull UpdatePasswordWithAccessTokenRequestInterface build() {
         UpdatePasswordWithAccessTokenRequestInterface pigeonReturn = new UpdatePasswordWithAccessTokenRequestInterface();
-        pigeonReturn.setConfig(config);
+        pigeonReturn.setReachFiveKey(reachFiveKey);
         pigeonReturn.setAuthToken(authToken);
         pigeonReturn.setOldPassword(oldPassword);
         pigeonReturn.setPassword(password);
@@ -1635,7 +1711,7 @@ public class ReachFiveApi {
     }
     @NonNull Map<String, Object> toMap() {
       Map<String, Object> toMapResult = new HashMap<>();
-      toMapResult.put("config", (config == null) ? null : config.toMap());
+      toMapResult.put("reachFiveKey", (reachFiveKey == null) ? null : reachFiveKey.toMap());
       toMapResult.put("authToken", (authToken == null) ? null : authToken.toMap());
       toMapResult.put("oldPassword", oldPassword);
       toMapResult.put("password", password);
@@ -1643,8 +1719,8 @@ public class ReachFiveApi {
     }
     static @NonNull UpdatePasswordWithAccessTokenRequestInterface fromMap(@NonNull Map<String, Object> map) {
       UpdatePasswordWithAccessTokenRequestInterface pigeonResult = new UpdatePasswordWithAccessTokenRequestInterface();
-      Object config = map.get("config");
-      pigeonResult.setConfig((config == null) ? null : ReachFiveConfigInterface.fromMap((Map)config));
+      Object reachFiveKey = map.get("reachFiveKey");
+      pigeonResult.setReachFiveKey((reachFiveKey == null) ? null : ReachFiveKeyInterface.fromMap((Map)reachFiveKey));
       Object authToken = map.get("authToken");
       pigeonResult.setAuthToken((authToken == null) ? null : AuthTokenInterface.fromMap((Map)authToken));
       Object oldPassword = map.get("oldPassword");
@@ -1657,13 +1733,13 @@ public class ReachFiveApi {
 
   /** Generated class from Pigeon that represents data sent in messages. */
   public static class UpdatePasswordWithFreshAccessTokenRequestInterface {
-    private @NonNull ReachFiveConfigInterface config;
-    public @NonNull ReachFiveConfigInterface getConfig() { return config; }
-    public void setConfig(@NonNull ReachFiveConfigInterface setterArg) {
+    private @NonNull ReachFiveKeyInterface reachFiveKey;
+    public @NonNull ReachFiveKeyInterface getReachFiveKey() { return reachFiveKey; }
+    public void setReachFiveKey(@NonNull ReachFiveKeyInterface setterArg) {
       if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"config\" is null.");
+        throw new IllegalStateException("Nonnull field \"reachFiveKey\" is null.");
       }
-      this.config = setterArg;
+      this.reachFiveKey = setterArg;
     }
 
     private @NonNull AuthTokenInterface freshAuthToken;
@@ -1687,9 +1763,9 @@ public class ReachFiveApi {
     /** Constructor is private to enforce null safety; use Builder. */
     private UpdatePasswordWithFreshAccessTokenRequestInterface() {}
     public static final class Builder {
-      private @Nullable ReachFiveConfigInterface config;
-      public @NonNull Builder setConfig(@NonNull ReachFiveConfigInterface setterArg) {
-        this.config = setterArg;
+      private @Nullable ReachFiveKeyInterface reachFiveKey;
+      public @NonNull Builder setReachFiveKey(@NonNull ReachFiveKeyInterface setterArg) {
+        this.reachFiveKey = setterArg;
         return this;
       }
       private @Nullable AuthTokenInterface freshAuthToken;
@@ -1704,7 +1780,7 @@ public class ReachFiveApi {
       }
       public @NonNull UpdatePasswordWithFreshAccessTokenRequestInterface build() {
         UpdatePasswordWithFreshAccessTokenRequestInterface pigeonReturn = new UpdatePasswordWithFreshAccessTokenRequestInterface();
-        pigeonReturn.setConfig(config);
+        pigeonReturn.setReachFiveKey(reachFiveKey);
         pigeonReturn.setFreshAuthToken(freshAuthToken);
         pigeonReturn.setPassword(password);
         return pigeonReturn;
@@ -1712,15 +1788,15 @@ public class ReachFiveApi {
     }
     @NonNull Map<String, Object> toMap() {
       Map<String, Object> toMapResult = new HashMap<>();
-      toMapResult.put("config", (config == null) ? null : config.toMap());
+      toMapResult.put("reachFiveKey", (reachFiveKey == null) ? null : reachFiveKey.toMap());
       toMapResult.put("freshAuthToken", (freshAuthToken == null) ? null : freshAuthToken.toMap());
       toMapResult.put("password", password);
       return toMapResult;
     }
     static @NonNull UpdatePasswordWithFreshAccessTokenRequestInterface fromMap(@NonNull Map<String, Object> map) {
       UpdatePasswordWithFreshAccessTokenRequestInterface pigeonResult = new UpdatePasswordWithFreshAccessTokenRequestInterface();
-      Object config = map.get("config");
-      pigeonResult.setConfig((config == null) ? null : ReachFiveConfigInterface.fromMap((Map)config));
+      Object reachFiveKey = map.get("reachFiveKey");
+      pigeonResult.setReachFiveKey((reachFiveKey == null) ? null : ReachFiveKeyInterface.fromMap((Map)reachFiveKey));
       Object freshAuthToken = map.get("freshAuthToken");
       pigeonResult.setFreshAuthToken((freshAuthToken == null) ? null : AuthTokenInterface.fromMap((Map)freshAuthToken));
       Object password = map.get("password");
@@ -1731,13 +1807,13 @@ public class ReachFiveApi {
 
   /** Generated class from Pigeon that represents data sent in messages. */
   public static class UpdatePasswordWithEmailRequestInterface {
-    private @NonNull ReachFiveConfigInterface config;
-    public @NonNull ReachFiveConfigInterface getConfig() { return config; }
-    public void setConfig(@NonNull ReachFiveConfigInterface setterArg) {
+    private @NonNull ReachFiveKeyInterface reachFiveKey;
+    public @NonNull ReachFiveKeyInterface getReachFiveKey() { return reachFiveKey; }
+    public void setReachFiveKey(@NonNull ReachFiveKeyInterface setterArg) {
       if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"config\" is null.");
+        throw new IllegalStateException("Nonnull field \"reachFiveKey\" is null.");
       }
-      this.config = setterArg;
+      this.reachFiveKey = setterArg;
     }
 
     private @NonNull String email;
@@ -1770,9 +1846,9 @@ public class ReachFiveApi {
     /** Constructor is private to enforce null safety; use Builder. */
     private UpdatePasswordWithEmailRequestInterface() {}
     public static final class Builder {
-      private @Nullable ReachFiveConfigInterface config;
-      public @NonNull Builder setConfig(@NonNull ReachFiveConfigInterface setterArg) {
-        this.config = setterArg;
+      private @Nullable ReachFiveKeyInterface reachFiveKey;
+      public @NonNull Builder setReachFiveKey(@NonNull ReachFiveKeyInterface setterArg) {
+        this.reachFiveKey = setterArg;
         return this;
       }
       private @Nullable String email;
@@ -1792,7 +1868,7 @@ public class ReachFiveApi {
       }
       public @NonNull UpdatePasswordWithEmailRequestInterface build() {
         UpdatePasswordWithEmailRequestInterface pigeonReturn = new UpdatePasswordWithEmailRequestInterface();
-        pigeonReturn.setConfig(config);
+        pigeonReturn.setReachFiveKey(reachFiveKey);
         pigeonReturn.setEmail(email);
         pigeonReturn.setVerificationCode(verificationCode);
         pigeonReturn.setPassword(password);
@@ -1801,7 +1877,7 @@ public class ReachFiveApi {
     }
     @NonNull Map<String, Object> toMap() {
       Map<String, Object> toMapResult = new HashMap<>();
-      toMapResult.put("config", (config == null) ? null : config.toMap());
+      toMapResult.put("reachFiveKey", (reachFiveKey == null) ? null : reachFiveKey.toMap());
       toMapResult.put("email", email);
       toMapResult.put("verificationCode", verificationCode);
       toMapResult.put("password", password);
@@ -1809,8 +1885,8 @@ public class ReachFiveApi {
     }
     static @NonNull UpdatePasswordWithEmailRequestInterface fromMap(@NonNull Map<String, Object> map) {
       UpdatePasswordWithEmailRequestInterface pigeonResult = new UpdatePasswordWithEmailRequestInterface();
-      Object config = map.get("config");
-      pigeonResult.setConfig((config == null) ? null : ReachFiveConfigInterface.fromMap((Map)config));
+      Object reachFiveKey = map.get("reachFiveKey");
+      pigeonResult.setReachFiveKey((reachFiveKey == null) ? null : ReachFiveKeyInterface.fromMap((Map)reachFiveKey));
       Object email = map.get("email");
       pigeonResult.setEmail((String)email);
       Object verificationCode = map.get("verificationCode");
@@ -1823,13 +1899,13 @@ public class ReachFiveApi {
 
   /** Generated class from Pigeon that represents data sent in messages. */
   public static class UpdatePasswordWithPhoneNumberRequestInterface {
-    private @NonNull ReachFiveConfigInterface config;
-    public @NonNull ReachFiveConfigInterface getConfig() { return config; }
-    public void setConfig(@NonNull ReachFiveConfigInterface setterArg) {
+    private @NonNull ReachFiveKeyInterface reachFiveKey;
+    public @NonNull ReachFiveKeyInterface getReachFiveKey() { return reachFiveKey; }
+    public void setReachFiveKey(@NonNull ReachFiveKeyInterface setterArg) {
       if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"config\" is null.");
+        throw new IllegalStateException("Nonnull field \"reachFiveKey\" is null.");
       }
-      this.config = setterArg;
+      this.reachFiveKey = setterArg;
     }
 
     private @NonNull String phoneNumber;
@@ -1862,9 +1938,9 @@ public class ReachFiveApi {
     /** Constructor is private to enforce null safety; use Builder. */
     private UpdatePasswordWithPhoneNumberRequestInterface() {}
     public static final class Builder {
-      private @Nullable ReachFiveConfigInterface config;
-      public @NonNull Builder setConfig(@NonNull ReachFiveConfigInterface setterArg) {
-        this.config = setterArg;
+      private @Nullable ReachFiveKeyInterface reachFiveKey;
+      public @NonNull Builder setReachFiveKey(@NonNull ReachFiveKeyInterface setterArg) {
+        this.reachFiveKey = setterArg;
         return this;
       }
       private @Nullable String phoneNumber;
@@ -1884,7 +1960,7 @@ public class ReachFiveApi {
       }
       public @NonNull UpdatePasswordWithPhoneNumberRequestInterface build() {
         UpdatePasswordWithPhoneNumberRequestInterface pigeonReturn = new UpdatePasswordWithPhoneNumberRequestInterface();
-        pigeonReturn.setConfig(config);
+        pigeonReturn.setReachFiveKey(reachFiveKey);
         pigeonReturn.setPhoneNumber(phoneNumber);
         pigeonReturn.setVerificationCode(verificationCode);
         pigeonReturn.setPassword(password);
@@ -1893,7 +1969,7 @@ public class ReachFiveApi {
     }
     @NonNull Map<String, Object> toMap() {
       Map<String, Object> toMapResult = new HashMap<>();
-      toMapResult.put("config", (config == null) ? null : config.toMap());
+      toMapResult.put("reachFiveKey", (reachFiveKey == null) ? null : reachFiveKey.toMap());
       toMapResult.put("phoneNumber", phoneNumber);
       toMapResult.put("verificationCode", verificationCode);
       toMapResult.put("password", password);
@@ -1901,8 +1977,8 @@ public class ReachFiveApi {
     }
     static @NonNull UpdatePasswordWithPhoneNumberRequestInterface fromMap(@NonNull Map<String, Object> map) {
       UpdatePasswordWithPhoneNumberRequestInterface pigeonResult = new UpdatePasswordWithPhoneNumberRequestInterface();
-      Object config = map.get("config");
-      pigeonResult.setConfig((config == null) ? null : ReachFiveConfigInterface.fromMap((Map)config));
+      Object reachFiveKey = map.get("reachFiveKey");
+      pigeonResult.setReachFiveKey((reachFiveKey == null) ? null : ReachFiveKeyInterface.fromMap((Map)reachFiveKey));
       Object phoneNumber = map.get("phoneNumber");
       pigeonResult.setPhoneNumber((String)phoneNumber);
       Object verificationCode = map.get("verificationCode");
@@ -1948,24 +2024,30 @@ public class ReachFiveApi {
           return ReachFiveConfigInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)136:         
-          return RefreshAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return ReachFiveKeyInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)137:         
-          return RequestPasswordResetRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return RefreshAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)138:         
-          return SignupRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return RequestPasswordResetRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)139:         
-          return UpdatePasswordWithAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return SdkConfigInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)140:         
-          return UpdatePasswordWithEmailRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return SignupRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)141:         
-          return UpdatePasswordWithFreshAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return UpdatePasswordWithAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)142:         
+          return UpdatePasswordWithEmailRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+        
+        case (byte)143:         
+          return UpdatePasswordWithFreshAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+        
+        case (byte)144:         
           return UpdatePasswordWithPhoneNumberRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         default:        
@@ -2007,32 +2089,40 @@ public class ReachFiveApi {
         stream.write(135);
         writeValue(stream, ((ReachFiveConfigInterface) value).toMap());
       } else 
-      if (value instanceof RefreshAccessTokenRequestInterface) {
+      if (value instanceof ReachFiveKeyInterface) {
         stream.write(136);
+        writeValue(stream, ((ReachFiveKeyInterface) value).toMap());
+      } else 
+      if (value instanceof RefreshAccessTokenRequestInterface) {
+        stream.write(137);
         writeValue(stream, ((RefreshAccessTokenRequestInterface) value).toMap());
       } else 
       if (value instanceof RequestPasswordResetRequestInterface) {
-        stream.write(137);
+        stream.write(138);
         writeValue(stream, ((RequestPasswordResetRequestInterface) value).toMap());
       } else 
+      if (value instanceof SdkConfigInterface) {
+        stream.write(139);
+        writeValue(stream, ((SdkConfigInterface) value).toMap());
+      } else 
       if (value instanceof SignupRequestInterface) {
-        stream.write(138);
+        stream.write(140);
         writeValue(stream, ((SignupRequestInterface) value).toMap());
       } else 
       if (value instanceof UpdatePasswordWithAccessTokenRequestInterface) {
-        stream.write(139);
+        stream.write(141);
         writeValue(stream, ((UpdatePasswordWithAccessTokenRequestInterface) value).toMap());
       } else 
       if (value instanceof UpdatePasswordWithEmailRequestInterface) {
-        stream.write(140);
+        stream.write(142);
         writeValue(stream, ((UpdatePasswordWithEmailRequestInterface) value).toMap());
       } else 
       if (value instanceof UpdatePasswordWithFreshAccessTokenRequestInterface) {
-        stream.write(141);
+        stream.write(143);
         writeValue(stream, ((UpdatePasswordWithFreshAccessTokenRequestInterface) value).toMap());
       } else 
       if (value instanceof UpdatePasswordWithPhoneNumberRequestInterface) {
-        stream.write(142);
+        stream.write(144);
         writeValue(stream, ((UpdatePasswordWithPhoneNumberRequestInterface) value).toMap());
       } else 
 {
@@ -2043,10 +2133,10 @@ public class ReachFiveApi {
 
   /** Generated interface from Pigeon that represents a handler of messages from Flutter.*/
   public interface ReachFiveHostApi {
-    void initialize(@NonNull ReachFiveConfigInterface config, Result<ReachFiveConfigInterface> result);
+    void initialize(@NonNull ReachFiveKeyInterface reachFiveKey, Result<ReachFiveConfigInterface> result);
     void signup(@NonNull SignupRequestInterface request, Result<AuthTokenInterface> result);
     void loginWithPassword(@NonNull LoginWithPasswordRequestInterface request, Result<AuthTokenInterface> result);
-    void logout(@NonNull ReachFiveConfigInterface config, Result<Void> result);
+    void logout(@NonNull ReachFiveKeyInterface reachFiveKey, Result<Void> result);
     void refreshAccessToken(@NonNull RefreshAccessTokenRequestInterface request, Result<AuthTokenInterface> result);
     void requestPasswordReset(@NonNull RequestPasswordResetRequestInterface request, Result<Void> result);
     void updatePasswordWithAccessToken(@NonNull UpdatePasswordWithAccessTokenRequestInterface request, Result<Void> result);
@@ -2069,9 +2159,9 @@ public class ReachFiveApi {
             Map<String, Object> wrapped = new HashMap<>();
             try {
               ArrayList<Object> args = (ArrayList<Object>)message;
-              ReachFiveConfigInterface configArg = (ReachFiveConfigInterface)args.get(0);
-              if (configArg == null) {
-                throw new NullPointerException("configArg unexpectedly null.");
+              ReachFiveKeyInterface reachFiveKeyArg = (ReachFiveKeyInterface)args.get(0);
+              if (reachFiveKeyArg == null) {
+                throw new NullPointerException("reachFiveKeyArg unexpectedly null.");
               }
               Result<ReachFiveConfigInterface> resultCallback = new Result<ReachFiveConfigInterface>() {
                 public void success(ReachFiveConfigInterface result) {
@@ -2084,7 +2174,7 @@ public class ReachFiveApi {
                 }
               };
 
-              api.initialize(configArg, resultCallback);
+              api.initialize(reachFiveKeyArg, resultCallback);
             }
             catch (Error | RuntimeException exception) {
               wrapped.put("error", wrapError(exception));
@@ -2171,9 +2261,9 @@ public class ReachFiveApi {
             Map<String, Object> wrapped = new HashMap<>();
             try {
               ArrayList<Object> args = (ArrayList<Object>)message;
-              ReachFiveConfigInterface configArg = (ReachFiveConfigInterface)args.get(0);
-              if (configArg == null) {
-                throw new NullPointerException("configArg unexpectedly null.");
+              ReachFiveKeyInterface reachFiveKeyArg = (ReachFiveKeyInterface)args.get(0);
+              if (reachFiveKeyArg == null) {
+                throw new NullPointerException("reachFiveKeyArg unexpectedly null.");
               }
               Result<Void> resultCallback = new Result<Void>() {
                 public void success(Void result) {
@@ -2186,7 +2276,7 @@ public class ReachFiveApi {
                 }
               };
 
-              api.logout(configArg, resultCallback);
+              api.logout(reachFiveKeyArg, resultCallback);
             }
             catch (Error | RuntimeException exception) {
               wrapped.put("error", wrapError(exception));

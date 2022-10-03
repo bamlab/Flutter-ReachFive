@@ -20,28 +20,28 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
         ReachFiveApi.ReachFiveHostApi.setup(binding.binaryMessenger, null)
     }
 
-    private fun getReachFiveInstanceKey(reachFiveConfig: ReachFiveApi.ReachFiveConfigInterface): String {
-        return reachFiveConfig.domain + reachFiveConfig.clientId + reachFiveConfig.scheme
+    private fun getReachFiveInstanceKey(reachFiveKey: ReachFiveApi.ReachFiveKeyInterface): String {
+        return reachFiveKey.sdkConfig.domain + reachFiveKey.sdkConfig.clientId + reachFiveKey.sdkConfig.scheme
     }
 
-    private fun getReachFiveInstance(reachFiveConfig: ReachFiveApi.ReachFiveConfigInterface): ReachFive {
-        val reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveConfig = reachFiveConfig)
+    private fun getReachFiveInstance(reachFiveKey: ReachFiveApi.ReachFiveKeyInterface): ReachFive {
+        val reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey = reachFiveKey)
 
         return reachFiveInstances[reachFiveInstanceKey]
             ?: throw Error("ReachFive instance has not been initialized")
     }
 
-    override fun initialize(config: ReachFiveApi.ReachFiveConfigInterface, result: ReachFiveApi.Result<ReachFiveApi.ReachFiveConfigInterface>) {
+    override fun initialize(reachFiveKey: ReachFiveApi.ReachFiveKeyInterface, result: ReachFiveApi.Result<ReachFiveApi.ReachFiveConfigInterface>) {
         val reachFive = ReachFive(
             sdkConfig = SdkConfig(
-                domain = config.domain,
-                clientId = config.clientId,
-                scheme = config.scheme
+                domain = reachFiveKey.sdkConfig.domain,
+                clientId = reachFiveKey.sdkConfig.clientId,
+                scheme = reachFiveKey.sdkConfig.scheme
             ),
             providersCreators = listOf()
         )
 
-        val reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveConfig = config)
+        val reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey = reachFiveKey)
 
         reachFive.initialize(
             {
@@ -49,9 +49,7 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
                 result.success(
                     ReachFiveApi.ReachFiveConfigInterface
                         .Builder()
-                        .setDomain(reachFive.sdkConfig.domain)
-                        .setClientId(reachFive.sdkConfig.clientId)
-                        .setScheme(reachFive.sdkConfig.scheme)
+                        .setReachFiveKey(reachFiveKey)
                         .build()
                 )
         }, {
@@ -66,7 +64,7 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
     ) {
         val reachFive: ReachFive
         try {
-            reachFive = getReachFiveInstance(reachFiveConfig = request.config)
+            reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
         } catch (error: Error) {
             result?.error(error)
             return
@@ -90,7 +88,7 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
     ) {
         val reachFive: ReachFive
         try {
-            reachFive = getReachFiveInstance(reachFiveConfig = request.config)
+            reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
         } catch (error: Error) {
             result?.error(error)
             return
@@ -109,12 +107,12 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
     }
 
     override fun logout(
-        config: ReachFiveApi.ReachFiveConfigInterface,
+        reachFiveKey: ReachFiveApi.ReachFiveKeyInterface,
         result: ReachFiveApi.Result<Void>?
     ) {
         val reachFive: ReachFive
         try {
-            reachFive = getReachFiveInstance(reachFiveConfig = config)
+            reachFive = getReachFiveInstance(reachFiveKey = reachFiveKey)
         } catch (error: Error) {
             result?.error(error)
             return
@@ -134,7 +132,7 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
     ) {
         val reachFive: ReachFive
         try {
-            reachFive = getReachFiveInstance(reachFiveConfig = request.config)
+            reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
         } catch (error: Error) {
             result?.error(error)
             return
@@ -157,7 +155,7 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
     ) {
         val reachFive: ReachFive
         try {
-            reachFive = getReachFiveInstance(reachFiveConfig = request.config)
+            reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
         } catch (error: Error) {
             result?.error(error)
             return
@@ -178,7 +176,7 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
     ) {
         val reachFive: ReachFive
         try {
-            reachFive = getReachFiveInstance(reachFiveConfig = request.config)
+            reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
         } catch (error: Error) {
             result?.error(error)
             return
@@ -201,7 +199,7 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
     ) {
         val reachFive: ReachFive
         try {
-            reachFive = getReachFiveInstance(reachFiveConfig = request.config)
+            reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
         } catch (error: Error) {
             result?.error(error)
             return
@@ -223,7 +221,7 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
     ) {
         val reachFive: ReachFive
         try {
-            reachFive = getReachFiveInstance(reachFiveConfig = request.config)
+            reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
         } catch (error: Error) {
             result?.error(error)
             return
@@ -246,7 +244,7 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
     ) {
         val reachFive: ReachFive
         try {
-            reachFive = getReachFiveInstance(reachFiveConfig = request.config)
+            reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
         } catch (error: Error) {
             result?.error(error)
             return

@@ -2,9 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_reach_five/flutter_reach_five.dart';
 import 'package:flutter_reach_five/helpers/auth_token.dart';
 import 'package:flutter_reach_five/helpers/profile_signup_request_converter.dart';
-import 'package:flutter_reach_five/helpers/reach_five_config_converter.dart';
+import 'package:flutter_reach_five/helpers/reach_five_key_converter.dart';
 import 'package:flutter_reach_five/helpers/scope_value_converter.dart';
-import 'package:flutter_reach_five/models/revoke_token_type.dart';
 import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -30,6 +29,8 @@ void main() {
     late MockReackFiveRepo mockReachFiveRepo;
     late MockOAuthApi mockOAuthApi;
 
+    late ReachFive reachFive;
+
     setUp(() {
       flutterReachFivePlatform = MockFlutterReachFivePlatform();
       FlutterReachFivePlatform.instance = flutterReachFivePlatform;
@@ -38,48 +39,54 @@ void main() {
       mockOAuthApi = MockOAuthApi();
 
       when(mockReachFiveRepo.getOAuthApi).thenReturn(mockOAuthApi);
+
+      const sdkConfig = SdkConfig(
+        domain: 'domain',
+        clientId: 'clientId',
+        scheme: 'scheme',
+      );
+
+      const reachFiveKey = ReachFiveKey(
+        sdkConfig: sdkConfig,
+      );
+
+      reachFive = ReachFive(
+        reachFiveKey: reachFiveKey,
+        repo: mockReachFiveRepo,
+      );
     });
 
     group('initialize', () {
       test('returns correct reachFive instance', () async {
-        const reachFiveConfig = ReachFiveConfig(
-          domain: 'domain',
-          clientId: 'clientId',
-          scheme: 'scheme',
+        final reachFiveConfigInterface = ReachFiveConfigInterface(
+          reachFiveKey:
+              ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
         );
 
         registerFallbackValue(
-          ReachFiveConfigConverter.toInterface(reachFiveConfig),
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
         );
         when(
           () => flutterReachFivePlatform.initialize(
             any(),
           ),
         ).thenAnswer(
-          (_) async => ReachFiveConfigConverter.toInterface(reachFiveConfig),
+          (_) async => reachFiveConfigInterface,
         );
 
-        final reachFive = await ReachFiveManager.initialize(
-          config: reachFiveConfig,
+        final reachFiveReceived = await ReachFiveManager.initialize(
+          sdkConfig: reachFive.reachFiveKey.sdkConfig,
         );
 
         expect(
-          reachFive.config,
-          reachFiveConfig,
+          reachFive.reachFiveKey,
+          reachFiveReceived.reachFiveKey,
         );
       });
     });
 
     group('signup', () {
       test('returns correct auth token instance', () async {
-        final reachFive = ReachFive(
-          config: const ReachFiveConfig(
-            domain: 'domain',
-            clientId: 'clientId',
-            scheme: 'scheme',
-          ),
-          repo: mockReachFiveRepo,
-        );
         const profile = ProfileSignupRequest(password: 'password');
         const redirectUrl = 'redirectUrl';
         const scope = [ScopeValue.address];
@@ -89,21 +96,17 @@ void main() {
         );
 
         registerFallbackValue(
-          ReachFiveConfigConverter.toInterface(reachFive.config),
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
         );
         registerFallbackValue(
           ProfileSignupRequestConverter.toInterface(profile),
         );
-        registerFallbackValue(redirectUrl);
-        registerFallbackValue(
-          scope.map(ScopeValueConverter.toInterface).toList(),
-        );
         when(
           () => flutterReachFivePlatform.signup(
-            config: any(named: 'config'),
+            reachFiveKey: any(named: 'reachFiveKey'),
             profile: any(named: 'profile'),
-            redirectUrl: any(named: 'redirectUrl'),
-            scope: any(named: 'scope'),
+            redirectUrl: redirectUrl,
+            scope: scope.map(ScopeValueConverter.toInterface).toList(),
           ),
         ).thenAnswer(
           (_) async => AuthTokenConverter.toInterface(authToken),
@@ -124,14 +127,6 @@ void main() {
 
     group('loginWithPassword', () {
       test('returns correct auth token instance', () async {
-        final reachFive = ReachFive(
-          config: const ReachFiveConfig(
-            domain: 'domain',
-            clientId: 'clientId',
-            scheme: 'scheme',
-          ),
-          repo: mockReachFiveRepo,
-        );
         const email = 'email';
         const password = 'password';
         const scope = [ScopeValue.events];
@@ -141,20 +136,14 @@ void main() {
         );
 
         registerFallbackValue(
-          ReachFiveConfigConverter.toInterface(reachFive.config),
-        );
-        registerFallbackValue(password);
-        registerFallbackValue(email);
-        registerFallbackValue(
-          scope.map(ScopeValueConverter.toInterface).toList(),
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
         );
         when(
           () => flutterReachFivePlatform.loginWithPassword(
-            config: any(named: 'config'),
-            password: any(named: 'password'),
-            email: any(named: 'email'),
-            phoneNumber: any(named: 'phoneNumber'),
-            scope: any(named: 'scope'),
+            reachFiveKey: any(named: 'reachFiveKey'),
+            password: password,
+            email: email,
+            scope: scope.map(ScopeValueConverter.toInterface).toList(),
           ),
         ).thenAnswer(
           (_) async => AuthTokenConverter.toInterface(authToken),
@@ -175,61 +164,53 @@ void main() {
 
     group('logout', () {
       test('call logout method', () async {
-        const config = ReachFiveConfig(
-          domain: 'domain',
-          clientId: 'clientId',
-          scheme: 'scheme',
+        const authToken = AuthToken(
+          accessToken: 'accessToken',
+          refreshToken: 'refreshToken',
+          tokenType: 'Bearer',
         );
-        final reachFive = ReachFive(
-          config: config,
-          repo: mockReachFiveRepo,
+        const clientSecret = 'clientSecret';
+
+        final request = RevokeTokenRequest(
+          clientId: reachFive.reachFiveKey.sdkConfig.clientId,
+          clientSecret: clientSecret,
+          token: authToken.refreshToken!,
+          tokenTypeHint: authToken.tokenType,
         );
 
-        registerFallbackValue(
-          RevokeTokenRequest(
-            (requestTokenRequestBuilder) => requestTokenRequestBuilder
-              ..clientId = config.clientId
-              ..clientSecret = ''
-              ..token = 'token'
-              ..tokenTypeHint = 'Bearer',
-          ),
-        );
         when(
-          () => mockOAuthApi.revokeToken(
-            revokeTokenRequest: any(named: 'revokeTokenRequest'),
-          ),
+          () => mockOAuthApi.revokeToken(revokeTokenRequest: request),
         ).thenAnswer(
           (_) async => Response(requestOptions: RequestOptions(path: 'path')),
         );
 
-        registerFallbackValue(ReachFiveConfigConverter.toInterface(config));
+        registerFallbackValue(
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
+        );
         when(
-          () => flutterReachFivePlatform.logout(config: any(named: 'config')),
+          () => flutterReachFivePlatform.logout(
+            reachFiveKey: any(named: 'reachFiveKey'),
+          ),
         ).thenAnswer((_) async {});
 
         await reachFive.logout(
-          authToken: const AuthToken(
-            accessToken: 'accessToken',
-            refreshToken: 'refreshToken',
-          ),
+          authToken: authToken,
+          clientSecret: clientSecret,
         );
 
         verify(
-          () => flutterReachFivePlatform.logout(config: any(named: 'config')),
+          () => mockOAuthApi.revokeToken(revokeTokenRequest: request),
+        ).called(1);
+        verify(
+          () => flutterReachFivePlatform.logout(
+            reachFiveKey: any(named: 'reachFiveKey'),
+          ),
         ).called(1);
       });
     });
 
     group('refreshAccessToken', () {
       test('returns correct auth token instance', () async {
-        final reachFive = ReachFive(
-          config: const ReachFiveConfig(
-            domain: 'domain',
-            clientId: 'clientId',
-            scheme: 'scheme',
-          ),
-          repo: mockReachFiveRepo,
-        );
         const firstAuthToken = AuthToken(
           accessToken: 'firstAccessToken',
         );
@@ -238,12 +219,12 @@ void main() {
         );
 
         registerFallbackValue(
-          ReachFiveConfigConverter.toInterface(reachFive.config),
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
         );
         registerFallbackValue(AuthTokenConverter.toInterface(firstAuthToken));
         when(
           () => flutterReachFivePlatform.refreshAccessToken(
-            config: any(named: 'config'),
+            reachFiveKey: any(named: 'reachFiveKey'),
             authToken: any(named: 'authToken'),
           ),
         ).thenAnswer(
@@ -262,68 +243,49 @@ void main() {
 
     group('revokeToken', () {
       test('launch revokeToken api call ', () async {
-        const config = ReachFiveConfig(
-          domain: 'domain',
-          clientId: 'clientId',
-          scheme: 'scheme',
+        const authToken = AuthToken(
+          accessToken: 'accessToken',
+          refreshToken: 'refreshToken',
+          tokenType: 'Bearer',
         );
-        final reachFive = ReachFive(
-          config: config,
-          repo: mockReachFiveRepo,
+        const clientSecret = 'clientSecret';
+
+        final request = RevokeTokenRequest(
+          clientId: reachFive.reachFiveKey.sdkConfig.clientId,
+          clientSecret: clientSecret,
+          token: authToken.accessToken,
+          tokenTypeHint: authToken.tokenType,
         );
 
-        registerFallbackValue(
-          RevokeTokenRequest(
-            (requestTokenRequestBuilder) => requestTokenRequestBuilder
-              ..clientId = config.clientId
-              ..clientSecret = ''
-              ..token = 'token'
-              ..tokenTypeHint = 'Bearer',
-          ),
-        );
         when(
-          () => mockOAuthApi.revokeToken(
-            revokeTokenRequest: any(named: 'revokeTokenRequest'),
-          ),
+          () => mockOAuthApi.revokeToken(revokeTokenRequest: request),
         ).thenAnswer(
           (_) async => Response(requestOptions: RequestOptions(path: 'path')),
         );
 
         await reachFive.revokeToken(
-          authToken: const AuthToken(
-            refreshToken: 'refreshToken',
-            accessToken: 'accessToken',
-          ),
+          authToken: authToken,
           revokeTokenType: RevokeTokenType.access,
+          clientSecret: clientSecret,
         );
 
         verify(
-          () => mockOAuthApi.revokeToken(
-            revokeTokenRequest: any(named: 'revokeTokenRequest'),
-          ),
+          () => mockOAuthApi.revokeToken(revokeTokenRequest: request),
         ).called(1);
       });
     });
 
     group('requestPasswordReset', () {
       test('call requestPasswordReset method', () async {
-        const config = ReachFiveConfig(
-          domain: 'domain',
-          clientId: 'clientId',
-          scheme: 'scheme',
-        );
-        final reachFive = ReachFive(
-          config: config,
-          repo: mockReachFiveRepo,
-        );
-
         const email = 'email';
         const redirectUrl = 'redirectUrl';
 
-        registerFallbackValue(ReachFiveConfigConverter.toInterface(config));
+        registerFallbackValue(
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
+        );
         when(
           () => flutterReachFivePlatform.requestPasswordReset(
-            config: any(named: 'config'),
+            reachFiveKey: any(named: 'reachFiveKey'),
             email: email,
             redirectUrl: redirectUrl,
           ),
@@ -336,7 +298,7 @@ void main() {
 
         verify(
           () => flutterReachFivePlatform.requestPasswordReset(
-            config: any(named: 'config'),
+            reachFiveKey: any(named: 'reachFiveKey'),
             email: email,
             redirectUrl: redirectUrl,
           ),
@@ -346,16 +308,6 @@ void main() {
 
     group('updatePassword', () {
       test('call requestPasswordReset withAccessToken method', () async {
-        const config = ReachFiveConfig(
-          domain: 'domain',
-          clientId: 'clientId',
-          scheme: 'scheme',
-        );
-        final reachFive = ReachFive(
-          config: config,
-          repo: mockReachFiveRepo,
-        );
-
         const authToken = AuthToken(
           accessToken: 'accessToken',
         );
@@ -363,11 +315,13 @@ void main() {
         const oldPassword = 'oldPassword';
         const newPassword = 'newPassword';
 
-        registerFallbackValue(ReachFiveConfigConverter.toInterface(config));
+        registerFallbackValue(
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
+        );
         registerFallbackValue(AuthTokenConverter.toInterface(authToken));
         when(
           () => flutterReachFivePlatform.updatePasswordWithAccessToken(
-            config: any(named: 'config'),
+            reachFiveKey: any(named: 'reachFiveKey'),
             authToken: any(named: 'authToken'),
             oldPassword: oldPassword,
             newPassword: newPassword,
@@ -384,7 +338,7 @@ void main() {
 
         verify(
           () => flutterReachFivePlatform.updatePasswordWithAccessToken(
-            config: any(named: 'config'),
+            reachFiveKey: any(named: 'reachFiveKey'),
             authToken: any(named: 'authToken'),
             oldPassword: oldPassword,
             newPassword: newPassword,
@@ -393,27 +347,19 @@ void main() {
       });
 
       test('call requestPasswordReset withFreshAccessToken method', () async {
-        const config = ReachFiveConfig(
-          domain: 'domain',
-          clientId: 'clientId',
-          scheme: 'scheme',
-        );
-        final reachFive = ReachFive(
-          config: config,
-          repo: mockReachFiveRepo,
-        );
-
         const freshAuthToken = AuthToken(
           accessToken: 'accessToken',
         );
 
         const newPassword = 'newPassword';
 
-        registerFallbackValue(ReachFiveConfigConverter.toInterface(config));
+        registerFallbackValue(
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
+        );
         registerFallbackValue(AuthTokenConverter.toInterface(freshAuthToken));
         when(
           () => flutterReachFivePlatform.updatePasswordWithFreshAccessToken(
-            config: any(named: 'config'),
+            reachFiveKey: any(named: 'reachFiveKey'),
             freshAuthToken: any(named: 'freshAuthToken'),
             newPassword: newPassword,
           ),
@@ -428,7 +374,7 @@ void main() {
 
         verify(
           () => flutterReachFivePlatform.updatePasswordWithFreshAccessToken(
-            config: any(named: 'config'),
+            reachFiveKey: any(named: 'reachFiveKey'),
             freshAuthToken: any(named: 'freshAuthToken'),
             newPassword: newPassword,
           ),
@@ -436,24 +382,16 @@ void main() {
       });
 
       test('call requestPasswordReset withEmail method', () async {
-        const config = ReachFiveConfig(
-          domain: 'domain',
-          clientId: 'clientId',
-          scheme: 'scheme',
-        );
-        final reachFive = ReachFive(
-          config: config,
-          repo: mockReachFiveRepo,
-        );
-
         const email = 'email';
         const verificationCode = 'verificationCode';
         const newPassword = 'newPassword';
 
-        registerFallbackValue(ReachFiveConfigConverter.toInterface(config));
+        registerFallbackValue(
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
+        );
         when(
           () => flutterReachFivePlatform.updatePasswordWithEmail(
-            config: any(named: 'config'),
+            reachFiveKey: any(named: 'reachFiveKey'),
             email: email,
             verificationCode: verificationCode,
             newPassword: newPassword,
@@ -470,7 +408,7 @@ void main() {
 
         verify(
           () => flutterReachFivePlatform.updatePasswordWithEmail(
-            config: any(named: 'config'),
+            reachFiveKey: any(named: 'reachFiveKey'),
             email: email,
             verificationCode: verificationCode,
             newPassword: newPassword,
@@ -479,24 +417,16 @@ void main() {
       });
 
       test('call requestPasswordReset withPhoneNumber method', () async {
-        const config = ReachFiveConfig(
-          domain: 'domain',
-          clientId: 'clientId',
-          scheme: 'scheme',
-        );
-        final reachFive = ReachFive(
-          config: config,
-          repo: mockReachFiveRepo,
-        );
-
         const phoneNumber = 'phoneNumber';
         const verificationCode = 'verificationCode';
         const newPassword = 'newPassword';
 
-        registerFallbackValue(ReachFiveConfigConverter.toInterface(config));
+        registerFallbackValue(
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
+        );
         when(
           () => flutterReachFivePlatform.updatePasswordWithPhoneNumber(
-            config: any(named: 'config'),
+            reachFiveKey: any(named: 'reachFiveKey'),
             phoneNumber: phoneNumber,
             verificationCode: verificationCode,
             newPassword: newPassword,
@@ -513,7 +443,7 @@ void main() {
 
         verify(
           () => flutterReachFivePlatform.updatePasswordWithPhoneNumber(
-            config: any(named: 'config'),
+            reachFiveKey: any(named: 'reachFiveKey'),
             phoneNumber: phoneNumber,
             verificationCode: verificationCode,
             newPassword: newPassword,

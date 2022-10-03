@@ -1,15 +1,15 @@
-import 'package:flutter_reach_five/models/reach_five_config.dart';
+import 'package:flutter_reach_five/models/sdk_config.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('$ReachFiveConfig', () {
+  group('$SdkConfig', () {
     test('instances with same fields are equal', () async {
-      const firstInstance = ReachFiveConfig(
+      const firstInstance = SdkConfig(
         domain: 'domain',
         clientId: 'clientId',
         scheme: 'scheme',
       );
-      const secondInstance = ReachFiveConfig(
+      const secondInstance = SdkConfig(
         domain: 'domain',
         clientId: 'clientId',
         scheme: 'scheme',
@@ -19,12 +19,12 @@ void main() {
     });
 
     test('instances with differents fields are not equal', () async {
-      const firstInstance = ReachFiveConfig(
+      const firstInstance = SdkConfig(
         domain: 'domain1',
         clientId: 'clientId',
         scheme: 'scheme',
       );
-      const secondInstance = ReachFiveConfig(
+      const secondInstance = SdkConfig(
         domain: 'domain2',
         clientId: 'clientId',
         scheme: 'scheme',

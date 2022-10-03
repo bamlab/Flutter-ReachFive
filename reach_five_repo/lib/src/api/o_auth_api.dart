@@ -4,7 +4,8 @@
 
 import 'dart:async';
 
-import 'package:built_value/serializer.dart';
+// ignore: unused_import
+import 'dart:convert';
 import 'package:dio/dio.dart';
 
 import 'package:reach_five_repo/src/model/revoke_token_request.dart';
@@ -12,9 +13,7 @@ import 'package:reach_five_repo/src/model/revoke_token_request.dart';
 class OAuthApi {
   final Dio _dio;
 
-  final Serializers _serializers;
-
-  const OAuthApi(this._dio, this._serializers);
+  const OAuthApi(this._dio);
 
   /// Revoke a token
   /// Use this endpoint to invalidate (revoke) a refresh or access token.  - **refresh_token**: When a refresh token is revoked, all the tokens associated with the user and &#x60;client_id&#x60; are revoked. - **access_token**: When an access token is revoked, only the tokens associated with the same specific grant are revoked.
@@ -56,9 +55,7 @@ class OAuthApi {
     dynamic _bodyData;
 
     try {
-      const _type = FullType(RevokeTokenRequest);
-      _bodyData =
-          _serializers.serialize(revokeTokenRequest, specifiedType: _type);
+      _bodyData = jsonEncode(revokeTokenRequest);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _options.compose(

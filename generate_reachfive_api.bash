@@ -3,8 +3,11 @@
 openApiCLIVersion="6.0.1"
 openApiDartVersion="6.3"
 
+# yaml basename
+basename="reach_five"
+
 # Downloading yaml
-yamlDefinition="reach_five_api.yaml"
+yamlDefinition="${basename}_api.yaml"
 
 # Downloading tools
 if test -f "openapi-generator-cli-$openApiCLIVersion.jar"; then
@@ -19,7 +22,7 @@ fi
 echo "==================================================================";
 echo "Building : $yamlDefinition";
 echo "==================================================================";
-pubName="reach_five_repo"
+pubName="${basename}_repo"
 pubLibrary=$pubName
 pubAuthor="CDA"
 pubAuthorEmail="matthieup@bam.tech"
@@ -32,13 +35,7 @@ java -jar "openapi-generator-cli-$openApiCLIVersion.jar" generate \
     -i $yamlDefinition \
     -g dart-dio \
     -o $pubName \
-    --additional-properties=pubName=$pubName,
-    pubLibrary=$pubLibrary,
-    pubAuthor=$pubAuthor,
-    pubAuthorEmail=$pubAuthorEmail,
-    disallowAdditionalPropertiesIfNotPresent=false,
-    serializationLibrary=json_serializable,
-    useEnumExtension=true
+    --additional-properties=pubName=$pubName,pubLibrary=$pubLibrary,pubAuthor=$pubAuthor,pubAuthorEmail=$pubAuthorEmail,disallowAdditionalPropertiesIfNotPresent=false,serializationLibrary=json_serializable,useEnumExtension=true
 
 # Deleting tests
 rm -rf "$pubName/test"

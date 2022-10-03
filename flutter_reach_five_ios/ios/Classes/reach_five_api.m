@@ -31,6 +31,16 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 }
 
 
+@interface SdkConfigInterface ()
++ (SdkConfigInterface *)fromMap:(NSDictionary *)dict;
++ (nullable SdkConfigInterface *)nullableFromMap:(NSDictionary *)dict;
+- (NSDictionary *)toMap;
+@end
+@interface ReachFiveKeyInterface ()
++ (ReachFiveKeyInterface *)fromMap:(NSDictionary *)dict;
++ (nullable ReachFiveKeyInterface *)nullableFromMap:(NSDictionary *)dict;
+- (NSDictionary *)toMap;
+@end
 @interface ReachFiveConfigInterface ()
 + (ReachFiveConfigInterface *)fromMap:(NSDictionary *)dict;
 + (nullable ReachFiveConfigInterface *)nullableFromMap:(NSDictionary *)dict;
@@ -107,18 +117,18 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 - (NSDictionary *)toMap;
 @end
 
-@implementation ReachFiveConfigInterface
+@implementation SdkConfigInterface
 + (instancetype)makeWithDomain:(NSString *)domain
     clientId:(NSString *)clientId
     scheme:(NSString *)scheme {
-  ReachFiveConfigInterface* pigeonResult = [[ReachFiveConfigInterface alloc] init];
+  SdkConfigInterface* pigeonResult = [[SdkConfigInterface alloc] init];
   pigeonResult.domain = domain;
   pigeonResult.clientId = clientId;
   pigeonResult.scheme = scheme;
   return pigeonResult;
 }
-+ (ReachFiveConfigInterface *)fromMap:(NSDictionary *)dict {
-  ReachFiveConfigInterface *pigeonResult = [[ReachFiveConfigInterface alloc] init];
++ (SdkConfigInterface *)fromMap:(NSDictionary *)dict {
+  SdkConfigInterface *pigeonResult = [[SdkConfigInterface alloc] init];
   pigeonResult.domain = GetNullableObject(dict, @"domain");
   NSAssert(pigeonResult.domain != nil, @"");
   pigeonResult.clientId = GetNullableObject(dict, @"clientId");
@@ -127,12 +137,52 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
   NSAssert(pigeonResult.scheme != nil, @"");
   return pigeonResult;
 }
-+ (nullable ReachFiveConfigInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [ReachFiveConfigInterface fromMap:dict] : nil; }
++ (nullable SdkConfigInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [SdkConfigInterface fromMap:dict] : nil; }
 - (NSDictionary *)toMap {
   return @{
     @"domain" : (self.domain ?: [NSNull null]),
     @"clientId" : (self.clientId ?: [NSNull null]),
     @"scheme" : (self.scheme ?: [NSNull null]),
+  };
+}
+@end
+
+@implementation ReachFiveKeyInterface
++ (instancetype)makeWithSdkConfig:(SdkConfigInterface *)sdkConfig {
+  ReachFiveKeyInterface* pigeonResult = [[ReachFiveKeyInterface alloc] init];
+  pigeonResult.sdkConfig = sdkConfig;
+  return pigeonResult;
+}
++ (ReachFiveKeyInterface *)fromMap:(NSDictionary *)dict {
+  ReachFiveKeyInterface *pigeonResult = [[ReachFiveKeyInterface alloc] init];
+  pigeonResult.sdkConfig = [SdkConfigInterface nullableFromMap:GetNullableObject(dict, @"sdkConfig")];
+  NSAssert(pigeonResult.sdkConfig != nil, @"");
+  return pigeonResult;
+}
++ (nullable ReachFiveKeyInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [ReachFiveKeyInterface fromMap:dict] : nil; }
+- (NSDictionary *)toMap {
+  return @{
+    @"sdkConfig" : (self.sdkConfig ? [self.sdkConfig toMap] : [NSNull null]),
+  };
+}
+@end
+
+@implementation ReachFiveConfigInterface
++ (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey {
+  ReachFiveConfigInterface* pigeonResult = [[ReachFiveConfigInterface alloc] init];
+  pigeonResult.reachFiveKey = reachFiveKey;
+  return pigeonResult;
+}
++ (ReachFiveConfigInterface *)fromMap:(NSDictionary *)dict {
+  ReachFiveConfigInterface *pigeonResult = [[ReachFiveConfigInterface alloc] init];
+  pigeonResult.reachFiveKey = [ReachFiveKeyInterface nullableFromMap:GetNullableObject(dict, @"reachFiveKey")];
+  NSAssert(pigeonResult.reachFiveKey != nil, @"");
+  return pigeonResult;
+}
++ (nullable ReachFiveConfigInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [ReachFiveConfigInterface fromMap:dict] : nil; }
+- (NSDictionary *)toMap {
+  return @{
+    @"reachFiveKey" : (self.reachFiveKey ? [self.reachFiveKey toMap] : [NSNull null]),
   };
 }
 @end
@@ -330,12 +380,12 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 @end
 
 @implementation SignupRequestInterface
-+ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
++ (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
     profile:(ProfileSignupRequestInterface *)profile
     redirectUrl:(nullable NSString *)redirectUrl
     scope:(nullable NSArray<NSString *> *)scope {
   SignupRequestInterface* pigeonResult = [[SignupRequestInterface alloc] init];
-  pigeonResult.config = config;
+  pigeonResult.reachFiveKey = reachFiveKey;
   pigeonResult.profile = profile;
   pigeonResult.redirectUrl = redirectUrl;
   pigeonResult.scope = scope;
@@ -343,8 +393,8 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 }
 + (SignupRequestInterface *)fromMap:(NSDictionary *)dict {
   SignupRequestInterface *pigeonResult = [[SignupRequestInterface alloc] init];
-  pigeonResult.config = [ReachFiveConfigInterface nullableFromMap:GetNullableObject(dict, @"config")];
-  NSAssert(pigeonResult.config != nil, @"");
+  pigeonResult.reachFiveKey = [ReachFiveKeyInterface nullableFromMap:GetNullableObject(dict, @"reachFiveKey")];
+  NSAssert(pigeonResult.reachFiveKey != nil, @"");
   pigeonResult.profile = [ProfileSignupRequestInterface nullableFromMap:GetNullableObject(dict, @"profile")];
   NSAssert(pigeonResult.profile != nil, @"");
   pigeonResult.redirectUrl = GetNullableObject(dict, @"redirectUrl");
@@ -354,7 +404,7 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (nullable SignupRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [SignupRequestInterface fromMap:dict] : nil; }
 - (NSDictionary *)toMap {
   return @{
-    @"config" : (self.config ? [self.config toMap] : [NSNull null]),
+    @"reachFiveKey" : (self.reachFiveKey ? [self.reachFiveKey toMap] : [NSNull null]),
     @"profile" : (self.profile ? [self.profile toMap] : [NSNull null]),
     @"redirectUrl" : (self.redirectUrl ?: [NSNull null]),
     @"scope" : (self.scope ?: [NSNull null]),
@@ -533,13 +583,13 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 @end
 
 @implementation LoginWithPasswordRequestInterface
-+ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
++ (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
     email:(nullable NSString *)email
     phoneNumber:(nullable NSString *)phoneNumber
     password:(NSString *)password
     scope:(nullable NSArray<NSString *> *)scope {
   LoginWithPasswordRequestInterface* pigeonResult = [[LoginWithPasswordRequestInterface alloc] init];
-  pigeonResult.config = config;
+  pigeonResult.reachFiveKey = reachFiveKey;
   pigeonResult.email = email;
   pigeonResult.phoneNumber = phoneNumber;
   pigeonResult.password = password;
@@ -548,8 +598,8 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 }
 + (LoginWithPasswordRequestInterface *)fromMap:(NSDictionary *)dict {
   LoginWithPasswordRequestInterface *pigeonResult = [[LoginWithPasswordRequestInterface alloc] init];
-  pigeonResult.config = [ReachFiveConfigInterface nullableFromMap:GetNullableObject(dict, @"config")];
-  NSAssert(pigeonResult.config != nil, @"");
+  pigeonResult.reachFiveKey = [ReachFiveKeyInterface nullableFromMap:GetNullableObject(dict, @"reachFiveKey")];
+  NSAssert(pigeonResult.reachFiveKey != nil, @"");
   pigeonResult.email = GetNullableObject(dict, @"email");
   pigeonResult.phoneNumber = GetNullableObject(dict, @"phoneNumber");
   pigeonResult.password = GetNullableObject(dict, @"password");
@@ -560,7 +610,7 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (nullable LoginWithPasswordRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [LoginWithPasswordRequestInterface fromMap:dict] : nil; }
 - (NSDictionary *)toMap {
   return @{
-    @"config" : (self.config ? [self.config toMap] : [NSNull null]),
+    @"reachFiveKey" : (self.reachFiveKey ? [self.reachFiveKey toMap] : [NSNull null]),
     @"email" : (self.email ?: [NSNull null]),
     @"phoneNumber" : (self.phoneNumber ?: [NSNull null]),
     @"password" : (self.password ?: [NSNull null]),
@@ -570,17 +620,17 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 @end
 
 @implementation RefreshAccessTokenRequestInterface
-+ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
++ (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
     authToken:(AuthTokenInterface *)authToken {
   RefreshAccessTokenRequestInterface* pigeonResult = [[RefreshAccessTokenRequestInterface alloc] init];
-  pigeonResult.config = config;
+  pigeonResult.reachFiveKey = reachFiveKey;
   pigeonResult.authToken = authToken;
   return pigeonResult;
 }
 + (RefreshAccessTokenRequestInterface *)fromMap:(NSDictionary *)dict {
   RefreshAccessTokenRequestInterface *pigeonResult = [[RefreshAccessTokenRequestInterface alloc] init];
-  pigeonResult.config = [ReachFiveConfigInterface nullableFromMap:GetNullableObject(dict, @"config")];
-  NSAssert(pigeonResult.config != nil, @"");
+  pigeonResult.reachFiveKey = [ReachFiveKeyInterface nullableFromMap:GetNullableObject(dict, @"reachFiveKey")];
+  NSAssert(pigeonResult.reachFiveKey != nil, @"");
   pigeonResult.authToken = [AuthTokenInterface nullableFromMap:GetNullableObject(dict, @"authToken")];
   NSAssert(pigeonResult.authToken != nil, @"");
   return pigeonResult;
@@ -588,19 +638,19 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (nullable RefreshAccessTokenRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [RefreshAccessTokenRequestInterface fromMap:dict] : nil; }
 - (NSDictionary *)toMap {
   return @{
-    @"config" : (self.config ? [self.config toMap] : [NSNull null]),
+    @"reachFiveKey" : (self.reachFiveKey ? [self.reachFiveKey toMap] : [NSNull null]),
     @"authToken" : (self.authToken ? [self.authToken toMap] : [NSNull null]),
   };
 }
 @end
 
 @implementation RequestPasswordResetRequestInterface
-+ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
++ (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
     email:(nullable NSString *)email
     phoneNumber:(nullable NSString *)phoneNumber
     redirectUrl:(nullable NSString *)redirectUrl {
   RequestPasswordResetRequestInterface* pigeonResult = [[RequestPasswordResetRequestInterface alloc] init];
-  pigeonResult.config = config;
+  pigeonResult.reachFiveKey = reachFiveKey;
   pigeonResult.email = email;
   pigeonResult.phoneNumber = phoneNumber;
   pigeonResult.redirectUrl = redirectUrl;
@@ -608,8 +658,8 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 }
 + (RequestPasswordResetRequestInterface *)fromMap:(NSDictionary *)dict {
   RequestPasswordResetRequestInterface *pigeonResult = [[RequestPasswordResetRequestInterface alloc] init];
-  pigeonResult.config = [ReachFiveConfigInterface nullableFromMap:GetNullableObject(dict, @"config")];
-  NSAssert(pigeonResult.config != nil, @"");
+  pigeonResult.reachFiveKey = [ReachFiveKeyInterface nullableFromMap:GetNullableObject(dict, @"reachFiveKey")];
+  NSAssert(pigeonResult.reachFiveKey != nil, @"");
   pigeonResult.email = GetNullableObject(dict, @"email");
   pigeonResult.phoneNumber = GetNullableObject(dict, @"phoneNumber");
   pigeonResult.redirectUrl = GetNullableObject(dict, @"redirectUrl");
@@ -618,7 +668,7 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (nullable RequestPasswordResetRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [RequestPasswordResetRequestInterface fromMap:dict] : nil; }
 - (NSDictionary *)toMap {
   return @{
-    @"config" : (self.config ? [self.config toMap] : [NSNull null]),
+    @"reachFiveKey" : (self.reachFiveKey ? [self.reachFiveKey toMap] : [NSNull null]),
     @"email" : (self.email ?: [NSNull null]),
     @"phoneNumber" : (self.phoneNumber ?: [NSNull null]),
     @"redirectUrl" : (self.redirectUrl ?: [NSNull null]),
@@ -627,12 +677,12 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 @end
 
 @implementation UpdatePasswordWithAccessTokenRequestInterface
-+ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
++ (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
     authToken:(AuthTokenInterface *)authToken
     oldPassword:(NSString *)oldPassword
     password:(NSString *)password {
   UpdatePasswordWithAccessTokenRequestInterface* pigeonResult = [[UpdatePasswordWithAccessTokenRequestInterface alloc] init];
-  pigeonResult.config = config;
+  pigeonResult.reachFiveKey = reachFiveKey;
   pigeonResult.authToken = authToken;
   pigeonResult.oldPassword = oldPassword;
   pigeonResult.password = password;
@@ -640,8 +690,8 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 }
 + (UpdatePasswordWithAccessTokenRequestInterface *)fromMap:(NSDictionary *)dict {
   UpdatePasswordWithAccessTokenRequestInterface *pigeonResult = [[UpdatePasswordWithAccessTokenRequestInterface alloc] init];
-  pigeonResult.config = [ReachFiveConfigInterface nullableFromMap:GetNullableObject(dict, @"config")];
-  NSAssert(pigeonResult.config != nil, @"");
+  pigeonResult.reachFiveKey = [ReachFiveKeyInterface nullableFromMap:GetNullableObject(dict, @"reachFiveKey")];
+  NSAssert(pigeonResult.reachFiveKey != nil, @"");
   pigeonResult.authToken = [AuthTokenInterface nullableFromMap:GetNullableObject(dict, @"authToken")];
   NSAssert(pigeonResult.authToken != nil, @"");
   pigeonResult.oldPassword = GetNullableObject(dict, @"oldPassword");
@@ -653,7 +703,7 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (nullable UpdatePasswordWithAccessTokenRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [UpdatePasswordWithAccessTokenRequestInterface fromMap:dict] : nil; }
 - (NSDictionary *)toMap {
   return @{
-    @"config" : (self.config ? [self.config toMap] : [NSNull null]),
+    @"reachFiveKey" : (self.reachFiveKey ? [self.reachFiveKey toMap] : [NSNull null]),
     @"authToken" : (self.authToken ? [self.authToken toMap] : [NSNull null]),
     @"oldPassword" : (self.oldPassword ?: [NSNull null]),
     @"password" : (self.password ?: [NSNull null]),
@@ -662,19 +712,19 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 @end
 
 @implementation UpdatePasswordWithFreshAccessTokenRequestInterface
-+ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
++ (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
     freshAuthToken:(AuthTokenInterface *)freshAuthToken
     password:(NSString *)password {
   UpdatePasswordWithFreshAccessTokenRequestInterface* pigeonResult = [[UpdatePasswordWithFreshAccessTokenRequestInterface alloc] init];
-  pigeonResult.config = config;
+  pigeonResult.reachFiveKey = reachFiveKey;
   pigeonResult.freshAuthToken = freshAuthToken;
   pigeonResult.password = password;
   return pigeonResult;
 }
 + (UpdatePasswordWithFreshAccessTokenRequestInterface *)fromMap:(NSDictionary *)dict {
   UpdatePasswordWithFreshAccessTokenRequestInterface *pigeonResult = [[UpdatePasswordWithFreshAccessTokenRequestInterface alloc] init];
-  pigeonResult.config = [ReachFiveConfigInterface nullableFromMap:GetNullableObject(dict, @"config")];
-  NSAssert(pigeonResult.config != nil, @"");
+  pigeonResult.reachFiveKey = [ReachFiveKeyInterface nullableFromMap:GetNullableObject(dict, @"reachFiveKey")];
+  NSAssert(pigeonResult.reachFiveKey != nil, @"");
   pigeonResult.freshAuthToken = [AuthTokenInterface nullableFromMap:GetNullableObject(dict, @"freshAuthToken")];
   NSAssert(pigeonResult.freshAuthToken != nil, @"");
   pigeonResult.password = GetNullableObject(dict, @"password");
@@ -684,7 +734,7 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (nullable UpdatePasswordWithFreshAccessTokenRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [UpdatePasswordWithFreshAccessTokenRequestInterface fromMap:dict] : nil; }
 - (NSDictionary *)toMap {
   return @{
-    @"config" : (self.config ? [self.config toMap] : [NSNull null]),
+    @"reachFiveKey" : (self.reachFiveKey ? [self.reachFiveKey toMap] : [NSNull null]),
     @"freshAuthToken" : (self.freshAuthToken ? [self.freshAuthToken toMap] : [NSNull null]),
     @"password" : (self.password ?: [NSNull null]),
   };
@@ -692,12 +742,12 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 @end
 
 @implementation UpdatePasswordWithEmailRequestInterface
-+ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
++ (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
     email:(NSString *)email
     verificationCode:(NSString *)verificationCode
     password:(NSString *)password {
   UpdatePasswordWithEmailRequestInterface* pigeonResult = [[UpdatePasswordWithEmailRequestInterface alloc] init];
-  pigeonResult.config = config;
+  pigeonResult.reachFiveKey = reachFiveKey;
   pigeonResult.email = email;
   pigeonResult.verificationCode = verificationCode;
   pigeonResult.password = password;
@@ -705,8 +755,8 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 }
 + (UpdatePasswordWithEmailRequestInterface *)fromMap:(NSDictionary *)dict {
   UpdatePasswordWithEmailRequestInterface *pigeonResult = [[UpdatePasswordWithEmailRequestInterface alloc] init];
-  pigeonResult.config = [ReachFiveConfigInterface nullableFromMap:GetNullableObject(dict, @"config")];
-  NSAssert(pigeonResult.config != nil, @"");
+  pigeonResult.reachFiveKey = [ReachFiveKeyInterface nullableFromMap:GetNullableObject(dict, @"reachFiveKey")];
+  NSAssert(pigeonResult.reachFiveKey != nil, @"");
   pigeonResult.email = GetNullableObject(dict, @"email");
   NSAssert(pigeonResult.email != nil, @"");
   pigeonResult.verificationCode = GetNullableObject(dict, @"verificationCode");
@@ -718,7 +768,7 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (nullable UpdatePasswordWithEmailRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [UpdatePasswordWithEmailRequestInterface fromMap:dict] : nil; }
 - (NSDictionary *)toMap {
   return @{
-    @"config" : (self.config ? [self.config toMap] : [NSNull null]),
+    @"reachFiveKey" : (self.reachFiveKey ? [self.reachFiveKey toMap] : [NSNull null]),
     @"email" : (self.email ?: [NSNull null]),
     @"verificationCode" : (self.verificationCode ?: [NSNull null]),
     @"password" : (self.password ?: [NSNull null]),
@@ -727,12 +777,12 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 @end
 
 @implementation UpdatePasswordWithPhoneNumberRequestInterface
-+ (instancetype)makeWithConfig:(ReachFiveConfigInterface *)config
++ (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
     phoneNumber:(NSString *)phoneNumber
     verificationCode:(NSString *)verificationCode
     password:(NSString *)password {
   UpdatePasswordWithPhoneNumberRequestInterface* pigeonResult = [[UpdatePasswordWithPhoneNumberRequestInterface alloc] init];
-  pigeonResult.config = config;
+  pigeonResult.reachFiveKey = reachFiveKey;
   pigeonResult.phoneNumber = phoneNumber;
   pigeonResult.verificationCode = verificationCode;
   pigeonResult.password = password;
@@ -740,8 +790,8 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 }
 + (UpdatePasswordWithPhoneNumberRequestInterface *)fromMap:(NSDictionary *)dict {
   UpdatePasswordWithPhoneNumberRequestInterface *pigeonResult = [[UpdatePasswordWithPhoneNumberRequestInterface alloc] init];
-  pigeonResult.config = [ReachFiveConfigInterface nullableFromMap:GetNullableObject(dict, @"config")];
-  NSAssert(pigeonResult.config != nil, @"");
+  pigeonResult.reachFiveKey = [ReachFiveKeyInterface nullableFromMap:GetNullableObject(dict, @"reachFiveKey")];
+  NSAssert(pigeonResult.reachFiveKey != nil, @"");
   pigeonResult.phoneNumber = GetNullableObject(dict, @"phoneNumber");
   NSAssert(pigeonResult.phoneNumber != nil, @"");
   pigeonResult.verificationCode = GetNullableObject(dict, @"verificationCode");
@@ -753,7 +803,7 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (nullable UpdatePasswordWithPhoneNumberRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [UpdatePasswordWithPhoneNumberRequestInterface fromMap:dict] : nil; }
 - (NSDictionary *)toMap {
   return @{
-    @"config" : (self.config ? [self.config toMap] : [NSNull null]),
+    @"reachFiveKey" : (self.reachFiveKey ? [self.reachFiveKey toMap] : [NSNull null]),
     @"phoneNumber" : (self.phoneNumber ?: [NSNull null]),
     @"verificationCode" : (self.verificationCode ?: [NSNull null]),
     @"password" : (self.password ?: [NSNull null]),
@@ -792,24 +842,30 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
       return [ReachFiveConfigInterface fromMap:[self readValue]];
     
     case 136:     
-      return [RefreshAccessTokenRequestInterface fromMap:[self readValue]];
+      return [ReachFiveKeyInterface fromMap:[self readValue]];
     
     case 137:     
-      return [RequestPasswordResetRequestInterface fromMap:[self readValue]];
+      return [RefreshAccessTokenRequestInterface fromMap:[self readValue]];
     
     case 138:     
-      return [SignupRequestInterface fromMap:[self readValue]];
+      return [RequestPasswordResetRequestInterface fromMap:[self readValue]];
     
     case 139:     
-      return [UpdatePasswordWithAccessTokenRequestInterface fromMap:[self readValue]];
+      return [SdkConfigInterface fromMap:[self readValue]];
     
     case 140:     
-      return [UpdatePasswordWithEmailRequestInterface fromMap:[self readValue]];
+      return [SignupRequestInterface fromMap:[self readValue]];
     
     case 141:     
-      return [UpdatePasswordWithFreshAccessTokenRequestInterface fromMap:[self readValue]];
+      return [UpdatePasswordWithAccessTokenRequestInterface fromMap:[self readValue]];
     
     case 142:     
+      return [UpdatePasswordWithEmailRequestInterface fromMap:[self readValue]];
+    
+    case 143:     
+      return [UpdatePasswordWithFreshAccessTokenRequestInterface fromMap:[self readValue]];
+    
+    case 144:     
       return [UpdatePasswordWithPhoneNumberRequestInterface fromMap:[self readValue]];
     
     default:    
@@ -856,32 +912,40 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
     [self writeByte:135];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[RefreshAccessTokenRequestInterface class]]) {
+  if ([value isKindOfClass:[ReachFiveKeyInterface class]]) {
     [self writeByte:136];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[RequestPasswordResetRequestInterface class]]) {
+  if ([value isKindOfClass:[RefreshAccessTokenRequestInterface class]]) {
     [self writeByte:137];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[SignupRequestInterface class]]) {
+  if ([value isKindOfClass:[RequestPasswordResetRequestInterface class]]) {
     [self writeByte:138];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[UpdatePasswordWithAccessTokenRequestInterface class]]) {
+  if ([value isKindOfClass:[SdkConfigInterface class]]) {
     [self writeByte:139];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[UpdatePasswordWithEmailRequestInterface class]]) {
+  if ([value isKindOfClass:[SignupRequestInterface class]]) {
     [self writeByte:140];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[UpdatePasswordWithFreshAccessTokenRequestInterface class]]) {
+  if ([value isKindOfClass:[UpdatePasswordWithAccessTokenRequestInterface class]]) {
     [self writeByte:141];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[UpdatePasswordWithPhoneNumberRequestInterface class]]) {
+  if ([value isKindOfClass:[UpdatePasswordWithEmailRequestInterface class]]) {
     [self writeByte:142];
+    [self writeValue:[value toMap]];
+  } else 
+  if ([value isKindOfClass:[UpdatePasswordWithFreshAccessTokenRequestInterface class]]) {
+    [self writeByte:143];
+    [self writeValue:[value toMap]];
+  } else 
+  if ([value isKindOfClass:[UpdatePasswordWithPhoneNumberRequestInterface class]]) {
+    [self writeByte:144];
     [self writeValue:[value toMap]];
   } else 
 {
@@ -920,11 +984,11 @@ void ReachFiveHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<
         binaryMessenger:binaryMessenger
         codec:ReachFiveHostApiGetCodec()        ];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(initializeConfig:completion:)], @"ReachFiveHostApi api (%@) doesn't respond to @selector(initializeConfig:completion:)", api);
+      NSCAssert([api respondsToSelector:@selector(initializeReachFiveKey:completion:)], @"ReachFiveHostApi api (%@) doesn't respond to @selector(initializeReachFiveKey:completion:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         NSArray *args = message;
-        ReachFiveConfigInterface *arg_config = GetNullableObjectAtIndex(args, 0);
-        [api initializeConfig:arg_config completion:^(ReachFiveConfigInterface *_Nullable output, FlutterError *_Nullable error) {
+        ReachFiveKeyInterface *arg_reachFiveKey = GetNullableObjectAtIndex(args, 0);
+        [api initializeReachFiveKey:arg_reachFiveKey completion:^(ReachFiveConfigInterface *_Nullable output, FlutterError *_Nullable error) {
           callback(wrapResult(output, error));
         }];
       }];
@@ -980,11 +1044,11 @@ void ReachFiveHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<
         binaryMessenger:binaryMessenger
         codec:ReachFiveHostApiGetCodec()        ];
     if (api) {
-      NSCAssert([api respondsToSelector:@selector(logoutConfig:completion:)], @"ReachFiveHostApi api (%@) doesn't respond to @selector(logoutConfig:completion:)", api);
+      NSCAssert([api respondsToSelector:@selector(logoutReachFiveKey:completion:)], @"ReachFiveHostApi api (%@) doesn't respond to @selector(logoutReachFiveKey:completion:)", api);
       [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
         NSArray *args = message;
-        ReachFiveConfigInterface *arg_config = GetNullableObjectAtIndex(args, 0);
-        [api logoutConfig:arg_config completion:^(FlutterError *_Nullable error) {
+        ReachFiveKeyInterface *arg_reachFiveKey = GetNullableObjectAtIndex(args, 0);
+        [api logoutReachFiveKey:arg_reachFiveKey completion:^(FlutterError *_Nullable error) {
           callback(wrapResult(nil, error));
         }];
       }];

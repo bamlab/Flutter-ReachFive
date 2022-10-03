@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
-/// [ReachFiveConfig] class, contains the infos for
+/// [SdkConfig] class, contains the infos for
 /// a ReachFive config
-class ReachFiveConfig extends Equatable {
-  /// [ReachFiveConfig] default constructor
-  const ReachFiveConfig({
+class SdkConfig extends Equatable {
+  /// [SdkConfig] default constructor
+  const SdkConfig({
     required this.domain,
     required this.clientId,
     required this.scheme,

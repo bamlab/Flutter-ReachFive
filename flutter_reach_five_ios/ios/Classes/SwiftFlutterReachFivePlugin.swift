@@ -20,24 +20,24 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
         
     }
     
-    private func getReachFiveInstanceKey(reachFiveConfig: ReachFiveConfigInterface) -> String {
-        let key: String =  reachFiveConfig.domain + reachFiveConfig.clientId + reachFiveConfig.scheme
+    private func getReachFiveInstanceKey(reachFiveKey: ReachFiveKeyInterface) -> String {
+        let key: String =  reachFiveKey.sdkConfig.domain + reachFiveKey.sdkConfig.clientId + reachFiveKey.sdkConfig.scheme
         return key
     }
 
-    public func initializeConfig(_ config: ReachFiveConfigInterface, completion: @escaping (ReachFiveConfigInterface?, FlutterError?) -> Void) {
+    public func initializeReachFiveKey(_ reachFiveKey: ReachFiveKeyInterface, completion: @escaping (ReachFiveConfigInterface?, FlutterError?) -> Void) {
 
         let reachFive = ReachFive(
             sdkConfig: SdkConfig(
-                domain: config.domain,
-                clientId: config.clientId,
-                scheme: config.scheme
+                domain: reachFiveKey.sdkConfig.domain,
+                clientId: reachFiveKey.sdkConfig.clientId,
+                scheme: reachFiveKey.sdkConfig.scheme
             ),
             providersCreators: [],
             storage: nil
         )
         
-        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveConfig: config)
+        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: reachFiveKey)
         
         reachFive
             .initialize()
@@ -45,9 +45,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                 self.reachFiveInstances[reachFiveInstanceKey] = reachFive
                 completion(
                     ReachFiveConfigInterface.make(
-                        withDomain: config.domain,
-                        clientId: config.clientId,
-                        scheme: config.scheme
+                        withReachFiveKey: reachFiveKey
                     ),
                     nil
                 )
@@ -65,7 +63,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
     }
     
     public func signupRequest(_ request: SignupRequestInterface, completion: @escaping (AuthTokenInterface?, FlutterError?) -> Void) {
-        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveConfig: request.config)
+        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
         guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
         else {
             completion(
@@ -105,7 +103,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
     }
     
     public func login(withPasswordRequest request: LoginWithPasswordRequestInterface, completion: @escaping (AuthTokenInterface?, FlutterError?) -> Void) {
-        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveConfig: request.config)
+        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
         guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
         else {
             completion(
@@ -141,8 +139,8 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
         )
     }
     
-    public func logoutConfig(_ config: ReachFiveConfigInterface, completion: @escaping (FlutterError?) -> Void) {
-        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveConfig: config)
+    public func logoutReachFiveKey(_ reachFiveKey: ReachFiveKeyInterface, completion: @escaping (FlutterError?) -> Void) {
+        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: reachFiveKey)
         guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
         else {
             completion(
@@ -169,7 +167,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
     }
     
     public func refreshAccessTokenRequest(_ request: RefreshAccessTokenRequestInterface, completion: @escaping (AuthTokenInterface?, FlutterError?) -> Void) {
-        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveConfig: request.config)
+        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
         guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
         else {
             completion(
@@ -207,7 +205,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
     }
     
     public func requestPasswordResetRequest(_ request: RequestPasswordResetRequestInterface, completion: @escaping (FlutterError?) -> Void) {
-        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveConfig: request.config)
+        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
         guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
         else {
             completion(
@@ -238,7 +236,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
     }
     
     public func updatePassword(withAccessTokenRequest request: UpdatePasswordWithAccessTokenRequestInterface, completion: @escaping (FlutterError?) -> Void) {
-        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveConfig: request.config)
+        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
         guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
         else {
             completion(
@@ -273,7 +271,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
     }
     
     public func updatePassword(withFreshAccessTokenRequest request: UpdatePasswordWithFreshAccessTokenRequestInterface, completion: @escaping (FlutterError?) -> Void) {
-        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveConfig: request.config)
+        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
         guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
         else {
             completion(
@@ -307,7 +305,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
     }
     
     public func updatePassword(withEmailRequest request: UpdatePasswordWithEmailRequestInterface, completion: @escaping (FlutterError?) -> Void) {
-        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveConfig: request.config)
+        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
         guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
         else {
             completion(
@@ -340,7 +338,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
     }
     
     public func updatePassword(withPhoneNumberRequest request: UpdatePasswordWithPhoneNumberRequestInterface, completion: @escaping (FlutterError?) -> Void) {
-        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveConfig: request.config)
+        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
         guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
         else {
             completion(

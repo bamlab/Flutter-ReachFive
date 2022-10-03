@@ -12,8 +12,8 @@ enum ProfileAddressTypeInterface {
   delivery,
 }
 
-class ReachFiveConfigInterface {
-  ReachFiveConfigInterface({
+class SdkConfigInterface {
+  SdkConfigInterface({
     required this.domain,
     required this.clientId,
     required this.scheme,
@@ -31,12 +31,54 @@ class ReachFiveConfigInterface {
     return pigeonMap;
   }
 
-  static ReachFiveConfigInterface decode(Object message) {
+  static SdkConfigInterface decode(Object message) {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
-    return ReachFiveConfigInterface(
+    return SdkConfigInterface(
       domain: pigeonMap['domain']! as String,
       clientId: pigeonMap['clientId']! as String,
       scheme: pigeonMap['scheme']! as String,
+    );
+  }
+}
+
+class ReachFiveKeyInterface {
+  ReachFiveKeyInterface({
+    required this.sdkConfig,
+  });
+
+  SdkConfigInterface sdkConfig;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['sdkConfig'] = sdkConfig.encode();
+    return pigeonMap;
+  }
+
+  static ReachFiveKeyInterface decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return ReachFiveKeyInterface(
+      sdkConfig: SdkConfigInterface.decode(pigeonMap['sdkConfig']!),
+    );
+  }
+}
+
+class ReachFiveConfigInterface {
+  ReachFiveConfigInterface({
+    required this.reachFiveKey,
+  });
+
+  ReachFiveKeyInterface reachFiveKey;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['reachFiveKey'] = reachFiveKey.encode();
+    return pigeonMap;
+  }
+
+  static ReachFiveConfigInterface decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return ReachFiveConfigInterface(
+      reachFiveKey: ReachFiveKeyInterface.decode(pigeonMap['reachFiveKey']!),
     );
   }
 }
@@ -243,20 +285,20 @@ class ProfileSignupRequestInterface {
 
 class SignupRequestInterface {
   SignupRequestInterface({
-    required this.config,
+    required this.reachFiveKey,
     required this.profile,
     this.redirectUrl,
     this.scope,
   });
 
-  ReachFiveConfigInterface config;
+  ReachFiveKeyInterface reachFiveKey;
   ProfileSignupRequestInterface profile;
   String? redirectUrl;
   List<String?>? scope;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
-    pigeonMap['config'] = config.encode();
+    pigeonMap['reachFiveKey'] = reachFiveKey.encode();
     pigeonMap['profile'] = profile.encode();
     pigeonMap['redirectUrl'] = redirectUrl;
     pigeonMap['scope'] = scope;
@@ -266,7 +308,7 @@ class SignupRequestInterface {
   static SignupRequestInterface decode(Object message) {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
     return SignupRequestInterface(
-      config: ReachFiveConfigInterface.decode(pigeonMap['config']!),
+      reachFiveKey: ReachFiveKeyInterface.decode(pigeonMap['reachFiveKey']!),
       profile: ProfileSignupRequestInterface.decode(pigeonMap['profile']!),
       redirectUrl: pigeonMap['redirectUrl'] as String?,
       scope: (pigeonMap['scope'] as List<Object?>?)?.cast<String?>(),
@@ -455,14 +497,14 @@ class AuthTokenInterface {
 
 class LoginWithPasswordRequestInterface {
   LoginWithPasswordRequestInterface({
-    required this.config,
+    required this.reachFiveKey,
     this.email,
     this.phoneNumber,
     required this.password,
     this.scope,
   });
 
-  ReachFiveConfigInterface config;
+  ReachFiveKeyInterface reachFiveKey;
   String? email;
   String? phoneNumber;
   String password;
@@ -470,7 +512,7 @@ class LoginWithPasswordRequestInterface {
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
-    pigeonMap['config'] = config.encode();
+    pigeonMap['reachFiveKey'] = reachFiveKey.encode();
     pigeonMap['email'] = email;
     pigeonMap['phoneNumber'] = phoneNumber;
     pigeonMap['password'] = password;
@@ -481,7 +523,7 @@ class LoginWithPasswordRequestInterface {
   static LoginWithPasswordRequestInterface decode(Object message) {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
     return LoginWithPasswordRequestInterface(
-      config: ReachFiveConfigInterface.decode(pigeonMap['config']!),
+      reachFiveKey: ReachFiveKeyInterface.decode(pigeonMap['reachFiveKey']!),
       email: pigeonMap['email'] as String?,
       phoneNumber: pigeonMap['phoneNumber'] as String?,
       password: pigeonMap['password']! as String,
@@ -492,16 +534,16 @@ class LoginWithPasswordRequestInterface {
 
 class RefreshAccessTokenRequestInterface {
   RefreshAccessTokenRequestInterface({
-    required this.config,
+    required this.reachFiveKey,
     required this.authToken,
   });
 
-  ReachFiveConfigInterface config;
+  ReachFiveKeyInterface reachFiveKey;
   AuthTokenInterface authToken;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
-    pigeonMap['config'] = config.encode();
+    pigeonMap['reachFiveKey'] = reachFiveKey.encode();
     pigeonMap['authToken'] = authToken.encode();
     return pigeonMap;
   }
@@ -509,7 +551,7 @@ class RefreshAccessTokenRequestInterface {
   static RefreshAccessTokenRequestInterface decode(Object message) {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
     return RefreshAccessTokenRequestInterface(
-      config: ReachFiveConfigInterface.decode(pigeonMap['config']!),
+      reachFiveKey: ReachFiveKeyInterface.decode(pigeonMap['reachFiveKey']!),
       authToken: AuthTokenInterface.decode(pigeonMap['authToken']!),
     );
   }
@@ -517,20 +559,20 @@ class RefreshAccessTokenRequestInterface {
 
 class RequestPasswordResetRequestInterface {
   RequestPasswordResetRequestInterface({
-    required this.config,
+    required this.reachFiveKey,
     this.email,
     this.phoneNumber,
     this.redirectUrl,
   });
 
-  ReachFiveConfigInterface config;
+  ReachFiveKeyInterface reachFiveKey;
   String? email;
   String? phoneNumber;
   String? redirectUrl;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
-    pigeonMap['config'] = config.encode();
+    pigeonMap['reachFiveKey'] = reachFiveKey.encode();
     pigeonMap['email'] = email;
     pigeonMap['phoneNumber'] = phoneNumber;
     pigeonMap['redirectUrl'] = redirectUrl;
@@ -540,7 +582,7 @@ class RequestPasswordResetRequestInterface {
   static RequestPasswordResetRequestInterface decode(Object message) {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
     return RequestPasswordResetRequestInterface(
-      config: ReachFiveConfigInterface.decode(pigeonMap['config']!),
+      reachFiveKey: ReachFiveKeyInterface.decode(pigeonMap['reachFiveKey']!),
       email: pigeonMap['email'] as String?,
       phoneNumber: pigeonMap['phoneNumber'] as String?,
       redirectUrl: pigeonMap['redirectUrl'] as String?,
@@ -550,20 +592,20 @@ class RequestPasswordResetRequestInterface {
 
 class UpdatePasswordWithAccessTokenRequestInterface {
   UpdatePasswordWithAccessTokenRequestInterface({
-    required this.config,
+    required this.reachFiveKey,
     required this.authToken,
     required this.oldPassword,
     required this.password,
   });
 
-  ReachFiveConfigInterface config;
+  ReachFiveKeyInterface reachFiveKey;
   AuthTokenInterface authToken;
   String oldPassword;
   String password;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
-    pigeonMap['config'] = config.encode();
+    pigeonMap['reachFiveKey'] = reachFiveKey.encode();
     pigeonMap['authToken'] = authToken.encode();
     pigeonMap['oldPassword'] = oldPassword;
     pigeonMap['password'] = password;
@@ -573,7 +615,7 @@ class UpdatePasswordWithAccessTokenRequestInterface {
   static UpdatePasswordWithAccessTokenRequestInterface decode(Object message) {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
     return UpdatePasswordWithAccessTokenRequestInterface(
-      config: ReachFiveConfigInterface.decode(pigeonMap['config']!),
+      reachFiveKey: ReachFiveKeyInterface.decode(pigeonMap['reachFiveKey']!),
       authToken: AuthTokenInterface.decode(pigeonMap['authToken']!),
       oldPassword: pigeonMap['oldPassword']! as String,
       password: pigeonMap['password']! as String,
@@ -583,18 +625,18 @@ class UpdatePasswordWithAccessTokenRequestInterface {
 
 class UpdatePasswordWithFreshAccessTokenRequestInterface {
   UpdatePasswordWithFreshAccessTokenRequestInterface({
-    required this.config,
+    required this.reachFiveKey,
     required this.freshAuthToken,
     required this.password,
   });
 
-  ReachFiveConfigInterface config;
+  ReachFiveKeyInterface reachFiveKey;
   AuthTokenInterface freshAuthToken;
   String password;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
-    pigeonMap['config'] = config.encode();
+    pigeonMap['reachFiveKey'] = reachFiveKey.encode();
     pigeonMap['freshAuthToken'] = freshAuthToken.encode();
     pigeonMap['password'] = password;
     return pigeonMap;
@@ -604,7 +646,7 @@ class UpdatePasswordWithFreshAccessTokenRequestInterface {
       Object message) {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
     return UpdatePasswordWithFreshAccessTokenRequestInterface(
-      config: ReachFiveConfigInterface.decode(pigeonMap['config']!),
+      reachFiveKey: ReachFiveKeyInterface.decode(pigeonMap['reachFiveKey']!),
       freshAuthToken: AuthTokenInterface.decode(pigeonMap['freshAuthToken']!),
       password: pigeonMap['password']! as String,
     );
@@ -613,20 +655,20 @@ class UpdatePasswordWithFreshAccessTokenRequestInterface {
 
 class UpdatePasswordWithEmailRequestInterface {
   UpdatePasswordWithEmailRequestInterface({
-    required this.config,
+    required this.reachFiveKey,
     required this.email,
     required this.verificationCode,
     required this.password,
   });
 
-  ReachFiveConfigInterface config;
+  ReachFiveKeyInterface reachFiveKey;
   String email;
   String verificationCode;
   String password;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
-    pigeonMap['config'] = config.encode();
+    pigeonMap['reachFiveKey'] = reachFiveKey.encode();
     pigeonMap['email'] = email;
     pigeonMap['verificationCode'] = verificationCode;
     pigeonMap['password'] = password;
@@ -636,7 +678,7 @@ class UpdatePasswordWithEmailRequestInterface {
   static UpdatePasswordWithEmailRequestInterface decode(Object message) {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
     return UpdatePasswordWithEmailRequestInterface(
-      config: ReachFiveConfigInterface.decode(pigeonMap['config']!),
+      reachFiveKey: ReachFiveKeyInterface.decode(pigeonMap['reachFiveKey']!),
       email: pigeonMap['email']! as String,
       verificationCode: pigeonMap['verificationCode']! as String,
       password: pigeonMap['password']! as String,
@@ -646,20 +688,20 @@ class UpdatePasswordWithEmailRequestInterface {
 
 class UpdatePasswordWithPhoneNumberRequestInterface {
   UpdatePasswordWithPhoneNumberRequestInterface({
-    required this.config,
+    required this.reachFiveKey,
     required this.phoneNumber,
     required this.verificationCode,
     required this.password,
   });
 
-  ReachFiveConfigInterface config;
+  ReachFiveKeyInterface reachFiveKey;
   String phoneNumber;
   String verificationCode;
   String password;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
-    pigeonMap['config'] = config.encode();
+    pigeonMap['reachFiveKey'] = reachFiveKey.encode();
     pigeonMap['phoneNumber'] = phoneNumber;
     pigeonMap['verificationCode'] = verificationCode;
     pigeonMap['password'] = password;
@@ -669,7 +711,7 @@ class UpdatePasswordWithPhoneNumberRequestInterface {
   static UpdatePasswordWithPhoneNumberRequestInterface decode(Object message) {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
     return UpdatePasswordWithPhoneNumberRequestInterface(
-      config: ReachFiveConfigInterface.decode(pigeonMap['config']!),
+      reachFiveKey: ReachFiveKeyInterface.decode(pigeonMap['reachFiveKey']!),
       phoneNumber: pigeonMap['phoneNumber']! as String,
       verificationCode: pigeonMap['verificationCode']! as String,
       password: pigeonMap['password']! as String,
@@ -705,26 +747,32 @@ class _ReachFiveHostApiCodec extends StandardMessageCodec {
     } else if (value is ReachFiveConfigInterface) {
       buffer.putUint8(135);
       writeValue(buffer, value.encode());
-    } else if (value is RefreshAccessTokenRequestInterface) {
+    } else if (value is ReachFiveKeyInterface) {
       buffer.putUint8(136);
       writeValue(buffer, value.encode());
-    } else if (value is RequestPasswordResetRequestInterface) {
+    } else if (value is RefreshAccessTokenRequestInterface) {
       buffer.putUint8(137);
       writeValue(buffer, value.encode());
-    } else if (value is SignupRequestInterface) {
+    } else if (value is RequestPasswordResetRequestInterface) {
       buffer.putUint8(138);
       writeValue(buffer, value.encode());
-    } else if (value is UpdatePasswordWithAccessTokenRequestInterface) {
+    } else if (value is SdkConfigInterface) {
       buffer.putUint8(139);
       writeValue(buffer, value.encode());
-    } else if (value is UpdatePasswordWithEmailRequestInterface) {
+    } else if (value is SignupRequestInterface) {
       buffer.putUint8(140);
       writeValue(buffer, value.encode());
-    } else if (value is UpdatePasswordWithFreshAccessTokenRequestInterface) {
+    } else if (value is UpdatePasswordWithAccessTokenRequestInterface) {
       buffer.putUint8(141);
       writeValue(buffer, value.encode());
-    } else if (value is UpdatePasswordWithPhoneNumberRequestInterface) {
+    } else if (value is UpdatePasswordWithEmailRequestInterface) {
       buffer.putUint8(142);
+      writeValue(buffer, value.encode());
+    } else if (value is UpdatePasswordWithFreshAccessTokenRequestInterface) {
+      buffer.putUint8(143);
+      writeValue(buffer, value.encode());
+    } else if (value is UpdatePasswordWithPhoneNumberRequestInterface) {
+      buffer.putUint8(144);
       writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
@@ -759,27 +807,33 @@ class _ReachFiveHostApiCodec extends StandardMessageCodec {
         return ReachFiveConfigInterface.decode(readValue(buffer)!);
 
       case 136:
-        return RefreshAccessTokenRequestInterface.decode(readValue(buffer)!);
+        return ReachFiveKeyInterface.decode(readValue(buffer)!);
 
       case 137:
-        return RequestPasswordResetRequestInterface.decode(readValue(buffer)!);
+        return RefreshAccessTokenRequestInterface.decode(readValue(buffer)!);
 
       case 138:
-        return SignupRequestInterface.decode(readValue(buffer)!);
+        return RequestPasswordResetRequestInterface.decode(readValue(buffer)!);
 
       case 139:
+        return SdkConfigInterface.decode(readValue(buffer)!);
+
+      case 140:
+        return SignupRequestInterface.decode(readValue(buffer)!);
+
+      case 141:
         return UpdatePasswordWithAccessTokenRequestInterface.decode(
             readValue(buffer)!);
 
-      case 140:
+      case 142:
         return UpdatePasswordWithEmailRequestInterface.decode(
             readValue(buffer)!);
 
-      case 141:
+      case 143:
         return UpdatePasswordWithFreshAccessTokenRequestInterface.decode(
             readValue(buffer)!);
 
-      case 142:
+      case 144:
         return UpdatePasswordWithPhoneNumberRequestInterface.decode(
             readValue(buffer)!);
 
@@ -801,12 +855,12 @@ class ReachFiveHostApi {
   static const MessageCodec<Object?> codec = _ReachFiveHostApiCodec();
 
   Future<ReachFiveConfigInterface> initialize(
-      ReachFiveConfigInterface arg_config) async {
+      ReachFiveKeyInterface arg_reachFiveKey) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.ReachFiveHostApi.initialize', codec,
         binaryMessenger: _binaryMessenger);
-    final Map<Object?, Object?>? replyMap =
-        await channel.send(<Object?>[arg_config]) as Map<Object?, Object?>?;
+    final Map<Object?, Object?>? replyMap = await channel
+        .send(<Object?>[arg_reachFiveKey]) as Map<Object?, Object?>?;
     if (replyMap == null) {
       throw PlatformException(
         code: 'channel-error',
@@ -889,12 +943,12 @@ class ReachFiveHostApi {
     }
   }
 
-  Future<void> logout(ReachFiveConfigInterface arg_config) async {
+  Future<void> logout(ReachFiveKeyInterface arg_reachFiveKey) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.ReachFiveHostApi.logout', codec,
         binaryMessenger: _binaryMessenger);
-    final Map<Object?, Object?>? replyMap =
-        await channel.send(<Object?>[arg_config]) as Map<Object?, Object?>?;
+    final Map<Object?, Object?>? replyMap = await channel
+        .send(<Object?>[arg_reachFiveKey]) as Map<Object?, Object?>?;
     if (replyMap == null) {
       throw PlatformException(
         code: 'channel-error',
