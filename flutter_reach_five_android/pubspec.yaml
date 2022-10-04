@@ -1,7 +1,6 @@
 name: flutter_reach_five_android
 description: Android implementation of the flutter_reach_five plugin
-version: 0.1.0+1
-publish_to: none
+version: 0.1.0
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -19,8 +18,7 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_reach_five_platform_interface:
-    path: ../flutter_reach_five_platform_interface
+  flutter_reach_five_platform_interface: ^0.1.0
 
 dev_dependencies:
   analyzer: ^4.7.0

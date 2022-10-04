@@ -1,0 +1,12 @@
+# melos_managed_dependency_overrides: flutter_reach_five,flutter_reach_five_android,flutter_reach_five_ios,flutter_reach_five_platform_interface,reach_five_repo
+dependency_overrides:
+  flutter_reach_five:
+    path: ../
+  flutter_reach_five_android:
+    path: ../../flutter_reach_five_android
+  flutter_reach_five_ios:
+    path: ../../flutter_reach_five_ios
+  flutter_reach_five_platform_interface:
+    path: ../../flutter_reach_five_platform_interface
+  reach_five_repo:
+    path: ../../reach_five_repo
