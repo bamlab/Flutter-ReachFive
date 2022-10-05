@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_reach_five/flutter_reach_five.dart';
 import 'package:flutter_reach_five/helpers/auth_token.dart';
 import 'package:flutter_reach_five/helpers/profile_signup_request_converter.dart';
+import 'package:flutter_reach_five/helpers/provider_converter.dart';
 import 'package:flutter_reach_five/helpers/reach_five_key_converter.dart';
 import 'package:flutter_reach_five/helpers/scope_value_converter.dart';
 import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platform_interface.dart';
@@ -45,13 +46,17 @@ void main() {
         clientId: 'clientId',
         scheme: 'scheme',
       );
+      const providerCreators = [ProviderCreator.webview];
 
       const reachFiveKey = ReachFiveKey(
         sdkConfig: sdkConfig,
+        providerCreators: providerCreators,
       );
+      const providers = [Provider.google];
 
       reachFive = ReachFive(
         reachFiveKey: reachFiveKey,
+        providers: providers,
         repo: mockReachFiveRepo,
       );
     });
@@ -61,6 +66,8 @@ void main() {
         final reachFiveConfigInterface = ReachFiveConfigInterface(
           reachFiveKey:
               ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
+          providers:
+              reachFive.providers.map(ProviderConverter.toInterface).toList(),
         );
 
         registerFallbackValue(

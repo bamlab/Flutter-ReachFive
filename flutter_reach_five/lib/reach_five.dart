@@ -5,6 +5,7 @@ import 'package:reach_five_repo/reach_five_repo.dart';
 import 'flutter_reach_five.dart';
 import 'helpers/auth_token.dart';
 import 'helpers/profile_signup_request_converter.dart';
+import 'helpers/provider_converter.dart';
 import 'helpers/reach_five_key_converter.dart';
 import 'helpers/scope_value_converter.dart';
 
@@ -17,6 +18,7 @@ class ReachFive {
   /// [ReachFive] default constructor
   const ReachFive({
     required this.reachFiveKey,
+    required this.providers,
     required this.repo,
   });
 
@@ -27,6 +29,12 @@ class ReachFive {
   /// and to have multi-instance of reachFive
   /// {@endtemplate}
   final ReachFiveKey reachFiveKey;
+
+  /// @template flutter_reach_five.reachFive.providers}
+  /// [ReachFive] available providers, kept in memory here to be given in every
+  /// reachFive native sdk methods that needs providers
+  /// {@endtemplate}
+  final List<Provider> providers;
 
   /// @template flutter_reach_five.reachFive.repo}
   /// [ReachFiveRepo] instance, kept in memory here to be create
@@ -242,6 +250,7 @@ class ReachFiveManager {
   /// {@endtemplate}
   static Future<ReachFive> initialize({
     required SdkConfig sdkConfig,
+    List<ProviderCreator> providerCreators = const [],
     Dio? dio,
     String? domainPathOverride,
     List<Interceptor>? interceptors,
@@ -250,6 +259,7 @@ class ReachFiveManager {
       ReachFiveKeyConverter.toInterface(
         ReachFiveKey(
           sdkConfig: sdkConfig,
+          providerCreators: providerCreators,
         ),
       ),
     );
@@ -267,6 +277,10 @@ class ReachFiveManager {
       reachFiveKey: ReachFiveKeyConverter.fromInterface(
         reachFiveConfigInterface.reachFiveKey,
       ),
+      providers: reachFiveConfigInterface.providers
+          .whereType<String>()
+          .map(ProviderConverter.fromInterface)
+          .toList(),
       repo: reachFiveRepo,
     );
   }

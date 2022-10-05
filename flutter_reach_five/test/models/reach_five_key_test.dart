@@ -10,6 +10,7 @@ void main() {
           clientId: 'clientId',
           scheme: 'scheme',
         ),
+        providerCreators: [ProviderCreator.facebook],
       );
       const secondInstance = ReachFiveKey(
         sdkConfig: SdkConfig(
@@ -17,6 +18,7 @@ void main() {
           clientId: 'clientId',
           scheme: 'scheme',
         ),
+        providerCreators: [ProviderCreator.facebook],
       );
 
       expect(firstInstance == secondInstance, isTrue);
@@ -29,6 +31,7 @@ void main() {
           clientId: 'clientId',
           scheme: 'scheme',
         ),
+        providerCreators: [ProviderCreator.facebook],
       );
       const secondInstance = ReachFiveKey(
         sdkConfig: SdkConfig(
@@ -36,6 +39,7 @@ void main() {
           clientId: 'clientId2',
           scheme: 'scheme2',
         ),
+        providerCreators: [ProviderCreator.google],
       );
 
       expect(firstInstance == secondInstance, isFalse);
