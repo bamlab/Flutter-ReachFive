@@ -1,7 +1,11 @@
 package tech.bam.flutter_reach_five.android
 
+import co.reachfive.identity.sdk.core.ProviderCreator
 import co.reachfive.identity.sdk.core.models.*
 import co.reachfive.identity.sdk.core.models.requests.*
+import co.reachfive.identity.sdk.facebook.FacebookProvider
+import co.reachfive.identity.sdk.google.GoogleProvider
+import co.reachfive.identity.sdk.webview.WebViewProvider
 
 class Converters {
     companion object {
@@ -200,6 +204,16 @@ class Converters {
                 consentType = consentInterface.consentType,
                 date = consentInterface.date,
             )
+        }
+
+        fun providerCreatorFromInterface(
+            providerCreatorInterface: ReachFiveApi.ProviderCreatorInterface
+        ): ProviderCreator {
+            return when (providerCreatorInterface.type) {
+                ReachFiveApi.ProviderCreatorTypeInterface.GOOGLE -> GoogleProvider()
+                ReachFiveApi.ProviderCreatorTypeInterface.FACEBOOK -> FacebookProvider()
+                ReachFiveApi.ProviderCreatorTypeInterface.WEBVIEW -> WebViewProvider()
+            }
         }
     }
 }
