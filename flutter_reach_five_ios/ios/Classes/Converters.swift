@@ -1,4 +1,7 @@
 import IdentitySdkCore
+import IdentitySdkGoogle
+import IdentitySdkFacebook
+import IdentitySdkWebView
 
 public class Converters {
     
@@ -246,4 +249,19 @@ public class Converters {
                 date: consentInterface.date
             )
         }
+    
+    static public func providerCreatorFromInterface(
+                providerCreatorInterface: ProviderCreatorInterface
+            ) -> ProviderCreator? {
+                switch providerCreatorInterface.type {
+                case ProviderCreatorTypeInterface.google:
+                    return GoogleProvider()
+                case ProviderCreatorTypeInterface.facebook:
+                    return FacebookProvider()
+                case ProviderCreatorTypeInterface.webview:
+                    return WebViewProvider()
+                @unknown default:
+                    return nil
+                }
+            }
 }
