@@ -28,9 +28,13 @@ void main() {
         clientId: 'clientId',
         scheme: 'scheme',
       );
+      final providerCreators = [
+        ProviderCreatorInterface(type: ProviderCreatorTypeInterface.webview)
+      ];
 
       reachFiveKey = ReachFiveKeyInterface(
         sdkConfig: sdkConfig,
+        providerCreators: providerCreators,
       );
     });
 
@@ -40,8 +44,10 @@ void main() {
 
     group('initialize', () {
       test('returns correct reach five config', () async {
+        final providers = ['facebook'];
         final reachFiveConfig = ReachFiveConfigInterface(
           reachFiveKey: reachFiveKey,
+          providers: providers,
         );
 
         when(() => mockReachFiveHostApi.initialize(reachFiveKey))
