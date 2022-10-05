@@ -28,6 +28,10 @@ class _InitializeMethodState extends State<InitializeMethod> {
   late String clientId = widget.dataSet.initialClientId;
   late String scheme = widget.dataSet.initialScheme;
 
+  late List<ProviderCreator> selectedProviderCreators = [
+    ProviderCreator.webview
+  ];
+
   void setDomain(String newDomain) => setState(() {
         domain = newDomain;
       });
@@ -38,6 +42,14 @@ class _InitializeMethodState extends State<InitializeMethod> {
 
   void setScheme(String newScheme) => setState(() {
         scheme = newScheme;
+      });
+
+  void toggleProviderCreator(ProviderCreator providerCreator) => setState(() {
+        if (selectedProviderCreators.contains(providerCreator)) {
+          selectedProviderCreators.remove(providerCreator);
+        } else {
+          selectedProviderCreators.add(providerCreator);
+        }
       });
 
   Future<void> initializeReachFive() async {
@@ -52,6 +64,7 @@ class _InitializeMethodState extends State<InitializeMethod> {
           clientId: clientId,
           scheme: scheme,
         ),
+        providerCreators: selectedProviderCreators,
       );
 
       widget.setReachFive(result);
@@ -103,12 +116,27 @@ class _InitializeMethodState extends State<InitializeMethod> {
             hintText: 'scheme',
             setValue: setScheme,
           ),
+          const SizedBox(height: 16),
+          ...ProviderCreator.values.map(
+            (providerCreator) => Padding(
+              padding: const EdgeInsets.all(16),
+              child: SwitchListTile(
+                title: Text(providerCreator.name),
+                value: selectedProviderCreators.contains(providerCreator),
+                onChanged: (_) => toggleProviderCreator(providerCreator),
+              ),
+            ),
+          ),
         ] else ...[
           Text('domain :${reachFive.reachFiveKey.sdkConfig.domain}'),
           const SizedBox(height: 16),
           Text('clientId :${reachFive.reachFiveKey.sdkConfig.clientId}'),
           const SizedBox(height: 16),
           Text('scheme :${reachFive.reachFiveKey.sdkConfig.scheme}'),
+          const SizedBox(height: 16),
+          Text(
+            'providers :${reachFive.providers.fold('', (previousValue, element) => '$previousValue ${element.name}')}',
+          ),
         ],
         const SizedBox(height: 32),
         ElevatedButton(
