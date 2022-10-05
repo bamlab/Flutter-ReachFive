@@ -36,6 +36,11 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (nullable SdkConfigInterface *)nullableFromMap:(NSDictionary *)dict;
 - (NSDictionary *)toMap;
 @end
+@interface ProviderCreatorInterface ()
++ (ProviderCreatorInterface *)fromMap:(NSDictionary *)dict;
++ (nullable ProviderCreatorInterface *)nullableFromMap:(NSDictionary *)dict;
+- (NSDictionary *)toMap;
+@end
 @interface ReachFiveKeyInterface ()
 + (ReachFiveKeyInterface *)fromMap:(NSDictionary *)dict;
 + (nullable ReachFiveKeyInterface *)nullableFromMap:(NSDictionary *)dict;
@@ -147,42 +152,71 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 }
 @end
 
+@implementation ProviderCreatorInterface
++ (instancetype)makeWithType:(ProviderCreatorTypeInterface)type {
+  ProviderCreatorInterface* pigeonResult = [[ProviderCreatorInterface alloc] init];
+  pigeonResult.type = type;
+  return pigeonResult;
+}
++ (ProviderCreatorInterface *)fromMap:(NSDictionary *)dict {
+  ProviderCreatorInterface *pigeonResult = [[ProviderCreatorInterface alloc] init];
+  pigeonResult.type = [GetNullableObject(dict, @"type") integerValue];
+  return pigeonResult;
+}
++ (nullable ProviderCreatorInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [ProviderCreatorInterface fromMap:dict] : nil; }
+- (NSDictionary *)toMap {
+  return @{
+    @"type" : @(self.type),
+  };
+}
+@end
+
 @implementation ReachFiveKeyInterface
-+ (instancetype)makeWithSdkConfig:(SdkConfigInterface *)sdkConfig {
++ (instancetype)makeWithSdkConfig:(SdkConfigInterface *)sdkConfig
+    providerCreators:(NSArray<ProviderCreatorInterface *> *)providerCreators {
   ReachFiveKeyInterface* pigeonResult = [[ReachFiveKeyInterface alloc] init];
   pigeonResult.sdkConfig = sdkConfig;
+  pigeonResult.providerCreators = providerCreators;
   return pigeonResult;
 }
 + (ReachFiveKeyInterface *)fromMap:(NSDictionary *)dict {
   ReachFiveKeyInterface *pigeonResult = [[ReachFiveKeyInterface alloc] init];
   pigeonResult.sdkConfig = [SdkConfigInterface nullableFromMap:GetNullableObject(dict, @"sdkConfig")];
   NSAssert(pigeonResult.sdkConfig != nil, @"");
+  pigeonResult.providerCreators = GetNullableObject(dict, @"providerCreators");
+  NSAssert(pigeonResult.providerCreators != nil, @"");
   return pigeonResult;
 }
 + (nullable ReachFiveKeyInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [ReachFiveKeyInterface fromMap:dict] : nil; }
 - (NSDictionary *)toMap {
   return @{
     @"sdkConfig" : (self.sdkConfig ? [self.sdkConfig toMap] : [NSNull null]),
+    @"providerCreators" : (self.providerCreators ?: [NSNull null]),
   };
 }
 @end
 
 @implementation ReachFiveConfigInterface
-+ (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey {
++ (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
+    providers:(NSArray<NSString *> *)providers {
   ReachFiveConfigInterface* pigeonResult = [[ReachFiveConfigInterface alloc] init];
   pigeonResult.reachFiveKey = reachFiveKey;
+  pigeonResult.providers = providers;
   return pigeonResult;
 }
 + (ReachFiveConfigInterface *)fromMap:(NSDictionary *)dict {
   ReachFiveConfigInterface *pigeonResult = [[ReachFiveConfigInterface alloc] init];
   pigeonResult.reachFiveKey = [ReachFiveKeyInterface nullableFromMap:GetNullableObject(dict, @"reachFiveKey")];
   NSAssert(pigeonResult.reachFiveKey != nil, @"");
+  pigeonResult.providers = GetNullableObject(dict, @"providers");
+  NSAssert(pigeonResult.providers != nil, @"");
   return pigeonResult;
 }
 + (nullable ReachFiveConfigInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [ReachFiveConfigInterface fromMap:dict] : nil; }
 - (NSDictionary *)toMap {
   return @{
     @"reachFiveKey" : (self.reachFiveKey ? [self.reachFiveKey toMap] : [NSNull null]),
+    @"providers" : (self.providers ?: [NSNull null]),
   };
 }
 @end
@@ -839,33 +873,36 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
       return [ProfileSignupRequestInterface fromMap:[self readValue]];
     
     case 135:     
-      return [ReachFiveConfigInterface fromMap:[self readValue]];
+      return [ProviderCreatorInterface fromMap:[self readValue]];
     
     case 136:     
-      return [ReachFiveKeyInterface fromMap:[self readValue]];
+      return [ReachFiveConfigInterface fromMap:[self readValue]];
     
     case 137:     
-      return [RefreshAccessTokenRequestInterface fromMap:[self readValue]];
+      return [ReachFiveKeyInterface fromMap:[self readValue]];
     
     case 138:     
-      return [RequestPasswordResetRequestInterface fromMap:[self readValue]];
+      return [RefreshAccessTokenRequestInterface fromMap:[self readValue]];
     
     case 139:     
-      return [SdkConfigInterface fromMap:[self readValue]];
+      return [RequestPasswordResetRequestInterface fromMap:[self readValue]];
     
     case 140:     
-      return [SignupRequestInterface fromMap:[self readValue]];
+      return [SdkConfigInterface fromMap:[self readValue]];
     
     case 141:     
-      return [UpdatePasswordWithAccessTokenRequestInterface fromMap:[self readValue]];
+      return [SignupRequestInterface fromMap:[self readValue]];
     
     case 142:     
-      return [UpdatePasswordWithEmailRequestInterface fromMap:[self readValue]];
+      return [UpdatePasswordWithAccessTokenRequestInterface fromMap:[self readValue]];
     
     case 143:     
-      return [UpdatePasswordWithFreshAccessTokenRequestInterface fromMap:[self readValue]];
+      return [UpdatePasswordWithEmailRequestInterface fromMap:[self readValue]];
     
     case 144:     
+      return [UpdatePasswordWithFreshAccessTokenRequestInterface fromMap:[self readValue]];
+    
+    case 145:     
       return [UpdatePasswordWithPhoneNumberRequestInterface fromMap:[self readValue]];
     
     default:    
@@ -908,44 +945,48 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
     [self writeByte:134];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ReachFiveConfigInterface class]]) {
+  if ([value isKindOfClass:[ProviderCreatorInterface class]]) {
     [self writeByte:135];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ReachFiveKeyInterface class]]) {
+  if ([value isKindOfClass:[ReachFiveConfigInterface class]]) {
     [self writeByte:136];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[RefreshAccessTokenRequestInterface class]]) {
+  if ([value isKindOfClass:[ReachFiveKeyInterface class]]) {
     [self writeByte:137];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[RequestPasswordResetRequestInterface class]]) {
+  if ([value isKindOfClass:[RefreshAccessTokenRequestInterface class]]) {
     [self writeByte:138];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[SdkConfigInterface class]]) {
+  if ([value isKindOfClass:[RequestPasswordResetRequestInterface class]]) {
     [self writeByte:139];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[SignupRequestInterface class]]) {
+  if ([value isKindOfClass:[SdkConfigInterface class]]) {
     [self writeByte:140];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[UpdatePasswordWithAccessTokenRequestInterface class]]) {
+  if ([value isKindOfClass:[SignupRequestInterface class]]) {
     [self writeByte:141];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[UpdatePasswordWithEmailRequestInterface class]]) {
+  if ([value isKindOfClass:[UpdatePasswordWithAccessTokenRequestInterface class]]) {
     [self writeByte:142];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[UpdatePasswordWithFreshAccessTokenRequestInterface class]]) {
+  if ([value isKindOfClass:[UpdatePasswordWithEmailRequestInterface class]]) {
     [self writeByte:143];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[UpdatePasswordWithPhoneNumberRequestInterface class]]) {
+  if ([value isKindOfClass:[UpdatePasswordWithFreshAccessTokenRequestInterface class]]) {
     [self writeByte:144];
+    [self writeValue:[value toMap]];
+  } else 
+  if ([value isKindOfClass:[UpdatePasswordWithPhoneNumberRequestInterface class]]) {
+    [self writeByte:145];
     [self writeValue:[value toMap]];
   } else 
 {

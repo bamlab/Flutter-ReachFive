@@ -25,20 +25,32 @@ class SdkConfigInterface {
   final String scheme;
 }
 
+enum ProviderCreatorTypeInterface { google, facebook, webview }
+
+class ProviderCreatorInterface {
+  const ProviderCreatorInterface({required this.type});
+
+  final ProviderCreatorTypeInterface type;
+}
+
 class ReachFiveKeyInterface {
   const ReachFiveKeyInterface({
     required this.sdkConfig,
+    required this.providerCreators,
   });
 
   final SdkConfigInterface sdkConfig;
+  final List<ProviderCreatorInterface?> providerCreators;
 }
 
 class ReachFiveConfigInterface {
   const ReachFiveConfigInterface({
     required this.reachFiveKey,
+    required this.providers,
   });
 
   final ReachFiveKeyInterface reachFiveKey;
+  final List<String?> providers;
 }
 
 enum ProfileAddressTypeInterface { billing, delivery }
