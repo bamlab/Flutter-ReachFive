@@ -21,7 +21,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
     }
     
     private func getReachFiveInstanceKey(reachFiveKey: ReachFiveKeyInterface) -> String {
-        var key: String =  reachFiveKey.sdkConfig.domain + reachFiveKey.sdkConfig.clientId + reachFiveKey.sdkConfig.scheme
+        var key: String =  reachFiveKey.sdkConfig.domain + reachFiveKey.sdkConfig.clientId + reachFiveKey.sdkConfig.iosScheme
         reachFiveKey.providerCreators.forEach({
             providerCreator in
             key += Converters.providerCreatorFromInterface(
@@ -46,7 +46,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
             sdkConfig: SdkConfig(
                 domain: reachFiveKey.sdkConfig.domain,
                 clientId: reachFiveKey.sdkConfig.clientId,
-                scheme: reachFiveKey.sdkConfig.scheme
+                scheme: reachFiveKey.sdkConfig.iosScheme
             ),
             providersCreators: providersCreators,
             storage: nil
