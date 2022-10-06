@@ -21,7 +21,7 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
     }
 
     private fun getReachFiveInstanceKey(reachFiveKey: ReachFiveApi.ReachFiveKeyInterface): String {
-        var key = reachFiveKey.sdkConfig.domain + reachFiveKey.sdkConfig.clientId + reachFiveKey.sdkConfig.scheme
+        var key = reachFiveKey.sdkConfig.domain + reachFiveKey.sdkConfig.clientId + reachFiveKey.sdkConfig.androidScheme
         reachFiveKey.providerCreators.forEach { providerCreatorInterface ->
             key += providerCreatorInterface.type.name
         }
@@ -40,7 +40,7 @@ class FlutterReachFivePlugin : FlutterPlugin, ReachFiveApi.ReachFiveHostApi
             sdkConfig = SdkConfig(
                 domain = reachFiveKey.sdkConfig.domain,
                 clientId = reachFiveKey.sdkConfig.clientId,
-                scheme = reachFiveKey.sdkConfig.scheme
+                scheme = reachFiveKey.sdkConfig.androidScheme
             ),
             providersCreators = reachFiveKey.providerCreators.map { providerCreatorInterface ->
                 Converters.providerCreatorFromInterface(providerCreatorInterface)
