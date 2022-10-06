@@ -16,6 +16,9 @@ abstract class DataSet {
   /// Your reach five ios scheme
   String get initialIosScheme;
 
+  /// Your reach five origin
+  String get initialOrigin;
+
   /// Your reach five account email
   String get initialEmail;
 
@@ -60,6 +63,10 @@ class _FirstDataSet extends DataSet {
   /// Your reach five ios scheme
   @override
   String get initialIosScheme => '';
+
+  /// Your reach five origin
+  @override
+  String get initialOrigin => '';
 
   /// Your reach five account email
   @override
@@ -112,6 +119,10 @@ class _SecondDataSet extends DataSet {
   /// Your reach five ios scheme
   @override
   String get initialIosScheme => '';
+
+  /// Your reach five origin
+  @override
+  String get initialOrigin => '';
 
   /// Your reach five account email
   @override
