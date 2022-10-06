@@ -114,6 +114,34 @@ void main() {
       });
     });
 
+    group('loginWithProvider', () {
+      test('returns correct auth token', () async {
+        const provider = 'apple';
+        const origin = 'origin';
+
+        final authToken = AuthTokenInterface(accessToken: 'accessToken');
+
+        registerFallbackValue(
+          LoginWithProviderRequestInterface(
+            reachFiveKey: reachFiveKey,
+            provider: provider,
+            origin: origin,
+          ),
+        );
+        when(() => mockReachFiveHostApi.loginWithProvider(any()))
+            .thenAnswer((_) async => authToken);
+
+        final receivedAuthToken =
+            await FlutterReachFivePlatform.instance.loginWithProvider(
+          reachFiveKey: reachFiveKey,
+          provider: provider,
+          origin: origin,
+        );
+
+        expect(authToken, receivedAuthToken);
+      });
+    });
+
     group('logout', () {
       test('execute reach five host api logout method', () async {
         when(() => mockReachFiveHostApi.logout(reachFiveKey))

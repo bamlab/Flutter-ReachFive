@@ -88,6 +88,22 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
         ),
       );
 
+  /// {@macro flutter_reach_five.reachFive.loginWithProvider}
+  Future<AuthTokenInterface> loginWithProvider({
+    required ReachFiveKeyInterface reachFiveKey,
+    required String provider,
+    required String origin,
+    List<String>? scope,
+  }) =>
+      reachFiveHostApi.loginWithProvider(
+        LoginWithProviderRequestInterface(
+          reachFiveKey: reachFiveKey,
+          provider: provider,
+          origin: origin,
+          scope: scope,
+        ),
+      );
+
   /// {@macro flutter_reach_five.reachFive.logout}
   Future<void> logout({
     required ReachFiveKeyInterface reachFiveKey,
