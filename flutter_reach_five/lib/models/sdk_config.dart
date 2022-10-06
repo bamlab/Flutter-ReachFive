@@ -7,7 +7,8 @@ class SdkConfig extends Equatable {
   const SdkConfig({
     required this.domain,
     required this.clientId,
-    required this.scheme,
+    required this.androidScheme,
+    required this.iosScheme,
   });
 
   /// domain of your reachFive api
@@ -16,13 +17,17 @@ class SdkConfig extends Equatable {
   /// clientId of your reachFive api
   final String clientId;
 
-  /// scheme of your reachFive api
-  final String scheme;
+  /// android scheme of your reachFive api
+  final String androidScheme;
+
+  /// ios scheme of your reachFive api
+  final String iosScheme;
 
   @override
   List<Object?> get props => [
         domain,
         clientId,
-        scheme,
+        androidScheme,
+        iosScheme,
       ];
 }

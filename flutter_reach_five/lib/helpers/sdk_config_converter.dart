@@ -12,7 +12,8 @@ class SdkConfigConverter {
       SdkConfigInterface(
         domain: sdkConfig.domain,
         clientId: sdkConfig.clientId,
-        scheme: sdkConfig.scheme,
+        androidScheme: sdkConfig.androidScheme,
+        iosScheme: sdkConfig.iosScheme,
       );
 
   /// convert a [SdkConfigInterface] to a [SdkConfig]
@@ -22,6 +23,7 @@ class SdkConfigConverter {
       SdkConfig(
         domain: sdkConfigInterface.domain,
         clientId: sdkConfigInterface.clientId,
-        scheme: sdkConfigInterface.scheme,
+        androidScheme: sdkConfigInterface.androidScheme,
+        iosScheme: sdkConfigInterface.iosScheme,
       );
 }

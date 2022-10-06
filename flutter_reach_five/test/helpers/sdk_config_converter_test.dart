@@ -11,7 +11,8 @@ void main() {
           const SdkConfig(
             domain: 'domain',
             clientId: 'clientId',
-            scheme: 'scheme',
+            androidScheme: 'androidScheme',
+            iosScheme: 'iosScheme',
           ),
         ),
         isInstanceOf<SdkConfigInterface>(),
@@ -24,7 +25,8 @@ void main() {
           SdkConfigInterface(
             domain: 'domain',
             clientId: 'clientId',
-            scheme: 'scheme',
+            androidScheme: 'androidScheme',
+            iosScheme: 'iosScheme',
           ),
         ),
         isInstanceOf<SdkConfig>(),

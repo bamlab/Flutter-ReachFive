@@ -44,7 +44,8 @@ void main() {
       const sdkConfig = SdkConfig(
         domain: 'domain',
         clientId: 'clientId',
-        scheme: 'scheme',
+        androidScheme: 'androidScheme',
+        iosScheme: 'iosScheme',
       );
       const providerCreators = [ProviderCreator.webview];
 

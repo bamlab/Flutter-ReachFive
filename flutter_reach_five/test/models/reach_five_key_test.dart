@@ -8,7 +8,8 @@ void main() {
         sdkConfig: SdkConfig(
           domain: 'domain',
           clientId: 'clientId',
-          scheme: 'scheme',
+          androidScheme: 'androidScheme',
+          iosScheme: 'iosScheme',
         ),
         providerCreators: [ProviderCreator.facebook],
       );
@@ -16,7 +17,8 @@ void main() {
         sdkConfig: SdkConfig(
           domain: 'domain',
           clientId: 'clientId',
-          scheme: 'scheme',
+          androidScheme: 'androidScheme',
+          iosScheme: 'iosScheme',
         ),
         providerCreators: [ProviderCreator.facebook],
       );
@@ -29,7 +31,8 @@ void main() {
         sdkConfig: SdkConfig(
           domain: 'domain',
           clientId: 'clientId',
-          scheme: 'scheme',
+          androidScheme: 'androidScheme',
+          iosScheme: 'iosScheme',
         ),
         providerCreators: [ProviderCreator.facebook],
       );
@@ -37,7 +40,8 @@ void main() {
         sdkConfig: SdkConfig(
           domain: 'domain2',
           clientId: 'clientId2',
-          scheme: 'scheme2',
+          androidScheme: 'androidScheme2',
+          iosScheme: 'iosScheme2',
         ),
         providerCreators: [ProviderCreator.google],
       );

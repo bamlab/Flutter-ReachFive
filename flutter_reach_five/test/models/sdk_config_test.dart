@@ -7,12 +7,14 @@ void main() {
       const firstInstance = SdkConfig(
         domain: 'domain',
         clientId: 'clientId',
-        scheme: 'scheme',
+        androidScheme: 'androidScheme',
+        iosScheme: 'iosScheme',
       );
       const secondInstance = SdkConfig(
         domain: 'domain',
         clientId: 'clientId',
-        scheme: 'scheme',
+        androidScheme: 'androidScheme',
+        iosScheme: 'iosScheme',
       );
 
       expect(firstInstance == secondInstance, isTrue);
@@ -22,12 +24,14 @@ void main() {
       const firstInstance = SdkConfig(
         domain: 'domain1',
         clientId: 'clientId',
-        scheme: 'scheme',
+        androidScheme: 'androidScheme',
+        iosScheme: 'iosScheme',
       );
       const secondInstance = SdkConfig(
         domain: 'domain2',
         clientId: 'clientId',
-        scheme: 'scheme',
+        androidScheme: 'androidScheme',
+        iosScheme: 'iosScheme',
       );
 
       expect(firstInstance == secondInstance, isFalse);
