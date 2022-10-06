@@ -26,6 +26,7 @@ pubName="${basename}_repo"
 pubLibrary=$pubName
 pubAuthor="CDA"
 pubAuthorEmail="matthieup@bam.tech"
+pubVersion="0.1.0"
 pubHomepage="https://github.com/bamlab/Flutter-ReachFive"
 
 # Deleting previous version
@@ -36,7 +37,7 @@ java -jar "openapi-generator-cli-$openApiCLIVersion.jar" generate \
     -i $yamlDefinition \
     -g dart-dio \
     -o $pubName \
-    --additional-properties=pubName=$pubName,pubLibrary=$pubLibrary,pubAuthor=$pubAuthor,pubAuthorEmail=$pubAuthorEmail,pubHomepage=$pubHomepage,disallowAdditionalPropertiesIfNotPresent=false,serializationLibrary=json_serializable,useEnumExtension=true
+    --additional-properties=pubName=$pubName,pubLibrary=$pubLibrary,pubAuthor=$pubAuthor,pubAuthorEmail=$pubAuthorEmail,pubHomepage=$pubHomepage,pubVersion=$pubVersion,disallowAdditionalPropertiesIfNotPresent=false,serializationLibrary=json_serializable,useEnumExtension=true
 
 # Deleting tests
 rm -rf "$pubName/test"
