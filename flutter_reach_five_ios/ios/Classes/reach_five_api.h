@@ -43,10 +43,12 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithDomain:(NSString *)domain
     clientId:(NSString *)clientId
-    scheme:(NSString *)scheme;
+    androidScheme:(NSString *)androidScheme
+    iosScheme:(NSString *)iosScheme;
 @property(nonatomic, copy) NSString * domain;
 @property(nonatomic, copy) NSString * clientId;
-@property(nonatomic, copy) NSString * scheme;
+@property(nonatomic, copy) NSString * androidScheme;
+@property(nonatomic, copy) NSString * iosScheme;
 @end
 
 @interface ProviderCreatorInterface : NSObject

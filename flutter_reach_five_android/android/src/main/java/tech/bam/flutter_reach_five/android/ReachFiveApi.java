@@ -63,13 +63,22 @@ public class ReachFiveApi {
       this.clientId = setterArg;
     }
 
-    private @NonNull String scheme;
-    public @NonNull String getScheme() { return scheme; }
-    public void setScheme(@NonNull String setterArg) {
+    private @NonNull String androidScheme;
+    public @NonNull String getAndroidScheme() { return androidScheme; }
+    public void setAndroidScheme(@NonNull String setterArg) {
       if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"scheme\" is null.");
+        throw new IllegalStateException("Nonnull field \"androidScheme\" is null.");
       }
-      this.scheme = setterArg;
+      this.androidScheme = setterArg;
+    }
+
+    private @NonNull String iosScheme;
+    public @NonNull String getIosScheme() { return iosScheme; }
+    public void setIosScheme(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"iosScheme\" is null.");
+      }
+      this.iosScheme = setterArg;
     }
 
     /** Constructor is private to enforce null safety; use Builder. */
@@ -85,16 +94,22 @@ public class ReachFiveApi {
         this.clientId = setterArg;
         return this;
       }
-      private @Nullable String scheme;
-      public @NonNull Builder setScheme(@NonNull String setterArg) {
-        this.scheme = setterArg;
+      private @Nullable String androidScheme;
+      public @NonNull Builder setAndroidScheme(@NonNull String setterArg) {
+        this.androidScheme = setterArg;
+        return this;
+      }
+      private @Nullable String iosScheme;
+      public @NonNull Builder setIosScheme(@NonNull String setterArg) {
+        this.iosScheme = setterArg;
         return this;
       }
       public @NonNull SdkConfigInterface build() {
         SdkConfigInterface pigeonReturn = new SdkConfigInterface();
         pigeonReturn.setDomain(domain);
         pigeonReturn.setClientId(clientId);
-        pigeonReturn.setScheme(scheme);
+        pigeonReturn.setAndroidScheme(androidScheme);
+        pigeonReturn.setIosScheme(iosScheme);
         return pigeonReturn;
       }
     }
@@ -102,7 +117,8 @@ public class ReachFiveApi {
       Map<String, Object> toMapResult = new HashMap<>();
       toMapResult.put("domain", domain);
       toMapResult.put("clientId", clientId);
-      toMapResult.put("scheme", scheme);
+      toMapResult.put("androidScheme", androidScheme);
+      toMapResult.put("iosScheme", iosScheme);
       return toMapResult;
     }
     static @NonNull SdkConfigInterface fromMap(@NonNull Map<String, Object> map) {
@@ -111,8 +127,10 @@ public class ReachFiveApi {
       pigeonResult.setDomain((String)domain);
       Object clientId = map.get("clientId");
       pigeonResult.setClientId((String)clientId);
-      Object scheme = map.get("scheme");
-      pigeonResult.setScheme((String)scheme);
+      Object androidScheme = map.get("androidScheme");
+      pigeonResult.setAndroidScheme((String)androidScheme);
+      Object iosScheme = map.get("iosScheme");
+      pigeonResult.setIosScheme((String)iosScheme);
       return pigeonResult;
     }
   }

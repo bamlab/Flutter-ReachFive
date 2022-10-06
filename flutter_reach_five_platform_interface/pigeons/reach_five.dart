@@ -17,12 +17,14 @@ class SdkConfigInterface {
   const SdkConfigInterface({
     required this.domain,
     required this.clientId,
-    required this.scheme,
+    required this.androidScheme,
+    required this.iosScheme,
   });
 
   final String domain;
   final String clientId;
-  final String scheme;
+  final String androidScheme;
+  final String iosScheme;
 }
 
 enum ProviderCreatorTypeInterface { google, facebook, webview }

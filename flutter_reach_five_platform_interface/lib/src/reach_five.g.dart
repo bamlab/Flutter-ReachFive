@@ -22,18 +22,21 @@ class SdkConfigInterface {
   SdkConfigInterface({
     required this.domain,
     required this.clientId,
-    required this.scheme,
+    required this.androidScheme,
+    required this.iosScheme,
   });
 
   String domain;
   String clientId;
-  String scheme;
+  String androidScheme;
+  String iosScheme;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
     pigeonMap['domain'] = domain;
     pigeonMap['clientId'] = clientId;
-    pigeonMap['scheme'] = scheme;
+    pigeonMap['androidScheme'] = androidScheme;
+    pigeonMap['iosScheme'] = iosScheme;
     return pigeonMap;
   }
 
@@ -42,7 +45,8 @@ class SdkConfigInterface {
     return SdkConfigInterface(
       domain: pigeonMap['domain']! as String,
       clientId: pigeonMap['clientId']! as String,
-      scheme: pigeonMap['scheme']! as String,
+      androidScheme: pigeonMap['androidScheme']! as String,
+      iosScheme: pigeonMap['iosScheme']! as String,
     );
   }
 }

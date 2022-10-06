@@ -125,11 +125,13 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 @implementation SdkConfigInterface
 + (instancetype)makeWithDomain:(NSString *)domain
     clientId:(NSString *)clientId
-    scheme:(NSString *)scheme {
+    androidScheme:(NSString *)androidScheme
+    iosScheme:(NSString *)iosScheme {
   SdkConfigInterface* pigeonResult = [[SdkConfigInterface alloc] init];
   pigeonResult.domain = domain;
   pigeonResult.clientId = clientId;
-  pigeonResult.scheme = scheme;
+  pigeonResult.androidScheme = androidScheme;
+  pigeonResult.iosScheme = iosScheme;
   return pigeonResult;
 }
 + (SdkConfigInterface *)fromMap:(NSDictionary *)dict {
@@ -138,8 +140,10 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
   NSAssert(pigeonResult.domain != nil, @"");
   pigeonResult.clientId = GetNullableObject(dict, @"clientId");
   NSAssert(pigeonResult.clientId != nil, @"");
-  pigeonResult.scheme = GetNullableObject(dict, @"scheme");
-  NSAssert(pigeonResult.scheme != nil, @"");
+  pigeonResult.androidScheme = GetNullableObject(dict, @"androidScheme");
+  NSAssert(pigeonResult.androidScheme != nil, @"");
+  pigeonResult.iosScheme = GetNullableObject(dict, @"iosScheme");
+  NSAssert(pigeonResult.iosScheme != nil, @"");
   return pigeonResult;
 }
 + (nullable SdkConfigInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [SdkConfigInterface fromMap:dict] : nil; }
@@ -147,7 +151,8 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
   return @{
     @"domain" : (self.domain ?: [NSNull null]),
     @"clientId" : (self.clientId ?: [NSNull null]),
-    @"scheme" : (self.scheme ?: [NSNull null]),
+    @"androidScheme" : (self.androidScheme ?: [NSNull null]),
+    @"iosScheme" : (self.iosScheme ?: [NSNull null]),
   };
 }
 @end
