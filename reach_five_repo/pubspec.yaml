@@ -1,7 +1,7 @@
 name: reach_five_repo
-version: 1.0.0
+version: 0.1.0
 description: OpenAPI API client
-homepage: homepage
+homepage: https://github.com/bamlab/Flutter-ReachFive
 
 environment:
   sdk: '>=2.14.0 <3.0.0'
