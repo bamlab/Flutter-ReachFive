@@ -26,7 +26,8 @@ void main() {
       final sdkConfig = SdkConfigInterface(
         domain: 'domain',
         clientId: 'clientId',
-        scheme: 'scheme',
+        iosScheme: 'iosScheme',
+        androidScheme: 'androidScheme',
       );
       final providerCreators = [
         ProviderCreatorInterface(type: ProviderCreatorTypeInterface.webview)
