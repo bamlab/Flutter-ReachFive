@@ -21,11 +21,26 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
     }
     
     private func getReachFiveInstanceKey(reachFiveKey: ReachFiveKeyInterface) -> String {
-        let key: String =  reachFiveKey.sdkConfig.domain + reachFiveKey.sdkConfig.clientId + reachFiveKey.sdkConfig.scheme
+        var key: String =  reachFiveKey.sdkConfig.domain + reachFiveKey.sdkConfig.clientId + reachFiveKey.sdkConfig.scheme
+        reachFiveKey.providerCreators.forEach({
+            providerCreator in
+            key += Converters.providerCreatorFromInterface(
+                providerCreatorInterface: providerCreator
+            )?.name ?? ""
+        })
         return key
     }
 
     public func initializeReachFiveKey(_ reachFiveKey: ReachFiveKeyInterface, completion: @escaping (ReachFiveConfigInterface?, FlutterError?) -> Void) {
+        let providersCreators = reachFiveKey.providerCreators.map({
+            providerCreatorInterface in
+            return Converters.providerCreatorFromInterface(
+                providerCreatorInterface: providerCreatorInterface
+            )
+        }).filter({
+            providerCreator in
+            return providerCreator != nil
+        }) as! Array<ProviderCreator>
 
         let reachFive = ReachFive(
             sdkConfig: SdkConfig(
@@ -33,7 +48,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                 clientId: reachFiveKey.sdkConfig.clientId,
                 scheme: reachFiveKey.sdkConfig.scheme
             ),
-            providersCreators: [],
+            providersCreators: providersCreators,
             storage: nil
         )
         
@@ -45,7 +60,11 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                 self.reachFiveInstances[reachFiveInstanceKey] = reachFive
                 completion(
                     ReachFiveConfigInterface.make(
-                        withReachFiveKey: reachFiveKey
+                        withReachFiveKey: reachFiveKey,
+                        providers: providers.map({
+                            provider in
+                            return provider.name
+                        })
                     ),
                     nil
                 )

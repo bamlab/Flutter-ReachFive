@@ -8,12 +8,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, ProviderCreatorTypeInterface) {
+  ProviderCreatorTypeInterfaceGoogle = 0,
+  ProviderCreatorTypeInterfaceFacebook = 1,
+  ProviderCreatorTypeInterfaceWebview = 2,
+};
+
 typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
   ProfileAddressTypeInterfaceBilling = 0,
   ProfileAddressTypeInterfaceDelivery = 1,
 };
 
 @class SdkConfigInterface;
+@class ProviderCreatorInterface;
 @class ReachFiveKeyInterface;
 @class ReachFiveConfigInterface;
 @class ProfileAddressInterface;
@@ -42,18 +49,29 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 @property(nonatomic, copy) NSString * scheme;
 @end
 
+@interface ProviderCreatorInterface : NSObject
+/// `init` unavailable to enforce nonnull fields, see the `make` class method.
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)makeWithType:(ProviderCreatorTypeInterface)type;
+@property(nonatomic, assign) ProviderCreatorTypeInterface type;
+@end
+
 @interface ReachFiveKeyInterface : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
 - (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)makeWithSdkConfig:(SdkConfigInterface *)sdkConfig;
++ (instancetype)makeWithSdkConfig:(SdkConfigInterface *)sdkConfig
+    providerCreators:(NSArray<ProviderCreatorInterface *> *)providerCreators;
 @property(nonatomic, strong) SdkConfigInterface * sdkConfig;
+@property(nonatomic, strong) NSArray<ProviderCreatorInterface *> * providerCreators;
 @end
 
 @interface ReachFiveConfigInterface : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
 - (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey;
++ (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
+    providers:(NSArray<NSString *> *)providers;
 @property(nonatomic, strong) ReachFiveKeyInterface * reachFiveKey;
+@property(nonatomic, strong) NSArray<NSString *> * providers;
 @end
 
 @interface ProfileAddressInterface : NSObject

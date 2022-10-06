@@ -6,6 +6,8 @@ export 'models/consent.dart';
 export 'models/open_id_user.dart';
 export 'models/profile_address.dart';
 export 'models/profile_signup_request.dart';
+export 'models/provider.dart';
+export 'models/provider_creator.dart';
 export 'models/reach_five_key.dart';
 export 'models/revoke_token_type.dart';
 export 'models/scope_value.dart';

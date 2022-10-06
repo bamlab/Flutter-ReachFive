@@ -22,6 +22,17 @@ import java.util.HashMap;
 @SuppressWarnings({"unused", "unchecked", "CodeBlock2Expr", "RedundantSuppression"})
 public class ReachFiveApi {
 
+  public enum ProviderCreatorTypeInterface {
+    GOOGLE(0),
+    FACEBOOK(1),
+    WEBVIEW(2);
+
+    private int index;
+    private ProviderCreatorTypeInterface(final int index) {
+      this.index = index;
+    }
+  }
+
   public enum ProfileAddressTypeInterface {
     BILLING(0),
     DELIVERY(1);
@@ -107,6 +118,44 @@ public class ReachFiveApi {
   }
 
   /** Generated class from Pigeon that represents data sent in messages. */
+  public static class ProviderCreatorInterface {
+    private @NonNull ProviderCreatorTypeInterface type;
+    public @NonNull ProviderCreatorTypeInterface getType() { return type; }
+    public void setType(@NonNull ProviderCreatorTypeInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"type\" is null.");
+      }
+      this.type = setterArg;
+    }
+
+    /** Constructor is private to enforce null safety; use Builder. */
+    private ProviderCreatorInterface() {}
+    public static final class Builder {
+      private @Nullable ProviderCreatorTypeInterface type;
+      public @NonNull Builder setType(@NonNull ProviderCreatorTypeInterface setterArg) {
+        this.type = setterArg;
+        return this;
+      }
+      public @NonNull ProviderCreatorInterface build() {
+        ProviderCreatorInterface pigeonReturn = new ProviderCreatorInterface();
+        pigeonReturn.setType(type);
+        return pigeonReturn;
+      }
+    }
+    @NonNull Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("type", type == null ? null : type.index);
+      return toMapResult;
+    }
+    static @NonNull ProviderCreatorInterface fromMap(@NonNull Map<String, Object> map) {
+      ProviderCreatorInterface pigeonResult = new ProviderCreatorInterface();
+      Object type = map.get("type");
+      pigeonResult.setType(type == null ? null : ProviderCreatorTypeInterface.values()[(int)type]);
+      return pigeonResult;
+    }
+  }
+
+  /** Generated class from Pigeon that represents data sent in messages. */
   public static class ReachFiveKeyInterface {
     private @NonNull SdkConfigInterface sdkConfig;
     public @NonNull SdkConfigInterface getSdkConfig() { return sdkConfig; }
@@ -117,6 +166,15 @@ public class ReachFiveApi {
       this.sdkConfig = setterArg;
     }
 
+    private @NonNull List<ProviderCreatorInterface> providerCreators;
+    public @NonNull List<ProviderCreatorInterface> getProviderCreators() { return providerCreators; }
+    public void setProviderCreators(@NonNull List<ProviderCreatorInterface> setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"providerCreators\" is null.");
+      }
+      this.providerCreators = setterArg;
+    }
+
     /** Constructor is private to enforce null safety; use Builder. */
     private ReachFiveKeyInterface() {}
     public static final class Builder {
@@ -125,21 +183,30 @@ public class ReachFiveApi {
         this.sdkConfig = setterArg;
         return this;
       }
+      private @Nullable List<ProviderCreatorInterface> providerCreators;
+      public @NonNull Builder setProviderCreators(@NonNull List<ProviderCreatorInterface> setterArg) {
+        this.providerCreators = setterArg;
+        return this;
+      }
       public @NonNull ReachFiveKeyInterface build() {
         ReachFiveKeyInterface pigeonReturn = new ReachFiveKeyInterface();
         pigeonReturn.setSdkConfig(sdkConfig);
+        pigeonReturn.setProviderCreators(providerCreators);
         return pigeonReturn;
       }
     }
     @NonNull Map<String, Object> toMap() {
       Map<String, Object> toMapResult = new HashMap<>();
       toMapResult.put("sdkConfig", (sdkConfig == null) ? null : sdkConfig.toMap());
+      toMapResult.put("providerCreators", providerCreators);
       return toMapResult;
     }
     static @NonNull ReachFiveKeyInterface fromMap(@NonNull Map<String, Object> map) {
       ReachFiveKeyInterface pigeonResult = new ReachFiveKeyInterface();
       Object sdkConfig = map.get("sdkConfig");
       pigeonResult.setSdkConfig((sdkConfig == null) ? null : SdkConfigInterface.fromMap((Map)sdkConfig));
+      Object providerCreators = map.get("providerCreators");
+      pigeonResult.setProviderCreators((List<ProviderCreatorInterface>)providerCreators);
       return pigeonResult;
     }
   }
@@ -155,6 +222,15 @@ public class ReachFiveApi {
       this.reachFiveKey = setterArg;
     }
 
+    private @NonNull List<String> providers;
+    public @NonNull List<String> getProviders() { return providers; }
+    public void setProviders(@NonNull List<String> setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"providers\" is null.");
+      }
+      this.providers = setterArg;
+    }
+
     /** Constructor is private to enforce null safety; use Builder. */
     private ReachFiveConfigInterface() {}
     public static final class Builder {
@@ -163,21 +239,30 @@ public class ReachFiveApi {
         this.reachFiveKey = setterArg;
         return this;
       }
+      private @Nullable List<String> providers;
+      public @NonNull Builder setProviders(@NonNull List<String> setterArg) {
+        this.providers = setterArg;
+        return this;
+      }
       public @NonNull ReachFiveConfigInterface build() {
         ReachFiveConfigInterface pigeonReturn = new ReachFiveConfigInterface();
         pigeonReturn.setReachFiveKey(reachFiveKey);
+        pigeonReturn.setProviders(providers);
         return pigeonReturn;
       }
     }
     @NonNull Map<String, Object> toMap() {
       Map<String, Object> toMapResult = new HashMap<>();
       toMapResult.put("reachFiveKey", (reachFiveKey == null) ? null : reachFiveKey.toMap());
+      toMapResult.put("providers", providers);
       return toMapResult;
     }
     static @NonNull ReachFiveConfigInterface fromMap(@NonNull Map<String, Object> map) {
       ReachFiveConfigInterface pigeonResult = new ReachFiveConfigInterface();
       Object reachFiveKey = map.get("reachFiveKey");
       pigeonResult.setReachFiveKey((reachFiveKey == null) ? null : ReachFiveKeyInterface.fromMap((Map)reachFiveKey));
+      Object providers = map.get("providers");
+      pigeonResult.setProviders((List<String>)providers);
       return pigeonResult;
     }
   }
@@ -2021,33 +2106,36 @@ public class ReachFiveApi {
           return ProfileSignupRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)135:         
-          return ReachFiveConfigInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return ProviderCreatorInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)136:         
-          return ReachFiveKeyInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return ReachFiveConfigInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)137:         
-          return RefreshAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return ReachFiveKeyInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)138:         
-          return RequestPasswordResetRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return RefreshAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)139:         
-          return SdkConfigInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return RequestPasswordResetRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)140:         
-          return SignupRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return SdkConfigInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)141:         
-          return UpdatePasswordWithAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return SignupRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)142:         
-          return UpdatePasswordWithEmailRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return UpdatePasswordWithAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)143:         
-          return UpdatePasswordWithFreshAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return UpdatePasswordWithEmailRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)144:         
+          return UpdatePasswordWithFreshAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+        
+        case (byte)145:         
           return UpdatePasswordWithPhoneNumberRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         default:        
@@ -2085,44 +2173,48 @@ public class ReachFiveApi {
         stream.write(134);
         writeValue(stream, ((ProfileSignupRequestInterface) value).toMap());
       } else 
-      if (value instanceof ReachFiveConfigInterface) {
+      if (value instanceof ProviderCreatorInterface) {
         stream.write(135);
+        writeValue(stream, ((ProviderCreatorInterface) value).toMap());
+      } else 
+      if (value instanceof ReachFiveConfigInterface) {
+        stream.write(136);
         writeValue(stream, ((ReachFiveConfigInterface) value).toMap());
       } else 
       if (value instanceof ReachFiveKeyInterface) {
-        stream.write(136);
+        stream.write(137);
         writeValue(stream, ((ReachFiveKeyInterface) value).toMap());
       } else 
       if (value instanceof RefreshAccessTokenRequestInterface) {
-        stream.write(137);
+        stream.write(138);
         writeValue(stream, ((RefreshAccessTokenRequestInterface) value).toMap());
       } else 
       if (value instanceof RequestPasswordResetRequestInterface) {
-        stream.write(138);
+        stream.write(139);
         writeValue(stream, ((RequestPasswordResetRequestInterface) value).toMap());
       } else 
       if (value instanceof SdkConfigInterface) {
-        stream.write(139);
+        stream.write(140);
         writeValue(stream, ((SdkConfigInterface) value).toMap());
       } else 
       if (value instanceof SignupRequestInterface) {
-        stream.write(140);
+        stream.write(141);
         writeValue(stream, ((SignupRequestInterface) value).toMap());
       } else 
       if (value instanceof UpdatePasswordWithAccessTokenRequestInterface) {
-        stream.write(141);
+        stream.write(142);
         writeValue(stream, ((UpdatePasswordWithAccessTokenRequestInterface) value).toMap());
       } else 
       if (value instanceof UpdatePasswordWithEmailRequestInterface) {
-        stream.write(142);
+        stream.write(143);
         writeValue(stream, ((UpdatePasswordWithEmailRequestInterface) value).toMap());
       } else 
       if (value instanceof UpdatePasswordWithFreshAccessTokenRequestInterface) {
-        stream.write(143);
+        stream.write(144);
         writeValue(stream, ((UpdatePasswordWithFreshAccessTokenRequestInterface) value).toMap());
       } else 
       if (value instanceof UpdatePasswordWithPhoneNumberRequestInterface) {
-        stream.write(144);
+        stream.write(145);
         writeValue(stream, ((UpdatePasswordWithPhoneNumberRequestInterface) value).toMap());
       } else 
 {

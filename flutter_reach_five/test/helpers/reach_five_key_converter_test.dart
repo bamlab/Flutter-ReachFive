@@ -14,6 +14,7 @@ void main() {
               clientId: 'clientId',
               scheme: 'scheme',
             ),
+            providerCreators: [ProviderCreator.facebook],
           ),
         ),
         isInstanceOf<ReachFiveKeyInterface>(),
@@ -29,6 +30,11 @@ void main() {
               clientId: 'clientId',
               scheme: 'scheme',
             ),
+            providerCreators: [
+              ProviderCreatorInterface(
+                type: ProviderCreatorTypeInterface.google,
+              )
+            ],
           ),
         ),
         isInstanceOf<ReachFiveKey>(),
