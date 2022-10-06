@@ -42,6 +42,20 @@ Prerequisites:
 platform :ios, '13.0'
 ```
 
+- Because of an issue causing WebViewProvider session to be lost by the flutter app, you need to add this dependency override in your `ios/Podfile` :
+
+```rb
+target 'Runner' do
+  use_frameworks!
+  use_modular_headers!
+
+  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+
+  # Add the next line in your Podfile to use webview providers
+  pod 'IdentitySdkWebView', :git => 'git@github.com:bamlab/identity-ios-sdk.git', :tag => '5.7.0.fork'
+end
+```
+
 ---
 
 # Implementation login/signup with provider
