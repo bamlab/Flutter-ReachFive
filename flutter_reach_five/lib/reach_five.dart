@@ -90,6 +90,28 @@ class ReachFive {
     return authToken;
   }
 
+  /// {@template flutter_reach_five.reachFive.loginWithProvider}
+  /// Login an user by using one of the available providers
+  ///
+  /// Your available providers are in the field [providers]
+  /// {@endtemplate}
+  Future<AuthToken> loginWithProvider({
+    required Provider provider,
+    required String origin,
+    List<ScopeValue>? scope,
+  }) async {
+    final authTokenInterface = await _platform.loginWithProvider(
+      reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
+      provider: ProviderConverter.toInterface(provider),
+      origin: origin,
+      scope: scope?.map(ScopeValueConverter.toInterface).toList(),
+    );
+
+    final authToken = AuthTokenConverter.fromInterface(authTokenInterface);
+
+    return authToken;
+  }
+
   /// {@template flutter_reach_five.reachFive.logout}
   /// Logout your user from your session (and every providers)
   ///

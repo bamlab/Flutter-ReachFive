@@ -18,9 +18,12 @@ class SdkConfig extends Equatable {
   final String clientId;
 
   /// android scheme of your reachFive api
+  /// must match the allowed url given in your AndroidManifest.xml
   final String androidScheme;
 
   /// ios scheme of your reachFive api
+  /// must be {ALLOWED_SCHEME}://callback
+  /// with ALLOWED_SCHEME one of your allowed scheme given in your Info.plist
   final String iosScheme;
 
   @override

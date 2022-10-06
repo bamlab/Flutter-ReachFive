@@ -170,6 +170,46 @@ void main() {
       });
     });
 
+    group('loginWithProvider', () {
+      test('returns correct auth token instance', () async {
+        final provider = reachFive.providers.first;
+        const origin = 'origin';
+        const scope = [ScopeValue.events];
+
+        const authToken = AuthToken(
+          accessToken: 'accessToken',
+        );
+
+        registerFallbackValue(
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
+        );
+        registerFallbackValue(
+          scope.map(ScopeValueConverter.toInterface).toList(),
+        );
+        when(
+          () => flutterReachFivePlatform.loginWithProvider(
+            reachFiveKey: any(named: 'reachFiveKey'),
+            provider: provider.name,
+            origin: origin,
+            scope: any(named: 'scope'),
+          ),
+        ).thenAnswer(
+          (_) async => AuthTokenConverter.toInterface(authToken),
+        );
+
+        final loginWithProviderAuthToken = await reachFive.loginWithProvider(
+          provider: provider,
+          origin: origin,
+          scope: scope,
+        );
+
+        expect(
+          authToken,
+          loginWithProviderAuthToken,
+        );
+      });
+    });
+
     group('logout', () {
       test('call logout method', () async {
         const authToken = AuthToken(
