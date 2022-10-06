@@ -91,6 +91,11 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (nullable LoginWithPasswordRequestInterface *)nullableFromMap:(NSDictionary *)dict;
 - (NSDictionary *)toMap;
 @end
+@interface LoginWithProviderRequestInterface ()
++ (LoginWithProviderRequestInterface *)fromMap:(NSDictionary *)dict;
++ (nullable LoginWithProviderRequestInterface *)nullableFromMap:(NSDictionary *)dict;
+- (NSDictionary *)toMap;
+@end
 @interface RefreshAccessTokenRequestInterface ()
 + (RefreshAccessTokenRequestInterface *)fromMap:(NSDictionary *)dict;
 + (nullable RefreshAccessTokenRequestInterface *)nullableFromMap:(NSDictionary *)dict;
@@ -125,11 +130,13 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 @implementation SdkConfigInterface
 + (instancetype)makeWithDomain:(NSString *)domain
     clientId:(NSString *)clientId
-    scheme:(NSString *)scheme {
+    androidScheme:(NSString *)androidScheme
+    iosScheme:(NSString *)iosScheme {
   SdkConfigInterface* pigeonResult = [[SdkConfigInterface alloc] init];
   pigeonResult.domain = domain;
   pigeonResult.clientId = clientId;
-  pigeonResult.scheme = scheme;
+  pigeonResult.androidScheme = androidScheme;
+  pigeonResult.iosScheme = iosScheme;
   return pigeonResult;
 }
 + (SdkConfigInterface *)fromMap:(NSDictionary *)dict {
@@ -138,8 +145,10 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
   NSAssert(pigeonResult.domain != nil, @"");
   pigeonResult.clientId = GetNullableObject(dict, @"clientId");
   NSAssert(pigeonResult.clientId != nil, @"");
-  pigeonResult.scheme = GetNullableObject(dict, @"scheme");
-  NSAssert(pigeonResult.scheme != nil, @"");
+  pigeonResult.androidScheme = GetNullableObject(dict, @"androidScheme");
+  NSAssert(pigeonResult.androidScheme != nil, @"");
+  pigeonResult.iosScheme = GetNullableObject(dict, @"iosScheme");
+  NSAssert(pigeonResult.iosScheme != nil, @"");
   return pigeonResult;
 }
 + (nullable SdkConfigInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [SdkConfigInterface fromMap:dict] : nil; }
@@ -147,7 +156,8 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
   return @{
     @"domain" : (self.domain ?: [NSNull null]),
     @"clientId" : (self.clientId ?: [NSNull null]),
-    @"scheme" : (self.scheme ?: [NSNull null]),
+    @"androidScheme" : (self.androidScheme ?: [NSNull null]),
+    @"iosScheme" : (self.iosScheme ?: [NSNull null]),
   };
 }
 @end
@@ -653,6 +663,40 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 }
 @end
 
+@implementation LoginWithProviderRequestInterface
++ (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
+    provider:(NSString *)provider
+    origin:(NSString *)origin
+    scope:(nullable NSArray<NSString *> *)scope {
+  LoginWithProviderRequestInterface* pigeonResult = [[LoginWithProviderRequestInterface alloc] init];
+  pigeonResult.reachFiveKey = reachFiveKey;
+  pigeonResult.provider = provider;
+  pigeonResult.origin = origin;
+  pigeonResult.scope = scope;
+  return pigeonResult;
+}
++ (LoginWithProviderRequestInterface *)fromMap:(NSDictionary *)dict {
+  LoginWithProviderRequestInterface *pigeonResult = [[LoginWithProviderRequestInterface alloc] init];
+  pigeonResult.reachFiveKey = [ReachFiveKeyInterface nullableFromMap:GetNullableObject(dict, @"reachFiveKey")];
+  NSAssert(pigeonResult.reachFiveKey != nil, @"");
+  pigeonResult.provider = GetNullableObject(dict, @"provider");
+  NSAssert(pigeonResult.provider != nil, @"");
+  pigeonResult.origin = GetNullableObject(dict, @"origin");
+  NSAssert(pigeonResult.origin != nil, @"");
+  pigeonResult.scope = GetNullableObject(dict, @"scope");
+  return pigeonResult;
+}
++ (nullable LoginWithProviderRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [LoginWithProviderRequestInterface fromMap:dict] : nil; }
+- (NSDictionary *)toMap {
+  return @{
+    @"reachFiveKey" : (self.reachFiveKey ? [self.reachFiveKey toMap] : [NSNull null]),
+    @"provider" : (self.provider ?: [NSNull null]),
+    @"origin" : (self.origin ?: [NSNull null]),
+    @"scope" : (self.scope ?: [NSNull null]),
+  };
+}
+@end
+
 @implementation RefreshAccessTokenRequestInterface
 + (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
     authToken:(AuthTokenInterface *)authToken {
@@ -864,45 +908,48 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
       return [LoginWithPasswordRequestInterface fromMap:[self readValue]];
     
     case 132:     
-      return [OpenIdUserInterface fromMap:[self readValue]];
+      return [LoginWithProviderRequestInterface fromMap:[self readValue]];
     
     case 133:     
-      return [ProfileAddressInterface fromMap:[self readValue]];
+      return [OpenIdUserInterface fromMap:[self readValue]];
     
     case 134:     
-      return [ProfileSignupRequestInterface fromMap:[self readValue]];
+      return [ProfileAddressInterface fromMap:[self readValue]];
     
     case 135:     
-      return [ProviderCreatorInterface fromMap:[self readValue]];
+      return [ProfileSignupRequestInterface fromMap:[self readValue]];
     
     case 136:     
-      return [ReachFiveConfigInterface fromMap:[self readValue]];
+      return [ProviderCreatorInterface fromMap:[self readValue]];
     
     case 137:     
-      return [ReachFiveKeyInterface fromMap:[self readValue]];
+      return [ReachFiveConfigInterface fromMap:[self readValue]];
     
     case 138:     
-      return [RefreshAccessTokenRequestInterface fromMap:[self readValue]];
+      return [ReachFiveKeyInterface fromMap:[self readValue]];
     
     case 139:     
-      return [RequestPasswordResetRequestInterface fromMap:[self readValue]];
+      return [RefreshAccessTokenRequestInterface fromMap:[self readValue]];
     
     case 140:     
-      return [SdkConfigInterface fromMap:[self readValue]];
+      return [RequestPasswordResetRequestInterface fromMap:[self readValue]];
     
     case 141:     
-      return [SignupRequestInterface fromMap:[self readValue]];
+      return [SdkConfigInterface fromMap:[self readValue]];
     
     case 142:     
-      return [UpdatePasswordWithAccessTokenRequestInterface fromMap:[self readValue]];
+      return [SignupRequestInterface fromMap:[self readValue]];
     
     case 143:     
-      return [UpdatePasswordWithEmailRequestInterface fromMap:[self readValue]];
+      return [UpdatePasswordWithAccessTokenRequestInterface fromMap:[self readValue]];
     
     case 144:     
-      return [UpdatePasswordWithFreshAccessTokenRequestInterface fromMap:[self readValue]];
+      return [UpdatePasswordWithEmailRequestInterface fromMap:[self readValue]];
     
     case 145:     
+      return [UpdatePasswordWithFreshAccessTokenRequestInterface fromMap:[self readValue]];
+    
+    case 146:     
       return [UpdatePasswordWithPhoneNumberRequestInterface fromMap:[self readValue]];
     
     default:    
@@ -933,60 +980,64 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
     [self writeByte:131];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[OpenIdUserInterface class]]) {
+  if ([value isKindOfClass:[LoginWithProviderRequestInterface class]]) {
     [self writeByte:132];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ProfileAddressInterface class]]) {
+  if ([value isKindOfClass:[OpenIdUserInterface class]]) {
     [self writeByte:133];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ProfileSignupRequestInterface class]]) {
+  if ([value isKindOfClass:[ProfileAddressInterface class]]) {
     [self writeByte:134];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ProviderCreatorInterface class]]) {
+  if ([value isKindOfClass:[ProfileSignupRequestInterface class]]) {
     [self writeByte:135];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ReachFiveConfigInterface class]]) {
+  if ([value isKindOfClass:[ProviderCreatorInterface class]]) {
     [self writeByte:136];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ReachFiveKeyInterface class]]) {
+  if ([value isKindOfClass:[ReachFiveConfigInterface class]]) {
     [self writeByte:137];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[RefreshAccessTokenRequestInterface class]]) {
+  if ([value isKindOfClass:[ReachFiveKeyInterface class]]) {
     [self writeByte:138];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[RequestPasswordResetRequestInterface class]]) {
+  if ([value isKindOfClass:[RefreshAccessTokenRequestInterface class]]) {
     [self writeByte:139];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[SdkConfigInterface class]]) {
+  if ([value isKindOfClass:[RequestPasswordResetRequestInterface class]]) {
     [self writeByte:140];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[SignupRequestInterface class]]) {
+  if ([value isKindOfClass:[SdkConfigInterface class]]) {
     [self writeByte:141];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[UpdatePasswordWithAccessTokenRequestInterface class]]) {
+  if ([value isKindOfClass:[SignupRequestInterface class]]) {
     [self writeByte:142];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[UpdatePasswordWithEmailRequestInterface class]]) {
+  if ([value isKindOfClass:[UpdatePasswordWithAccessTokenRequestInterface class]]) {
     [self writeByte:143];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[UpdatePasswordWithFreshAccessTokenRequestInterface class]]) {
+  if ([value isKindOfClass:[UpdatePasswordWithEmailRequestInterface class]]) {
     [self writeByte:144];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[UpdatePasswordWithPhoneNumberRequestInterface class]]) {
+  if ([value isKindOfClass:[UpdatePasswordWithFreshAccessTokenRequestInterface class]]) {
     [self writeByte:145];
+    [self writeValue:[value toMap]];
+  } else 
+  if ([value isKindOfClass:[UpdatePasswordWithPhoneNumberRequestInterface class]]) {
+    [self writeByte:146];
     [self writeValue:[value toMap]];
   } else 
 {
@@ -1070,6 +1121,26 @@ void ReachFiveHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<
         NSArray *args = message;
         LoginWithPasswordRequestInterface *arg_request = GetNullableObjectAtIndex(args, 0);
         [api loginWithPasswordRequest:arg_request completion:^(AuthTokenInterface *_Nullable output, FlutterError *_Nullable error) {
+          callback(wrapResult(output, error));
+        }];
+      }];
+    }
+    else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.ReachFiveHostApi.loginWithProvider"
+        binaryMessenger:binaryMessenger
+        codec:ReachFiveHostApiGetCodec()        ];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(loginWithProviderRequest:completion:)], @"ReachFiveHostApi api (%@) doesn't respond to @selector(loginWithProviderRequest:completion:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray *args = message;
+        LoginWithProviderRequestInterface *arg_request = GetNullableObjectAtIndex(args, 0);
+        [api loginWithProviderRequest:arg_request completion:^(AuthTokenInterface *_Nullable output, FlutterError *_Nullable error) {
           callback(wrapResult(output, error));
         }];
       }];

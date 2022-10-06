@@ -26,7 +26,8 @@ class _InitializeMethodState extends State<InitializeMethod> {
 
   late String domain = widget.dataSet.initialDomain;
   late String clientId = widget.dataSet.initialClientId;
-  late String scheme = widget.dataSet.initialScheme;
+  late String androidScheme = widget.dataSet.initialAndroidScheme;
+  late String iosScheme = widget.dataSet.initialIosScheme;
 
   late List<ProviderCreator> selectedProviderCreators = [
     ProviderCreator.webview
@@ -40,8 +41,12 @@ class _InitializeMethodState extends State<InitializeMethod> {
         clientId = newClientId;
       });
 
-  void setScheme(String newScheme) => setState(() {
-        scheme = newScheme;
+  void setAndroidScheme(String newAndroidScheme) => setState(() {
+        androidScheme = newAndroidScheme;
+      });
+
+  void setIosScheme(String newIosScheme) => setState(() {
+        iosScheme = newIosScheme;
       });
 
   void toggleProviderCreator(ProviderCreator providerCreator) => setState(() {
@@ -62,7 +67,8 @@ class _InitializeMethodState extends State<InitializeMethod> {
         sdkConfig: SdkConfig(
           domain: domain,
           clientId: clientId,
-          scheme: scheme,
+          androidScheme: androidScheme,
+          iosScheme: iosScheme,
         ),
         providerCreators: selectedProviderCreators,
       );
@@ -112,9 +118,15 @@ class _InitializeMethodState extends State<InitializeMethod> {
           ),
           const SizedBox(height: 16),
           CustomTextField(
-            value: scheme,
-            hintText: 'scheme',
-            setValue: setScheme,
+            value: androidScheme,
+            hintText: 'androidScheme',
+            setValue: setAndroidScheme,
+          ),
+          const SizedBox(height: 16),
+          CustomTextField(
+            value: iosScheme,
+            hintText: 'iosScheme',
+            setValue: setIosScheme,
           ),
           const SizedBox(height: 16),
           ...ProviderCreator.values.map(
@@ -132,7 +144,11 @@ class _InitializeMethodState extends State<InitializeMethod> {
           const SizedBox(height: 16),
           Text('clientId :${reachFive.reachFiveKey.sdkConfig.clientId}'),
           const SizedBox(height: 16),
-          Text('scheme :${reachFive.reachFiveKey.sdkConfig.scheme}'),
+          Text(
+            'androidScheme :${reachFive.reachFiveKey.sdkConfig.androidScheme}',
+          ),
+          const SizedBox(height: 16),
+          Text('iosScheme :${reachFive.reachFiveKey.sdkConfig.iosScheme}'),
           const SizedBox(height: 16),
           Text(
             'providers :${reachFive.providers.fold('', (previousValue, element) => '$previousValue ${element.name}')}',

@@ -12,7 +12,8 @@ void main() {
             sdkConfig: SdkConfig(
               domain: 'domain',
               clientId: 'clientId',
-              scheme: 'scheme',
+              androidScheme: 'androidScheme',
+              iosScheme: 'iosScheme',
             ),
             providerCreators: [ProviderCreator.facebook],
           ),
@@ -28,7 +29,8 @@ void main() {
             sdkConfig: SdkConfigInterface(
               domain: 'domain',
               clientId: 'clientId',
-              scheme: 'scheme',
+              androidScheme: 'androidScheme',
+              iosScheme: 'iosScheme',
             ),
             providerCreators: [
               ProviderCreatorInterface(

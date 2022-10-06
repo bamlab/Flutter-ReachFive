@@ -26,7 +26,8 @@ void main() {
       final sdkConfig = SdkConfigInterface(
         domain: 'domain',
         clientId: 'clientId',
-        scheme: 'scheme',
+        iosScheme: 'iosScheme',
+        androidScheme: 'androidScheme',
       );
       final providerCreators = [
         ProviderCreatorInterface(type: ProviderCreatorTypeInterface.webview)
@@ -107,6 +108,34 @@ void main() {
           reachFiveKey: reachFiveKey,
           email: email,
           password: password,
+        );
+
+        expect(authToken, receivedAuthToken);
+      });
+    });
+
+    group('loginWithProvider', () {
+      test('returns correct auth token', () async {
+        const provider = 'apple';
+        const origin = 'origin';
+
+        final authToken = AuthTokenInterface(accessToken: 'accessToken');
+
+        registerFallbackValue(
+          LoginWithProviderRequestInterface(
+            reachFiveKey: reachFiveKey,
+            provider: provider,
+            origin: origin,
+          ),
+        );
+        when(() => mockReachFiveHostApi.loginWithProvider(any()))
+            .thenAnswer((_) async => authToken);
+
+        final receivedAuthToken =
+            await FlutterReachFivePlatform.instance.loginWithProvider(
+          reachFiveKey: reachFiveKey,
+          provider: provider,
+          origin: origin,
         );
 
         expect(authToken, receivedAuthToken);

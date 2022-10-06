@@ -4,6 +4,7 @@ import 'package:flutter_reach_five/flutter_reach_five.dart';
 import '../const.dart';
 import '../methods/initialize_method.dart';
 import '../methods/login_with_password_method.dart';
+import '../methods/login_with_provider_method.dart';
 import '../methods/logout_method.dart';
 import '../methods/refresh_access_token_method.dart';
 import '../methods/request_password_reset_method.dart';
@@ -14,6 +15,7 @@ enum ReachFiveMethod {
   initialize,
   signup,
   loginWithPassword,
+  loginWithProvider,
   logout,
   refreshAccessToken,
   requestPasswordReset,
@@ -150,6 +152,16 @@ class _ReachFiveMethodView extends StatelessWidget {
       case ReachFiveMethod.loginWithPassword:
         if (reachFive != null) {
           return LoginWithPasswordMethod(
+            dataSet: dataSet,
+            reachFive: reachFive,
+            authToken: authToken,
+            setAuthToken: setAuthToken,
+          );
+        }
+        return const Text('You should initialize Reach Five first');
+      case ReachFiveMethod.loginWithProvider:
+        if (reachFive != null) {
+          return LoginWithProviderMethod(
             dataSet: dataSet,
             reachFive: reachFive,
             authToken: authToken,

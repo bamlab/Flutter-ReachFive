@@ -2,6 +2,10 @@
 
 ---
 
+# Installation
+
+---
+
 ## Android
 
 Prerequisites:
@@ -37,6 +41,111 @@ Prerequisites:
 ```rb
 platform :ios, '13.0'
 ```
+
+---
+
+# Implementation login/signup with provider
+
+---
+
+## Android
+
+### WebView Providers
+
+Every providers defined in your reachFive console can be accessed through a webview in your app
+
+To use webview providers, you need to make the following changes (according to this [doc](https://developer.reachfive.com/sdk-android/8.0.1/guides/web-based-flows.html))
+
+You will need to add a callbackUrl, to your android and reachFive config
+The url will have this form : {YOUR_SCHEME}://{YOUR_HOST}{YOUR_PATH_PREFIX}
+
+This url must match the one given in your SdkConfig androidScheme
+You must give this url in your SdkConfig androidScheme when initializing your reachFive instance
+
+- You need to add this url in the list of authorized callback URL in your reachFive console client
+
+- This url must match the `scheme` you give in the reachFive instance initialization
+
+- In your `android/app/src/main/AndroidManifest.xml`, add these lines :
+
+```xml
+<manifest>
+    <!-- others lines... -->
+    <activity
+            android:name="co.reachfive.identity.sdk.core.RedirectionActivity"
+            android:screenOrientation="portrait"
+            android:exported="true">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                android:scheme="{YOUR_SCHEME}"
+                android:host="{YOUR_HOST}"
+                android:pathPrefix="{YOUR_PATH_PREFIX}" />
+            </intent-filter>
+        </activity>
+</manifest>
+```
+
+### Google Native Provider
+
+To configure the google native provider, you need to give the google provider creator in the ReachFiveManager initialization method and you need to follow these docs :
+
+- [Android](https://developer.reachfive.com/sdk-android/8.0.1/index.html#configure-google-native-provider)
+
+### Facebook Native Provider
+
+To configure the facebook native provider, you need to give the facebook provider creator in the ReachFiveManager initialization method and you need to follow these docs :
+
+- [Android](https://developer.reachfive.com/sdk-android/8.0.1/index.html#facebook-native-provider)
+
+---
+
+## iOS
+
+### WebView Providers
+
+Every providers defined in your reachFive console can be accessed through a webview in your app
+
+To use webview providers, you need to make the following changes (according to this [doc](https://developer.reachfive.com/sdk-ios/index.html#sdk-webview))
+
+You will need to add a callbackUrlScheme, to your ios config
+The scheme will have this form : reachfive-{YOUR_CLIENTID}
+
+You must give the iosScheme reachfive-{YOUR_CLIENTID}://callback in your SdkConfig iosScheme when initializing your reachFive instance
+
+- You need to add this url in the list of authorized callback URL in your reachFive console client
+
+- In your `ios/Runner/Info.plist`, add these lines :
+
+```plist
+<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>reachfive-{YOUR_CLIENTID}</string>
+                <!-- Add your others reachfive client ids here if you wat multiple instances -->
+				<!-- <string>reachfive-{YOUR_OTHER_CLIENT_ID}</string> -->
+			</array>
+		</dict>
+	</array>
+```
+
+### Google Native Provider
+
+To configure the google native provider, you need to give the google provider creator in the ReachFiveManager initialization method and you need to follow these docs :
+
+- [iOS](https://developer.reachfive.com/sdk-ios/index.html#google-native-provider)
+
+### Facebook Native Provider
+
+To configure the facebook native provider, you need to give the facebook provider creator in the ReachFiveManager initialization method and you need to follow these docs :
+
+- [iOS](https://developer.reachfive.com/sdk-ios/index.html#facebook-native-provider)
 
 ---
 
