@@ -1,6 +1,7 @@
 import Flutter
 import UIKit
 import IdentitySdkCore
+import AuthenticationServices
 
 public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHostApi {
 
@@ -157,6 +158,57 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
             }
         )
     }
+    
+    public func login(withProviderRequest request: LoginWithProviderRequestInterface, completion: @escaping (AuthTokenInterface?, FlutterError?) -> Void) {
+            let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
+            guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
+            else {
+                completion(
+                    nil,
+                    nonInitializedFlutterError
+                )
+                return
+            }
+
+            let viewController = ((UIApplication.shared.delegate?.window!)!).rootViewController
+
+            guard let provider = reachFive.getProvider(name: request.provider)
+            else {
+                completion(
+                    nil,
+                    FlutterError(
+                        code: "null",
+                        message: "The provider was not found in your reachFive instance",
+                        details: nil
+                    )
+                )
+                return
+            }
+
+            provider.login(
+                scope: request.scope,
+                origin: request.origin,
+                viewController: viewController
+            ).onSuccess(
+                callback: { authToken in
+                    completion(
+                        Converters.authTokenToInterface(authToken: authToken),
+                        nil
+                    )
+                }
+            ).onFailure(
+                callback: { error in
+                    completion(
+                        nil,
+                        FlutterError(
+                            code: "null",
+                            message: error.message(),
+                            details: nil
+                        )
+                    )
+                }
+            )
+        }
     
     public func logoutReachFiveKey(_ reachFiveKey: ReachFiveKeyInterface, completion: @escaping (FlutterError?) -> Void) {
         let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: reachFiveKey)
@@ -389,4 +441,10 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
         )
     }
     
+}
+
+extension UIViewController: ASWebAuthenticationPresentationContextProviding {
+    public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        return view.window!
+    }
 }
