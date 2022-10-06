@@ -31,6 +31,7 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 @class OpenIdUserInterface;
 @class AuthTokenInterface;
 @class LoginWithPasswordRequestInterface;
+@class LoginWithProviderRequestInterface;
 @class RefreshAccessTokenRequestInterface;
 @class RequestPasswordResetRequestInterface;
 @class UpdatePasswordWithAccessTokenRequestInterface;
@@ -262,6 +263,19 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 @property(nonatomic, strong, nullable) NSArray<NSString *> * scope;
 @end
 
+@interface LoginWithProviderRequestInterface : NSObject
+/// `init` unavailable to enforce nonnull fields, see the `make` class method.
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
+    provider:(NSString *)provider
+    origin:(NSString *)origin
+    scope:(nullable NSArray<NSString *> *)scope;
+@property(nonatomic, strong) ReachFiveKeyInterface * reachFiveKey;
+@property(nonatomic, copy) NSString * provider;
+@property(nonatomic, copy) NSString * origin;
+@property(nonatomic, strong, nullable) NSArray<NSString *> * scope;
+@end
+
 @interface RefreshAccessTokenRequestInterface : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
 - (instancetype)init NS_UNAVAILABLE;
@@ -341,6 +355,7 @@ NSObject<FlutterMessageCodec> *ReachFiveHostApiGetCodec(void);
 - (void)initializeReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey completion:(void(^)(ReachFiveConfigInterface *_Nullable, FlutterError *_Nullable))completion;
 - (void)signupRequest:(SignupRequestInterface *)request completion:(void(^)(AuthTokenInterface *_Nullable, FlutterError *_Nullable))completion;
 - (void)loginWithPasswordRequest:(LoginWithPasswordRequestInterface *)request completion:(void(^)(AuthTokenInterface *_Nullable, FlutterError *_Nullable))completion;
+- (void)loginWithProviderRequest:(LoginWithProviderRequestInterface *)request completion:(void(^)(AuthTokenInterface *_Nullable, FlutterError *_Nullable))completion;
 - (void)logoutReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey completion:(void(^)(FlutterError *_Nullable))completion;
 - (void)refreshAccessTokenRequest:(RefreshAccessTokenRequestInterface *)request completion:(void(^)(AuthTokenInterface *_Nullable, FlutterError *_Nullable))completion;
 - (void)requestPasswordResetRequest:(RequestPasswordResetRequestInterface *)request completion:(void(^)(FlutterError *_Nullable))completion;

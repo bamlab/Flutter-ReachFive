@@ -257,6 +257,20 @@ class LoginWithPasswordRequestInterface {
   final List<String?>? scope;
 }
 
+class LoginWithProviderRequestInterface {
+  const LoginWithProviderRequestInterface({
+    required this.reachFiveKey,
+    required this.provider,
+    required this.origin,
+    required this.scope,
+  });
+
+  final ReachFiveKeyInterface reachFiveKey;
+  final String provider;
+  final String origin;
+  final List<String?>? scope;
+}
+
 class RefreshAccessTokenRequestInterface {
   const RefreshAccessTokenRequestInterface({
     required this.reachFiveKey,
@@ -346,6 +360,11 @@ abstract class ReachFiveHostApi {
   @async
   AuthTokenInterface loginWithPassword(
     LoginWithPasswordRequestInterface request,
+  );
+
+  @async
+  AuthTokenInterface loginWithProvider(
+    LoginWithProviderRequestInterface request,
   );
 
   @async
