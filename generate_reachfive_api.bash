@@ -29,6 +29,10 @@ pubAuthorEmail="matthieup@bam.tech"
 pubVersion="0.1.0"
 pubHomepage="https://github.com/bamlab/Flutter-ReachFive"
 
+# Moving LICENSE and CHANGELOD.md up to preserve them from deletion
+mv $pubName/LICENSE ${pubName}LICENSE
+mv $pubName/CHANGELOG.md ${pubName}CHANGELOG.md
+
 # Deleting previous version
 rm -rf "$pubName"
 
@@ -38,6 +42,10 @@ java -jar "openapi-generator-cli-$openApiCLIVersion.jar" generate \
     -g dart-dio \
     -o $pubName \
     --additional-properties=pubName=$pubName,pubLibrary=$pubLibrary,pubAuthor=$pubAuthor,pubAuthorEmail=$pubAuthorEmail,pubHomepage=$pubHomepage,pubVersion=$pubVersion,disallowAdditionalPropertiesIfNotPresent=false,serializationLibrary=json_serializable,useEnumExtension=true
+
+# Moving LICENSE and CHANGELOD.md back in the repo
+mv ${pubName}LICENSE $pubName/LICENSE
+mv ${pubName}CHANGELOG.md $pubName/CHANGELOG.md
 
 # Deleting tests
 rm -rf "$pubName/test"
