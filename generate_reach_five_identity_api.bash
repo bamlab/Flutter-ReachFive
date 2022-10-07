@@ -4,7 +4,7 @@ openApiCLIVersion="6.0.1"
 openApiDartVersion="6.3"
 
 # yaml basename
-basename="reach_five"
+basename="reach_five_identity"
 
 # Downloading yaml
 yamlDefinition="${basename}_api.yaml"

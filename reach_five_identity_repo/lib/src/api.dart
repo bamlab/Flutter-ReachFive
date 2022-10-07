@@ -3,17 +3,17 @@
 //
 
 import 'package:dio/dio.dart';
-import 'package:reach_five_repo/src/auth/api_key_auth.dart';
-import 'package:reach_five_repo/src/auth/basic_auth.dart';
-import 'package:reach_five_repo/src/auth/bearer_auth.dart';
-import 'package:reach_five_repo/src/auth/oauth.dart';
-import 'package:reach_five_repo/src/api/o_auth_api.dart';
+import 'package:reach_five_identity_repo/src/auth/api_key_auth.dart';
+import 'package:reach_five_identity_repo/src/auth/basic_auth.dart';
+import 'package:reach_five_identity_repo/src/auth/bearer_auth.dart';
+import 'package:reach_five_identity_repo/src/auth/oauth.dart';
+import 'package:reach_five_identity_repo/src/api/o_auth_api.dart';
 
-class ReachFiveRepo {
+class ReachFiveIdentityRepo {
   static const String basePath = r'https://YOUR_DOMAIN';
 
   final Dio dio;
-  ReachFiveRepo({
+  ReachFiveIdentityRepo({
     Dio? dio,
     String? basePathOverride,
     List<Interceptor>? interceptors,

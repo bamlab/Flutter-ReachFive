@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platform_interface.dart';
-import 'package:reach_five_repo/reach_five_repo.dart';
+import 'package:reach_five_identity_repo/reach_five_identity_repo.dart';
 
 import 'flutter_reach_five.dart';
 import 'helpers/auth_token.dart';
@@ -19,7 +19,7 @@ class ReachFive {
   const ReachFive({
     required this.reachFiveKey,
     required this.providers,
-    required this.repo,
+    required this.identityRepo,
   });
 
   /// @template flutter_reach_five.reachFive.reachFiveKey}
@@ -37,16 +37,16 @@ class ReachFive {
   final List<Provider> providers;
 
   /// @template flutter_reach_five.reachFive.repo}
-  /// [ReachFiveRepo] instance, kept in memory here to be create
+  /// [ReachFiveIdentityRepo] instance, kept in memory here to be create
   /// every api linked to it
   /// {@endtemplate}
-  final ReachFiveRepo repo;
+  final ReachFiveIdentityRepo identityRepo;
 
   /// @template flutter_reach_five.reachFive.oAuthApi}
-  /// [OAuthApi] instance from [repo] to be given in every
+  /// [OAuthApi] instance from [identityRepo] to be given in every
   /// reachFive api methods that needs it
   /// {@endtemplate}
-  OAuthApi get oAuthApi => repo.getOAuthApi();
+  OAuthApi get oAuthApi => identityRepo.getOAuthApi();
 
   /// {@template flutter_reach_five.reachFive.signup}
   /// Create and authenticate a new user with the specified data.
@@ -289,7 +289,7 @@ class ReachFiveManager {
     final basePathOverride =
         domainPathOverride ?? 'https://${sdkConfig.domain}';
 
-    final reachFiveRepo = ReachFiveRepo(
+    final reachFiveIdentityRepo = ReachFiveIdentityRepo(
       dio: dio,
       basePathOverride: basePathOverride,
       interceptors: interceptors,
@@ -303,7 +303,7 @@ class ReachFiveManager {
           .whereType<String>()
           .map(ProviderConverter.fromInterface)
           .toList(),
-      repo: reachFiveRepo,
+      identityRepo: reachFiveIdentityRepo,
     );
   }
 }
