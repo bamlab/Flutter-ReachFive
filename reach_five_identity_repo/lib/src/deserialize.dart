@@ -1,4 +1,4 @@
-import 'package:reach_five_repo/src/model/revoke_token_request.dart';
+import 'package:reach_five_identity_repo/src/model/revoke_token_request.dart';
 
 final _regList = RegExp(r'^List<(.*)>$');
 final _regSet = RegExp(r'^Set<(.*)>$');

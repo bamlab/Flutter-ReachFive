@@ -27,7 +27,7 @@ dependencies:
   flutter_reach_five_platform_interface: ^0.1.0
   freezed: ^2.1.0+1
   freezed_annotation: ^2.1.0
-  reach_five_repo: ^0.1.0
+  reach_five_identity_repo: ^0.1.0
 
 dev_dependencies:
   analyzer: ^4.7.0

@@ -8,7 +8,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 
-import 'package:reach_five_repo/src/model/revoke_token_request.dart';
+import 'package:reach_five_identity_repo/src/model/revoke_token_request.dart';
 
 class OAuthApi {
   final Dio _dio;

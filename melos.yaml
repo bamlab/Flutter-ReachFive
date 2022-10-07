@@ -5,7 +5,7 @@ packages:
   - flutter_reach_five_android
   - flutter_reach_five_ios
   - flutter_reach_five_platform_interface
-  - reach_five_repo
+  - reach_five_identity_repo
 
 command:
   bootstrap:

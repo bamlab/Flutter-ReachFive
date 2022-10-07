@@ -1,8 +1,8 @@
-# reach_five_repo.api.OAuthApi
+# reach_five_identity_repo.api.OAuthApi
 
 ## Load the API package
 ```dart
-import 'package:reach_five_repo/api.dart';
+import 'package:reach_five_identity_repo/api.dart';
 ```
 
 All URIs are relative to *https://YOUR_DOMAIN*
@@ -21,9 +21,9 @@ Use this endpoint to invalidate (revoke) a refresh or access token.  - **refresh
 
 ### Example
 ```dart
-import 'package:reach_five_repo/api.dart';
+import 'package:reach_five_identity_repo/api.dart';
 
-final api = ReachFiveRepo().getOAuthApi();
+final api = ReachFiveIdentityRepo().getOAuthApi();
 final RevokeTokenRequest revokeTokenRequest = ; // RevokeTokenRequest | 
 
 try {

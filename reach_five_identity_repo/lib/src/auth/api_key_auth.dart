@@ -3,7 +3,7 @@
 //
 
 import 'package:dio/dio.dart';
-import 'package:reach_five_repo/src/auth/auth.dart';
+import 'package:reach_five_identity_repo/src/auth/auth.dart';
 
 class ApiKeyAuthInterceptor extends AuthInterceptor {
   final Map<String, String> apiKeys = {};

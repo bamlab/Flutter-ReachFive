@@ -9,12 +9,12 @@ import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platfor
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'package:reach_five_repo/reach_five_repo.dart';
+import 'package:reach_five_identity_repo/reach_five_identity_repo.dart';
 
 mixin PlatformInterfaceMockMixin on Mock implements MockPlatformInterfaceMixin {
 }
 
-class MockReackFiveRepo extends Mock implements ReachFiveRepo {}
+class MockReackFiveIdentityRepo extends Mock implements ReachFiveIdentityRepo {}
 
 class MockOAuthApi extends Mock implements OAuthApi {}
 
@@ -27,7 +27,7 @@ void main() {
 
   group('FlutterReachFive', () {
     late FlutterReachFivePlatform flutterReachFivePlatform;
-    late MockReackFiveRepo mockReachFiveRepo;
+    late MockReackFiveIdentityRepo mockReachFiveIdentityRepo;
     late MockOAuthApi mockOAuthApi;
 
     late ReachFive reachFive;
@@ -36,10 +36,10 @@ void main() {
       flutterReachFivePlatform = MockFlutterReachFivePlatform();
       FlutterReachFivePlatform.instance = flutterReachFivePlatform;
 
-      mockReachFiveRepo = MockReackFiveRepo();
+      mockReachFiveIdentityRepo = MockReackFiveIdentityRepo();
       mockOAuthApi = MockOAuthApi();
 
-      when(mockReachFiveRepo.getOAuthApi).thenReturn(mockOAuthApi);
+      when(mockReachFiveIdentityRepo.getOAuthApi).thenReturn(mockOAuthApi);
 
       const sdkConfig = SdkConfig(
         domain: 'domain',
@@ -58,7 +58,7 @@ void main() {
       reachFive = ReachFive(
         reachFiveKey: reachFiveKey,
         providers: providers,
-        repo: mockReachFiveRepo,
+        identityRepo: mockReachFiveIdentityRepo,
       );
     });
 

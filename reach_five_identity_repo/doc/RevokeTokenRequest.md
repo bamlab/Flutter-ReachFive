@@ -1,8 +1,8 @@
-# reach_five_repo.model.RevokeTokenRequest
+# reach_five_identity_repo.model.RevokeTokenRequest
 
 ## Load the model package
 ```dart
-import 'package:reach_five_repo/api.dart';
+import 'package:reach_five_identity_repo/api.dart';
 ```
 
 ## Properties

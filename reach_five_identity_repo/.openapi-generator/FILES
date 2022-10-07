@@ -5,7 +5,7 @@ analysis_options.yaml
 build.yaml
 doc/OAuthApi.md
 doc/RevokeTokenRequest.md
-lib/reach_five_repo.dart
+lib/reach_five_identity_repo.dart
 lib/src/api.dart
 lib/src/api/o_auth_api.dart
 lib/src/auth/api_key_auth.dart
