@@ -8,7 +8,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
     var reachFiveInstances =  [String: ReachFive]()
     
     let nonInitializedFlutterError = FlutterError(
-        code: "null",
+        code: "non_initialized_error_code",
         message: "ReachFive instance has not been initialized",
         details: nil
     )
@@ -74,7 +74,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                 completion(
                     nil,
                     FlutterError(
-                        code: "null",
+                        code: "initialization_error_code",
                         message: error.message(),
                         details: nil
                     )
@@ -113,7 +113,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                 completion(
                     nil,
                     FlutterError(
-                        code: "null",
+                        code: "sign_up_error_code",
                         message: error.message(),
                         details: nil
                     )
@@ -150,7 +150,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                 completion(
                     nil,
                     FlutterError(
-                        code: "null",
+                        code: "login_with_password_error_code",
                         message: error.message(),
                         details: nil
                     )
@@ -177,7 +177,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                 completion(
                     nil,
                     FlutterError(
-                        code: "null",
+                        code: "not_available_provider_error_code",
                         message: "The provider was not found in your reachFive instance",
                         details: nil
                     )
@@ -201,7 +201,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                     completion(
                         nil,
                         FlutterError(
-                            code: "null",
+                            code: "login_with_provider_error_code",
                             message: error.message(),
                             details: nil
                         )
@@ -228,7 +228,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
             callback: { error in
                 completion(
                     FlutterError(
-                        code: "null",
+                        code: "logout_error_code",
                         message: error.message(),
                         details: nil
                     )
@@ -266,7 +266,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                 completion(
                     nil,
                     FlutterError(
-                        code: "null",
+                        code: "refresh_access_token_error_code",
                         message: error.message(),
                         details: nil
                     )
@@ -297,7 +297,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
             callback: {error in
                 completion(
                     FlutterError(
-                        code: "null",
+                        code: "request_password_reset_error_code",
                         message: error.message(),
                         details: nil
                     )
@@ -332,7 +332,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
             callback: {error in
                 completion(
                     FlutterError(
-                        code: "null",
+                        code: "update_password_with_access_token_error_code",
                         message: error.message(),
                         details: nil
                     )
@@ -366,7 +366,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
             callback: {error in
                 completion(
                     FlutterError(
-                        code: "null",
+                        code: "update_password_with_fresh_access_token_error_code",
                         message: error.message(),
                         details: nil
                     )
@@ -399,7 +399,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
             callback: {error in
                 completion(
                     FlutterError(
-                        code: "null",
+                        code: "update_password_with_email_request_error_code",
                         message: error.message(),
                         details: nil
                     )
@@ -432,7 +432,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
             callback: {error in
                 completion(
                     FlutterError(
-                        code: "null",
+                        code: "update_password_with_phone_number_request_error_code",
                         message: error.message(),
                         details: nil
                     )
