@@ -13,6 +13,18 @@ import 'package:pigeon/pigeon.dart';
     objcSourceOut: '../flutter_reach_five_ios/ios/Classes/reach_five_api.m',
   ),
 )
+class ErrorCodesInterface {
+  const ErrorCodesInterface({
+    required this.emailAlreadyInUseCode,
+    required this.invalidEmailOrPasswordCode,
+    required this.invalidVerificationCode,
+  });
+
+  final String emailAlreadyInUseCode;
+  final String invalidEmailOrPasswordCode;
+  final String invalidVerificationCode;
+}
+
 class SdkConfigInterface {
   const SdkConfigInterface({
     required this.domain,
@@ -153,12 +165,14 @@ class SignupRequestInterface {
     required this.profile,
     required this.redirectUrl,
     required this.scope,
+    required this.errorCodes,
   });
 
   final ReachFiveKeyInterface reachFiveKey;
   final ProfileSignupRequestInterface profile;
   final String? redirectUrl;
   final List<String?>? scope;
+  final ErrorCodesInterface errorCodes;
 }
 
 class AddressInterface {
@@ -248,6 +262,7 @@ class LoginWithPasswordRequestInterface {
     required this.phoneNumber,
     required this.password,
     required this.scope,
+    required this.errorCodes,
   });
 
   final ReachFiveKeyInterface reachFiveKey;
@@ -255,6 +270,7 @@ class LoginWithPasswordRequestInterface {
   final String? phoneNumber;
   final String password;
   final List<String?>? scope;
+  final ErrorCodesInterface errorCodes;
 }
 
 class LoginWithProviderRequestInterface {
@@ -327,12 +343,14 @@ class UpdatePasswordWithEmailRequestInterface {
     required this.email,
     required this.verificationCode,
     required this.password,
+    required this.errorCodes,
   });
 
   final ReachFiveKeyInterface reachFiveKey;
   final String email;
   final String verificationCode;
   final String password;
+  final ErrorCodesInterface errorCodes;
 }
 
 class UpdatePasswordWithPhoneNumberRequestInterface {
@@ -341,12 +359,14 @@ class UpdatePasswordWithPhoneNumberRequestInterface {
     required this.phoneNumber,
     required this.verificationCode,
     required this.password,
+    required this.errorCodes,
   });
 
   final ReachFiveKeyInterface reachFiveKey;
   final String phoneNumber;
   final String verificationCode;
   final String password;
+  final ErrorCodesInterface errorCodes;
 }
 
 @HostApi()

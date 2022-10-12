@@ -18,6 +18,36 @@ enum ProfileAddressTypeInterface {
   delivery,
 }
 
+class ErrorCodesInterface {
+  ErrorCodesInterface({
+    required this.emailAlreadyInUseCode,
+    required this.invalidEmailOrPasswordCode,
+    required this.invalidVerificationCode,
+  });
+
+  String emailAlreadyInUseCode;
+  String invalidEmailOrPasswordCode;
+  String invalidVerificationCode;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['emailAlreadyInUseCode'] = emailAlreadyInUseCode;
+    pigeonMap['invalidEmailOrPasswordCode'] = invalidEmailOrPasswordCode;
+    pigeonMap['invalidVerificationCode'] = invalidVerificationCode;
+    return pigeonMap;
+  }
+
+  static ErrorCodesInterface decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return ErrorCodesInterface(
+      emailAlreadyInUseCode: pigeonMap['emailAlreadyInUseCode']! as String,
+      invalidEmailOrPasswordCode:
+          pigeonMap['invalidEmailOrPasswordCode']! as String,
+      invalidVerificationCode: pigeonMap['invalidVerificationCode']! as String,
+    );
+  }
+}
+
 class SdkConfigInterface {
   SdkConfigInterface({
     required this.domain,
@@ -329,12 +359,14 @@ class SignupRequestInterface {
     required this.profile,
     this.redirectUrl,
     this.scope,
+    required this.errorCodes,
   });
 
   ReachFiveKeyInterface reachFiveKey;
   ProfileSignupRequestInterface profile;
   String? redirectUrl;
   List<String?>? scope;
+  ErrorCodesInterface errorCodes;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
@@ -342,6 +374,7 @@ class SignupRequestInterface {
     pigeonMap['profile'] = profile.encode();
     pigeonMap['redirectUrl'] = redirectUrl;
     pigeonMap['scope'] = scope;
+    pigeonMap['errorCodes'] = errorCodes.encode();
     return pigeonMap;
   }
 
@@ -352,6 +385,7 @@ class SignupRequestInterface {
       profile: ProfileSignupRequestInterface.decode(pigeonMap['profile']!),
       redirectUrl: pigeonMap['redirectUrl'] as String?,
       scope: (pigeonMap['scope'] as List<Object?>?)?.cast<String?>(),
+      errorCodes: ErrorCodesInterface.decode(pigeonMap['errorCodes']!),
     );
   }
 }
@@ -542,6 +576,7 @@ class LoginWithPasswordRequestInterface {
     this.phoneNumber,
     required this.password,
     this.scope,
+    required this.errorCodes,
   });
 
   ReachFiveKeyInterface reachFiveKey;
@@ -549,6 +584,7 @@ class LoginWithPasswordRequestInterface {
   String? phoneNumber;
   String password;
   List<String?>? scope;
+  ErrorCodesInterface errorCodes;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
@@ -557,6 +593,7 @@ class LoginWithPasswordRequestInterface {
     pigeonMap['phoneNumber'] = phoneNumber;
     pigeonMap['password'] = password;
     pigeonMap['scope'] = scope;
+    pigeonMap['errorCodes'] = errorCodes.encode();
     return pigeonMap;
   }
 
@@ -568,6 +605,7 @@ class LoginWithPasswordRequestInterface {
       phoneNumber: pigeonMap['phoneNumber'] as String?,
       password: pigeonMap['password']! as String,
       scope: (pigeonMap['scope'] as List<Object?>?)?.cast<String?>(),
+      errorCodes: ErrorCodesInterface.decode(pigeonMap['errorCodes']!),
     );
   }
 }
@@ -732,12 +770,14 @@ class UpdatePasswordWithEmailRequestInterface {
     required this.email,
     required this.verificationCode,
     required this.password,
+    required this.errorCodes,
   });
 
   ReachFiveKeyInterface reachFiveKey;
   String email;
   String verificationCode;
   String password;
+  ErrorCodesInterface errorCodes;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
@@ -745,6 +785,7 @@ class UpdatePasswordWithEmailRequestInterface {
     pigeonMap['email'] = email;
     pigeonMap['verificationCode'] = verificationCode;
     pigeonMap['password'] = password;
+    pigeonMap['errorCodes'] = errorCodes.encode();
     return pigeonMap;
   }
 
@@ -755,6 +796,7 @@ class UpdatePasswordWithEmailRequestInterface {
       email: pigeonMap['email']! as String,
       verificationCode: pigeonMap['verificationCode']! as String,
       password: pigeonMap['password']! as String,
+      errorCodes: ErrorCodesInterface.decode(pigeonMap['errorCodes']!),
     );
   }
 }
@@ -765,12 +807,14 @@ class UpdatePasswordWithPhoneNumberRequestInterface {
     required this.phoneNumber,
     required this.verificationCode,
     required this.password,
+    required this.errorCodes,
   });
 
   ReachFiveKeyInterface reachFiveKey;
   String phoneNumber;
   String verificationCode;
   String password;
+  ErrorCodesInterface errorCodes;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
@@ -778,6 +822,7 @@ class UpdatePasswordWithPhoneNumberRequestInterface {
     pigeonMap['phoneNumber'] = phoneNumber;
     pigeonMap['verificationCode'] = verificationCode;
     pigeonMap['password'] = password;
+    pigeonMap['errorCodes'] = errorCodes.encode();
     return pigeonMap;
   }
 
@@ -788,6 +833,7 @@ class UpdatePasswordWithPhoneNumberRequestInterface {
       phoneNumber: pigeonMap['phoneNumber']! as String,
       verificationCode: pigeonMap['verificationCode']! as String,
       password: pigeonMap['password']! as String,
+      errorCodes: ErrorCodesInterface.decode(pigeonMap['errorCodes']!),
     );
   }
 }
@@ -805,53 +851,56 @@ class _ReachFiveHostApiCodec extends StandardMessageCodec {
     } else if (value is ConsentInterface) {
       buffer.putUint8(130);
       writeValue(buffer, value.encode());
-    } else if (value is LoginWithPasswordRequestInterface) {
+    } else if (value is ErrorCodesInterface) {
       buffer.putUint8(131);
       writeValue(buffer, value.encode());
-    } else if (value is LoginWithProviderRequestInterface) {
+    } else if (value is LoginWithPasswordRequestInterface) {
       buffer.putUint8(132);
       writeValue(buffer, value.encode());
-    } else if (value is OpenIdUserInterface) {
+    } else if (value is LoginWithProviderRequestInterface) {
       buffer.putUint8(133);
       writeValue(buffer, value.encode());
-    } else if (value is ProfileAddressInterface) {
+    } else if (value is OpenIdUserInterface) {
       buffer.putUint8(134);
       writeValue(buffer, value.encode());
-    } else if (value is ProfileSignupRequestInterface) {
+    } else if (value is ProfileAddressInterface) {
       buffer.putUint8(135);
       writeValue(buffer, value.encode());
-    } else if (value is ProviderCreatorInterface) {
+    } else if (value is ProfileSignupRequestInterface) {
       buffer.putUint8(136);
       writeValue(buffer, value.encode());
-    } else if (value is ReachFiveConfigInterface) {
+    } else if (value is ProviderCreatorInterface) {
       buffer.putUint8(137);
       writeValue(buffer, value.encode());
-    } else if (value is ReachFiveKeyInterface) {
+    } else if (value is ReachFiveConfigInterface) {
       buffer.putUint8(138);
       writeValue(buffer, value.encode());
-    } else if (value is RefreshAccessTokenRequestInterface) {
+    } else if (value is ReachFiveKeyInterface) {
       buffer.putUint8(139);
       writeValue(buffer, value.encode());
-    } else if (value is RequestPasswordResetRequestInterface) {
+    } else if (value is RefreshAccessTokenRequestInterface) {
       buffer.putUint8(140);
       writeValue(buffer, value.encode());
-    } else if (value is SdkConfigInterface) {
+    } else if (value is RequestPasswordResetRequestInterface) {
       buffer.putUint8(141);
       writeValue(buffer, value.encode());
-    } else if (value is SignupRequestInterface) {
+    } else if (value is SdkConfigInterface) {
       buffer.putUint8(142);
       writeValue(buffer, value.encode());
-    } else if (value is UpdatePasswordWithAccessTokenRequestInterface) {
+    } else if (value is SignupRequestInterface) {
       buffer.putUint8(143);
       writeValue(buffer, value.encode());
-    } else if (value is UpdatePasswordWithEmailRequestInterface) {
+    } else if (value is UpdatePasswordWithAccessTokenRequestInterface) {
       buffer.putUint8(144);
       writeValue(buffer, value.encode());
-    } else if (value is UpdatePasswordWithFreshAccessTokenRequestInterface) {
+    } else if (value is UpdatePasswordWithEmailRequestInterface) {
       buffer.putUint8(145);
       writeValue(buffer, value.encode());
-    } else if (value is UpdatePasswordWithPhoneNumberRequestInterface) {
+    } else if (value is UpdatePasswordWithFreshAccessTokenRequestInterface) {
       buffer.putUint8(146);
+      writeValue(buffer, value.encode());
+    } else if (value is UpdatePasswordWithPhoneNumberRequestInterface) {
+      buffer.putUint8(147);
       writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
@@ -871,54 +920,57 @@ class _ReachFiveHostApiCodec extends StandardMessageCodec {
         return ConsentInterface.decode(readValue(buffer)!);
 
       case 131:
-        return LoginWithPasswordRequestInterface.decode(readValue(buffer)!);
+        return ErrorCodesInterface.decode(readValue(buffer)!);
 
       case 132:
-        return LoginWithProviderRequestInterface.decode(readValue(buffer)!);
+        return LoginWithPasswordRequestInterface.decode(readValue(buffer)!);
 
       case 133:
-        return OpenIdUserInterface.decode(readValue(buffer)!);
+        return LoginWithProviderRequestInterface.decode(readValue(buffer)!);
 
       case 134:
-        return ProfileAddressInterface.decode(readValue(buffer)!);
+        return OpenIdUserInterface.decode(readValue(buffer)!);
 
       case 135:
-        return ProfileSignupRequestInterface.decode(readValue(buffer)!);
+        return ProfileAddressInterface.decode(readValue(buffer)!);
 
       case 136:
-        return ProviderCreatorInterface.decode(readValue(buffer)!);
+        return ProfileSignupRequestInterface.decode(readValue(buffer)!);
 
       case 137:
-        return ReachFiveConfigInterface.decode(readValue(buffer)!);
+        return ProviderCreatorInterface.decode(readValue(buffer)!);
 
       case 138:
-        return ReachFiveKeyInterface.decode(readValue(buffer)!);
+        return ReachFiveConfigInterface.decode(readValue(buffer)!);
 
       case 139:
-        return RefreshAccessTokenRequestInterface.decode(readValue(buffer)!);
+        return ReachFiveKeyInterface.decode(readValue(buffer)!);
 
       case 140:
-        return RequestPasswordResetRequestInterface.decode(readValue(buffer)!);
+        return RefreshAccessTokenRequestInterface.decode(readValue(buffer)!);
 
       case 141:
-        return SdkConfigInterface.decode(readValue(buffer)!);
+        return RequestPasswordResetRequestInterface.decode(readValue(buffer)!);
 
       case 142:
-        return SignupRequestInterface.decode(readValue(buffer)!);
+        return SdkConfigInterface.decode(readValue(buffer)!);
 
       case 143:
+        return SignupRequestInterface.decode(readValue(buffer)!);
+
+      case 144:
         return UpdatePasswordWithAccessTokenRequestInterface.decode(
             readValue(buffer)!);
 
-      case 144:
+      case 145:
         return UpdatePasswordWithEmailRequestInterface.decode(
             readValue(buffer)!);
 
-      case 145:
+      case 146:
         return UpdatePasswordWithFreshAccessTokenRequestInterface.decode(
             readValue(buffer)!);
 
-      case 146:
+      case 147:
         return UpdatePasswordWithPhoneNumberRequestInterface.decode(
             readValue(buffer)!);
 
