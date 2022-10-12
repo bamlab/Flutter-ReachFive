@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reach_five/flutter_reach_five.dart';
 
 import '../const.dart';
+import '../widgets/custom_text_field.dart';
 import '../widgets/snackbar.dart';
 
 class RequestPasswordResetMethod extends StatefulWidget {
@@ -23,6 +24,12 @@ class RequestPasswordResetMethodState
     extends State<RequestPasswordResetMethod> {
   bool areInteractionsDisabled = false;
 
+  late String email = widget.dataSet.initialEmail;
+
+  void setEmail(String newEmail) => setState(() {
+        email = newEmail;
+      });
+
   Future<void> requestPasswordReset(ReachFive reachFive) async {
     setState(() {
       areInteractionsDisabled = true;
@@ -30,7 +37,7 @@ class RequestPasswordResetMethodState
 
     try {
       await reachFive.requestPasswordReset(
-        email: widget.dataSet.initialEmail,
+        email: email,
         redirectUrl: widget.dataSet.initialRedirectUrl,
       );
 
@@ -62,6 +69,14 @@ class RequestPasswordResetMethodState
 
     return ListView(
       children: [
+        if (!areInteractionsDisabled)
+          CustomTextField(
+            value: email,
+            hintText: 'email',
+            setValue: setEmail,
+          )
+        else
+          Text('email : $email'),
         ElevatedButton(
           onPressed: !isButtonDisabled
               ? () async => requestPasswordReset(widget.reachFive)
