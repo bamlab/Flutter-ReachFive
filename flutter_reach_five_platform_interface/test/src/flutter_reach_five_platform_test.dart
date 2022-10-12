@@ -1,4 +1,4 @@
-import 'package:flutter_reach_five_platform_interface/src/error_codes.dart';
+import 'package:flutter_reach_five_platform_interface/src/errors.dart';
 import 'package:flutter_reach_five_platform_interface/src/flutter_reach_five_platform.dart';
 import 'package:flutter_reach_five_platform_interface/src/reach_five.g.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -6,7 +6,11 @@ import 'package:mocktail/mocktail.dart';
 
 class MockReachFiveHostApi extends Mock implements ReachFiveHostApi {}
 
-class TestFlutterReachFive extends FlutterReachFivePlatform {}
+class TestFlutterReachFive extends FlutterReachFivePlatform {
+  @override
+  Never parseError(Object error, StackTrace stackTrace) =>
+      throw UnimplementedError();
+}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-import 'error_codes.dart';
+import 'errors.dart';
 import 'method_channel_flutter_reach_five.dart';
 import 'reach_five.g.dart';
 
@@ -48,6 +48,9 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
   set reachFiveHostApi(ReachFiveHostApi newReachFiveHostApi) {
     _reachFiveHostApi = newReachFiveHostApi;
   }
+
+  /// method used to parse the error on the differents platform
+  Never parseError(Object error, StackTrace stackTrace);
 
   /// {@macro flutter_reach_five.reachFiveManager.initialize}
   Future<ReachFiveConfigInterface> initialize(
