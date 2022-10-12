@@ -233,7 +233,7 @@ public class Converters {
                 bio: profileSignupRequestInterface.bio,
                 consents: consents,
                 company: profileSignupRequestInterface.company,
-                liteOnly: profileSignupRequestInterface.liteOnly as? Bool
+                liteOnly: liteOnly
             )
         }
     
