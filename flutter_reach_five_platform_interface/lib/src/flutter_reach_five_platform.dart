@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
+import 'errors.dart';
 import 'method_channel_flutter_reach_five.dart';
 import 'reach_five.g.dart';
 
@@ -48,6 +49,9 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
     _reachFiveHostApi = newReachFiveHostApi;
   }
 
+  /// method used to parse the error on the differents platform
+  Never parseError(Object error, StackTrace stackTrace);
+
   /// {@macro flutter_reach_five.reachFiveManager.initialize}
   Future<ReachFiveConfigInterface> initialize(
     ReachFiveKeyInterface reachFiveKey,
@@ -67,6 +71,7 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
           profile: profile,
           redirectUrl: redirectUrl,
           scope: scope,
+          errorCodes: errorCodesInterface,
         ),
       );
 
@@ -85,6 +90,7 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
           email: email,
           phoneNumber: phoneNumber,
           scope: scope,
+          errorCodes: errorCodesInterface,
         ),
       );
 
@@ -181,6 +187,7 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
           email: email,
           verificationCode: verificationCode,
           password: newPassword,
+          errorCodes: errorCodesInterface,
         ),
       );
 
@@ -197,6 +204,7 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
           phoneNumber: phoneNumber,
           verificationCode: verificationCode,
           password: newPassword,
+          errorCodes: errorCodesInterface,
         ),
       );
 }

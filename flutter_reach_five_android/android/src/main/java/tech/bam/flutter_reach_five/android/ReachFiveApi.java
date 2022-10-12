@@ -44,6 +44,80 @@ public class ReachFiveApi {
   }
 
   /** Generated class from Pigeon that represents data sent in messages. */
+  public static class ErrorCodesInterface {
+    private @NonNull String emailAlreadyInUseCode;
+    public @NonNull String getEmailAlreadyInUseCode() { return emailAlreadyInUseCode; }
+    public void setEmailAlreadyInUseCode(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"emailAlreadyInUseCode\" is null.");
+      }
+      this.emailAlreadyInUseCode = setterArg;
+    }
+
+    private @NonNull String invalidEmailOrPasswordCode;
+    public @NonNull String getInvalidEmailOrPasswordCode() { return invalidEmailOrPasswordCode; }
+    public void setInvalidEmailOrPasswordCode(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"invalidEmailOrPasswordCode\" is null.");
+      }
+      this.invalidEmailOrPasswordCode = setterArg;
+    }
+
+    private @NonNull String invalidVerificationCode;
+    public @NonNull String getInvalidVerificationCode() { return invalidVerificationCode; }
+    public void setInvalidVerificationCode(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"invalidVerificationCode\" is null.");
+      }
+      this.invalidVerificationCode = setterArg;
+    }
+
+    /** Constructor is private to enforce null safety; use Builder. */
+    private ErrorCodesInterface() {}
+    public static final class Builder {
+      private @Nullable String emailAlreadyInUseCode;
+      public @NonNull Builder setEmailAlreadyInUseCode(@NonNull String setterArg) {
+        this.emailAlreadyInUseCode = setterArg;
+        return this;
+      }
+      private @Nullable String invalidEmailOrPasswordCode;
+      public @NonNull Builder setInvalidEmailOrPasswordCode(@NonNull String setterArg) {
+        this.invalidEmailOrPasswordCode = setterArg;
+        return this;
+      }
+      private @Nullable String invalidVerificationCode;
+      public @NonNull Builder setInvalidVerificationCode(@NonNull String setterArg) {
+        this.invalidVerificationCode = setterArg;
+        return this;
+      }
+      public @NonNull ErrorCodesInterface build() {
+        ErrorCodesInterface pigeonReturn = new ErrorCodesInterface();
+        pigeonReturn.setEmailAlreadyInUseCode(emailAlreadyInUseCode);
+        pigeonReturn.setInvalidEmailOrPasswordCode(invalidEmailOrPasswordCode);
+        pigeonReturn.setInvalidVerificationCode(invalidVerificationCode);
+        return pigeonReturn;
+      }
+    }
+    @NonNull Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("emailAlreadyInUseCode", emailAlreadyInUseCode);
+      toMapResult.put("invalidEmailOrPasswordCode", invalidEmailOrPasswordCode);
+      toMapResult.put("invalidVerificationCode", invalidVerificationCode);
+      return toMapResult;
+    }
+    static @NonNull ErrorCodesInterface fromMap(@NonNull Map<String, Object> map) {
+      ErrorCodesInterface pigeonResult = new ErrorCodesInterface();
+      Object emailAlreadyInUseCode = map.get("emailAlreadyInUseCode");
+      pigeonResult.setEmailAlreadyInUseCode((String)emailAlreadyInUseCode);
+      Object invalidEmailOrPasswordCode = map.get("invalidEmailOrPasswordCode");
+      pigeonResult.setInvalidEmailOrPasswordCode((String)invalidEmailOrPasswordCode);
+      Object invalidVerificationCode = map.get("invalidVerificationCode");
+      pigeonResult.setInvalidVerificationCode((String)invalidVerificationCode);
+      return pigeonResult;
+    }
+  }
+
+  /** Generated class from Pigeon that represents data sent in messages. */
   public static class SdkConfigInterface {
     private @NonNull String domain;
     public @NonNull String getDomain() { return domain; }
@@ -924,6 +998,15 @@ public class ReachFiveApi {
       this.scope = setterArg;
     }
 
+    private @NonNull ErrorCodesInterface errorCodes;
+    public @NonNull ErrorCodesInterface getErrorCodes() { return errorCodes; }
+    public void setErrorCodes(@NonNull ErrorCodesInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"errorCodes\" is null.");
+      }
+      this.errorCodes = setterArg;
+    }
+
     /** Constructor is private to enforce null safety; use Builder. */
     private SignupRequestInterface() {}
     public static final class Builder {
@@ -947,12 +1030,18 @@ public class ReachFiveApi {
         this.scope = setterArg;
         return this;
       }
+      private @Nullable ErrorCodesInterface errorCodes;
+      public @NonNull Builder setErrorCodes(@NonNull ErrorCodesInterface setterArg) {
+        this.errorCodes = setterArg;
+        return this;
+      }
       public @NonNull SignupRequestInterface build() {
         SignupRequestInterface pigeonReturn = new SignupRequestInterface();
         pigeonReturn.setReachFiveKey(reachFiveKey);
         pigeonReturn.setProfile(profile);
         pigeonReturn.setRedirectUrl(redirectUrl);
         pigeonReturn.setScope(scope);
+        pigeonReturn.setErrorCodes(errorCodes);
         return pigeonReturn;
       }
     }
@@ -962,6 +1051,7 @@ public class ReachFiveApi {
       toMapResult.put("profile", (profile == null) ? null : profile.toMap());
       toMapResult.put("redirectUrl", redirectUrl);
       toMapResult.put("scope", scope);
+      toMapResult.put("errorCodes", (errorCodes == null) ? null : errorCodes.toMap());
       return toMapResult;
     }
     static @NonNull SignupRequestInterface fromMap(@NonNull Map<String, Object> map) {
@@ -974,6 +1064,8 @@ public class ReachFiveApi {
       pigeonResult.setRedirectUrl((String)redirectUrl);
       Object scope = map.get("scope");
       pigeonResult.setScope((List<String>)scope);
+      Object errorCodes = map.get("errorCodes");
+      pigeonResult.setErrorCodes((errorCodes == null) ? null : ErrorCodesInterface.fromMap((Map)errorCodes));
       return pigeonResult;
     }
   }
@@ -1540,6 +1632,15 @@ public class ReachFiveApi {
       this.scope = setterArg;
     }
 
+    private @NonNull ErrorCodesInterface errorCodes;
+    public @NonNull ErrorCodesInterface getErrorCodes() { return errorCodes; }
+    public void setErrorCodes(@NonNull ErrorCodesInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"errorCodes\" is null.");
+      }
+      this.errorCodes = setterArg;
+    }
+
     /** Constructor is private to enforce null safety; use Builder. */
     private LoginWithPasswordRequestInterface() {}
     public static final class Builder {
@@ -1568,6 +1669,11 @@ public class ReachFiveApi {
         this.scope = setterArg;
         return this;
       }
+      private @Nullable ErrorCodesInterface errorCodes;
+      public @NonNull Builder setErrorCodes(@NonNull ErrorCodesInterface setterArg) {
+        this.errorCodes = setterArg;
+        return this;
+      }
       public @NonNull LoginWithPasswordRequestInterface build() {
         LoginWithPasswordRequestInterface pigeonReturn = new LoginWithPasswordRequestInterface();
         pigeonReturn.setReachFiveKey(reachFiveKey);
@@ -1575,6 +1681,7 @@ public class ReachFiveApi {
         pigeonReturn.setPhoneNumber(phoneNumber);
         pigeonReturn.setPassword(password);
         pigeonReturn.setScope(scope);
+        pigeonReturn.setErrorCodes(errorCodes);
         return pigeonReturn;
       }
     }
@@ -1585,6 +1692,7 @@ public class ReachFiveApi {
       toMapResult.put("phoneNumber", phoneNumber);
       toMapResult.put("password", password);
       toMapResult.put("scope", scope);
+      toMapResult.put("errorCodes", (errorCodes == null) ? null : errorCodes.toMap());
       return toMapResult;
     }
     static @NonNull LoginWithPasswordRequestInterface fromMap(@NonNull Map<String, Object> map) {
@@ -1599,6 +1707,8 @@ public class ReachFiveApi {
       pigeonResult.setPassword((String)password);
       Object scope = map.get("scope");
       pigeonResult.setScope((List<String>)scope);
+      Object errorCodes = map.get("errorCodes");
+      pigeonResult.setErrorCodes((errorCodes == null) ? null : ErrorCodesInterface.fromMap((Map)errorCodes));
       return pigeonResult;
     }
   }
@@ -2035,6 +2145,15 @@ public class ReachFiveApi {
       this.password = setterArg;
     }
 
+    private @NonNull ErrorCodesInterface errorCodes;
+    public @NonNull ErrorCodesInterface getErrorCodes() { return errorCodes; }
+    public void setErrorCodes(@NonNull ErrorCodesInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"errorCodes\" is null.");
+      }
+      this.errorCodes = setterArg;
+    }
+
     /** Constructor is private to enforce null safety; use Builder. */
     private UpdatePasswordWithEmailRequestInterface() {}
     public static final class Builder {
@@ -2058,12 +2177,18 @@ public class ReachFiveApi {
         this.password = setterArg;
         return this;
       }
+      private @Nullable ErrorCodesInterface errorCodes;
+      public @NonNull Builder setErrorCodes(@NonNull ErrorCodesInterface setterArg) {
+        this.errorCodes = setterArg;
+        return this;
+      }
       public @NonNull UpdatePasswordWithEmailRequestInterface build() {
         UpdatePasswordWithEmailRequestInterface pigeonReturn = new UpdatePasswordWithEmailRequestInterface();
         pigeonReturn.setReachFiveKey(reachFiveKey);
         pigeonReturn.setEmail(email);
         pigeonReturn.setVerificationCode(verificationCode);
         pigeonReturn.setPassword(password);
+        pigeonReturn.setErrorCodes(errorCodes);
         return pigeonReturn;
       }
     }
@@ -2073,6 +2198,7 @@ public class ReachFiveApi {
       toMapResult.put("email", email);
       toMapResult.put("verificationCode", verificationCode);
       toMapResult.put("password", password);
+      toMapResult.put("errorCodes", (errorCodes == null) ? null : errorCodes.toMap());
       return toMapResult;
     }
     static @NonNull UpdatePasswordWithEmailRequestInterface fromMap(@NonNull Map<String, Object> map) {
@@ -2085,6 +2211,8 @@ public class ReachFiveApi {
       pigeonResult.setVerificationCode((String)verificationCode);
       Object password = map.get("password");
       pigeonResult.setPassword((String)password);
+      Object errorCodes = map.get("errorCodes");
+      pigeonResult.setErrorCodes((errorCodes == null) ? null : ErrorCodesInterface.fromMap((Map)errorCodes));
       return pigeonResult;
     }
   }
@@ -2127,6 +2255,15 @@ public class ReachFiveApi {
       this.password = setterArg;
     }
 
+    private @NonNull ErrorCodesInterface errorCodes;
+    public @NonNull ErrorCodesInterface getErrorCodes() { return errorCodes; }
+    public void setErrorCodes(@NonNull ErrorCodesInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"errorCodes\" is null.");
+      }
+      this.errorCodes = setterArg;
+    }
+
     /** Constructor is private to enforce null safety; use Builder. */
     private UpdatePasswordWithPhoneNumberRequestInterface() {}
     public static final class Builder {
@@ -2150,12 +2287,18 @@ public class ReachFiveApi {
         this.password = setterArg;
         return this;
       }
+      private @Nullable ErrorCodesInterface errorCodes;
+      public @NonNull Builder setErrorCodes(@NonNull ErrorCodesInterface setterArg) {
+        this.errorCodes = setterArg;
+        return this;
+      }
       public @NonNull UpdatePasswordWithPhoneNumberRequestInterface build() {
         UpdatePasswordWithPhoneNumberRequestInterface pigeonReturn = new UpdatePasswordWithPhoneNumberRequestInterface();
         pigeonReturn.setReachFiveKey(reachFiveKey);
         pigeonReturn.setPhoneNumber(phoneNumber);
         pigeonReturn.setVerificationCode(verificationCode);
         pigeonReturn.setPassword(password);
+        pigeonReturn.setErrorCodes(errorCodes);
         return pigeonReturn;
       }
     }
@@ -2165,6 +2308,7 @@ public class ReachFiveApi {
       toMapResult.put("phoneNumber", phoneNumber);
       toMapResult.put("verificationCode", verificationCode);
       toMapResult.put("password", password);
+      toMapResult.put("errorCodes", (errorCodes == null) ? null : errorCodes.toMap());
       return toMapResult;
     }
     static @NonNull UpdatePasswordWithPhoneNumberRequestInterface fromMap(@NonNull Map<String, Object> map) {
@@ -2177,6 +2321,8 @@ public class ReachFiveApi {
       pigeonResult.setVerificationCode((String)verificationCode);
       Object password = map.get("password");
       pigeonResult.setPassword((String)password);
+      Object errorCodes = map.get("errorCodes");
+      pigeonResult.setErrorCodes((errorCodes == null) ? null : ErrorCodesInterface.fromMap((Map)errorCodes));
       return pigeonResult;
     }
   }
@@ -2201,51 +2347,54 @@ public class ReachFiveApi {
           return ConsentInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)131:         
-          return LoginWithPasswordRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return ErrorCodesInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)132:         
-          return LoginWithProviderRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return LoginWithPasswordRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)133:         
-          return OpenIdUserInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return LoginWithProviderRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)134:         
-          return ProfileAddressInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return OpenIdUserInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)135:         
-          return ProfileSignupRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return ProfileAddressInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)136:         
-          return ProviderCreatorInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return ProfileSignupRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)137:         
-          return ReachFiveConfigInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return ProviderCreatorInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)138:         
-          return ReachFiveKeyInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return ReachFiveConfigInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)139:         
-          return RefreshAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return ReachFiveKeyInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)140:         
-          return RequestPasswordResetRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return RefreshAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)141:         
-          return SdkConfigInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return RequestPasswordResetRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)142:         
-          return SignupRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return SdkConfigInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)143:         
-          return UpdatePasswordWithAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return SignupRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)144:         
-          return UpdatePasswordWithEmailRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return UpdatePasswordWithAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)145:         
-          return UpdatePasswordWithFreshAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return UpdatePasswordWithEmailRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)146:         
+          return UpdatePasswordWithFreshAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+        
+        case (byte)147:         
           return UpdatePasswordWithPhoneNumberRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         default:        
@@ -2267,68 +2416,72 @@ public class ReachFiveApi {
         stream.write(130);
         writeValue(stream, ((ConsentInterface) value).toMap());
       } else 
-      if (value instanceof LoginWithPasswordRequestInterface) {
+      if (value instanceof ErrorCodesInterface) {
         stream.write(131);
+        writeValue(stream, ((ErrorCodesInterface) value).toMap());
+      } else 
+      if (value instanceof LoginWithPasswordRequestInterface) {
+        stream.write(132);
         writeValue(stream, ((LoginWithPasswordRequestInterface) value).toMap());
       } else 
       if (value instanceof LoginWithProviderRequestInterface) {
-        stream.write(132);
+        stream.write(133);
         writeValue(stream, ((LoginWithProviderRequestInterface) value).toMap());
       } else 
       if (value instanceof OpenIdUserInterface) {
-        stream.write(133);
+        stream.write(134);
         writeValue(stream, ((OpenIdUserInterface) value).toMap());
       } else 
       if (value instanceof ProfileAddressInterface) {
-        stream.write(134);
+        stream.write(135);
         writeValue(stream, ((ProfileAddressInterface) value).toMap());
       } else 
       if (value instanceof ProfileSignupRequestInterface) {
-        stream.write(135);
+        stream.write(136);
         writeValue(stream, ((ProfileSignupRequestInterface) value).toMap());
       } else 
       if (value instanceof ProviderCreatorInterface) {
-        stream.write(136);
+        stream.write(137);
         writeValue(stream, ((ProviderCreatorInterface) value).toMap());
       } else 
       if (value instanceof ReachFiveConfigInterface) {
-        stream.write(137);
+        stream.write(138);
         writeValue(stream, ((ReachFiveConfigInterface) value).toMap());
       } else 
       if (value instanceof ReachFiveKeyInterface) {
-        stream.write(138);
+        stream.write(139);
         writeValue(stream, ((ReachFiveKeyInterface) value).toMap());
       } else 
       if (value instanceof RefreshAccessTokenRequestInterface) {
-        stream.write(139);
+        stream.write(140);
         writeValue(stream, ((RefreshAccessTokenRequestInterface) value).toMap());
       } else 
       if (value instanceof RequestPasswordResetRequestInterface) {
-        stream.write(140);
+        stream.write(141);
         writeValue(stream, ((RequestPasswordResetRequestInterface) value).toMap());
       } else 
       if (value instanceof SdkConfigInterface) {
-        stream.write(141);
+        stream.write(142);
         writeValue(stream, ((SdkConfigInterface) value).toMap());
       } else 
       if (value instanceof SignupRequestInterface) {
-        stream.write(142);
+        stream.write(143);
         writeValue(stream, ((SignupRequestInterface) value).toMap());
       } else 
       if (value instanceof UpdatePasswordWithAccessTokenRequestInterface) {
-        stream.write(143);
+        stream.write(144);
         writeValue(stream, ((UpdatePasswordWithAccessTokenRequestInterface) value).toMap());
       } else 
       if (value instanceof UpdatePasswordWithEmailRequestInterface) {
-        stream.write(144);
+        stream.write(145);
         writeValue(stream, ((UpdatePasswordWithEmailRequestInterface) value).toMap());
       } else 
       if (value instanceof UpdatePasswordWithFreshAccessTokenRequestInterface) {
-        stream.write(145);
+        stream.write(146);
         writeValue(stream, ((UpdatePasswordWithFreshAccessTokenRequestInterface) value).toMap());
       } else 
       if (value instanceof UpdatePasswordWithPhoneNumberRequestInterface) {
-        stream.write(146);
+        stream.write(147);
         writeValue(stream, ((UpdatePasswordWithPhoneNumberRequestInterface) value).toMap());
       } else 
 {

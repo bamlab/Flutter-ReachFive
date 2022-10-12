@@ -9,6 +9,41 @@ import co.reachfive.identity.sdk.webview.WebViewProvider
 
 class Converters {
     companion object {
+        fun parseError(
+        reachFiveError: ReachFiveError,
+        errorCodesInterface: ReachFiveApi.ErrorCodesInterface,
+        defaultFlutterError: FlutterError
+        ): FlutterError {
+            if (reachFiveError.data?.errorMessageKey == "error.email.alreadyInUse") {
+                val errocCode = errorCodesInterface.emailAlreadyInUseCode
+                val errorUsrMessage = reachFiveError.data?.errorUserMsg ?: ""
+                return FlutterError(
+                    code= errocCode,
+                    message= "$errocCode - $errorUsrMessage",
+                    details = null
+                )
+            }
+            if (reachFiveError.data?.errorMessageKey == "error.invalidEmailOrPassword") {
+                val errocCode = errorCodesInterface.invalidEmailOrPasswordCode
+                val errorUsrMessage = reachFiveError.data?.errorUserMsg ?: ""
+                return FlutterError(
+                    code= errocCode,
+                    message= "$errocCode - $errorUsrMessage",
+                    details = null
+                )
+            }
+            if (reachFiveError.data?.errorMessageKey == "error.invalidVerificationCode") {
+                val errocCode = errorCodesInterface.invalidVerificationCode
+                val errorUsrMessage = reachFiveError.data?.errorUserMsg ?: ""
+                return FlutterError(
+                    code= errocCode,
+                    message= "$errocCode - $errorUsrMessage",
+                    details = null
+                )
+            }
+            return defaultFlutterError
+        }
+
         fun authTokenToInterface(
             authToken: AuthToken
         ): ReachFiveApi.AuthTokenInterface {

@@ -4,6 +4,44 @@ import IdentitySdkFacebook
 import IdentitySdkWebView
 
 public class Converters {
+
+    static public func parseError(
+            reachFiveError: ReachFiveError,
+            errorCodesInterface: ErrorCodesInterface,
+            defaultFlutterError: FlutterError
+    ) -> FlutterError {
+        switch reachFiveError {
+        case .RequestError(apiError: let apiError):
+            if (apiError.errorMessageKey == "error.email.alreadyInUse") {
+                return FlutterError(
+                        code: errorCodesInterface.emailAlreadyInUseCode,
+                        message: apiError.errorUserMsg,
+                        details: nil
+                )
+            }
+            return defaultFlutterError
+        case .AuthFailure(reason: _, apiError: let apiError):
+            if (apiError?.errorMessageKey == "error.invalidEmailOrPassword") {
+                return FlutterError(
+                        code: errorCodesInterface.invalidEmailOrPasswordCode,
+                        message: apiError?.errorUserMsg,
+                        details: nil
+                )
+            }
+            if (apiError?.errorMessageKey == "error.invalidVerificationCode") {
+                return FlutterError(
+                        code: errorCodesInterface.invalidVerificationCode,
+                        message: apiError?.errorUserMsg,
+                        details: nil
+                )
+            }
+            return defaultFlutterError
+        case .AuthCanceled:
+            return defaultFlutterError
+        case .TechnicalError(reason: _, apiError: _):
+            return defaultFlutterError
+        }
+    }
     
     static public func authTokenToInterface(
             authToken: AuthToken
@@ -120,36 +158,36 @@ public class Converters {
     static public func addressToInterface(
             address: ProfileAddress
         ) -> AddressInterface {
-            
-            return AddressInterface.make(
-                withFormatted: address.raw,
-                streetAddress: address.streetAddress,
-                locality: address.locality,
-                region: address.region,
-                postalCode: address.postalCode,
-                country: address.country
-            )
+
+        AddressInterface.make(
+            withFormatted: address.raw,
+            streetAddress: address.streetAddress,
+            locality: address.locality,
+            region: address.region,
+            postalCode: address.postalCode,
+            country: address.country
+        )
         }
     
     static public func addressFromInterface(
             addressInterface: AddressInterface
         ) -> ProfileAddress {
-            
-            return ProfileAddress(
-                title: nil,
-                isDefault: nil,
-                addressType: nil,
-                streetAddress: addressInterface.streetAddress,
-                locality: addressInterface.locality,
-                region: addressInterface.region,
-                postalCode: addressInterface.postalCode,
-                country: addressInterface.country,
-                raw: addressInterface.formatted,
-                deliveryNote: nil,
-                recipient: nil,
-                company: nil,
-                phoneNumber: nil
-            )
+
+        ProfileAddress(
+            title: nil,
+            isDefault: nil,
+            addressType: nil,
+            streetAddress: addressInterface.streetAddress,
+            locality: addressInterface.locality,
+            region: addressInterface.region,
+            postalCode: addressInterface.postalCode,
+            country: addressInterface.country,
+            raw: addressInterface.formatted,
+            deliveryNote: nil,
+            recipient: nil,
+            company: nil,
+            phoneNumber: nil
+        )
         }
     
     static public func signupRequestFromInterface(
@@ -160,8 +198,8 @@ public class Converters {
             
             let addresses = profileSignupRequestInterface.addresses?
                 .map({ addressRequest in
-                    return profileAddressFromInterface(
-                        profileAddressInterface: addressRequest
+                    profileAddressFromInterface(
+                            profileAddressInterface: addressRequest
                     )
                 })
             
@@ -195,7 +233,7 @@ public class Converters {
                 bio: profileSignupRequestInterface.bio,
                 consents: consents,
                 company: profileSignupRequestInterface.company,
-                liteOnly: profileSignupRequestInterface.liteOnly as? Bool
+                liteOnly: liteOnly
             )
         }
     
@@ -242,12 +280,12 @@ public class Converters {
     static public func consentFromInterface(
         consentInterface: ConsentInterface
         ) -> Consent {
-        
-            return  Consent(
-                granted: consentInterface.granted as! Bool,
-                consentType: consentInterface.consentType,
-                date: consentInterface.date
-            )
+
+        Consent(
+            granted: consentInterface.granted as! Bool,
+            consentType: consentInterface.consentType,
+            date: consentInterface.date
+        )
         }
     
     static public func providerCreatorFromInterface(

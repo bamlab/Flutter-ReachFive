@@ -108,7 +108,11 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
         val reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey = reachFiveKey)
 
         return reachFiveInstances[reachFiveInstanceKey]
-            ?: throw Error("ReachFive instance has not been initialized")
+            ?: throw FlutterError(
+                code= "non_initialized_error_code",
+                message= "ReachFive instance has not been initialized",
+                details= null
+            )
     }
 
     override fun initialize(reachFiveKey: ReachFiveApi.ReachFiveKeyInterface, result: ReachFiveApi.Result<ReachFiveApi.ReachFiveConfigInterface>) {
@@ -128,8 +132,13 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
         reachFive.initialize(
             success = {},
             failure = {
-                    error -> result.error(error)
-            }
+                    error -> result.error(
+                FlutterError(
+                    code= "initialization_error_code",
+                    message= error.message,
+                    details= null
+                )
+            )}
         )
 
         val context = this.context
@@ -154,8 +163,13 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
                 )
             },
             failure = {
-                    error -> result.error(error)
-            }
+                    error -> result.error(
+                FlutterError(
+                    code= "loading_social_providers_error_code",
+                    message= error.message,
+                    details= null
+                )
+            )}
         )
     }
 
@@ -166,7 +180,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
         val reachFive: ReachFive
         try {
             reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
-        } catch (error: Error) {
+        } catch (error: FlutterError) {
             result?.error(error)
             return
         }
@@ -179,7 +193,18 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
             success = { authToken ->
                 result?.success(Converters.authTokenToInterface(authToken))
             },
-            failure = { error -> result?.error(error)}
+            failure = {
+                    error -> result?.error(
+                Converters.parseError(
+                    reachFiveError = error,
+                    errorCodesInterface = request.errorCodes,
+                    defaultFlutterError = FlutterError(
+                        code= "sign_up_error_code",
+                        message= error.message,
+                        details= null
+                    )
+                )
+            )}
         )
     }
 
@@ -190,7 +215,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
         val reachFive: ReachFive
         try {
             reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
-        } catch (error: Error) {
+        } catch (error: FlutterError) {
             result?.error(error)
             return
         }
@@ -203,7 +228,18 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
             success = { authToken ->
                 result?.success(Converters.authTokenToInterface(authToken))
             },
-            failure = { error -> result?.error(error)}
+            failure = {
+                    error -> result?.error(
+                Converters.parseError(
+                    reachFiveError = error,
+                    errorCodesInterface = request.errorCodes,
+                    defaultFlutterError = FlutterError(
+                        code= "login_with_password_error_code",
+                        message= error.message,
+                        details= null
+                    )
+                )
+            )}
         )
     }
 
@@ -214,7 +250,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
         val reachFive: ReachFive
         try {
             reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
-        } catch (error: Error) {
+        } catch (error: FlutterError) {
             result?.error(error)
             return
         }
@@ -227,7 +263,12 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
 
         val activity = this.activity
         if(activity == null) {
-            result?.error(Error("No android activity attached to your application"))
+            result?.error(
+                FlutterError(
+                code= "not_available_provider_error_code",
+                message= "The provider was not found in your reachFive instance",
+                details= null
+            ))
             return
         }
 
@@ -236,7 +277,14 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
                 authToken ->
             result?.success(Converters.authTokenToInterface(authToken))
         }
-        this.onLoginWithProviderFailure = {error -> result?.error(error)}
+        this.onLoginWithProviderFailure = {
+                error -> result?.error(
+            FlutterError(
+                code= "login_with_provider_error_code",
+                message= error.message,
+                details= null
+            )
+        )}
 
         provider.login(
             origin = request.origin,
@@ -252,7 +300,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
         val reachFive: ReachFive
         try {
             reachFive = getReachFiveInstance(reachFiveKey = reachFiveKey)
-        } catch (error: Error) {
+        } catch (error: FlutterError) {
             result?.error(error)
             return
         }
@@ -261,7 +309,14 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
             success = {
                 result?.success(null)
             },
-            failure = { error -> result?.error(error)}
+            failure = {
+                    error -> result?.error(
+                FlutterError(
+                    code= "logout_error_code",
+                    message= error.message,
+                    details= null
+                )
+            )}
         )
     }
 
@@ -272,7 +327,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
         val reachFive: ReachFive
         try {
             reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
-        } catch (error: Error) {
+        } catch (error: FlutterError) {
             result?.error(error)
             return
         }
@@ -284,7 +339,14 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
             success = { authToken ->
                 result?.success(Converters.authTokenToInterface(authToken))
             },
-            failure = { error -> result?.error(error)}
+            failure = {
+                    error -> result?.error(
+                FlutterError(
+                    code= "refresh_access_token_error_code",
+                    message= error.message,
+                    details= null
+                )
+            )}
         )
     }
 
@@ -295,7 +357,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
         val reachFive: ReachFive
         try {
             reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
-        } catch (error: Error) {
+        } catch (error: FlutterError) {
             result?.error(error)
             return
         }
@@ -305,7 +367,14 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
             phoneNumber = request.phoneNumber,
             redirectUrl = request.redirectUrl,
             success = { result?.success(null)},
-            failure = {error -> result?.error(error)}
+            failure = {
+                    error -> result?.error(
+                FlutterError(
+                    code= "request_password_reset_error_code",
+                    message= error.message,
+                    details= null
+                )
+            )}
         )
     }
 
@@ -316,7 +385,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
         val reachFive: ReachFive
         try {
             reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
-        } catch (error: Error) {
+        } catch (error: FlutterError) {
             result?.error(error)
             return
         }
@@ -328,7 +397,14 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
                 password = request.password
             ),
             success = { result?.success(null) },
-            failure = {error -> result?.error(error)}
+            failure = {
+                    error -> result?.error(
+                FlutterError(
+                    code= "update_password_with_access_token_error_code",
+                    message= error.message,
+                    details= null
+                )
+            )}
         )
     }
 
@@ -339,7 +415,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
         val reachFive: ReachFive
         try {
             reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
-        } catch (error: Error) {
+        } catch (error: FlutterError) {
             result?.error(error)
             return
         }
@@ -350,7 +426,14 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
                 password = request.password
             ),
             success = { result?.success(null) },
-            failure = {error -> result?.error(error)}
+            failure = {
+                    error -> result?.error(
+                FlutterError(
+                    code= "update_password_with_fresh_access_token_error_code",
+                    message= error.message,
+                    details= null
+                )
+            )}
         )
     }
 
@@ -361,7 +444,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
         val reachFive: ReachFive
         try {
             reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
-        } catch (error: Error) {
+        } catch (error: FlutterError) {
             result?.error(error)
             return
         }
@@ -373,7 +456,18 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
                 password = request.password
             ),
             success = { result?.success(null) },
-            failure = {error -> result?.error(error)}
+            failure = {
+                    error -> result?.error(
+                Converters.parseError(
+                    reachFiveError = error,
+                    errorCodesInterface = request.errorCodes,
+                    defaultFlutterError = FlutterError(
+                        code= "update_password_with_email_request_error_code",
+                        message= error.message,
+                        details= null
+                    )
+                )
+            )}
         )
     }
 
@@ -384,7 +478,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
         val reachFive: ReachFive
         try {
             reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
-        } catch (error: Error) {
+        } catch (error: FlutterError) {
             result?.error(error)
             return
         }
@@ -396,7 +490,18 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
                 password = request.password
             ),
             success = { result?.success(null) },
-            failure = {error -> result?.error(error)}
+            failure = {
+                    error -> result?.error(
+                Converters.parseError(
+                    reachFiveError = error,
+                    errorCodesInterface = request.errorCodes,
+                    defaultFlutterError = FlutterError(
+                        code= "update_password_with_phone_number_request_error_code",
+                        message= error.message,
+                        details= null
+                    )
+                )
+            )}
         )
     }
 }

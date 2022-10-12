@@ -19,6 +19,7 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
   ProfileAddressTypeInterfaceDelivery = 1,
 };
 
+@class ErrorCodesInterface;
 @class SdkConfigInterface;
 @class ProviderCreatorInterface;
 @class ReachFiveKeyInterface;
@@ -38,6 +39,17 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 @class UpdatePasswordWithFreshAccessTokenRequestInterface;
 @class UpdatePasswordWithEmailRequestInterface;
 @class UpdatePasswordWithPhoneNumberRequestInterface;
+
+@interface ErrorCodesInterface : NSObject
+/// `init` unavailable to enforce nonnull fields, see the `make` class method.
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)makeWithEmailAlreadyInUseCode:(NSString *)emailAlreadyInUseCode
+    invalidEmailOrPasswordCode:(NSString *)invalidEmailOrPasswordCode
+    invalidVerificationCode:(NSString *)invalidVerificationCode;
+@property(nonatomic, copy) NSString * emailAlreadyInUseCode;
+@property(nonatomic, copy) NSString * invalidEmailOrPasswordCode;
+@property(nonatomic, copy) NSString * invalidVerificationCode;
+@end
 
 @interface SdkConfigInterface : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
@@ -168,11 +180,13 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 + (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
     profile:(ProfileSignupRequestInterface *)profile
     redirectUrl:(nullable NSString *)redirectUrl
-    scope:(nullable NSArray<NSString *> *)scope;
+    scope:(nullable NSArray<NSString *> *)scope
+    errorCodes:(ErrorCodesInterface *)errorCodes;
 @property(nonatomic, strong) ReachFiveKeyInterface * reachFiveKey;
 @property(nonatomic, strong) ProfileSignupRequestInterface * profile;
 @property(nonatomic, copy, nullable) NSString * redirectUrl;
 @property(nonatomic, strong, nullable) NSArray<NSString *> * scope;
+@property(nonatomic, strong) ErrorCodesInterface * errorCodes;
 @end
 
 @interface AddressInterface : NSObject
@@ -255,12 +269,14 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
     email:(nullable NSString *)email
     phoneNumber:(nullable NSString *)phoneNumber
     password:(NSString *)password
-    scope:(nullable NSArray<NSString *> *)scope;
+    scope:(nullable NSArray<NSString *> *)scope
+    errorCodes:(ErrorCodesInterface *)errorCodes;
 @property(nonatomic, strong) ReachFiveKeyInterface * reachFiveKey;
 @property(nonatomic, copy, nullable) NSString * email;
 @property(nonatomic, copy, nullable) NSString * phoneNumber;
 @property(nonatomic, copy) NSString * password;
 @property(nonatomic, strong, nullable) NSArray<NSString *> * scope;
+@property(nonatomic, strong) ErrorCodesInterface * errorCodes;
 @end
 
 @interface LoginWithProviderRequestInterface : NSObject
@@ -328,11 +344,13 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 + (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
     email:(NSString *)email
     verificationCode:(NSString *)verificationCode
-    password:(NSString *)password;
+    password:(NSString *)password
+    errorCodes:(ErrorCodesInterface *)errorCodes;
 @property(nonatomic, strong) ReachFiveKeyInterface * reachFiveKey;
 @property(nonatomic, copy) NSString * email;
 @property(nonatomic, copy) NSString * verificationCode;
 @property(nonatomic, copy) NSString * password;
+@property(nonatomic, strong) ErrorCodesInterface * errorCodes;
 @end
 
 @interface UpdatePasswordWithPhoneNumberRequestInterface : NSObject
@@ -341,11 +359,13 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 + (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
     phoneNumber:(NSString *)phoneNumber
     verificationCode:(NSString *)verificationCode
-    password:(NSString *)password;
+    password:(NSString *)password
+    errorCodes:(ErrorCodesInterface *)errorCodes;
 @property(nonatomic, strong) ReachFiveKeyInterface * reachFiveKey;
 @property(nonatomic, copy) NSString * phoneNumber;
 @property(nonatomic, copy) NSString * verificationCode;
 @property(nonatomic, copy) NSString * password;
+@property(nonatomic, strong) ErrorCodesInterface * errorCodes;
 @end
 
 /// The codec used by ReachFiveHostApi.

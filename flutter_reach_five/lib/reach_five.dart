@@ -56,16 +56,20 @@ class ReachFive {
     String? redirectUrl,
     List<ScopeValue>? scope,
   }) async {
-    final authTokenInterface = await _platform.signup(
-      reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
-      profile: ProfileSignupRequestConverter.toInterface(profile),
-      redirectUrl: redirectUrl,
-      scope: scope?.map(ScopeValueConverter.toInterface).toList(),
-    );
+    try {
+      final authTokenInterface = await _platform.signup(
+        reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
+        profile: ProfileSignupRequestConverter.toInterface(profile),
+        redirectUrl: redirectUrl,
+        scope: scope?.map(ScopeValueConverter.toInterface).toList(),
+      );
 
-    final authToken = AuthTokenConverter.fromInterface(authTokenInterface);
+      final authToken = AuthTokenConverter.fromInterface(authTokenInterface);
 
-    return authToken;
+      return authToken;
+    } catch (error, stackTrace) {
+      _platform.parseError(error, stackTrace);
+    }
   }
 
   /// {@template flutter_reach_five.reachFive.loginWithPassword}
@@ -77,17 +81,21 @@ class ReachFive {
     String? phoneNumber,
     List<ScopeValue>? scope,
   }) async {
-    final authTokenInterface = await _platform.loginWithPassword(
-      reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
-      password: password,
-      email: email,
-      phoneNumber: phoneNumber,
-      scope: scope?.map(ScopeValueConverter.toInterface).toList(),
-    );
+    try {
+      final authTokenInterface = await _platform.loginWithPassword(
+        reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
+        password: password,
+        email: email,
+        phoneNumber: phoneNumber,
+        scope: scope?.map(ScopeValueConverter.toInterface).toList(),
+      );
 
-    final authToken = AuthTokenConverter.fromInterface(authTokenInterface);
+      final authToken = AuthTokenConverter.fromInterface(authTokenInterface);
 
-    return authToken;
+      return authToken;
+    } catch (error, stackTrace) {
+      _platform.parseError(error, stackTrace);
+    }
   }
 
   /// {@template flutter_reach_five.reachFive.loginWithProvider}
@@ -227,39 +235,44 @@ class ReachFive {
   Future<void> updatePassword(
     UpdatePasswordRequest updatePasswordRequest,
   ) async {
-    await updatePasswordRequest.map<Future<void>>(
-      withAccessToken: (updatePasswordRequestWithAccessToken) =>
-          _platform.updatePasswordWithAccessToken(
-        reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
-        authToken: AuthTokenConverter.toInterface(
-          updatePasswordRequestWithAccessToken.authToken,
+    try {
+      await updatePasswordRequest.map<Future<void>>(
+        withAccessToken: (updatePasswordRequestWithAccessToken) =>
+            _platform.updatePasswordWithAccessToken(
+          reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
+          authToken: AuthTokenConverter.toInterface(
+            updatePasswordRequestWithAccessToken.authToken,
+          ),
+          oldPassword: updatePasswordRequestWithAccessToken.oldPassword,
+          newPassword: updatePasswordRequestWithAccessToken.newPassword,
         ),
-        oldPassword: updatePasswordRequestWithAccessToken.oldPassword,
-        newPassword: updatePasswordRequestWithAccessToken.newPassword,
-      ),
-      withFreshAccessToken: (updatePasswordRequestWithFreshAccessToken) =>
-          _platform.updatePasswordWithFreshAccessToken(
-        reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
-        freshAuthToken: AuthTokenConverter.toInterface(
-          updatePasswordRequestWithFreshAccessToken.freshAuthToken,
+        withFreshAccessToken: (updatePasswordRequestWithFreshAccessToken) =>
+            _platform.updatePasswordWithFreshAccessToken(
+          reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
+          freshAuthToken: AuthTokenConverter.toInterface(
+            updatePasswordRequestWithFreshAccessToken.freshAuthToken,
+          ),
+          newPassword: updatePasswordRequestWithFreshAccessToken.newPassword,
         ),
-        newPassword: updatePasswordRequestWithFreshAccessToken.newPassword,
-      ),
-      withEmail: (updatePasswordRequestWithEmail) =>
-          _platform.updatePasswordWithEmail(
-        reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
-        email: updatePasswordRequestWithEmail.email,
-        verificationCode: updatePasswordRequestWithEmail.verificationCode,
-        newPassword: updatePasswordRequestWithEmail.newPassword,
-      ),
-      withPhoneNumber: (updatePasswordRequestWithPhoneNumber) =>
-          _platform.updatePasswordWithPhoneNumber(
-        reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
-        phoneNumber: updatePasswordRequestWithPhoneNumber.phoneNumber,
-        verificationCode: updatePasswordRequestWithPhoneNumber.verificationCode,
-        newPassword: updatePasswordRequestWithPhoneNumber.newPassword,
-      ),
-    );
+        withEmail: (updatePasswordRequestWithEmail) =>
+            _platform.updatePasswordWithEmail(
+          reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
+          email: updatePasswordRequestWithEmail.email,
+          verificationCode: updatePasswordRequestWithEmail.verificationCode,
+          newPassword: updatePasswordRequestWithEmail.newPassword,
+        ),
+        withPhoneNumber: (updatePasswordRequestWithPhoneNumber) =>
+            _platform.updatePasswordWithPhoneNumber(
+          reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
+          phoneNumber: updatePasswordRequestWithPhoneNumber.phoneNumber,
+          verificationCode:
+              updatePasswordRequestWithPhoneNumber.verificationCode,
+          newPassword: updatePasswordRequestWithPhoneNumber.newPassword,
+        ),
+      );
+    } catch (error, stackTrace) {
+      _platform.parseError(error, stackTrace);
+    }
   }
 }
 
@@ -270,7 +283,7 @@ class ReachFiveManager {
   /// {@template flutter_reach_five.reachFiveManager.initialize}
   /// initialize function used to create an instance of ReachFive
   /// {@endtemplate}
-  static Future<ReachFive> initialize({
+  Future<ReachFive> initialize({
     required SdkConfig sdkConfig,
     List<ProviderCreator> providerCreators = const [],
     Dio? dio,

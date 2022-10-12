@@ -32,5 +32,88 @@ void main() {
       FlutterReachFiveIOS.registerWith();
       expect(FlutterReachFivePlatform.instance, isA<FlutterReachFiveIOS>());
     });
+
+    group('can parse an error', () {
+      test('random error', () {
+        final exception = Exception();
+
+        Object? error;
+
+        try {
+          FlutterReachFiveIOS()
+              .parseError(exception, StackTrace.fromString('test'));
+        } catch (e) {
+          error = e;
+        }
+
+        expect(exception, error);
+      });
+
+      test('random platform exception', () {
+        final exception = PlatformException(code: 'code');
+
+        Object? error;
+
+        try {
+          FlutterReachFiveIOS()
+              .parseError(exception, StackTrace.fromString('test'));
+        } catch (e) {
+          error = e;
+        }
+
+        expect(exception, error);
+      });
+
+      test('$EmailAlreadyInUseException', () {
+        final exception = PlatformException(
+          code: errorCodesInterface.emailAlreadyInUseCode,
+        );
+
+        Object? error;
+
+        try {
+          FlutterReachFiveIOS()
+              .parseError(exception, StackTrace.fromString('test'));
+        } catch (e) {
+          error = e;
+        }
+
+        expect(error, isA<EmailAlreadyInUseException>());
+      });
+
+      test('$InvalidEmailOrPasswordException', () {
+        final exception = PlatformException(
+          code: errorCodesInterface.invalidEmailOrPasswordCode,
+        );
+
+        Object? error;
+
+        try {
+          FlutterReachFiveIOS()
+              .parseError(exception, StackTrace.fromString('test'));
+        } catch (e) {
+          error = e;
+        }
+
+        expect(error, isA<InvalidEmailOrPasswordException>());
+      });
+
+      test('$InvalidVerificationCodeException', () {
+        final exception = PlatformException(
+          code: errorCodesInterface.invalidVerificationCode,
+        );
+
+        Object? error;
+
+        try {
+          FlutterReachFiveIOS()
+              .parseError(exception, StackTrace.fromString('test'));
+        } catch (e) {
+          error = e;
+        }
+
+        expect(error, isA<InvalidVerificationCodeException>());
+      });
+    });
   });
 }

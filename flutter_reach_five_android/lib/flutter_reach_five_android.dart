@@ -6,6 +6,25 @@ import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platfor
 ///
 /// The Android implementation of [FlutterReachFivePlatform].
 class FlutterReachFiveAndroid extends FlutterReachFivePlatform {
+  @override
+  Never parseError(Object error, StackTrace stackTrace) {
+    if (error is PlatformException) {
+      final errorMessage = error.message;
+      if (errorMessage != null) {
+        if (errorMessage.contains(errorCodesInterface.emailAlreadyInUseCode)) {
+          throw EmailAlreadyInUseException();
+        } else if (errorMessage
+            .contains(errorCodesInterface.invalidEmailOrPasswordCode)) {
+          throw InvalidEmailOrPasswordException();
+        } else if (errorMessage
+            .contains(errorCodesInterface.invalidVerificationCode)) {
+          throw InvalidVerificationCodeException();
+        }
+      }
+    }
+    return Error.throwWithStackTrace(error, stackTrace);
+  }
+
   /// {@macro flutter_reach_five.methodChannelFlutterReachFive.methodChannel}
   @visibleForTesting
   final MethodChannel methodChannel =

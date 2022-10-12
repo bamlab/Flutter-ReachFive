@@ -6,6 +6,20 @@ import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platfor
 ///
 /// The iOS implementation of [FlutterReachFivePlatform].
 class FlutterReachFiveIOS extends FlutterReachFivePlatform {
+  @override
+  Never parseError(Object error, StackTrace stackTrace) {
+    if (error is PlatformException) {
+      if (error.code == errorCodesInterface.emailAlreadyInUseCode) {
+        throw EmailAlreadyInUseException();
+      } else if (error.code == errorCodesInterface.invalidEmailOrPasswordCode) {
+        throw InvalidEmailOrPasswordException();
+      } else if (error.code == errorCodesInterface.invalidVerificationCode) {
+        throw InvalidVerificationCodeException();
+      }
+    }
+    return Error.throwWithStackTrace(error, stackTrace);
+  }
+
   /// {@macro flutter_reach_five.methodChannelFlutterReachFive.methodChannel}
   @visibleForTesting
   final methodChannel = const MethodChannel('flutter_reach_five_ios');

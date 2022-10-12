@@ -31,6 +31,11 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 }
 
 
+@interface ErrorCodesInterface ()
++ (ErrorCodesInterface *)fromMap:(NSDictionary *)dict;
++ (nullable ErrorCodesInterface *)nullableFromMap:(NSDictionary *)dict;
+- (NSDictionary *)toMap;
+@end
 @interface SdkConfigInterface ()
 + (SdkConfigInterface *)fromMap:(NSDictionary *)dict;
 + (nullable SdkConfigInterface *)nullableFromMap:(NSDictionary *)dict;
@@ -125,6 +130,36 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (UpdatePasswordWithPhoneNumberRequestInterface *)fromMap:(NSDictionary *)dict;
 + (nullable UpdatePasswordWithPhoneNumberRequestInterface *)nullableFromMap:(NSDictionary *)dict;
 - (NSDictionary *)toMap;
+@end
+
+@implementation ErrorCodesInterface
++ (instancetype)makeWithEmailAlreadyInUseCode:(NSString *)emailAlreadyInUseCode
+    invalidEmailOrPasswordCode:(NSString *)invalidEmailOrPasswordCode
+    invalidVerificationCode:(NSString *)invalidVerificationCode {
+  ErrorCodesInterface* pigeonResult = [[ErrorCodesInterface alloc] init];
+  pigeonResult.emailAlreadyInUseCode = emailAlreadyInUseCode;
+  pigeonResult.invalidEmailOrPasswordCode = invalidEmailOrPasswordCode;
+  pigeonResult.invalidVerificationCode = invalidVerificationCode;
+  return pigeonResult;
+}
++ (ErrorCodesInterface *)fromMap:(NSDictionary *)dict {
+  ErrorCodesInterface *pigeonResult = [[ErrorCodesInterface alloc] init];
+  pigeonResult.emailAlreadyInUseCode = GetNullableObject(dict, @"emailAlreadyInUseCode");
+  NSAssert(pigeonResult.emailAlreadyInUseCode != nil, @"");
+  pigeonResult.invalidEmailOrPasswordCode = GetNullableObject(dict, @"invalidEmailOrPasswordCode");
+  NSAssert(pigeonResult.invalidEmailOrPasswordCode != nil, @"");
+  pigeonResult.invalidVerificationCode = GetNullableObject(dict, @"invalidVerificationCode");
+  NSAssert(pigeonResult.invalidVerificationCode != nil, @"");
+  return pigeonResult;
+}
++ (nullable ErrorCodesInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [ErrorCodesInterface fromMap:dict] : nil; }
+- (NSDictionary *)toMap {
+  return @{
+    @"emailAlreadyInUseCode" : (self.emailAlreadyInUseCode ?: [NSNull null]),
+    @"invalidEmailOrPasswordCode" : (self.invalidEmailOrPasswordCode ?: [NSNull null]),
+    @"invalidVerificationCode" : (self.invalidVerificationCode ?: [NSNull null]),
+  };
+}
 @end
 
 @implementation SdkConfigInterface
@@ -427,12 +462,14 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
     profile:(ProfileSignupRequestInterface *)profile
     redirectUrl:(nullable NSString *)redirectUrl
-    scope:(nullable NSArray<NSString *> *)scope {
+    scope:(nullable NSArray<NSString *> *)scope
+    errorCodes:(ErrorCodesInterface *)errorCodes {
   SignupRequestInterface* pigeonResult = [[SignupRequestInterface alloc] init];
   pigeonResult.reachFiveKey = reachFiveKey;
   pigeonResult.profile = profile;
   pigeonResult.redirectUrl = redirectUrl;
   pigeonResult.scope = scope;
+  pigeonResult.errorCodes = errorCodes;
   return pigeonResult;
 }
 + (SignupRequestInterface *)fromMap:(NSDictionary *)dict {
@@ -443,6 +480,8 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
   NSAssert(pigeonResult.profile != nil, @"");
   pigeonResult.redirectUrl = GetNullableObject(dict, @"redirectUrl");
   pigeonResult.scope = GetNullableObject(dict, @"scope");
+  pigeonResult.errorCodes = [ErrorCodesInterface nullableFromMap:GetNullableObject(dict, @"errorCodes")];
+  NSAssert(pigeonResult.errorCodes != nil, @"");
   return pigeonResult;
 }
 + (nullable SignupRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [SignupRequestInterface fromMap:dict] : nil; }
@@ -452,6 +491,7 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
     @"profile" : (self.profile ? [self.profile toMap] : [NSNull null]),
     @"redirectUrl" : (self.redirectUrl ?: [NSNull null]),
     @"scope" : (self.scope ?: [NSNull null]),
+    @"errorCodes" : (self.errorCodes ? [self.errorCodes toMap] : [NSNull null]),
   };
 }
 @end
@@ -631,13 +671,15 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
     email:(nullable NSString *)email
     phoneNumber:(nullable NSString *)phoneNumber
     password:(NSString *)password
-    scope:(nullable NSArray<NSString *> *)scope {
+    scope:(nullable NSArray<NSString *> *)scope
+    errorCodes:(ErrorCodesInterface *)errorCodes {
   LoginWithPasswordRequestInterface* pigeonResult = [[LoginWithPasswordRequestInterface alloc] init];
   pigeonResult.reachFiveKey = reachFiveKey;
   pigeonResult.email = email;
   pigeonResult.phoneNumber = phoneNumber;
   pigeonResult.password = password;
   pigeonResult.scope = scope;
+  pigeonResult.errorCodes = errorCodes;
   return pigeonResult;
 }
 + (LoginWithPasswordRequestInterface *)fromMap:(NSDictionary *)dict {
@@ -649,6 +691,8 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
   pigeonResult.password = GetNullableObject(dict, @"password");
   NSAssert(pigeonResult.password != nil, @"");
   pigeonResult.scope = GetNullableObject(dict, @"scope");
+  pigeonResult.errorCodes = [ErrorCodesInterface nullableFromMap:GetNullableObject(dict, @"errorCodes")];
+  NSAssert(pigeonResult.errorCodes != nil, @"");
   return pigeonResult;
 }
 + (nullable LoginWithPasswordRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [LoginWithPasswordRequestInterface fromMap:dict] : nil; }
@@ -659,6 +703,7 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
     @"phoneNumber" : (self.phoneNumber ?: [NSNull null]),
     @"password" : (self.password ?: [NSNull null]),
     @"scope" : (self.scope ?: [NSNull null]),
+    @"errorCodes" : (self.errorCodes ? [self.errorCodes toMap] : [NSNull null]),
   };
 }
 @end
@@ -823,12 +868,14 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
     email:(NSString *)email
     verificationCode:(NSString *)verificationCode
-    password:(NSString *)password {
+    password:(NSString *)password
+    errorCodes:(ErrorCodesInterface *)errorCodes {
   UpdatePasswordWithEmailRequestInterface* pigeonResult = [[UpdatePasswordWithEmailRequestInterface alloc] init];
   pigeonResult.reachFiveKey = reachFiveKey;
   pigeonResult.email = email;
   pigeonResult.verificationCode = verificationCode;
   pigeonResult.password = password;
+  pigeonResult.errorCodes = errorCodes;
   return pigeonResult;
 }
 + (UpdatePasswordWithEmailRequestInterface *)fromMap:(NSDictionary *)dict {
@@ -841,6 +888,8 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
   NSAssert(pigeonResult.verificationCode != nil, @"");
   pigeonResult.password = GetNullableObject(dict, @"password");
   NSAssert(pigeonResult.password != nil, @"");
+  pigeonResult.errorCodes = [ErrorCodesInterface nullableFromMap:GetNullableObject(dict, @"errorCodes")];
+  NSAssert(pigeonResult.errorCodes != nil, @"");
   return pigeonResult;
 }
 + (nullable UpdatePasswordWithEmailRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [UpdatePasswordWithEmailRequestInterface fromMap:dict] : nil; }
@@ -850,6 +899,7 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
     @"email" : (self.email ?: [NSNull null]),
     @"verificationCode" : (self.verificationCode ?: [NSNull null]),
     @"password" : (self.password ?: [NSNull null]),
+    @"errorCodes" : (self.errorCodes ? [self.errorCodes toMap] : [NSNull null]),
   };
 }
 @end
@@ -858,12 +908,14 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
     phoneNumber:(NSString *)phoneNumber
     verificationCode:(NSString *)verificationCode
-    password:(NSString *)password {
+    password:(NSString *)password
+    errorCodes:(ErrorCodesInterface *)errorCodes {
   UpdatePasswordWithPhoneNumberRequestInterface* pigeonResult = [[UpdatePasswordWithPhoneNumberRequestInterface alloc] init];
   pigeonResult.reachFiveKey = reachFiveKey;
   pigeonResult.phoneNumber = phoneNumber;
   pigeonResult.verificationCode = verificationCode;
   pigeonResult.password = password;
+  pigeonResult.errorCodes = errorCodes;
   return pigeonResult;
 }
 + (UpdatePasswordWithPhoneNumberRequestInterface *)fromMap:(NSDictionary *)dict {
@@ -876,6 +928,8 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
   NSAssert(pigeonResult.verificationCode != nil, @"");
   pigeonResult.password = GetNullableObject(dict, @"password");
   NSAssert(pigeonResult.password != nil, @"");
+  pigeonResult.errorCodes = [ErrorCodesInterface nullableFromMap:GetNullableObject(dict, @"errorCodes")];
+  NSAssert(pigeonResult.errorCodes != nil, @"");
   return pigeonResult;
 }
 + (nullable UpdatePasswordWithPhoneNumberRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [UpdatePasswordWithPhoneNumberRequestInterface fromMap:dict] : nil; }
@@ -885,6 +939,7 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
     @"phoneNumber" : (self.phoneNumber ?: [NSNull null]),
     @"verificationCode" : (self.verificationCode ?: [NSNull null]),
     @"password" : (self.password ?: [NSNull null]),
+    @"errorCodes" : (self.errorCodes ? [self.errorCodes toMap] : [NSNull null]),
   };
 }
 @end
@@ -905,51 +960,54 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
       return [ConsentInterface fromMap:[self readValue]];
     
     case 131:     
-      return [LoginWithPasswordRequestInterface fromMap:[self readValue]];
+      return [ErrorCodesInterface fromMap:[self readValue]];
     
     case 132:     
-      return [LoginWithProviderRequestInterface fromMap:[self readValue]];
+      return [LoginWithPasswordRequestInterface fromMap:[self readValue]];
     
     case 133:     
-      return [OpenIdUserInterface fromMap:[self readValue]];
+      return [LoginWithProviderRequestInterface fromMap:[self readValue]];
     
     case 134:     
-      return [ProfileAddressInterface fromMap:[self readValue]];
+      return [OpenIdUserInterface fromMap:[self readValue]];
     
     case 135:     
-      return [ProfileSignupRequestInterface fromMap:[self readValue]];
+      return [ProfileAddressInterface fromMap:[self readValue]];
     
     case 136:     
-      return [ProviderCreatorInterface fromMap:[self readValue]];
+      return [ProfileSignupRequestInterface fromMap:[self readValue]];
     
     case 137:     
-      return [ReachFiveConfigInterface fromMap:[self readValue]];
+      return [ProviderCreatorInterface fromMap:[self readValue]];
     
     case 138:     
-      return [ReachFiveKeyInterface fromMap:[self readValue]];
+      return [ReachFiveConfigInterface fromMap:[self readValue]];
     
     case 139:     
-      return [RefreshAccessTokenRequestInterface fromMap:[self readValue]];
+      return [ReachFiveKeyInterface fromMap:[self readValue]];
     
     case 140:     
-      return [RequestPasswordResetRequestInterface fromMap:[self readValue]];
+      return [RefreshAccessTokenRequestInterface fromMap:[self readValue]];
     
     case 141:     
-      return [SdkConfigInterface fromMap:[self readValue]];
+      return [RequestPasswordResetRequestInterface fromMap:[self readValue]];
     
     case 142:     
-      return [SignupRequestInterface fromMap:[self readValue]];
+      return [SdkConfigInterface fromMap:[self readValue]];
     
     case 143:     
-      return [UpdatePasswordWithAccessTokenRequestInterface fromMap:[self readValue]];
+      return [SignupRequestInterface fromMap:[self readValue]];
     
     case 144:     
-      return [UpdatePasswordWithEmailRequestInterface fromMap:[self readValue]];
+      return [UpdatePasswordWithAccessTokenRequestInterface fromMap:[self readValue]];
     
     case 145:     
-      return [UpdatePasswordWithFreshAccessTokenRequestInterface fromMap:[self readValue]];
+      return [UpdatePasswordWithEmailRequestInterface fromMap:[self readValue]];
     
     case 146:     
+      return [UpdatePasswordWithFreshAccessTokenRequestInterface fromMap:[self readValue]];
+    
+    case 147:     
       return [UpdatePasswordWithPhoneNumberRequestInterface fromMap:[self readValue]];
     
     default:    
@@ -976,68 +1034,72 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
     [self writeByte:130];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[LoginWithPasswordRequestInterface class]]) {
+  if ([value isKindOfClass:[ErrorCodesInterface class]]) {
     [self writeByte:131];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[LoginWithProviderRequestInterface class]]) {
+  if ([value isKindOfClass:[LoginWithPasswordRequestInterface class]]) {
     [self writeByte:132];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[OpenIdUserInterface class]]) {
+  if ([value isKindOfClass:[LoginWithProviderRequestInterface class]]) {
     [self writeByte:133];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ProfileAddressInterface class]]) {
+  if ([value isKindOfClass:[OpenIdUserInterface class]]) {
     [self writeByte:134];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ProfileSignupRequestInterface class]]) {
+  if ([value isKindOfClass:[ProfileAddressInterface class]]) {
     [self writeByte:135];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ProviderCreatorInterface class]]) {
+  if ([value isKindOfClass:[ProfileSignupRequestInterface class]]) {
     [self writeByte:136];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ReachFiveConfigInterface class]]) {
+  if ([value isKindOfClass:[ProviderCreatorInterface class]]) {
     [self writeByte:137];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ReachFiveKeyInterface class]]) {
+  if ([value isKindOfClass:[ReachFiveConfigInterface class]]) {
     [self writeByte:138];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[RefreshAccessTokenRequestInterface class]]) {
+  if ([value isKindOfClass:[ReachFiveKeyInterface class]]) {
     [self writeByte:139];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[RequestPasswordResetRequestInterface class]]) {
+  if ([value isKindOfClass:[RefreshAccessTokenRequestInterface class]]) {
     [self writeByte:140];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[SdkConfigInterface class]]) {
+  if ([value isKindOfClass:[RequestPasswordResetRequestInterface class]]) {
     [self writeByte:141];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[SignupRequestInterface class]]) {
+  if ([value isKindOfClass:[SdkConfigInterface class]]) {
     [self writeByte:142];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[UpdatePasswordWithAccessTokenRequestInterface class]]) {
+  if ([value isKindOfClass:[SignupRequestInterface class]]) {
     [self writeByte:143];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[UpdatePasswordWithEmailRequestInterface class]]) {
+  if ([value isKindOfClass:[UpdatePasswordWithAccessTokenRequestInterface class]]) {
     [self writeByte:144];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[UpdatePasswordWithFreshAccessTokenRequestInterface class]]) {
+  if ([value isKindOfClass:[UpdatePasswordWithEmailRequestInterface class]]) {
     [self writeByte:145];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[UpdatePasswordWithPhoneNumberRequestInterface class]]) {
+  if ([value isKindOfClass:[UpdatePasswordWithFreshAccessTokenRequestInterface class]]) {
     [self writeByte:146];
+    [self writeValue:[value toMap]];
+  } else 
+  if ([value isKindOfClass:[UpdatePasswordWithPhoneNumberRequestInterface class]]) {
+    [self writeByte:147];
     [self writeValue:[value toMap]];
   } else 
 {

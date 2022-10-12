@@ -82,7 +82,7 @@ void main() {
           (_) async => reachFiveConfigInterface,
         );
 
-        final reachFiveReceived = await ReachFiveManager.initialize(
+        final reachFiveReceived = await ReachFiveManager().initialize(
           sdkConfig: reachFive.reachFiveKey.sdkConfig,
         );
 
@@ -131,6 +131,45 @@ void main() {
           signupAuthToken,
         );
       });
+
+      test('parse throw error', () async {
+        const profile = ProfileSignupRequest(password: 'password');
+        const redirectUrl = 'redirectUrl';
+        const scope = [ScopeValue.address];
+
+        registerFallbackValue(
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
+        );
+        registerFallbackValue(
+          ProfileSignupRequestConverter.toInterface(profile),
+        );
+        when(
+          () => flutterReachFivePlatform.signup(
+            reachFiveKey: any(named: 'reachFiveKey'),
+            profile: any(named: 'profile'),
+            redirectUrl: redirectUrl,
+            scope: scope.map(ScopeValueConverter.toInterface).toList(),
+          ),
+        ).thenThrow(Exception());
+
+        registerFallbackValue(
+          StackTrace.fromString('test'),
+        );
+        when(
+          () => flutterReachFivePlatform.parseError(any(), any()),
+        ).thenThrow(Exception());
+
+        try {
+          await reachFive.signup(
+            profile: profile,
+            redirectUrl: redirectUrl,
+            scope: scope,
+          );
+        } catch (_) {}
+
+        verify(() => flutterReachFivePlatform.parseError(any(), any()))
+            .called(1);
+      });
     });
 
     group('loginWithPassword', () {
@@ -167,6 +206,42 @@ void main() {
           authToken,
           loginWithPasswordAuthToken,
         );
+      });
+
+      test('parse throw error', () async {
+        const email = 'email';
+        const password = 'password';
+        const scope = [ScopeValue.events];
+
+        registerFallbackValue(
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
+        );
+        when(
+          () => flutterReachFivePlatform.loginWithPassword(
+            reachFiveKey: any(named: 'reachFiveKey'),
+            password: password,
+            email: email,
+            scope: scope.map(ScopeValueConverter.toInterface).toList(),
+          ),
+        ).thenThrow(Exception());
+
+        registerFallbackValue(
+          StackTrace.fromString('test'),
+        );
+        when(
+          () => flutterReachFivePlatform.parseError(any(), any()),
+        ).thenThrow(Exception());
+
+        try {
+          await reachFive.loginWithPassword(
+            password: password,
+            email: email,
+            scope: scope,
+          );
+        } catch (_) {}
+
+        verify(() => flutterReachFivePlatform.parseError(any(), any()))
+            .called(1);
       });
     });
 
@@ -497,6 +572,44 @@ void main() {
             newPassword: newPassword,
           ),
         ).called(1);
+      });
+
+      test('parse throw error', () async {
+        const phoneNumber = 'phoneNumber';
+        const verificationCode = 'verificationCode';
+        const newPassword = 'newPassword';
+
+        registerFallbackValue(
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
+        );
+        when(
+          () => flutterReachFivePlatform.updatePasswordWithPhoneNumber(
+            reachFiveKey: any(named: 'reachFiveKey'),
+            phoneNumber: phoneNumber,
+            verificationCode: verificationCode,
+            newPassword: newPassword,
+          ),
+        ).thenThrow(Exception());
+
+        registerFallbackValue(
+          StackTrace.fromString('test'),
+        );
+        when(
+          () => flutterReachFivePlatform.parseError(any(), any()),
+        ).thenThrow(Exception());
+
+        try {
+          await reachFive.updatePassword(
+            const UpdatePasswordRequest.withPhoneNumber(
+              phoneNumber: phoneNumber,
+              verificationCode: verificationCode,
+              newPassword: newPassword,
+            ),
+          );
+        } catch (_) {}
+
+        verify(() => flutterReachFivePlatform.parseError(any(), any()))
+            .called(1);
       });
     });
   });
