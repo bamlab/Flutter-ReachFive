@@ -270,7 +270,7 @@ class ReachFiveManager {
   /// {@template flutter_reach_five.reachFiveManager.initialize}
   /// initialize function used to create an instance of ReachFive
   /// {@endtemplate}
-  static Future<ReachFive> initialize({
+  Future<ReachFive> initialize({
     required SdkConfig sdkConfig,
     List<ProviderCreator> providerCreators = const [],
     Dio? dio,

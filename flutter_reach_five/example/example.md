@@ -8,7 +8,7 @@ class MyExampleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<ReachFive>(
-      future: ReachFiveManager.initialize(
+      future: ReachFiveManager().initialize(
         sdkConfig: const SdkConfig(
           domain: 'YOUR_DOMAIN',
           clientId: 'YOUR_CLIENT_ID',

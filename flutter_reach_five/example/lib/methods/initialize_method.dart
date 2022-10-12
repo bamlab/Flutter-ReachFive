@@ -63,7 +63,7 @@ class _InitializeMethodState extends State<InitializeMethod> {
     });
 
     try {
-      final result = await ReachFiveManager.initialize(
+      final result = await ReachFiveManager().initialize(
         sdkConfig: SdkConfig(
           domain: domain,
           clientId: clientId,

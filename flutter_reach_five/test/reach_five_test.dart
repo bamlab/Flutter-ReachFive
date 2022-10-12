@@ -82,7 +82,7 @@ void main() {
           (_) async => reachFiveConfigInterface,
         );
 
-        final reachFiveReceived = await ReachFiveManager.initialize(
+        final reachFiveReceived = await ReachFiveManager().initialize(
           sdkConfig: reachFive.reachFiveKey.sdkConfig,
         );
 
