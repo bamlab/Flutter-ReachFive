@@ -1,3 +1,4 @@
+import 'package:flutter_reach_five_platform_interface/src/error_codes.dart';
 import 'package:flutter_reach_five_platform_interface/src/flutter_reach_five_platform.dart';
 import 'package:flutter_reach_five_platform_interface/src/reach_five.g.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -71,6 +72,7 @@ void main() {
           SignupRequestInterface(
             reachFiveKey: reachFiveKey,
             profile: profile,
+            errorCodes: errorCodesInterface,
           ),
         );
         when(() => mockReachFiveHostApi.signup(any()))
@@ -98,6 +100,7 @@ void main() {
             reachFiveKey: reachFiveKey,
             email: email,
             password: password,
+            errorCodes: errorCodesInterface,
           ),
         );
         when(() => mockReachFiveHostApi.loginWithPassword(any()))
@@ -262,6 +265,7 @@ void main() {
           email: 'email',
           verificationCode: 'verificationCode',
           password: 'newPassword',
+          errorCodes: errorCodesInterface,
         );
 
         registerFallbackValue(request);
@@ -288,6 +292,7 @@ void main() {
           phoneNumber: 'phoneNumber',
           verificationCode: 'verificationCode',
           password: 'newPassword',
+          errorCodes: errorCodesInterface,
         );
 
         registerFallbackValue(request);

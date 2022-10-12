@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
+import 'error_codes.dart';
 import 'method_channel_flutter_reach_five.dart';
 import 'reach_five.g.dart';
 
@@ -67,6 +68,7 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
           profile: profile,
           redirectUrl: redirectUrl,
           scope: scope,
+          errorCodes: errorCodesInterface,
         ),
       );
 
@@ -85,6 +87,7 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
           email: email,
           phoneNumber: phoneNumber,
           scope: scope,
+          errorCodes: errorCodesInterface,
         ),
       );
 
@@ -181,6 +184,7 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
           email: email,
           verificationCode: verificationCode,
           password: newPassword,
+          errorCodes: errorCodesInterface,
         ),
       );
 
@@ -197,6 +201,7 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
           phoneNumber: phoneNumber,
           verificationCode: verificationCode,
           password: newPassword,
+          errorCodes: errorCodesInterface,
         ),
       );
 }
