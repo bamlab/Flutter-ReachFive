@@ -4,6 +4,44 @@ import IdentitySdkFacebook
 import IdentitySdkWebView
 
 public class Converters {
+
+    static public func parseError(
+            reachFiveError: ReachFiveError,
+            errorCodesInterface: ErrorCodesInterface,
+            defaultFlutterError: FlutterError
+    ) -> FlutterError {
+        switch reachFiveError {
+        case .RequestError(apiError: let apiError):
+            if (apiError.errorMessageKey == "error.email.alreadyInUse") {
+                return FlutterError(
+                        code: errorCodesInterface.emailAlreadyInUseCode,
+                        message: apiError.errorUserMsg,
+                        details: nil
+                )
+            }
+            return defaultFlutterError
+        case .AuthFailure(reason: _, apiError: let apiError):
+            if (apiError?.errorMessageKey == "error.invalidEmailOrPassword") {
+                return FlutterError(
+                        code: errorCodesInterface.invalidEmailOrPasswordCode,
+                        message: apiError?.errorUserMsg,
+                        details: nil
+                )
+            }
+            if (apiError?.errorMessageKey == "error.invalidVerificationCode") {
+                return FlutterError(
+                        code: errorCodesInterface.invalidVerificationCode,
+                        message: apiError?.errorUserMsg,
+                        details: nil
+                )
+            }
+            return defaultFlutterError
+        case .AuthCanceled:
+            return defaultFlutterError
+        case .TechnicalError(reason: _, apiError: _):
+            return defaultFlutterError
+        }
+    }
     
     static public func authTokenToInterface(
             authToken: AuthToken

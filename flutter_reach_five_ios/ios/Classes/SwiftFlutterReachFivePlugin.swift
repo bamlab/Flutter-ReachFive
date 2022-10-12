@@ -112,11 +112,15 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
             callback: { error in
                 completion(
                     nil,
-                    FlutterError(
-                        code: "sign_up_error_code",
-                        message: error.message(),
-                        details: nil
-                    )
+                        Converters.parseError(
+                                reachFiveError: error,
+                                errorCodesInterface: request.errorCodes,
+                                defaultFlutterError: FlutterError(
+                                        code: "sign_up_error_code",
+                                        message: error.message(),
+                                        details: nil
+                                )
+                        )
                 )
             }
         )
@@ -149,11 +153,15 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
             callback: { error in
                 completion(
                     nil,
-                    FlutterError(
-                        code: "login_with_password_error_code",
-                        message: error.message(),
-                        details: nil
-                    )
+                        Converters.parseError(
+                                reachFiveError: error,
+                                errorCodesInterface: request.errorCodes,
+                                defaultFlutterError: FlutterError(
+                                        code: "login_with_password_error_code",
+                                        message: error.message(),
+                                        details: nil
+                                )
+                        )
                 )
             }
         )
@@ -398,11 +406,15 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
         ).onFailure(
             callback: {error in
                 completion(
-                    FlutterError(
-                        code: "update_password_with_email_request_error_code",
-                        message: error.message(),
-                        details: nil
-                    )
+                        Converters.parseError(
+                                reachFiveError: error,
+                                errorCodesInterface: request.errorCodes,
+                                defaultFlutterError: FlutterError(
+                                        code: "update_password_with_email_request_error_code",
+                                        message: error.message(),
+                                        details: nil
+                                )
+                        )
                 )
             }
         )
@@ -431,10 +443,14 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
         ).onFailure(
             callback: {error in
                 completion(
-                    FlutterError(
-                        code: "update_password_with_phone_number_request_error_code",
-                        message: error.message(),
-                        details: nil
+                    Converters.parseError(
+                            reachFiveError: error,
+                            errorCodesInterface: request.errorCodes,
+                            defaultFlutterError: FlutterError(
+                                    code: "update_password_with_phone_number_request_error_code",
+                                    message: error.message(),
+                                    details: nil
+                            )
                     )
                 )
             }
