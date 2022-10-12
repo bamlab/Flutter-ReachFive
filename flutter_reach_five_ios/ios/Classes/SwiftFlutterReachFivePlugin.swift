@@ -35,12 +35,12 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
     public func initializeReachFiveKey(_ reachFiveKey: ReachFiveKeyInterface, completion: @escaping (ReachFiveConfigInterface?, FlutterError?) -> Void) {
         let providersCreators = reachFiveKey.providerCreators.map({
             providerCreatorInterface in
-            return Converters.providerCreatorFromInterface(
-                providerCreatorInterface: providerCreatorInterface
-            )
+                    Converters.providerCreatorFromInterface(
+                            providerCreatorInterface: providerCreatorInterface
+                    )
         }).filter({
             providerCreator in
-            return providerCreator != nil
+                    providerCreator != nil
         }) as! Array<ProviderCreator>
 
         let reachFive = ReachFive(
@@ -64,7 +64,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                         withReachFiveKey: reachFiveKey,
                         providers: providers.map({
                             provider in
-                            return provider.name
+                            provider.name
                         })
                     ),
                     nil
@@ -445,6 +445,6 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
 
 extension UIViewController: ASWebAuthenticationPresentationContextProviding {
     public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
-        return view.window!
+        view.window!
     }
 }
