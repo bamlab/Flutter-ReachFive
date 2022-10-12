@@ -120,36 +120,36 @@ public class Converters {
     static public func addressToInterface(
             address: ProfileAddress
         ) -> AddressInterface {
-            
-            return AddressInterface.make(
-                withFormatted: address.raw,
-                streetAddress: address.streetAddress,
-                locality: address.locality,
-                region: address.region,
-                postalCode: address.postalCode,
-                country: address.country
-            )
+
+        AddressInterface.make(
+            withFormatted: address.raw,
+            streetAddress: address.streetAddress,
+            locality: address.locality,
+            region: address.region,
+            postalCode: address.postalCode,
+            country: address.country
+        )
         }
     
     static public func addressFromInterface(
             addressInterface: AddressInterface
         ) -> ProfileAddress {
-            
-            return ProfileAddress(
-                title: nil,
-                isDefault: nil,
-                addressType: nil,
-                streetAddress: addressInterface.streetAddress,
-                locality: addressInterface.locality,
-                region: addressInterface.region,
-                postalCode: addressInterface.postalCode,
-                country: addressInterface.country,
-                raw: addressInterface.formatted,
-                deliveryNote: nil,
-                recipient: nil,
-                company: nil,
-                phoneNumber: nil
-            )
+
+        ProfileAddress(
+            title: nil,
+            isDefault: nil,
+            addressType: nil,
+            streetAddress: addressInterface.streetAddress,
+            locality: addressInterface.locality,
+            region: addressInterface.region,
+            postalCode: addressInterface.postalCode,
+            country: addressInterface.country,
+            raw: addressInterface.formatted,
+            deliveryNote: nil,
+            recipient: nil,
+            company: nil,
+            phoneNumber: nil
+        )
         }
     
     static public func signupRequestFromInterface(
@@ -160,8 +160,8 @@ public class Converters {
             
             let addresses = profileSignupRequestInterface.addresses?
                 .map({ addressRequest in
-                    return profileAddressFromInterface(
-                        profileAddressInterface: addressRequest
+                    profileAddressFromInterface(
+                            profileAddressInterface: addressRequest
                     )
                 })
             
@@ -242,12 +242,12 @@ public class Converters {
     static public func consentFromInterface(
         consentInterface: ConsentInterface
         ) -> Consent {
-        
-            return  Consent(
-                granted: consentInterface.granted as! Bool,
-                consentType: consentInterface.consentType,
-                date: consentInterface.date
-            )
+
+        Consent(
+            granted: consentInterface.granted as! Bool,
+            consentType: consentInterface.consentType,
+            date: consentInterface.date
+        )
         }
     
     static public func providerCreatorFromInterface(
