@@ -195,10 +195,14 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
             },
             failure = {
                     error -> result?.error(
-                FlutterError(
-                    code= "sign_up_error_code",
-                    message= error.message,
-                    details= null
+                Converters.parseError(
+                    reachFiveError = error,
+                    errorCodesInterface = request.errorCodes,
+                    defaultFlutterError = FlutterError(
+                        code= "sign_up_error_code",
+                        message= error.message,
+                        details= null
+                    )
                 )
             )}
         )
@@ -226,10 +230,14 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
             },
             failure = {
                     error -> result?.error(
-                FlutterError(
-                    code= "login_with_password_error_code",
-                    message= error.message,
-                    details= null
+                Converters.parseError(
+                    reachFiveError = error,
+                    errorCodesInterface = request.errorCodes,
+                    defaultFlutterError = FlutterError(
+                        code= "login_with_password_error_code",
+                        message= error.message,
+                        details= null
+                    )
                 )
             )}
         )
@@ -450,10 +458,14 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
             success = { result?.success(null) },
             failure = {
                     error -> result?.error(
-                FlutterError(
-                    code= "update_password_with_email_request_error_code",
-                    message= error.message,
-                    details= null
+                Converters.parseError(
+                    reachFiveError = error,
+                    errorCodesInterface = request.errorCodes,
+                    defaultFlutterError = FlutterError(
+                        code= "update_password_with_email_request_error_code",
+                        message= error.message,
+                        details= null
+                    )
                 )
             )}
         )
@@ -480,10 +492,14 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
             success = { result?.success(null) },
             failure = {
                     error -> result?.error(
-                FlutterError(
-                    code= "update_password_with_phone_number_request_error_code",
-                    message= error.message,
-                    details= null
+                Converters.parseError(
+                    reachFiveError = error,
+                    errorCodesInterface = request.errorCodes,
+                    defaultFlutterError = FlutterError(
+                        code= "update_password_with_phone_number_request_error_code",
+                        message= error.message,
+                        details= null
+                    )
                 )
             )}
         )
