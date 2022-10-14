@@ -3,6 +3,7 @@ import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platfor
 import 'package:reach_five_identity_repo/reach_five_identity_repo.dart';
 
 import 'flutter_reach_five.dart';
+import 'helpers/adapt_errors.dart';
 import 'helpers/auth_token.dart';
 import 'helpers/profile_signup_request_converter.dart';
 import 'helpers/provider_converter.dart';
@@ -68,7 +69,14 @@ class ReachFive {
 
       return authToken;
     } catch (error, stackTrace) {
-      _platform.parseError(error, stackTrace);
+      try {
+        _platform.parseError(error, stackTrace);
+      } catch (interfaceError, interfaceStackTrace) {
+        adaptErrors(
+          error: interfaceError,
+          stackTrace: interfaceStackTrace,
+        );
+      }
     }
   }
 
@@ -94,7 +102,14 @@ class ReachFive {
 
       return authToken;
     } catch (error, stackTrace) {
-      _platform.parseError(error, stackTrace);
+      try {
+        _platform.parseError(error, stackTrace);
+      } catch (interfaceError, interfaceStackTrace) {
+        adaptErrors(
+          error: interfaceError,
+          stackTrace: interfaceStackTrace,
+        );
+      }
     }
   }
 
@@ -271,7 +286,14 @@ class ReachFive {
         ),
       );
     } catch (error, stackTrace) {
-      _platform.parseError(error, stackTrace);
+      try {
+        _platform.parseError(error, stackTrace);
+      } catch (interfaceError, interfaceStackTrace) {
+        adaptErrors(
+          error: interfaceError,
+          stackTrace: interfaceStackTrace,
+        );
+      }
     }
   }
 }
