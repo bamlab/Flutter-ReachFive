@@ -115,37 +115,14 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
             )
     }
 
-    override fun initialize(reachFiveKey: ReachFiveApi.ReachFiveKeyInterface, result: ReachFiveApi.Result<ReachFiveApi.ReachFiveConfigInterface>) {
-        val reachFive = ReachFive(
-            sdkConfig = SdkConfig(
-                domain = reachFiveKey.sdkConfig.domain,
-                clientId = reachFiveKey.sdkConfig.clientId,
-                scheme = reachFiveKey.sdkConfig.androidScheme
-            ),
-            providersCreators = reachFiveKey.providerCreators.map { providerCreatorInterface ->
-                Converters.providerCreatorFromInterface(providerCreatorInterface)
-            }
-        )
-
-        val reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey = reachFiveKey)
-
-        reachFive.initialize(
-            success = {},
-            failure = {
-                    error -> result.error(
-                FlutterError(
-                    code= "initialization_error_code",
-                    message= error.message,
-                    details= null
-                )
-            )}
-        )
-
+    private fun loadSocialProviders(reachFive: ReachFive, reachFiveKey: ReachFiveApi.ReachFiveKeyInterface, result: ReachFiveApi.Result<ReachFiveApi.ReachFiveConfigInterface>) {
         val context = this.context
         if(context == null) {
             result.error(Error("No android context attached to your application"))
             return
         }
+
+        val reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey = reachFiveKey)
 
         reachFive.loadSocialProviders(
             context,
@@ -166,6 +143,37 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
                     error -> result.error(
                 FlutterError(
                     code= "loading_social_providers_error_code",
+                    message= error.message,
+                    details= null
+                )
+            )}
+        )
+    }
+
+    override fun initialize(reachFiveKey: ReachFiveApi.ReachFiveKeyInterface, result: ReachFiveApi.Result<ReachFiveApi.ReachFiveConfigInterface>) {
+        val reachFive = ReachFive(
+            sdkConfig = SdkConfig(
+                domain = reachFiveKey.sdkConfig.domain,
+                clientId = reachFiveKey.sdkConfig.clientId,
+                scheme = reachFiveKey.sdkConfig.androidScheme
+            ),
+            providersCreators = reachFiveKey.providerCreators.map { providerCreatorInterface ->
+                Converters.providerCreatorFromInterface(providerCreatorInterface)
+            }
+        )
+        
+        reachFive.initialize(
+            success = {
+                loadSocialProviders(
+                    reachFive = reachFive,
+                    reachFiveKey = reachFiveKey,
+                    result = result
+                )
+            },
+            failure = {
+                    error -> result.error(
+                FlutterError(
+                    code= "initialization_error_code",
                     message= error.message,
                     details= null
                 )
