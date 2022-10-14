@@ -12,13 +12,13 @@ class FlutterReachFiveAndroid extends FlutterReachFivePlatform {
       final errorMessage = error.message;
       if (errorMessage != null) {
         if (errorMessage.contains(errorCodesInterface.emailAlreadyInUseCode)) {
-          throw EmailAlreadyInUseException();
+          throw EmailAlreadyInUseExceptionInterface();
         } else if (errorMessage
             .contains(errorCodesInterface.invalidEmailOrPasswordCode)) {
-          throw InvalidEmailOrPasswordException();
+          throw InvalidEmailOrPasswordExceptionInterface();
         } else if (errorMessage
             .contains(errorCodesInterface.invalidVerificationCode)) {
-          throw InvalidVerificationCodeException();
+          throw InvalidVerificationCodeExceptionInterface();
         }
       }
     }

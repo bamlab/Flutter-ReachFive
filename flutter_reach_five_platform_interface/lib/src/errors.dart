@@ -9,11 +9,11 @@ final errorCodesInterface = ErrorCodesInterface(
 );
 
 /// Error thrown when trying to signup with an already in use email
-class EmailAlreadyInUseException implements Exception {}
+class EmailAlreadyInUseExceptionInterface implements Exception {}
 
 /// Error thrown when trying to login with an incorrect email or password
-class InvalidEmailOrPasswordException implements Exception {}
+class InvalidEmailOrPasswordExceptionInterface implements Exception {}
 
 /// Error thrown when trying to update your password
 /// with the wrong verification code
-class InvalidVerificationCodeException implements Exception {}
+class InvalidVerificationCodeExceptionInterface implements Exception {}

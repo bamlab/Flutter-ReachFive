@@ -64,7 +64,7 @@ void main() {
         expect(exception, error);
       });
 
-      test('$EmailAlreadyInUseException', () {
+      test('$EmailAlreadyInUseExceptionInterface', () {
         final exception = PlatformException(
           code: 'code',
           message: errorCodesInterface.emailAlreadyInUseCode,
@@ -79,10 +79,10 @@ void main() {
           error = e;
         }
 
-        expect(error, isA<EmailAlreadyInUseException>());
+        expect(error, isA<EmailAlreadyInUseExceptionInterface>());
       });
 
-      test('$InvalidEmailOrPasswordException', () {
+      test('$InvalidEmailOrPasswordExceptionInterface', () {
         final exception = PlatformException(
           code: 'code',
           message: errorCodesInterface.invalidEmailOrPasswordCode,
@@ -97,10 +97,10 @@ void main() {
           error = e;
         }
 
-        expect(error, isA<InvalidEmailOrPasswordException>());
+        expect(error, isA<InvalidEmailOrPasswordExceptionInterface>());
       });
 
-      test('$InvalidVerificationCodeException', () {
+      test('$InvalidVerificationCodeExceptionInterface', () {
         final exception = PlatformException(
           code: 'code',
           message: errorCodesInterface.invalidVerificationCode,
@@ -115,7 +115,7 @@ void main() {
           error = e;
         }
 
-        expect(error, isA<InvalidVerificationCodeException>());
+        expect(error, isA<InvalidVerificationCodeExceptionInterface>());
       });
     });
   });
