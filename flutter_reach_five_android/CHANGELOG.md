@@ -1,3 +1,7 @@
+# 0.1.2
+
+- Fix crash on Android release mode
+
 # 0.1.1
 
 - Add Error parsing
