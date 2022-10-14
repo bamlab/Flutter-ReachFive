@@ -30,6 +30,29 @@ defaultConfig {
 </manifest>
 ```
 
+- To use the sdk in release mode, add a file `android/app/proguard-rules.pro` with these lines :
+  (Otherwise a `java.lang.NullPointerException` uncaught exception is thrown when initializing reachFive)
+
+```pro
+# We need to keep reachfive models from obfuscating otherwise there is
+# serialization/deserialization errors when building your app in release mode
+-keep class co.reachfive.identity.sdk.core.models.** {*;}
+```
+
+And in your `android/app/build.gradle`, add this line in your release buildTypes :
+
+```gradle
+buildTypes {
+        // ...others buildTypes
+        release {
+            // ...others lines
+
+            // Add this line
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+        }
+    }
+```
+
 ---
 
 ## iOS
