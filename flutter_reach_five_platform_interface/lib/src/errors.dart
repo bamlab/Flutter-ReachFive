@@ -8,12 +8,11 @@ final errorCodesInterface = ErrorCodesInterface(
   invalidVerificationCode: 'invalid_verification_code',
 );
 
-/// Error thrown when trying to signup with an already in use email
-class EmailAlreadyInUseException implements Exception {}
+/// {@macro flutter_reach_five.reachFiveManager.errors.email_already_in_use}
+class EmailAlreadyInUseExceptionInterface implements Exception {}
 
-/// Error thrown when trying to login with an incorrect email or password
-class InvalidEmailOrPasswordException implements Exception {}
+/// {@macro flutter_reach_five.reachFiveManager.errors.invalid_email_or_password}
+class InvalidEmailOrPasswordExceptionInterface implements Exception {}
 
-/// Error thrown when trying to update your password
-/// with the wrong verification code
-class InvalidVerificationCodeException implements Exception {}
+/// {@macro flutter_reach_five.reachFiveManager.errors.invalid_verification_code}
+class InvalidVerificationCodeExceptionInterface implements Exception {}

@@ -1,5 +1,6 @@
 library flutter_reach_five;
 
+export 'errors.dart';
 export 'models/address.dart';
 export 'models/auth_token.dart';
 export 'models/consent.dart';

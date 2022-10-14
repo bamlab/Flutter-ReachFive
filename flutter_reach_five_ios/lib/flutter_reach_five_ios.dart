@@ -10,11 +10,11 @@ class FlutterReachFiveIOS extends FlutterReachFivePlatform {
   Never parseError(Object error, StackTrace stackTrace) {
     if (error is PlatformException) {
       if (error.code == errorCodesInterface.emailAlreadyInUseCode) {
-        throw EmailAlreadyInUseException();
+        throw EmailAlreadyInUseExceptionInterface();
       } else if (error.code == errorCodesInterface.invalidEmailOrPasswordCode) {
-        throw InvalidEmailOrPasswordException();
+        throw InvalidEmailOrPasswordExceptionInterface();
       } else if (error.code == errorCodesInterface.invalidVerificationCode) {
-        throw InvalidVerificationCodeException();
+        throw InvalidVerificationCodeExceptionInterface();
       }
     }
     return Error.throwWithStackTrace(error, stackTrace);
