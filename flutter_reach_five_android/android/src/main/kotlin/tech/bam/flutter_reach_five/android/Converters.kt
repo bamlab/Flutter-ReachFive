@@ -21,29 +21,38 @@ class Converters {
         defaultFlutterError: FlutterError
         ): FlutterError {
             if (reachFiveError.data?.errorMessageKey == "error.email.alreadyInUse") {
-                val errocCode = errorCodesInterface.emailAlreadyInUseCode
+                val errorCode = errorCodesInterface.emailAlreadyInUseCode
                 val errorUsrMessage = reachFiveError.data?.errorUserMsg ?: ""
                 return FlutterError(
-                    code= errocCode,
-                    message= "$errocCode - $errorUsrMessage",
+                    code= errorCode,
+                    message= "$errorCode - $errorUsrMessage",
                     details = null
                 )
             }
             if (reachFiveError.data?.errorMessageKey == "error.invalidEmailOrPassword") {
-                val errocCode = errorCodesInterface.invalidEmailOrPasswordCode
+                val errorCode = errorCodesInterface.invalidEmailOrPasswordCode
                 val errorUsrMessage = reachFiveError.data?.errorUserMsg ?: ""
                 return FlutterError(
-                    code= errocCode,
-                    message= "$errocCode - $errorUsrMessage",
+                    code= errorCode,
+                    message= "$errorCode - $errorUsrMessage",
                     details = null
                 )
             }
             if (reachFiveError.data?.errorMessageKey == "error.invalidVerificationCode") {
-                val errocCode = errorCodesInterface.invalidVerificationCode
+                val errorCode = errorCodesInterface.invalidVerificationCode
                 val errorUsrMessage = reachFiveError.data?.errorUserMsg ?: ""
                 return FlutterError(
-                    code= errocCode,
-                    message= "$errocCode - $errorUsrMessage",
+                    code= errorCode,
+                    message= "$errorCode - $errorUsrMessage",
+                    details = null
+                )
+            }
+            if (reachFiveError.data?.error == "invalid_grant") {
+                val errorCode = errorCodesInterface.invalidGrant
+                val errorUsrMessage = reachFiveError.data?.errorDescription ?: ""
+                return FlutterError(
+                    code= errorCode,
+                    message= "$errorCode - $errorUsrMessage",
                     details = null
                 )
             }

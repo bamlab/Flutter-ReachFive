@@ -19,6 +19,8 @@ class FlutterReachFiveAndroid extends FlutterReachFivePlatform {
         } else if (errorMessage
             .contains(errorCodesInterface.invalidVerificationCode)) {
           throw InvalidVerificationCodeExceptionInterface();
+        } else if (errorMessage.contains(errorCodesInterface.invalidGrant)) {
+          throw InvalidGrantCodeExceptionInterface();
         }
       }
     }

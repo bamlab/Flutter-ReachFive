@@ -347,10 +347,14 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
             },
             failure = {
                 error -> result.error(
-                FlutterError(
-                    code= "update_profile_error_code",
-                    message= error.message,
-                    details= null
+                Converters.parseError(
+                    reachFiveError = error,
+                    errorCodesInterface = request.errorCodes,
+                    defaultFlutterError = FlutterError(
+                        code= "update_profile_error_code",
+                        message= error.message,
+                        details= null
+                    )
                 )
             )}
         )
