@@ -1,6 +1,6 @@
 import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platform_interface.dart';
 
-import '../errors.dart';
+import '../models/errors.dart';
 
 /// method used to adapt the error from the platform interface
 Never adaptErrors({
