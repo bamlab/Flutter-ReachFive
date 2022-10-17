@@ -5,6 +5,7 @@ import 'package:reach_five_identity_repo/reach_five_identity_repo.dart';
 import 'flutter_reach_five.dart';
 import 'helpers/adapt_errors.dart';
 import 'helpers/auth_token.dart';
+import 'helpers/profile_converter.dart';
 import 'helpers/profile_signup_request_converter.dart';
 import 'helpers/provider_converter.dart';
 import 'helpers/reach_five_key_converter.dart';
@@ -155,6 +156,25 @@ class ReachFive {
     await _platform.logout(
       reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
     );
+  }
+
+  /// {@template flutter_reach_five.reachFive.updateProfile}
+  /// Update your user profile informations
+  ///
+  /// It needs a authToken with an valid accessToken to success
+  /// Every non null informations given in [profile] will be updated
+  /// {@endtemplate}
+  Future<Profile> updateProfile({
+    required AuthToken authToken,
+    required Profile profile,
+  }) async {
+    final newProfileInterface = await _platform.updateProfile(
+      reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
+      authToken: AuthTokenConverter.toInterface(authToken),
+      profile: ProfileConverter.toInterface(profile),
+    );
+
+    return ProfileConverter.fromInterface(newProfileInterface);
   }
 
   /// {@template flutter_reach_five.reachFive.refreshAccessToken}

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_reach_five/flutter_reach_five.dart';
 import 'package:flutter_reach_five/helpers/auth_token.dart';
+import 'package:flutter_reach_five/helpers/profile_converter.dart';
 import 'package:flutter_reach_five/helpers/profile_signup_request_converter.dart';
 import 'package:flutter_reach_five/helpers/provider_converter.dart';
 import 'package:flutter_reach_five/helpers/reach_five_key_converter.dart';
@@ -329,6 +330,44 @@ void main() {
             reachFiveKey: any(named: 'reachFiveKey'),
           ),
         ).called(1);
+      });
+    });
+
+    group('updateProfile', () {
+      test('returns correct profile instance', () async {
+        const firstProfile = Profile(
+          givenName: 'firstGivenName',
+        );
+        const secondProfile = Profile(
+          givenName: 'secondGivenName',
+        );
+
+        const authToken = AuthToken(accessToken: 'accessToken');
+
+        registerFallbackValue(
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
+        );
+        registerFallbackValue(AuthTokenConverter.toInterface(authToken));
+        registerFallbackValue(ProfileConverter.toInterface(firstProfile));
+        when(
+          () => flutterReachFivePlatform.updateProfile(
+            reachFiveKey: any(named: 'reachFiveKey'),
+            authToken: any(named: 'authToken'),
+            profile: any(named: 'profile'),
+          ),
+        ).thenAnswer(
+          (_) async => ProfileConverter.toInterface(secondProfile),
+        );
+
+        final receivedProfile = await reachFive.updateProfile(
+          authToken: authToken,
+          profile: firstProfile,
+        );
+
+        expect(
+          secondProfile,
+          receivedProfile,
+        );
       });
     });
 
