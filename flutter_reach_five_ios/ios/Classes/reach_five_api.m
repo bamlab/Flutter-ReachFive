@@ -106,6 +106,26 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (nullable RefreshAccessTokenRequestInterface *)nullableFromMap:(NSDictionary *)dict;
 - (NSDictionary *)toMap;
 @end
+@interface LoginSummaryInterface ()
++ (LoginSummaryInterface *)fromMap:(NSDictionary *)dict;
++ (nullable LoginSummaryInterface *)nullableFromMap:(NSDictionary *)dict;
+- (NSDictionary *)toMap;
+@end
+@interface EmailsInterface ()
++ (EmailsInterface *)fromMap:(NSDictionary *)dict;
++ (nullable EmailsInterface *)nullableFromMap:(NSDictionary *)dict;
+- (NSDictionary *)toMap;
+@end
+@interface ProfileInterface ()
++ (ProfileInterface *)fromMap:(NSDictionary *)dict;
++ (nullable ProfileInterface *)nullableFromMap:(NSDictionary *)dict;
+- (NSDictionary *)toMap;
+@end
+@interface UpdateProfileRequestInterface ()
++ (UpdateProfileRequestInterface *)fromMap:(NSDictionary *)dict;
++ (nullable UpdateProfileRequestInterface *)nullableFromMap:(NSDictionary *)dict;
+- (NSDictionary *)toMap;
+@end
 @interface RequestPasswordResetRequestInterface ()
 + (RequestPasswordResetRequestInterface *)fromMap:(NSDictionary *)dict;
 + (nullable RequestPasswordResetRequestInterface *)nullableFromMap:(NSDictionary *)dict;
@@ -767,6 +787,225 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 }
 @end
 
+@implementation LoginSummaryInterface
++ (instancetype)makeWithFirstLogin:(nullable NSNumber *)firstLogin
+    lastLogin:(nullable NSNumber *)lastLogin
+    total:(nullable NSNumber *)total
+    origins:(nullable NSArray<NSString *> *)origins
+    devices:(nullable NSArray<NSString *> *)devices
+    lastProvider:(nullable NSString *)lastProvider {
+  LoginSummaryInterface* pigeonResult = [[LoginSummaryInterface alloc] init];
+  pigeonResult.firstLogin = firstLogin;
+  pigeonResult.lastLogin = lastLogin;
+  pigeonResult.total = total;
+  pigeonResult.origins = origins;
+  pigeonResult.devices = devices;
+  pigeonResult.lastProvider = lastProvider;
+  return pigeonResult;
+}
++ (LoginSummaryInterface *)fromMap:(NSDictionary *)dict {
+  LoginSummaryInterface *pigeonResult = [[LoginSummaryInterface alloc] init];
+  pigeonResult.firstLogin = GetNullableObject(dict, @"firstLogin");
+  pigeonResult.lastLogin = GetNullableObject(dict, @"lastLogin");
+  pigeonResult.total = GetNullableObject(dict, @"total");
+  pigeonResult.origins = GetNullableObject(dict, @"origins");
+  pigeonResult.devices = GetNullableObject(dict, @"devices");
+  pigeonResult.lastProvider = GetNullableObject(dict, @"lastProvider");
+  return pigeonResult;
+}
++ (nullable LoginSummaryInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [LoginSummaryInterface fromMap:dict] : nil; }
+- (NSDictionary *)toMap {
+  return @{
+    @"firstLogin" : (self.firstLogin ?: [NSNull null]),
+    @"lastLogin" : (self.lastLogin ?: [NSNull null]),
+    @"total" : (self.total ?: [NSNull null]),
+    @"origins" : (self.origins ?: [NSNull null]),
+    @"devices" : (self.devices ?: [NSNull null]),
+    @"lastProvider" : (self.lastProvider ?: [NSNull null]),
+  };
+}
+@end
+
+@implementation EmailsInterface
++ (instancetype)makeWithVerified:(nullable NSArray<NSString *> *)verified
+    unverified:(nullable NSArray<NSString *> *)unverified {
+  EmailsInterface* pigeonResult = [[EmailsInterface alloc] init];
+  pigeonResult.verified = verified;
+  pigeonResult.unverified = unverified;
+  return pigeonResult;
+}
++ (EmailsInterface *)fromMap:(NSDictionary *)dict {
+  EmailsInterface *pigeonResult = [[EmailsInterface alloc] init];
+  pigeonResult.verified = GetNullableObject(dict, @"verified");
+  pigeonResult.unverified = GetNullableObject(dict, @"unverified");
+  return pigeonResult;
+}
++ (nullable EmailsInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [EmailsInterface fromMap:dict] : nil; }
+- (NSDictionary *)toMap {
+  return @{
+    @"verified" : (self.verified ?: [NSNull null]),
+    @"unverified" : (self.unverified ?: [NSNull null]),
+  };
+}
+@end
+
+@implementation ProfileInterface
++ (instancetype)makeWithUid:(nullable NSString *)uid
+    givenName:(nullable NSString *)givenName
+    middleName:(nullable NSString *)middleName
+    familyName:(nullable NSString *)familyName
+    name:(nullable NSString *)name
+    nickname:(nullable NSString *)nickname
+    birthdate:(nullable NSString *)birthdate
+    profileURL:(nullable NSString *)profileURL
+    picture:(nullable NSString *)picture
+    externalId:(nullable NSString *)externalId
+    authTypes:(nullable NSArray<NSString *> *)authTypes
+    loginSummary:(nullable LoginSummaryInterface *)loginSummary
+    username:(nullable NSString *)username
+    gender:(nullable NSString *)gender
+    email:(nullable NSString *)email
+    emailVerified:(nullable NSNumber *)emailVerified
+    emails:(nullable EmailsInterface *)emails
+    phoneNumber:(nullable NSString *)phoneNumber
+    phoneNumberVerified:(nullable NSNumber *)phoneNumberVerified
+    addresses:(nullable NSArray<ProfileAddressInterface *> *)addresses
+    locale:(nullable NSString *)locale
+    bio:(nullable NSString *)bio
+    customFields:(nullable NSDictionary<NSString *, id> *)customFields
+    consents:(nullable NSDictionary<NSString *, ConsentInterface *> *)consents
+    createdAt:(nullable NSString *)createdAt
+    updatedAt:(nullable NSString *)updatedAt
+    liteOnly:(nullable NSNumber *)liteOnly
+    company:(nullable NSString *)company {
+  ProfileInterface* pigeonResult = [[ProfileInterface alloc] init];
+  pigeonResult.uid = uid;
+  pigeonResult.givenName = givenName;
+  pigeonResult.middleName = middleName;
+  pigeonResult.familyName = familyName;
+  pigeonResult.name = name;
+  pigeonResult.nickname = nickname;
+  pigeonResult.birthdate = birthdate;
+  pigeonResult.profileURL = profileURL;
+  pigeonResult.picture = picture;
+  pigeonResult.externalId = externalId;
+  pigeonResult.authTypes = authTypes;
+  pigeonResult.loginSummary = loginSummary;
+  pigeonResult.username = username;
+  pigeonResult.gender = gender;
+  pigeonResult.email = email;
+  pigeonResult.emailVerified = emailVerified;
+  pigeonResult.emails = emails;
+  pigeonResult.phoneNumber = phoneNumber;
+  pigeonResult.phoneNumberVerified = phoneNumberVerified;
+  pigeonResult.addresses = addresses;
+  pigeonResult.locale = locale;
+  pigeonResult.bio = bio;
+  pigeonResult.customFields = customFields;
+  pigeonResult.consents = consents;
+  pigeonResult.createdAt = createdAt;
+  pigeonResult.updatedAt = updatedAt;
+  pigeonResult.liteOnly = liteOnly;
+  pigeonResult.company = company;
+  return pigeonResult;
+}
++ (ProfileInterface *)fromMap:(NSDictionary *)dict {
+  ProfileInterface *pigeonResult = [[ProfileInterface alloc] init];
+  pigeonResult.uid = GetNullableObject(dict, @"uid");
+  pigeonResult.givenName = GetNullableObject(dict, @"givenName");
+  pigeonResult.middleName = GetNullableObject(dict, @"middleName");
+  pigeonResult.familyName = GetNullableObject(dict, @"familyName");
+  pigeonResult.name = GetNullableObject(dict, @"name");
+  pigeonResult.nickname = GetNullableObject(dict, @"nickname");
+  pigeonResult.birthdate = GetNullableObject(dict, @"birthdate");
+  pigeonResult.profileURL = GetNullableObject(dict, @"profileURL");
+  pigeonResult.picture = GetNullableObject(dict, @"picture");
+  pigeonResult.externalId = GetNullableObject(dict, @"externalId");
+  pigeonResult.authTypes = GetNullableObject(dict, @"authTypes");
+  pigeonResult.loginSummary = [LoginSummaryInterface nullableFromMap:GetNullableObject(dict, @"loginSummary")];
+  pigeonResult.username = GetNullableObject(dict, @"username");
+  pigeonResult.gender = GetNullableObject(dict, @"gender");
+  pigeonResult.email = GetNullableObject(dict, @"email");
+  pigeonResult.emailVerified = GetNullableObject(dict, @"emailVerified");
+  pigeonResult.emails = [EmailsInterface nullableFromMap:GetNullableObject(dict, @"emails")];
+  pigeonResult.phoneNumber = GetNullableObject(dict, @"phoneNumber");
+  pigeonResult.phoneNumberVerified = GetNullableObject(dict, @"phoneNumberVerified");
+  pigeonResult.addresses = GetNullableObject(dict, @"addresses");
+  pigeonResult.locale = GetNullableObject(dict, @"locale");
+  pigeonResult.bio = GetNullableObject(dict, @"bio");
+  pigeonResult.customFields = GetNullableObject(dict, @"customFields");
+  pigeonResult.consents = GetNullableObject(dict, @"consents");
+  pigeonResult.createdAt = GetNullableObject(dict, @"createdAt");
+  pigeonResult.updatedAt = GetNullableObject(dict, @"updatedAt");
+  pigeonResult.liteOnly = GetNullableObject(dict, @"liteOnly");
+  pigeonResult.company = GetNullableObject(dict, @"company");
+  return pigeonResult;
+}
++ (nullable ProfileInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [ProfileInterface fromMap:dict] : nil; }
+- (NSDictionary *)toMap {
+  return @{
+    @"uid" : (self.uid ?: [NSNull null]),
+    @"givenName" : (self.givenName ?: [NSNull null]),
+    @"middleName" : (self.middleName ?: [NSNull null]),
+    @"familyName" : (self.familyName ?: [NSNull null]),
+    @"name" : (self.name ?: [NSNull null]),
+    @"nickname" : (self.nickname ?: [NSNull null]),
+    @"birthdate" : (self.birthdate ?: [NSNull null]),
+    @"profileURL" : (self.profileURL ?: [NSNull null]),
+    @"picture" : (self.picture ?: [NSNull null]),
+    @"externalId" : (self.externalId ?: [NSNull null]),
+    @"authTypes" : (self.authTypes ?: [NSNull null]),
+    @"loginSummary" : (self.loginSummary ? [self.loginSummary toMap] : [NSNull null]),
+    @"username" : (self.username ?: [NSNull null]),
+    @"gender" : (self.gender ?: [NSNull null]),
+    @"email" : (self.email ?: [NSNull null]),
+    @"emailVerified" : (self.emailVerified ?: [NSNull null]),
+    @"emails" : (self.emails ? [self.emails toMap] : [NSNull null]),
+    @"phoneNumber" : (self.phoneNumber ?: [NSNull null]),
+    @"phoneNumberVerified" : (self.phoneNumberVerified ?: [NSNull null]),
+    @"addresses" : (self.addresses ?: [NSNull null]),
+    @"locale" : (self.locale ?: [NSNull null]),
+    @"bio" : (self.bio ?: [NSNull null]),
+    @"customFields" : (self.customFields ?: [NSNull null]),
+    @"consents" : (self.consents ?: [NSNull null]),
+    @"createdAt" : (self.createdAt ?: [NSNull null]),
+    @"updatedAt" : (self.updatedAt ?: [NSNull null]),
+    @"liteOnly" : (self.liteOnly ?: [NSNull null]),
+    @"company" : (self.company ?: [NSNull null]),
+  };
+}
+@end
+
+@implementation UpdateProfileRequestInterface
++ (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
+    authToken:(AuthTokenInterface *)authToken
+    profile:(ProfileInterface *)profile {
+  UpdateProfileRequestInterface* pigeonResult = [[UpdateProfileRequestInterface alloc] init];
+  pigeonResult.reachFiveKey = reachFiveKey;
+  pigeonResult.authToken = authToken;
+  pigeonResult.profile = profile;
+  return pigeonResult;
+}
++ (UpdateProfileRequestInterface *)fromMap:(NSDictionary *)dict {
+  UpdateProfileRequestInterface *pigeonResult = [[UpdateProfileRequestInterface alloc] init];
+  pigeonResult.reachFiveKey = [ReachFiveKeyInterface nullableFromMap:GetNullableObject(dict, @"reachFiveKey")];
+  NSAssert(pigeonResult.reachFiveKey != nil, @"");
+  pigeonResult.authToken = [AuthTokenInterface nullableFromMap:GetNullableObject(dict, @"authToken")];
+  NSAssert(pigeonResult.authToken != nil, @"");
+  pigeonResult.profile = [ProfileInterface nullableFromMap:GetNullableObject(dict, @"profile")];
+  NSAssert(pigeonResult.profile != nil, @"");
+  return pigeonResult;
+}
++ (nullable UpdateProfileRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [UpdateProfileRequestInterface fromMap:dict] : nil; }
+- (NSDictionary *)toMap {
+  return @{
+    @"reachFiveKey" : (self.reachFiveKey ? [self.reachFiveKey toMap] : [NSNull null]),
+    @"authToken" : (self.authToken ? [self.authToken toMap] : [NSNull null]),
+    @"profile" : (self.profile ? [self.profile toMap] : [NSNull null]),
+  };
+}
+@end
+
 @implementation RequestPasswordResetRequestInterface
 + (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
     email:(nullable NSString *)email
@@ -960,55 +1199,67 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
       return [ConsentInterface fromMap:[self readValue]];
     
     case 131:     
-      return [ErrorCodesInterface fromMap:[self readValue]];
+      return [EmailsInterface fromMap:[self readValue]];
     
     case 132:     
-      return [LoginWithPasswordRequestInterface fromMap:[self readValue]];
+      return [ErrorCodesInterface fromMap:[self readValue]];
     
     case 133:     
-      return [LoginWithProviderRequestInterface fromMap:[self readValue]];
+      return [LoginSummaryInterface fromMap:[self readValue]];
     
     case 134:     
-      return [OpenIdUserInterface fromMap:[self readValue]];
+      return [LoginWithPasswordRequestInterface fromMap:[self readValue]];
     
     case 135:     
-      return [ProfileAddressInterface fromMap:[self readValue]];
+      return [LoginWithProviderRequestInterface fromMap:[self readValue]];
     
     case 136:     
-      return [ProfileSignupRequestInterface fromMap:[self readValue]];
+      return [OpenIdUserInterface fromMap:[self readValue]];
     
     case 137:     
-      return [ProviderCreatorInterface fromMap:[self readValue]];
+      return [ProfileAddressInterface fromMap:[self readValue]];
     
     case 138:     
-      return [ReachFiveConfigInterface fromMap:[self readValue]];
+      return [ProfileInterface fromMap:[self readValue]];
     
     case 139:     
-      return [ReachFiveKeyInterface fromMap:[self readValue]];
+      return [ProfileSignupRequestInterface fromMap:[self readValue]];
     
     case 140:     
-      return [RefreshAccessTokenRequestInterface fromMap:[self readValue]];
+      return [ProviderCreatorInterface fromMap:[self readValue]];
     
     case 141:     
-      return [RequestPasswordResetRequestInterface fromMap:[self readValue]];
+      return [ReachFiveConfigInterface fromMap:[self readValue]];
     
     case 142:     
-      return [SdkConfigInterface fromMap:[self readValue]];
+      return [ReachFiveKeyInterface fromMap:[self readValue]];
     
     case 143:     
-      return [SignupRequestInterface fromMap:[self readValue]];
+      return [RefreshAccessTokenRequestInterface fromMap:[self readValue]];
     
     case 144:     
-      return [UpdatePasswordWithAccessTokenRequestInterface fromMap:[self readValue]];
+      return [RequestPasswordResetRequestInterface fromMap:[self readValue]];
     
     case 145:     
-      return [UpdatePasswordWithEmailRequestInterface fromMap:[self readValue]];
+      return [SdkConfigInterface fromMap:[self readValue]];
     
     case 146:     
-      return [UpdatePasswordWithFreshAccessTokenRequestInterface fromMap:[self readValue]];
+      return [SignupRequestInterface fromMap:[self readValue]];
     
     case 147:     
+      return [UpdatePasswordWithAccessTokenRequestInterface fromMap:[self readValue]];
+    
+    case 148:     
+      return [UpdatePasswordWithEmailRequestInterface fromMap:[self readValue]];
+    
+    case 149:     
+      return [UpdatePasswordWithFreshAccessTokenRequestInterface fromMap:[self readValue]];
+    
+    case 150:     
       return [UpdatePasswordWithPhoneNumberRequestInterface fromMap:[self readValue]];
+    
+    case 151:     
+      return [UpdateProfileRequestInterface fromMap:[self readValue]];
     
     default:    
       return [super readValueOfType:type];
@@ -1034,72 +1285,88 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
     [self writeByte:130];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ErrorCodesInterface class]]) {
+  if ([value isKindOfClass:[EmailsInterface class]]) {
     [self writeByte:131];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[LoginWithPasswordRequestInterface class]]) {
+  if ([value isKindOfClass:[ErrorCodesInterface class]]) {
     [self writeByte:132];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[LoginWithProviderRequestInterface class]]) {
+  if ([value isKindOfClass:[LoginSummaryInterface class]]) {
     [self writeByte:133];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[OpenIdUserInterface class]]) {
+  if ([value isKindOfClass:[LoginWithPasswordRequestInterface class]]) {
     [self writeByte:134];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ProfileAddressInterface class]]) {
+  if ([value isKindOfClass:[LoginWithProviderRequestInterface class]]) {
     [self writeByte:135];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ProfileSignupRequestInterface class]]) {
+  if ([value isKindOfClass:[OpenIdUserInterface class]]) {
     [self writeByte:136];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ProviderCreatorInterface class]]) {
+  if ([value isKindOfClass:[ProfileAddressInterface class]]) {
     [self writeByte:137];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ReachFiveConfigInterface class]]) {
+  if ([value isKindOfClass:[ProfileInterface class]]) {
     [self writeByte:138];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[ReachFiveKeyInterface class]]) {
+  if ([value isKindOfClass:[ProfileSignupRequestInterface class]]) {
     [self writeByte:139];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[RefreshAccessTokenRequestInterface class]]) {
+  if ([value isKindOfClass:[ProviderCreatorInterface class]]) {
     [self writeByte:140];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[RequestPasswordResetRequestInterface class]]) {
+  if ([value isKindOfClass:[ReachFiveConfigInterface class]]) {
     [self writeByte:141];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[SdkConfigInterface class]]) {
+  if ([value isKindOfClass:[ReachFiveKeyInterface class]]) {
     [self writeByte:142];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[SignupRequestInterface class]]) {
+  if ([value isKindOfClass:[RefreshAccessTokenRequestInterface class]]) {
     [self writeByte:143];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[UpdatePasswordWithAccessTokenRequestInterface class]]) {
+  if ([value isKindOfClass:[RequestPasswordResetRequestInterface class]]) {
     [self writeByte:144];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[UpdatePasswordWithEmailRequestInterface class]]) {
+  if ([value isKindOfClass:[SdkConfigInterface class]]) {
     [self writeByte:145];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[UpdatePasswordWithFreshAccessTokenRequestInterface class]]) {
+  if ([value isKindOfClass:[SignupRequestInterface class]]) {
     [self writeByte:146];
     [self writeValue:[value toMap]];
   } else 
-  if ([value isKindOfClass:[UpdatePasswordWithPhoneNumberRequestInterface class]]) {
+  if ([value isKindOfClass:[UpdatePasswordWithAccessTokenRequestInterface class]]) {
     [self writeByte:147];
+    [self writeValue:[value toMap]];
+  } else 
+  if ([value isKindOfClass:[UpdatePasswordWithEmailRequestInterface class]]) {
+    [self writeByte:148];
+    [self writeValue:[value toMap]];
+  } else 
+  if ([value isKindOfClass:[UpdatePasswordWithFreshAccessTokenRequestInterface class]]) {
+    [self writeByte:149];
+    [self writeValue:[value toMap]];
+  } else 
+  if ([value isKindOfClass:[UpdatePasswordWithPhoneNumberRequestInterface class]]) {
+    [self writeByte:150];
+    [self writeValue:[value toMap]];
+  } else 
+  if ([value isKindOfClass:[UpdateProfileRequestInterface class]]) {
+    [self writeByte:151];
     [self writeValue:[value toMap]];
   } else 
 {
@@ -1224,6 +1491,26 @@ void ReachFiveHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<
         ReachFiveKeyInterface *arg_reachFiveKey = GetNullableObjectAtIndex(args, 0);
         [api logoutReachFiveKey:arg_reachFiveKey completion:^(FlutterError *_Nullable error) {
           callback(wrapResult(nil, error));
+        }];
+      }];
+    }
+    else {
+      [channel setMessageHandler:nil];
+    }
+  }
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.ReachFiveHostApi.updateProfile"
+        binaryMessenger:binaryMessenger
+        codec:ReachFiveHostApiGetCodec()        ];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(updateProfileRequest:completion:)], @"ReachFiveHostApi api (%@) doesn't respond to @selector(updateProfileRequest:completion:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        NSArray *args = message;
+        UpdateProfileRequestInterface *arg_request = GetNullableObjectAtIndex(args, 0);
+        [api updateProfileRequest:arg_request completion:^(ProfileInterface *_Nullable output, FlutterError *_Nullable error) {
+          callback(wrapResult(output, error));
         }];
       }];
     }

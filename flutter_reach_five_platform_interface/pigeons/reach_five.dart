@@ -297,6 +297,108 @@ class RefreshAccessTokenRequestInterface {
   final AuthTokenInterface authToken;
 }
 
+class LoginSummaryInterface {
+  const LoginSummaryInterface({
+    required this.firstLogin,
+    required this.lastLogin,
+    required this.total,
+    required this.origins,
+    required this.devices,
+    required this.lastProvider,
+  });
+
+  final double? firstLogin;
+  final double? lastLogin;
+  final int? total;
+  final List<String?>? origins;
+  final List<String?>? devices;
+  final String? lastProvider;
+}
+
+class EmailsInterface {
+  const EmailsInterface({
+    required this.verified,
+    required this.unverified,
+  });
+
+  final List<String?>? verified;
+  final List<String?>? unverified;
+}
+
+class ProfileInterface {
+  const ProfileInterface({
+    required this.uid,
+    required this.givenName,
+    required this.middleName,
+    required this.familyName,
+    required this.name,
+    required this.nickname,
+    required this.birthdate,
+    required this.profileURL,
+    required this.picture,
+    required this.externalId,
+    required this.authTypes,
+    required this.loginSummary,
+    required this.username,
+    required this.gender,
+    required this.email,
+    required this.emailVerified,
+    required this.emails,
+    required this.phoneNumber,
+    required this.phoneNumberVerified,
+    required this.addresses,
+    required this.locale,
+    required this.bio,
+    required this.customFields,
+    required this.consents,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.liteOnly,
+    required this.company,
+  });
+
+  final String? uid;
+  final String? givenName;
+  final String? middleName;
+  final String? familyName;
+  final String? name;
+  final String? nickname;
+  final String? birthdate;
+  final String? profileURL;
+  final String? picture;
+  final String? externalId;
+  final List<String?>? authTypes;
+  final LoginSummaryInterface? loginSummary;
+  final String? username;
+  final String? gender;
+  final String? email;
+  final bool? emailVerified;
+  final EmailsInterface? emails;
+  final String? phoneNumber;
+  final bool? phoneNumberVerified;
+  final List<ProfileAddressInterface?>? addresses;
+  final String? locale;
+  final String? bio;
+  final Map<String?, Object?>? customFields;
+  final Map<String?, ConsentInterface?>? consents;
+  final String? createdAt;
+  final String? updatedAt;
+  final bool? liteOnly;
+  final String? company;
+}
+
+class UpdateProfileRequestInterface {
+  const UpdateProfileRequestInterface({
+    required this.reachFiveKey,
+    required this.authToken,
+    required this.profile,
+  });
+
+  final ReachFiveKeyInterface reachFiveKey;
+  final AuthTokenInterface authToken;
+  final ProfileInterface profile;
+}
+
 class RequestPasswordResetRequestInterface {
   const RequestPasswordResetRequestInterface({
     required this.reachFiveKey,
@@ -389,6 +491,11 @@ abstract class ReachFiveHostApi {
 
   @async
   void logout(ReachFiveKeyInterface reachFiveKey);
+
+  @async
+  ProfileInterface updateProfile(
+    UpdateProfileRequestInterface request,
+  );
 
   @async
   AuthTokenInterface refreshAccessToken(

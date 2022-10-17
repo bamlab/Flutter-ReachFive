@@ -1859,6 +1859,674 @@ public class ReachFiveApi {
   }
 
   /** Generated class from Pigeon that represents data sent in messages. */
+  public static class LoginSummaryInterface {
+    private @Nullable Double firstLogin;
+    public @Nullable Double getFirstLogin() { return firstLogin; }
+    public void setFirstLogin(@Nullable Double setterArg) {
+      this.firstLogin = setterArg;
+    }
+
+    private @Nullable Double lastLogin;
+    public @Nullable Double getLastLogin() { return lastLogin; }
+    public void setLastLogin(@Nullable Double setterArg) {
+      this.lastLogin = setterArg;
+    }
+
+    private @Nullable Long total;
+    public @Nullable Long getTotal() { return total; }
+    public void setTotal(@Nullable Long setterArg) {
+      this.total = setterArg;
+    }
+
+    private @Nullable List<String> origins;
+    public @Nullable List<String> getOrigins() { return origins; }
+    public void setOrigins(@Nullable List<String> setterArg) {
+      this.origins = setterArg;
+    }
+
+    private @Nullable List<String> devices;
+    public @Nullable List<String> getDevices() { return devices; }
+    public void setDevices(@Nullable List<String> setterArg) {
+      this.devices = setterArg;
+    }
+
+    private @Nullable String lastProvider;
+    public @Nullable String getLastProvider() { return lastProvider; }
+    public void setLastProvider(@Nullable String setterArg) {
+      this.lastProvider = setterArg;
+    }
+
+    public static final class Builder {
+      private @Nullable Double firstLogin;
+      public @NonNull Builder setFirstLogin(@Nullable Double setterArg) {
+        this.firstLogin = setterArg;
+        return this;
+      }
+      private @Nullable Double lastLogin;
+      public @NonNull Builder setLastLogin(@Nullable Double setterArg) {
+        this.lastLogin = setterArg;
+        return this;
+      }
+      private @Nullable Long total;
+      public @NonNull Builder setTotal(@Nullable Long setterArg) {
+        this.total = setterArg;
+        return this;
+      }
+      private @Nullable List<String> origins;
+      public @NonNull Builder setOrigins(@Nullable List<String> setterArg) {
+        this.origins = setterArg;
+        return this;
+      }
+      private @Nullable List<String> devices;
+      public @NonNull Builder setDevices(@Nullable List<String> setterArg) {
+        this.devices = setterArg;
+        return this;
+      }
+      private @Nullable String lastProvider;
+      public @NonNull Builder setLastProvider(@Nullable String setterArg) {
+        this.lastProvider = setterArg;
+        return this;
+      }
+      public @NonNull LoginSummaryInterface build() {
+        LoginSummaryInterface pigeonReturn = new LoginSummaryInterface();
+        pigeonReturn.setFirstLogin(firstLogin);
+        pigeonReturn.setLastLogin(lastLogin);
+        pigeonReturn.setTotal(total);
+        pigeonReturn.setOrigins(origins);
+        pigeonReturn.setDevices(devices);
+        pigeonReturn.setLastProvider(lastProvider);
+        return pigeonReturn;
+      }
+    }
+    @NonNull Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("firstLogin", firstLogin);
+      toMapResult.put("lastLogin", lastLogin);
+      toMapResult.put("total", total);
+      toMapResult.put("origins", origins);
+      toMapResult.put("devices", devices);
+      toMapResult.put("lastProvider", lastProvider);
+      return toMapResult;
+    }
+    static @NonNull LoginSummaryInterface fromMap(@NonNull Map<String, Object> map) {
+      LoginSummaryInterface pigeonResult = new LoginSummaryInterface();
+      Object firstLogin = map.get("firstLogin");
+      pigeonResult.setFirstLogin((Double)firstLogin);
+      Object lastLogin = map.get("lastLogin");
+      pigeonResult.setLastLogin((Double)lastLogin);
+      Object total = map.get("total");
+      pigeonResult.setTotal((total == null) ? null : ((total instanceof Integer) ? (Integer)total : (Long)total));
+      Object origins = map.get("origins");
+      pigeonResult.setOrigins((List<String>)origins);
+      Object devices = map.get("devices");
+      pigeonResult.setDevices((List<String>)devices);
+      Object lastProvider = map.get("lastProvider");
+      pigeonResult.setLastProvider((String)lastProvider);
+      return pigeonResult;
+    }
+  }
+
+  /** Generated class from Pigeon that represents data sent in messages. */
+  public static class EmailsInterface {
+    private @Nullable List<String> verified;
+    public @Nullable List<String> getVerified() { return verified; }
+    public void setVerified(@Nullable List<String> setterArg) {
+      this.verified = setterArg;
+    }
+
+    private @Nullable List<String> unverified;
+    public @Nullable List<String> getUnverified() { return unverified; }
+    public void setUnverified(@Nullable List<String> setterArg) {
+      this.unverified = setterArg;
+    }
+
+    public static final class Builder {
+      private @Nullable List<String> verified;
+      public @NonNull Builder setVerified(@Nullable List<String> setterArg) {
+        this.verified = setterArg;
+        return this;
+      }
+      private @Nullable List<String> unverified;
+      public @NonNull Builder setUnverified(@Nullable List<String> setterArg) {
+        this.unverified = setterArg;
+        return this;
+      }
+      public @NonNull EmailsInterface build() {
+        EmailsInterface pigeonReturn = new EmailsInterface();
+        pigeonReturn.setVerified(verified);
+        pigeonReturn.setUnverified(unverified);
+        return pigeonReturn;
+      }
+    }
+    @NonNull Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("verified", verified);
+      toMapResult.put("unverified", unverified);
+      return toMapResult;
+    }
+    static @NonNull EmailsInterface fromMap(@NonNull Map<String, Object> map) {
+      EmailsInterface pigeonResult = new EmailsInterface();
+      Object verified = map.get("verified");
+      pigeonResult.setVerified((List<String>)verified);
+      Object unverified = map.get("unverified");
+      pigeonResult.setUnverified((List<String>)unverified);
+      return pigeonResult;
+    }
+  }
+
+  /** Generated class from Pigeon that represents data sent in messages. */
+  public static class ProfileInterface {
+    private @Nullable String uid;
+    public @Nullable String getUid() { return uid; }
+    public void setUid(@Nullable String setterArg) {
+      this.uid = setterArg;
+    }
+
+    private @Nullable String givenName;
+    public @Nullable String getGivenName() { return givenName; }
+    public void setGivenName(@Nullable String setterArg) {
+      this.givenName = setterArg;
+    }
+
+    private @Nullable String middleName;
+    public @Nullable String getMiddleName() { return middleName; }
+    public void setMiddleName(@Nullable String setterArg) {
+      this.middleName = setterArg;
+    }
+
+    private @Nullable String familyName;
+    public @Nullable String getFamilyName() { return familyName; }
+    public void setFamilyName(@Nullable String setterArg) {
+      this.familyName = setterArg;
+    }
+
+    private @Nullable String name;
+    public @Nullable String getName() { return name; }
+    public void setName(@Nullable String setterArg) {
+      this.name = setterArg;
+    }
+
+    private @Nullable String nickname;
+    public @Nullable String getNickname() { return nickname; }
+    public void setNickname(@Nullable String setterArg) {
+      this.nickname = setterArg;
+    }
+
+    private @Nullable String birthdate;
+    public @Nullable String getBirthdate() { return birthdate; }
+    public void setBirthdate(@Nullable String setterArg) {
+      this.birthdate = setterArg;
+    }
+
+    private @Nullable String profileURL;
+    public @Nullable String getProfileURL() { return profileURL; }
+    public void setProfileURL(@Nullable String setterArg) {
+      this.profileURL = setterArg;
+    }
+
+    private @Nullable String picture;
+    public @Nullable String getPicture() { return picture; }
+    public void setPicture(@Nullable String setterArg) {
+      this.picture = setterArg;
+    }
+
+    private @Nullable String externalId;
+    public @Nullable String getExternalId() { return externalId; }
+    public void setExternalId(@Nullable String setterArg) {
+      this.externalId = setterArg;
+    }
+
+    private @Nullable List<String> authTypes;
+    public @Nullable List<String> getAuthTypes() { return authTypes; }
+    public void setAuthTypes(@Nullable List<String> setterArg) {
+      this.authTypes = setterArg;
+    }
+
+    private @Nullable LoginSummaryInterface loginSummary;
+    public @Nullable LoginSummaryInterface getLoginSummary() { return loginSummary; }
+    public void setLoginSummary(@Nullable LoginSummaryInterface setterArg) {
+      this.loginSummary = setterArg;
+    }
+
+    private @Nullable String username;
+    public @Nullable String getUsername() { return username; }
+    public void setUsername(@Nullable String setterArg) {
+      this.username = setterArg;
+    }
+
+    private @Nullable String gender;
+    public @Nullable String getGender() { return gender; }
+    public void setGender(@Nullable String setterArg) {
+      this.gender = setterArg;
+    }
+
+    private @Nullable String email;
+    public @Nullable String getEmail() { return email; }
+    public void setEmail(@Nullable String setterArg) {
+      this.email = setterArg;
+    }
+
+    private @Nullable Boolean emailVerified;
+    public @Nullable Boolean getEmailVerified() { return emailVerified; }
+    public void setEmailVerified(@Nullable Boolean setterArg) {
+      this.emailVerified = setterArg;
+    }
+
+    private @Nullable EmailsInterface emails;
+    public @Nullable EmailsInterface getEmails() { return emails; }
+    public void setEmails(@Nullable EmailsInterface setterArg) {
+      this.emails = setterArg;
+    }
+
+    private @Nullable String phoneNumber;
+    public @Nullable String getPhoneNumber() { return phoneNumber; }
+    public void setPhoneNumber(@Nullable String setterArg) {
+      this.phoneNumber = setterArg;
+    }
+
+    private @Nullable Boolean phoneNumberVerified;
+    public @Nullable Boolean getPhoneNumberVerified() { return phoneNumberVerified; }
+    public void setPhoneNumberVerified(@Nullable Boolean setterArg) {
+      this.phoneNumberVerified = setterArg;
+    }
+
+    private @Nullable List<ProfileAddressInterface> addresses;
+    public @Nullable List<ProfileAddressInterface> getAddresses() { return addresses; }
+    public void setAddresses(@Nullable List<ProfileAddressInterface> setterArg) {
+      this.addresses = setterArg;
+    }
+
+    private @Nullable String locale;
+    public @Nullable String getLocale() { return locale; }
+    public void setLocale(@Nullable String setterArg) {
+      this.locale = setterArg;
+    }
+
+    private @Nullable String bio;
+    public @Nullable String getBio() { return bio; }
+    public void setBio(@Nullable String setterArg) {
+      this.bio = setterArg;
+    }
+
+    private @Nullable Map<String, Object> customFields;
+    public @Nullable Map<String, Object> getCustomFields() { return customFields; }
+    public void setCustomFields(@Nullable Map<String, Object> setterArg) {
+      this.customFields = setterArg;
+    }
+
+    private @Nullable Map<String, ConsentInterface> consents;
+    public @Nullable Map<String, ConsentInterface> getConsents() { return consents; }
+    public void setConsents(@Nullable Map<String, ConsentInterface> setterArg) {
+      this.consents = setterArg;
+    }
+
+    private @Nullable String createdAt;
+    public @Nullable String getCreatedAt() { return createdAt; }
+    public void setCreatedAt(@Nullable String setterArg) {
+      this.createdAt = setterArg;
+    }
+
+    private @Nullable String updatedAt;
+    public @Nullable String getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(@Nullable String setterArg) {
+      this.updatedAt = setterArg;
+    }
+
+    private @Nullable Boolean liteOnly;
+    public @Nullable Boolean getLiteOnly() { return liteOnly; }
+    public void setLiteOnly(@Nullable Boolean setterArg) {
+      this.liteOnly = setterArg;
+    }
+
+    private @Nullable String company;
+    public @Nullable String getCompany() { return company; }
+    public void setCompany(@Nullable String setterArg) {
+      this.company = setterArg;
+    }
+
+    public static final class Builder {
+      private @Nullable String uid;
+      public @NonNull Builder setUid(@Nullable String setterArg) {
+        this.uid = setterArg;
+        return this;
+      }
+      private @Nullable String givenName;
+      public @NonNull Builder setGivenName(@Nullable String setterArg) {
+        this.givenName = setterArg;
+        return this;
+      }
+      private @Nullable String middleName;
+      public @NonNull Builder setMiddleName(@Nullable String setterArg) {
+        this.middleName = setterArg;
+        return this;
+      }
+      private @Nullable String familyName;
+      public @NonNull Builder setFamilyName(@Nullable String setterArg) {
+        this.familyName = setterArg;
+        return this;
+      }
+      private @Nullable String name;
+      public @NonNull Builder setName(@Nullable String setterArg) {
+        this.name = setterArg;
+        return this;
+      }
+      private @Nullable String nickname;
+      public @NonNull Builder setNickname(@Nullable String setterArg) {
+        this.nickname = setterArg;
+        return this;
+      }
+      private @Nullable String birthdate;
+      public @NonNull Builder setBirthdate(@Nullable String setterArg) {
+        this.birthdate = setterArg;
+        return this;
+      }
+      private @Nullable String profileURL;
+      public @NonNull Builder setProfileURL(@Nullable String setterArg) {
+        this.profileURL = setterArg;
+        return this;
+      }
+      private @Nullable String picture;
+      public @NonNull Builder setPicture(@Nullable String setterArg) {
+        this.picture = setterArg;
+        return this;
+      }
+      private @Nullable String externalId;
+      public @NonNull Builder setExternalId(@Nullable String setterArg) {
+        this.externalId = setterArg;
+        return this;
+      }
+      private @Nullable List<String> authTypes;
+      public @NonNull Builder setAuthTypes(@Nullable List<String> setterArg) {
+        this.authTypes = setterArg;
+        return this;
+      }
+      private @Nullable LoginSummaryInterface loginSummary;
+      public @NonNull Builder setLoginSummary(@Nullable LoginSummaryInterface setterArg) {
+        this.loginSummary = setterArg;
+        return this;
+      }
+      private @Nullable String username;
+      public @NonNull Builder setUsername(@Nullable String setterArg) {
+        this.username = setterArg;
+        return this;
+      }
+      private @Nullable String gender;
+      public @NonNull Builder setGender(@Nullable String setterArg) {
+        this.gender = setterArg;
+        return this;
+      }
+      private @Nullable String email;
+      public @NonNull Builder setEmail(@Nullable String setterArg) {
+        this.email = setterArg;
+        return this;
+      }
+      private @Nullable Boolean emailVerified;
+      public @NonNull Builder setEmailVerified(@Nullable Boolean setterArg) {
+        this.emailVerified = setterArg;
+        return this;
+      }
+      private @Nullable EmailsInterface emails;
+      public @NonNull Builder setEmails(@Nullable EmailsInterface setterArg) {
+        this.emails = setterArg;
+        return this;
+      }
+      private @Nullable String phoneNumber;
+      public @NonNull Builder setPhoneNumber(@Nullable String setterArg) {
+        this.phoneNumber = setterArg;
+        return this;
+      }
+      private @Nullable Boolean phoneNumberVerified;
+      public @NonNull Builder setPhoneNumberVerified(@Nullable Boolean setterArg) {
+        this.phoneNumberVerified = setterArg;
+        return this;
+      }
+      private @Nullable List<ProfileAddressInterface> addresses;
+      public @NonNull Builder setAddresses(@Nullable List<ProfileAddressInterface> setterArg) {
+        this.addresses = setterArg;
+        return this;
+      }
+      private @Nullable String locale;
+      public @NonNull Builder setLocale(@Nullable String setterArg) {
+        this.locale = setterArg;
+        return this;
+      }
+      private @Nullable String bio;
+      public @NonNull Builder setBio(@Nullable String setterArg) {
+        this.bio = setterArg;
+        return this;
+      }
+      private @Nullable Map<String, Object> customFields;
+      public @NonNull Builder setCustomFields(@Nullable Map<String, Object> setterArg) {
+        this.customFields = setterArg;
+        return this;
+      }
+      private @Nullable Map<String, ConsentInterface> consents;
+      public @NonNull Builder setConsents(@Nullable Map<String, ConsentInterface> setterArg) {
+        this.consents = setterArg;
+        return this;
+      }
+      private @Nullable String createdAt;
+      public @NonNull Builder setCreatedAt(@Nullable String setterArg) {
+        this.createdAt = setterArg;
+        return this;
+      }
+      private @Nullable String updatedAt;
+      public @NonNull Builder setUpdatedAt(@Nullable String setterArg) {
+        this.updatedAt = setterArg;
+        return this;
+      }
+      private @Nullable Boolean liteOnly;
+      public @NonNull Builder setLiteOnly(@Nullable Boolean setterArg) {
+        this.liteOnly = setterArg;
+        return this;
+      }
+      private @Nullable String company;
+      public @NonNull Builder setCompany(@Nullable String setterArg) {
+        this.company = setterArg;
+        return this;
+      }
+      public @NonNull ProfileInterface build() {
+        ProfileInterface pigeonReturn = new ProfileInterface();
+        pigeonReturn.setUid(uid);
+        pigeonReturn.setGivenName(givenName);
+        pigeonReturn.setMiddleName(middleName);
+        pigeonReturn.setFamilyName(familyName);
+        pigeonReturn.setName(name);
+        pigeonReturn.setNickname(nickname);
+        pigeonReturn.setBirthdate(birthdate);
+        pigeonReturn.setProfileURL(profileURL);
+        pigeonReturn.setPicture(picture);
+        pigeonReturn.setExternalId(externalId);
+        pigeonReturn.setAuthTypes(authTypes);
+        pigeonReturn.setLoginSummary(loginSummary);
+        pigeonReturn.setUsername(username);
+        pigeonReturn.setGender(gender);
+        pigeonReturn.setEmail(email);
+        pigeonReturn.setEmailVerified(emailVerified);
+        pigeonReturn.setEmails(emails);
+        pigeonReturn.setPhoneNumber(phoneNumber);
+        pigeonReturn.setPhoneNumberVerified(phoneNumberVerified);
+        pigeonReturn.setAddresses(addresses);
+        pigeonReturn.setLocale(locale);
+        pigeonReturn.setBio(bio);
+        pigeonReturn.setCustomFields(customFields);
+        pigeonReturn.setConsents(consents);
+        pigeonReturn.setCreatedAt(createdAt);
+        pigeonReturn.setUpdatedAt(updatedAt);
+        pigeonReturn.setLiteOnly(liteOnly);
+        pigeonReturn.setCompany(company);
+        return pigeonReturn;
+      }
+    }
+    @NonNull Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("uid", uid);
+      toMapResult.put("givenName", givenName);
+      toMapResult.put("middleName", middleName);
+      toMapResult.put("familyName", familyName);
+      toMapResult.put("name", name);
+      toMapResult.put("nickname", nickname);
+      toMapResult.put("birthdate", birthdate);
+      toMapResult.put("profileURL", profileURL);
+      toMapResult.put("picture", picture);
+      toMapResult.put("externalId", externalId);
+      toMapResult.put("authTypes", authTypes);
+      toMapResult.put("loginSummary", (loginSummary == null) ? null : loginSummary.toMap());
+      toMapResult.put("username", username);
+      toMapResult.put("gender", gender);
+      toMapResult.put("email", email);
+      toMapResult.put("emailVerified", emailVerified);
+      toMapResult.put("emails", (emails == null) ? null : emails.toMap());
+      toMapResult.put("phoneNumber", phoneNumber);
+      toMapResult.put("phoneNumberVerified", phoneNumberVerified);
+      toMapResult.put("addresses", addresses);
+      toMapResult.put("locale", locale);
+      toMapResult.put("bio", bio);
+      toMapResult.put("customFields", customFields);
+      toMapResult.put("consents", consents);
+      toMapResult.put("createdAt", createdAt);
+      toMapResult.put("updatedAt", updatedAt);
+      toMapResult.put("liteOnly", liteOnly);
+      toMapResult.put("company", company);
+      return toMapResult;
+    }
+    static @NonNull ProfileInterface fromMap(@NonNull Map<String, Object> map) {
+      ProfileInterface pigeonResult = new ProfileInterface();
+      Object uid = map.get("uid");
+      pigeonResult.setUid((String)uid);
+      Object givenName = map.get("givenName");
+      pigeonResult.setGivenName((String)givenName);
+      Object middleName = map.get("middleName");
+      pigeonResult.setMiddleName((String)middleName);
+      Object familyName = map.get("familyName");
+      pigeonResult.setFamilyName((String)familyName);
+      Object name = map.get("name");
+      pigeonResult.setName((String)name);
+      Object nickname = map.get("nickname");
+      pigeonResult.setNickname((String)nickname);
+      Object birthdate = map.get("birthdate");
+      pigeonResult.setBirthdate((String)birthdate);
+      Object profileURL = map.get("profileURL");
+      pigeonResult.setProfileURL((String)profileURL);
+      Object picture = map.get("picture");
+      pigeonResult.setPicture((String)picture);
+      Object externalId = map.get("externalId");
+      pigeonResult.setExternalId((String)externalId);
+      Object authTypes = map.get("authTypes");
+      pigeonResult.setAuthTypes((List<String>)authTypes);
+      Object loginSummary = map.get("loginSummary");
+      pigeonResult.setLoginSummary((loginSummary == null) ? null : LoginSummaryInterface.fromMap((Map)loginSummary));
+      Object username = map.get("username");
+      pigeonResult.setUsername((String)username);
+      Object gender = map.get("gender");
+      pigeonResult.setGender((String)gender);
+      Object email = map.get("email");
+      pigeonResult.setEmail((String)email);
+      Object emailVerified = map.get("emailVerified");
+      pigeonResult.setEmailVerified((Boolean)emailVerified);
+      Object emails = map.get("emails");
+      pigeonResult.setEmails((emails == null) ? null : EmailsInterface.fromMap((Map)emails));
+      Object phoneNumber = map.get("phoneNumber");
+      pigeonResult.setPhoneNumber((String)phoneNumber);
+      Object phoneNumberVerified = map.get("phoneNumberVerified");
+      pigeonResult.setPhoneNumberVerified((Boolean)phoneNumberVerified);
+      Object addresses = map.get("addresses");
+      pigeonResult.setAddresses((List<ProfileAddressInterface>)addresses);
+      Object locale = map.get("locale");
+      pigeonResult.setLocale((String)locale);
+      Object bio = map.get("bio");
+      pigeonResult.setBio((String)bio);
+      Object customFields = map.get("customFields");
+      pigeonResult.setCustomFields((Map<String, Object>)customFields);
+      Object consents = map.get("consents");
+      pigeonResult.setConsents((Map<String, ConsentInterface>)consents);
+      Object createdAt = map.get("createdAt");
+      pigeonResult.setCreatedAt((String)createdAt);
+      Object updatedAt = map.get("updatedAt");
+      pigeonResult.setUpdatedAt((String)updatedAt);
+      Object liteOnly = map.get("liteOnly");
+      pigeonResult.setLiteOnly((Boolean)liteOnly);
+      Object company = map.get("company");
+      pigeonResult.setCompany((String)company);
+      return pigeonResult;
+    }
+  }
+
+  /** Generated class from Pigeon that represents data sent in messages. */
+  public static class UpdateProfileRequestInterface {
+    private @NonNull ReachFiveKeyInterface reachFiveKey;
+    public @NonNull ReachFiveKeyInterface getReachFiveKey() { return reachFiveKey; }
+    public void setReachFiveKey(@NonNull ReachFiveKeyInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"reachFiveKey\" is null.");
+      }
+      this.reachFiveKey = setterArg;
+    }
+
+    private @NonNull AuthTokenInterface authToken;
+    public @NonNull AuthTokenInterface getAuthToken() { return authToken; }
+    public void setAuthToken(@NonNull AuthTokenInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"authToken\" is null.");
+      }
+      this.authToken = setterArg;
+    }
+
+    private @NonNull ProfileInterface profile;
+    public @NonNull ProfileInterface getProfile() { return profile; }
+    public void setProfile(@NonNull ProfileInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"profile\" is null.");
+      }
+      this.profile = setterArg;
+    }
+
+    /** Constructor is private to enforce null safety; use Builder. */
+    private UpdateProfileRequestInterface() {}
+    public static final class Builder {
+      private @Nullable ReachFiveKeyInterface reachFiveKey;
+      public @NonNull Builder setReachFiveKey(@NonNull ReachFiveKeyInterface setterArg) {
+        this.reachFiveKey = setterArg;
+        return this;
+      }
+      private @Nullable AuthTokenInterface authToken;
+      public @NonNull Builder setAuthToken(@NonNull AuthTokenInterface setterArg) {
+        this.authToken = setterArg;
+        return this;
+      }
+      private @Nullable ProfileInterface profile;
+      public @NonNull Builder setProfile(@NonNull ProfileInterface setterArg) {
+        this.profile = setterArg;
+        return this;
+      }
+      public @NonNull UpdateProfileRequestInterface build() {
+        UpdateProfileRequestInterface pigeonReturn = new UpdateProfileRequestInterface();
+        pigeonReturn.setReachFiveKey(reachFiveKey);
+        pigeonReturn.setAuthToken(authToken);
+        pigeonReturn.setProfile(profile);
+        return pigeonReturn;
+      }
+    }
+    @NonNull Map<String, Object> toMap() {
+      Map<String, Object> toMapResult = new HashMap<>();
+      toMapResult.put("reachFiveKey", (reachFiveKey == null) ? null : reachFiveKey.toMap());
+      toMapResult.put("authToken", (authToken == null) ? null : authToken.toMap());
+      toMapResult.put("profile", (profile == null) ? null : profile.toMap());
+      return toMapResult;
+    }
+    static @NonNull UpdateProfileRequestInterface fromMap(@NonNull Map<String, Object> map) {
+      UpdateProfileRequestInterface pigeonResult = new UpdateProfileRequestInterface();
+      Object reachFiveKey = map.get("reachFiveKey");
+      pigeonResult.setReachFiveKey((reachFiveKey == null) ? null : ReachFiveKeyInterface.fromMap((Map)reachFiveKey));
+      Object authToken = map.get("authToken");
+      pigeonResult.setAuthToken((authToken == null) ? null : AuthTokenInterface.fromMap((Map)authToken));
+      Object profile = map.get("profile");
+      pigeonResult.setProfile((profile == null) ? null : ProfileInterface.fromMap((Map)profile));
+      return pigeonResult;
+    }
+  }
+
+  /** Generated class from Pigeon that represents data sent in messages. */
   public static class RequestPasswordResetRequestInterface {
     private @NonNull ReachFiveKeyInterface reachFiveKey;
     public @NonNull ReachFiveKeyInterface getReachFiveKey() { return reachFiveKey; }
@@ -2347,55 +3015,67 @@ public class ReachFiveApi {
           return ConsentInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)131:         
-          return ErrorCodesInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return EmailsInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)132:         
-          return LoginWithPasswordRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return ErrorCodesInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)133:         
-          return LoginWithProviderRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return LoginSummaryInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)134:         
-          return OpenIdUserInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return LoginWithPasswordRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)135:         
-          return ProfileAddressInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return LoginWithProviderRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)136:         
-          return ProfileSignupRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return OpenIdUserInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)137:         
-          return ProviderCreatorInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return ProfileAddressInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)138:         
-          return ReachFiveConfigInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return ProfileInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)139:         
-          return ReachFiveKeyInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return ProfileSignupRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)140:         
-          return RefreshAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return ProviderCreatorInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)141:         
-          return RequestPasswordResetRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return ReachFiveConfigInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)142:         
-          return SdkConfigInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return ReachFiveKeyInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)143:         
-          return SignupRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return RefreshAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)144:         
-          return UpdatePasswordWithAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return RequestPasswordResetRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)145:         
-          return UpdatePasswordWithEmailRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return SdkConfigInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)146:         
-          return UpdatePasswordWithFreshAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+          return SignupRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         case (byte)147:         
+          return UpdatePasswordWithAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+        
+        case (byte)148:         
+          return UpdatePasswordWithEmailRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+        
+        case (byte)149:         
+          return UpdatePasswordWithFreshAccessTokenRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+        
+        case (byte)150:         
           return UpdatePasswordWithPhoneNumberRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
+        
+        case (byte)151:         
+          return UpdateProfileRequestInterface.fromMap((Map<String, Object>) readValue(buffer));
         
         default:        
           return super.readValueOfType(type, buffer);
@@ -2416,73 +3096,89 @@ public class ReachFiveApi {
         stream.write(130);
         writeValue(stream, ((ConsentInterface) value).toMap());
       } else 
-      if (value instanceof ErrorCodesInterface) {
+      if (value instanceof EmailsInterface) {
         stream.write(131);
+        writeValue(stream, ((EmailsInterface) value).toMap());
+      } else 
+      if (value instanceof ErrorCodesInterface) {
+        stream.write(132);
         writeValue(stream, ((ErrorCodesInterface) value).toMap());
       } else 
+      if (value instanceof LoginSummaryInterface) {
+        stream.write(133);
+        writeValue(stream, ((LoginSummaryInterface) value).toMap());
+      } else 
       if (value instanceof LoginWithPasswordRequestInterface) {
-        stream.write(132);
+        stream.write(134);
         writeValue(stream, ((LoginWithPasswordRequestInterface) value).toMap());
       } else 
       if (value instanceof LoginWithProviderRequestInterface) {
-        stream.write(133);
+        stream.write(135);
         writeValue(stream, ((LoginWithProviderRequestInterface) value).toMap());
       } else 
       if (value instanceof OpenIdUserInterface) {
-        stream.write(134);
+        stream.write(136);
         writeValue(stream, ((OpenIdUserInterface) value).toMap());
       } else 
       if (value instanceof ProfileAddressInterface) {
-        stream.write(135);
+        stream.write(137);
         writeValue(stream, ((ProfileAddressInterface) value).toMap());
       } else 
+      if (value instanceof ProfileInterface) {
+        stream.write(138);
+        writeValue(stream, ((ProfileInterface) value).toMap());
+      } else 
       if (value instanceof ProfileSignupRequestInterface) {
-        stream.write(136);
+        stream.write(139);
         writeValue(stream, ((ProfileSignupRequestInterface) value).toMap());
       } else 
       if (value instanceof ProviderCreatorInterface) {
-        stream.write(137);
+        stream.write(140);
         writeValue(stream, ((ProviderCreatorInterface) value).toMap());
       } else 
       if (value instanceof ReachFiveConfigInterface) {
-        stream.write(138);
+        stream.write(141);
         writeValue(stream, ((ReachFiveConfigInterface) value).toMap());
       } else 
       if (value instanceof ReachFiveKeyInterface) {
-        stream.write(139);
+        stream.write(142);
         writeValue(stream, ((ReachFiveKeyInterface) value).toMap());
       } else 
       if (value instanceof RefreshAccessTokenRequestInterface) {
-        stream.write(140);
+        stream.write(143);
         writeValue(stream, ((RefreshAccessTokenRequestInterface) value).toMap());
       } else 
       if (value instanceof RequestPasswordResetRequestInterface) {
-        stream.write(141);
+        stream.write(144);
         writeValue(stream, ((RequestPasswordResetRequestInterface) value).toMap());
       } else 
       if (value instanceof SdkConfigInterface) {
-        stream.write(142);
+        stream.write(145);
         writeValue(stream, ((SdkConfigInterface) value).toMap());
       } else 
       if (value instanceof SignupRequestInterface) {
-        stream.write(143);
+        stream.write(146);
         writeValue(stream, ((SignupRequestInterface) value).toMap());
       } else 
       if (value instanceof UpdatePasswordWithAccessTokenRequestInterface) {
-        stream.write(144);
+        stream.write(147);
         writeValue(stream, ((UpdatePasswordWithAccessTokenRequestInterface) value).toMap());
       } else 
       if (value instanceof UpdatePasswordWithEmailRequestInterface) {
-        stream.write(145);
+        stream.write(148);
         writeValue(stream, ((UpdatePasswordWithEmailRequestInterface) value).toMap());
       } else 
       if (value instanceof UpdatePasswordWithFreshAccessTokenRequestInterface) {
-        stream.write(146);
+        stream.write(149);
         writeValue(stream, ((UpdatePasswordWithFreshAccessTokenRequestInterface) value).toMap());
       } else 
       if (value instanceof UpdatePasswordWithPhoneNumberRequestInterface) {
-        stream.write(147);
+        stream.write(150);
         writeValue(stream, ((UpdatePasswordWithPhoneNumberRequestInterface) value).toMap());
+      } else 
+      if (value instanceof UpdateProfileRequestInterface) {
+        stream.write(151);
+        writeValue(stream, ((UpdateProfileRequestInterface) value).toMap());
       } else 
 {
         super.writeValue(stream, value);
@@ -2497,6 +3193,7 @@ public class ReachFiveApi {
     void loginWithPassword(@NonNull LoginWithPasswordRequestInterface request, Result<AuthTokenInterface> result);
     void loginWithProvider(@NonNull LoginWithProviderRequestInterface request, Result<AuthTokenInterface> result);
     void logout(@NonNull ReachFiveKeyInterface reachFiveKey, Result<Void> result);
+    void updateProfile(@NonNull UpdateProfileRequestInterface request, Result<ProfileInterface> result);
     void refreshAccessToken(@NonNull RefreshAccessTokenRequestInterface request, Result<AuthTokenInterface> result);
     void requestPasswordReset(@NonNull RequestPasswordResetRequestInterface request, Result<Void> result);
     void updatePasswordWithAccessToken(@NonNull UpdatePasswordWithAccessTokenRequestInterface request, Result<Void> result);
@@ -2671,6 +3368,40 @@ public class ReachFiveApi {
               };
 
               api.logout(reachFiveKeyArg, resultCallback);
+            }
+            catch (Error | RuntimeException exception) {
+              wrapped.put("error", wrapError(exception));
+              reply.reply(wrapped);
+            }
+          });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(binaryMessenger, "dev.flutter.pigeon.ReachFiveHostApi.updateProfile", getCodec());
+        if (api != null) {
+          channel.setMessageHandler((message, reply) -> {
+            Map<String, Object> wrapped = new HashMap<>();
+            try {
+              ArrayList<Object> args = (ArrayList<Object>)message;
+              UpdateProfileRequestInterface requestArg = (UpdateProfileRequestInterface)args.get(0);
+              if (requestArg == null) {
+                throw new NullPointerException("requestArg unexpectedly null.");
+              }
+              Result<ProfileInterface> resultCallback = new Result<ProfileInterface>() {
+                public void success(ProfileInterface result) {
+                  wrapped.put("result", result);
+                  reply.reply(wrapped);
+                }
+                public void error(Throwable error) {
+                  wrapped.put("error", wrapError(error));
+                  reply.reply(wrapped);
+                }
+              };
+
+              api.updateProfile(requestArg, resultCallback);
             }
             catch (Error | RuntimeException exception) {
               wrapped.put("error", wrapError(exception));
