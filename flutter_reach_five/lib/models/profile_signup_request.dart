@@ -87,13 +87,16 @@ class ProfileSignupRequest extends Equatable {
   /// The user bio
   final String? bio;
 
-  /// TODO: find the customFields we can put in here / Only on Android for now
+  /// (Android only) the custom fields linked to your user
+  /// It must match the ones you have created in your reachFive console
+  // TODO: implement it on iOS
   final Map<String, Object?>? customFields;
 
-  /// TODO: find the consents we can put in here
+  /// The user consents
+  // TODO: find the consents we can put in here
   final Map<String, Consent>? consents;
 
-  /// TODO: find exactly what's this option do
+  /// Used to know if the user profile is lite or not
   final bool? liteOnly;
 
   @override
