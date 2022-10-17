@@ -35,6 +35,13 @@ public class Converters {
                         details: nil
                 )
             }
+            if (apiError?.error == "invalid_grant") {
+                return FlutterError(
+                        code: errorCodesInterface.invalidGrant,
+                        message: apiError?.errorUserMsg,
+                        details: nil
+                )
+            }
             return defaultFlutterError
         case .AuthCanceled:
             return defaultFlutterError

@@ -114,6 +114,23 @@ void main() {
 
         expect(error, isA<InvalidVerificationCodeExceptionInterface>());
       });
+
+      test('$InvalidGrantCodeExceptionInterface', () {
+        final exception = PlatformException(
+          code: errorCodesInterface.invalidGrant,
+        );
+
+        Object? error;
+
+        try {
+          FlutterReachFiveIOS()
+              .parseError(exception, StackTrace.fromString('test'));
+        } catch (e) {
+          error = e;
+        }
+
+        expect(error, isA<InvalidGrantCodeExceptionInterface>());
+      });
     });
   });
 }
