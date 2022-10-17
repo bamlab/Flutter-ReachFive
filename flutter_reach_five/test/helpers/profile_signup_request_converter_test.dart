@@ -13,6 +13,7 @@ void main() {
           const ProfileSignupRequest(
             password: 'password',
             addresses: [ProfileAddress()],
+            customFields: <String, Object?>{'key': 'objectValue'},
             consents: <String, Consent>{
               'key': Consent(granted: true, date: 'date')
             },
@@ -28,6 +29,7 @@ void main() {
           ProfileSignupRequestInterface(
             password: 'password',
             addresses: [ProfileAddressInterface()],
+            customFields: <String, Object?>{'key': 'objectValue'},
             consents: <String, ConsentInterface>{
               'key': ConsentInterface(granted: true, date: 'date')
             },

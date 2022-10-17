@@ -53,15 +53,21 @@ class ProfileSignupRequestConverter {
         .map(ProfileAddressConverter.fromInterface)
         .toList();
 
-    final customFieldsInterface = Map<String?, Object?>.from(
-      profileSignupRequestInterface.customFields ?? <String?, Object?>{},
-    )..removeWhere((key, _) => key == null);
-    final customFields = customFieldsInterface.cast<String, Object?>();
+    final profileCustomFieldsInterface =
+        profileSignupRequestInterface.customFields;
+    final customFieldsInterface = profileCustomFieldsInterface != null
+        ? Map<String?, Object?>.from(profileCustomFieldsInterface)
+        : null;
+    customFieldsInterface?.removeWhere((key, _) => key == null);
+    final customFields = customFieldsInterface?.cast<String, Object?>();
 
-    final consentsInterface = Map<String?, ConsentInterface?>.from(
-      profileSignupRequestInterface.consents ?? <String?, ConsentInterface?>{},
-    )..removeWhere((key, value) => key == null || value == null);
-    final consents = consentsInterface.cast<String, ConsentInterface>().map(
+    final profileConsentsInterface = profileSignupRequestInterface.consents;
+    final consentsInterface = profileConsentsInterface != null
+        ? Map<String?, ConsentInterface?>.from(profileConsentsInterface)
+        : null;
+    consentsInterface
+        ?.removeWhere((key, value) => key == null || value == null);
+    final consents = consentsInterface?.cast<String, ConsentInterface>().map(
           (key, consentInterface) =>
               MapEntry(key, ConsentConverter.fromInterface(consentInterface)),
         );
