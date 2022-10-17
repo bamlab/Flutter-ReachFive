@@ -127,6 +127,7 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
           reachFiveKey: reachFiveKey,
           authToken: authToken,
           profile: profile,
+          errorCodes: errorCodesInterface,
         ),
       );
 

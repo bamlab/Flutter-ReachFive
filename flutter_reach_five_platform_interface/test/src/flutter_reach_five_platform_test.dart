@@ -174,6 +174,7 @@ void main() {
             authToken: authToken,
             reachFiveKey: reachFiveKey,
             profile: firstProfile,
+            errorCodes: errorCodesInterface,
           ),
         );
         when(() => mockReachFiveHostApi.updateProfile(any()))
