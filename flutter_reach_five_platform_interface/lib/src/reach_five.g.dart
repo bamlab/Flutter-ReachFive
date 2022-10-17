@@ -23,17 +23,20 @@ class ErrorCodesInterface {
     required this.emailAlreadyInUseCode,
     required this.invalidEmailOrPasswordCode,
     required this.invalidVerificationCode,
+    required this.invalidGrant,
   });
 
   String emailAlreadyInUseCode;
   String invalidEmailOrPasswordCode;
   String invalidVerificationCode;
+  String invalidGrant;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
     pigeonMap['emailAlreadyInUseCode'] = emailAlreadyInUseCode;
     pigeonMap['invalidEmailOrPasswordCode'] = invalidEmailOrPasswordCode;
     pigeonMap['invalidVerificationCode'] = invalidVerificationCode;
+    pigeonMap['invalidGrant'] = invalidGrant;
     return pigeonMap;
   }
 
@@ -44,6 +47,7 @@ class ErrorCodesInterface {
       invalidEmailOrPasswordCode:
           pigeonMap['invalidEmailOrPasswordCode']! as String,
       invalidVerificationCode: pigeonMap['invalidVerificationCode']! as String,
+      invalidGrant: pigeonMap['invalidGrant']! as String,
     );
   }
 }
@@ -668,6 +672,241 @@ class RefreshAccessTokenRequestInterface {
   }
 }
 
+class LoginSummaryInterface {
+  LoginSummaryInterface({
+    this.firstLogin,
+    this.lastLogin,
+    this.total,
+    this.origins,
+    this.devices,
+    this.lastProvider,
+  });
+
+  double? firstLogin;
+  double? lastLogin;
+  int? total;
+  List<String?>? origins;
+  List<String?>? devices;
+  String? lastProvider;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['firstLogin'] = firstLogin;
+    pigeonMap['lastLogin'] = lastLogin;
+    pigeonMap['total'] = total;
+    pigeonMap['origins'] = origins;
+    pigeonMap['devices'] = devices;
+    pigeonMap['lastProvider'] = lastProvider;
+    return pigeonMap;
+  }
+
+  static LoginSummaryInterface decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return LoginSummaryInterface(
+      firstLogin: pigeonMap['firstLogin'] as double?,
+      lastLogin: pigeonMap['lastLogin'] as double?,
+      total: pigeonMap['total'] as int?,
+      origins: (pigeonMap['origins'] as List<Object?>?)?.cast<String?>(),
+      devices: (pigeonMap['devices'] as List<Object?>?)?.cast<String?>(),
+      lastProvider: pigeonMap['lastProvider'] as String?,
+    );
+  }
+}
+
+class EmailsInterface {
+  EmailsInterface({
+    this.verified,
+    this.unverified,
+  });
+
+  List<String?>? verified;
+  List<String?>? unverified;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['verified'] = verified;
+    pigeonMap['unverified'] = unverified;
+    return pigeonMap;
+  }
+
+  static EmailsInterface decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return EmailsInterface(
+      verified: (pigeonMap['verified'] as List<Object?>?)?.cast<String?>(),
+      unverified: (pigeonMap['unverified'] as List<Object?>?)?.cast<String?>(),
+    );
+  }
+}
+
+class ProfileInterface {
+  ProfileInterface({
+    this.uid,
+    this.givenName,
+    this.middleName,
+    this.familyName,
+    this.name,
+    this.nickname,
+    this.birthdate,
+    this.profileURL,
+    this.picture,
+    this.externalId,
+    this.authTypes,
+    this.loginSummary,
+    this.username,
+    this.gender,
+    this.email,
+    this.emailVerified,
+    this.emails,
+    this.phoneNumber,
+    this.phoneNumberVerified,
+    this.addresses,
+    this.locale,
+    this.bio,
+    this.customFields,
+    this.consents,
+    this.createdAt,
+    this.updatedAt,
+    this.liteOnly,
+    this.company,
+  });
+
+  String? uid;
+  String? givenName;
+  String? middleName;
+  String? familyName;
+  String? name;
+  String? nickname;
+  String? birthdate;
+  String? profileURL;
+  String? picture;
+  String? externalId;
+  List<String?>? authTypes;
+  LoginSummaryInterface? loginSummary;
+  String? username;
+  String? gender;
+  String? email;
+  bool? emailVerified;
+  EmailsInterface? emails;
+  String? phoneNumber;
+  bool? phoneNumberVerified;
+  List<ProfileAddressInterface?>? addresses;
+  String? locale;
+  String? bio;
+  Map<String?, Object?>? customFields;
+  Map<String?, ConsentInterface?>? consents;
+  String? createdAt;
+  String? updatedAt;
+  bool? liteOnly;
+  String? company;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['uid'] = uid;
+    pigeonMap['givenName'] = givenName;
+    pigeonMap['middleName'] = middleName;
+    pigeonMap['familyName'] = familyName;
+    pigeonMap['name'] = name;
+    pigeonMap['nickname'] = nickname;
+    pigeonMap['birthdate'] = birthdate;
+    pigeonMap['profileURL'] = profileURL;
+    pigeonMap['picture'] = picture;
+    pigeonMap['externalId'] = externalId;
+    pigeonMap['authTypes'] = authTypes;
+    pigeonMap['loginSummary'] = loginSummary?.encode();
+    pigeonMap['username'] = username;
+    pigeonMap['gender'] = gender;
+    pigeonMap['email'] = email;
+    pigeonMap['emailVerified'] = emailVerified;
+    pigeonMap['emails'] = emails?.encode();
+    pigeonMap['phoneNumber'] = phoneNumber;
+    pigeonMap['phoneNumberVerified'] = phoneNumberVerified;
+    pigeonMap['addresses'] = addresses;
+    pigeonMap['locale'] = locale;
+    pigeonMap['bio'] = bio;
+    pigeonMap['customFields'] = customFields;
+    pigeonMap['consents'] = consents;
+    pigeonMap['createdAt'] = createdAt;
+    pigeonMap['updatedAt'] = updatedAt;
+    pigeonMap['liteOnly'] = liteOnly;
+    pigeonMap['company'] = company;
+    return pigeonMap;
+  }
+
+  static ProfileInterface decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return ProfileInterface(
+      uid: pigeonMap['uid'] as String?,
+      givenName: pigeonMap['givenName'] as String?,
+      middleName: pigeonMap['middleName'] as String?,
+      familyName: pigeonMap['familyName'] as String?,
+      name: pigeonMap['name'] as String?,
+      nickname: pigeonMap['nickname'] as String?,
+      birthdate: pigeonMap['birthdate'] as String?,
+      profileURL: pigeonMap['profileURL'] as String?,
+      picture: pigeonMap['picture'] as String?,
+      externalId: pigeonMap['externalId'] as String?,
+      authTypes: (pigeonMap['authTypes'] as List<Object?>?)?.cast<String?>(),
+      loginSummary: pigeonMap['loginSummary'] != null
+          ? LoginSummaryInterface.decode(pigeonMap['loginSummary']!)
+          : null,
+      username: pigeonMap['username'] as String?,
+      gender: pigeonMap['gender'] as String?,
+      email: pigeonMap['email'] as String?,
+      emailVerified: pigeonMap['emailVerified'] as bool?,
+      emails: pigeonMap['emails'] != null
+          ? EmailsInterface.decode(pigeonMap['emails']!)
+          : null,
+      phoneNumber: pigeonMap['phoneNumber'] as String?,
+      phoneNumberVerified: pigeonMap['phoneNumberVerified'] as bool?,
+      addresses: (pigeonMap['addresses'] as List<Object?>?)
+          ?.cast<ProfileAddressInterface?>(),
+      locale: pigeonMap['locale'] as String?,
+      bio: pigeonMap['bio'] as String?,
+      customFields: (pigeonMap['customFields'] as Map<Object?, Object?>?)
+          ?.cast<String?, Object?>(),
+      consents: (pigeonMap['consents'] as Map<Object?, Object?>?)
+          ?.cast<String?, ConsentInterface?>(),
+      createdAt: pigeonMap['createdAt'] as String?,
+      updatedAt: pigeonMap['updatedAt'] as String?,
+      liteOnly: pigeonMap['liteOnly'] as bool?,
+      company: pigeonMap['company'] as String?,
+    );
+  }
+}
+
+class UpdateProfileRequestInterface {
+  UpdateProfileRequestInterface({
+    required this.reachFiveKey,
+    required this.authToken,
+    required this.profile,
+    required this.errorCodes,
+  });
+
+  ReachFiveKeyInterface reachFiveKey;
+  AuthTokenInterface authToken;
+  ProfileInterface profile;
+  ErrorCodesInterface errorCodes;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['reachFiveKey'] = reachFiveKey.encode();
+    pigeonMap['authToken'] = authToken.encode();
+    pigeonMap['profile'] = profile.encode();
+    pigeonMap['errorCodes'] = errorCodes.encode();
+    return pigeonMap;
+  }
+
+  static UpdateProfileRequestInterface decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return UpdateProfileRequestInterface(
+      reachFiveKey: ReachFiveKeyInterface.decode(pigeonMap['reachFiveKey']!),
+      authToken: AuthTokenInterface.decode(pigeonMap['authToken']!),
+      profile: ProfileInterface.decode(pigeonMap['profile']!),
+      errorCodes: ErrorCodesInterface.decode(pigeonMap['errorCodes']!),
+    );
+  }
+}
+
 class RequestPasswordResetRequestInterface {
   RequestPasswordResetRequestInterface({
     required this.reachFiveKey,
@@ -851,56 +1090,68 @@ class _ReachFiveHostApiCodec extends StandardMessageCodec {
     } else if (value is ConsentInterface) {
       buffer.putUint8(130);
       writeValue(buffer, value.encode());
-    } else if (value is ErrorCodesInterface) {
+    } else if (value is EmailsInterface) {
       buffer.putUint8(131);
       writeValue(buffer, value.encode());
-    } else if (value is LoginWithPasswordRequestInterface) {
+    } else if (value is ErrorCodesInterface) {
       buffer.putUint8(132);
       writeValue(buffer, value.encode());
-    } else if (value is LoginWithProviderRequestInterface) {
+    } else if (value is LoginSummaryInterface) {
       buffer.putUint8(133);
       writeValue(buffer, value.encode());
-    } else if (value is OpenIdUserInterface) {
+    } else if (value is LoginWithPasswordRequestInterface) {
       buffer.putUint8(134);
       writeValue(buffer, value.encode());
-    } else if (value is ProfileAddressInterface) {
+    } else if (value is LoginWithProviderRequestInterface) {
       buffer.putUint8(135);
       writeValue(buffer, value.encode());
-    } else if (value is ProfileSignupRequestInterface) {
+    } else if (value is OpenIdUserInterface) {
       buffer.putUint8(136);
       writeValue(buffer, value.encode());
-    } else if (value is ProviderCreatorInterface) {
+    } else if (value is ProfileAddressInterface) {
       buffer.putUint8(137);
       writeValue(buffer, value.encode());
-    } else if (value is ReachFiveConfigInterface) {
+    } else if (value is ProfileInterface) {
       buffer.putUint8(138);
       writeValue(buffer, value.encode());
-    } else if (value is ReachFiveKeyInterface) {
+    } else if (value is ProfileSignupRequestInterface) {
       buffer.putUint8(139);
       writeValue(buffer, value.encode());
-    } else if (value is RefreshAccessTokenRequestInterface) {
+    } else if (value is ProviderCreatorInterface) {
       buffer.putUint8(140);
       writeValue(buffer, value.encode());
-    } else if (value is RequestPasswordResetRequestInterface) {
+    } else if (value is ReachFiveConfigInterface) {
       buffer.putUint8(141);
       writeValue(buffer, value.encode());
-    } else if (value is SdkConfigInterface) {
+    } else if (value is ReachFiveKeyInterface) {
       buffer.putUint8(142);
       writeValue(buffer, value.encode());
-    } else if (value is SignupRequestInterface) {
+    } else if (value is RefreshAccessTokenRequestInterface) {
       buffer.putUint8(143);
       writeValue(buffer, value.encode());
-    } else if (value is UpdatePasswordWithAccessTokenRequestInterface) {
+    } else if (value is RequestPasswordResetRequestInterface) {
       buffer.putUint8(144);
       writeValue(buffer, value.encode());
-    } else if (value is UpdatePasswordWithEmailRequestInterface) {
+    } else if (value is SdkConfigInterface) {
       buffer.putUint8(145);
       writeValue(buffer, value.encode());
-    } else if (value is UpdatePasswordWithFreshAccessTokenRequestInterface) {
+    } else if (value is SignupRequestInterface) {
       buffer.putUint8(146);
       writeValue(buffer, value.encode());
-    } else if (value is UpdatePasswordWithPhoneNumberRequestInterface) {
+    } else if (value is UpdatePasswordWithAccessTokenRequestInterface) {
       buffer.putUint8(147);
+      writeValue(buffer, value.encode());
+    } else if (value is UpdatePasswordWithEmailRequestInterface) {
+      buffer.putUint8(148);
+      writeValue(buffer, value.encode());
+    } else if (value is UpdatePasswordWithFreshAccessTokenRequestInterface) {
+      buffer.putUint8(149);
+      writeValue(buffer, value.encode());
+    } else if (value is UpdatePasswordWithPhoneNumberRequestInterface) {
+      buffer.putUint8(150);
+      writeValue(buffer, value.encode());
+    } else if (value is UpdateProfileRequestInterface) {
+      buffer.putUint8(151);
       writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
@@ -920,59 +1171,71 @@ class _ReachFiveHostApiCodec extends StandardMessageCodec {
         return ConsentInterface.decode(readValue(buffer)!);
 
       case 131:
-        return ErrorCodesInterface.decode(readValue(buffer)!);
+        return EmailsInterface.decode(readValue(buffer)!);
 
       case 132:
-        return LoginWithPasswordRequestInterface.decode(readValue(buffer)!);
+        return ErrorCodesInterface.decode(readValue(buffer)!);
 
       case 133:
-        return LoginWithProviderRequestInterface.decode(readValue(buffer)!);
+        return LoginSummaryInterface.decode(readValue(buffer)!);
 
       case 134:
-        return OpenIdUserInterface.decode(readValue(buffer)!);
+        return LoginWithPasswordRequestInterface.decode(readValue(buffer)!);
 
       case 135:
-        return ProfileAddressInterface.decode(readValue(buffer)!);
+        return LoginWithProviderRequestInterface.decode(readValue(buffer)!);
 
       case 136:
-        return ProfileSignupRequestInterface.decode(readValue(buffer)!);
+        return OpenIdUserInterface.decode(readValue(buffer)!);
 
       case 137:
-        return ProviderCreatorInterface.decode(readValue(buffer)!);
+        return ProfileAddressInterface.decode(readValue(buffer)!);
 
       case 138:
-        return ReachFiveConfigInterface.decode(readValue(buffer)!);
+        return ProfileInterface.decode(readValue(buffer)!);
 
       case 139:
-        return ReachFiveKeyInterface.decode(readValue(buffer)!);
+        return ProfileSignupRequestInterface.decode(readValue(buffer)!);
 
       case 140:
-        return RefreshAccessTokenRequestInterface.decode(readValue(buffer)!);
+        return ProviderCreatorInterface.decode(readValue(buffer)!);
 
       case 141:
-        return RequestPasswordResetRequestInterface.decode(readValue(buffer)!);
+        return ReachFiveConfigInterface.decode(readValue(buffer)!);
 
       case 142:
-        return SdkConfigInterface.decode(readValue(buffer)!);
+        return ReachFiveKeyInterface.decode(readValue(buffer)!);
 
       case 143:
-        return SignupRequestInterface.decode(readValue(buffer)!);
+        return RefreshAccessTokenRequestInterface.decode(readValue(buffer)!);
 
       case 144:
+        return RequestPasswordResetRequestInterface.decode(readValue(buffer)!);
+
+      case 145:
+        return SdkConfigInterface.decode(readValue(buffer)!);
+
+      case 146:
+        return SignupRequestInterface.decode(readValue(buffer)!);
+
+      case 147:
         return UpdatePasswordWithAccessTokenRequestInterface.decode(
             readValue(buffer)!);
 
-      case 145:
+      case 148:
         return UpdatePasswordWithEmailRequestInterface.decode(
             readValue(buffer)!);
 
-      case 146:
+      case 149:
         return UpdatePasswordWithFreshAccessTokenRequestInterface.decode(
             readValue(buffer)!);
 
-      case 147:
+      case 150:
         return UpdatePasswordWithPhoneNumberRequestInterface.decode(
             readValue(buffer)!);
+
+      case 151:
+        return UpdateProfileRequestInterface.decode(readValue(buffer)!);
 
       default:
         return super.readValueOfType(type, buffer);
@@ -1131,6 +1394,36 @@ class ReachFiveHostApi {
       );
     } else {
       return;
+    }
+  }
+
+  Future<ProfileInterface> updateProfile(
+      UpdateProfileRequestInterface arg_request) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.ReachFiveHostApi.updateProfile', codec,
+        binaryMessenger: _binaryMessenger);
+    final Map<Object?, Object?>? replyMap =
+        await channel.send(<Object?>[arg_request]) as Map<Object?, Object?>?;
+    if (replyMap == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyMap['error'] != null) {
+      final Map<Object?, Object?> error =
+          (replyMap['error'] as Map<Object?, Object?>?)!;
+      throw PlatformException(
+        code: (error['code'] as String?)!,
+        message: error['message'] as String?,
+        details: error['details'],
+      );
+    } else if (replyMap['result'] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (replyMap['result'] as ProfileInterface?)!;
     }
   }
 

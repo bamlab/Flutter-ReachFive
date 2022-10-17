@@ -161,6 +161,36 @@ void main() {
       });
     });
 
+    group('updateProfile', () {
+      test('returns correct profile', () async {
+        final authToken = AuthTokenInterface(accessToken: 'firstAccessToken');
+
+        final firstProfile = ProfileInterface();
+
+        final secondProfile = ProfileInterface();
+
+        registerFallbackValue(
+          UpdateProfileRequestInterface(
+            authToken: authToken,
+            reachFiveKey: reachFiveKey,
+            profile: firstProfile,
+            errorCodes: errorCodesInterface,
+          ),
+        );
+        when(() => mockReachFiveHostApi.updateProfile(any()))
+            .thenAnswer((_) async => secondProfile);
+
+        final receivedProfile =
+            await FlutterReachFivePlatform.instance.updateProfile(
+          reachFiveKey: reachFiveKey,
+          authToken: authToken,
+          profile: firstProfile,
+        );
+
+        expect(secondProfile, receivedProfile);
+      });
+    });
+
     group('refreshAccessToken', () {
       test('returns correct auth token', () async {
         final firstAuthToken =

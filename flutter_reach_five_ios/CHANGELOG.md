@@ -1,3 +1,7 @@
+# 0.1.3
+
+- Add UpdateProfile function
+
 # 0.1.2
 
 - Keep up to date with others packages release

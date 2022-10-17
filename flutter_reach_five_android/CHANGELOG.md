@@ -1,3 +1,7 @@
+# 0.1.3
+
+- Add UpdateProfile function
+
 # 0.1.2
 
 - Fix crash on Android release mode

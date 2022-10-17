@@ -1,16 +1,15 @@
 import 'package:equatable/equatable.dart';
 
 import 'consent.dart';
+import 'emails.dart';
+import 'login_summary.dart';
 import 'profile_address.dart';
 
-/// [ProfileSignupRequest] class, contains the infos for the profile
-/// in a signUp request
-class ProfileSignupRequest extends Equatable {
-  /// [ProfileSignupRequest] default constructor
-  const ProfileSignupRequest({
-    required this.password,
-    this.email,
-    this.phoneNumber,
+/// [Profile] class, contains the infos of an user
+class Profile extends Equatable {
+  /// [Profile] default constructor
+  const Profile({
+    this.uid,
     this.givenName,
     this.middleName,
     this.familyName,
@@ -19,39 +18,37 @@ class ProfileSignupRequest extends Equatable {
     this.birthdate,
     this.profileURL,
     this.picture,
+    this.externalId,
+    this.authTypes,
+    this.loginSummary,
     this.username,
     this.gender,
-    this.company,
+    this.email,
+    this.emailVerified,
+    this.emails,
+    this.phoneNumber,
+    this.phoneNumberVerified,
     this.addresses,
     this.locale,
     this.bio,
     this.customFields,
     this.consents,
+    this.createdAt,
+    this.updatedAt,
     this.liteOnly,
+    this.company,
   });
 
-  /// The user password
-  final String password;
+  /// The user id
+  final String? uid;
 
-  /// The user email
-  ///
-  /// Used to identify the user
-  /// If not provided, a phoneNumber must be given
-  final String? email;
-
-  /// The user phoneNumber
-  ///
-  /// Used to identify the user
-  /// If not provided, an email must be given
-  final String? phoneNumber;
-
-  /// The user givenName
+  /// The user given name
   final String? givenName;
 
-  /// The user middleName
+  /// The user middle name
   final String? middleName;
 
-  /// The user familyName
+  /// The user family name
   final String? familyName;
 
   /// The user name
@@ -63,11 +60,20 @@ class ProfileSignupRequest extends Equatable {
   /// The user birthdate
   final String? birthdate;
 
-  /// The user profileURL
+  /// The user profile url
   final String? profileURL;
 
   /// The user picture
   final String? picture;
+
+  /// The user external id
+  final String? externalId;
+
+  /// The user list of authentification types
+  final List<String>? authTypes;
+
+  /// The user [LoginSummary]
+  final LoginSummary? loginSummary;
 
   /// The user username
   final String? username;
@@ -75,10 +81,22 @@ class ProfileSignupRequest extends Equatable {
   /// The user gender
   final String? gender;
 
-  /// The user company
-  final String? company;
+  /// The user email
+  final String? email;
 
-  /// The user addresses
+  /// Used to check if an user [email] is verified or not
+  final bool? emailVerified;
+
+  /// The user list of verified/unverified emails
+  final Emails? emails;
+
+  /// The user phone number
+  final String? phoneNumber;
+
+  /// Used to check if an user [phoneNumber] is verified or not
+  final bool? phoneNumberVerified;
+
+  /// The user list of addresses
   final List<ProfileAddress>? addresses;
 
   /// The user locale
@@ -96,14 +114,21 @@ class ProfileSignupRequest extends Equatable {
   // TODO: find the consents we can put in here
   final Map<String, Consent>? consents;
 
+  /// The time the user's profile was created
+  final String? createdAt;
+
+  /// The last time the user's profile was updated
+  final String? updatedAt;
+
   /// Used to know if the user profile is lite or not
   final bool? liteOnly;
 
+  /// The user company
+  final String? company;
+
   @override
   List<Object?> get props => [
-        password,
-        email,
-        phoneNumber,
+        uid,
         givenName,
         middleName,
         familyName,
@@ -112,14 +137,24 @@ class ProfileSignupRequest extends Equatable {
         birthdate,
         profileURL,
         picture,
+        externalId,
+        authTypes,
+        loginSummary,
         username,
         gender,
-        company,
+        email,
+        emailVerified,
+        emails,
+        phoneNumber,
+        phoneNumberVerified,
         addresses,
         locale,
         bio,
         customFields,
         consents,
+        createdAt,
+        updatedAt,
         liteOnly,
+        company,
       ];
 }

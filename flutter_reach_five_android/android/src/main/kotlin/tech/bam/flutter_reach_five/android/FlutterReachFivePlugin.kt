@@ -4,9 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import co.reachfive.identity.sdk.core.ReachFive
-import co.reachfive.identity.sdk.core.models.AuthToken
-import co.reachfive.identity.sdk.core.models.ReachFiveError
-import co.reachfive.identity.sdk.core.models.SdkConfig
+import co.reachfive.identity.sdk.core.models.*
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import co.reachfive.identity.sdk.core.models.requests.UpdatePasswordRequest.*
@@ -323,6 +321,40 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
                     code= "logout_error_code",
                     message= error.message,
                     details= null
+                )
+            )}
+        )
+    }
+
+    override fun updateProfile(
+        request: ReachFiveApi.UpdateProfileRequestInterface,
+        result: ReachFiveApi.Result<ReachFiveApi.ProfileInterface>
+    ) {
+        val reachFive: ReachFive
+        try {
+            reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
+        } catch (error: FlutterError) {
+            result.error(error)
+            return
+        }
+
+        reachFive.updateProfile(
+            authToken = Converters.authTokenFromInterface(request.authToken),
+            profile = Converters.profileFromInterface(request.profile),
+            success = {
+                profile ->
+                result.success(Converters.profileToInterface(profile))
+            },
+            failure = {
+                error -> result.error(
+                Converters.parseError(
+                    reachFiveError = error,
+                    errorCodesInterface = request.errorCodes,
+                    defaultFlutterError = FlutterError(
+                        code= "update_profile_error_code",
+                        message= error.message,
+                        details= null
+                    )
                 )
             )}
         )

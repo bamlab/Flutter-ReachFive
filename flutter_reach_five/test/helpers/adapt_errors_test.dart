@@ -70,5 +70,20 @@ void main() {
 
       expect(error, isA<InvalidVerificationCodeException>());
     });
+
+    test('$InvalidGrantCodeException', () async {
+      Object? error;
+
+      try {
+        adaptErrors(
+          error: InvalidGrantCodeExceptionInterface(),
+          stackTrace: StackTrace.fromString('test'),
+        );
+      } catch (e) {
+        error = e;
+      }
+
+      expect(error, isA<InvalidGrantCodeException>());
+    });
   });
 }

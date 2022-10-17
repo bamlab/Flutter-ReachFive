@@ -34,6 +34,10 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 @class LoginWithPasswordRequestInterface;
 @class LoginWithProviderRequestInterface;
 @class RefreshAccessTokenRequestInterface;
+@class LoginSummaryInterface;
+@class EmailsInterface;
+@class ProfileInterface;
+@class UpdateProfileRequestInterface;
 @class RequestPasswordResetRequestInterface;
 @class UpdatePasswordWithAccessTokenRequestInterface;
 @class UpdatePasswordWithFreshAccessTokenRequestInterface;
@@ -45,10 +49,12 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithEmailAlreadyInUseCode:(NSString *)emailAlreadyInUseCode
     invalidEmailOrPasswordCode:(NSString *)invalidEmailOrPasswordCode
-    invalidVerificationCode:(NSString *)invalidVerificationCode;
+    invalidVerificationCode:(NSString *)invalidVerificationCode
+    invalidGrant:(NSString *)invalidGrant;
 @property(nonatomic, copy) NSString * emailAlreadyInUseCode;
 @property(nonatomic, copy) NSString * invalidEmailOrPasswordCode;
 @property(nonatomic, copy) NSString * invalidVerificationCode;
+@property(nonatomic, copy) NSString * invalidGrant;
 @end
 
 @interface SdkConfigInterface : NSObject
@@ -301,6 +307,100 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 @property(nonatomic, strong) AuthTokenInterface * authToken;
 @end
 
+@interface LoginSummaryInterface : NSObject
++ (instancetype)makeWithFirstLogin:(nullable NSNumber *)firstLogin
+    lastLogin:(nullable NSNumber *)lastLogin
+    total:(nullable NSNumber *)total
+    origins:(nullable NSArray<NSString *> *)origins
+    devices:(nullable NSArray<NSString *> *)devices
+    lastProvider:(nullable NSString *)lastProvider;
+@property(nonatomic, strong, nullable) NSNumber * firstLogin;
+@property(nonatomic, strong, nullable) NSNumber * lastLogin;
+@property(nonatomic, strong, nullable) NSNumber * total;
+@property(nonatomic, strong, nullable) NSArray<NSString *> * origins;
+@property(nonatomic, strong, nullable) NSArray<NSString *> * devices;
+@property(nonatomic, copy, nullable) NSString * lastProvider;
+@end
+
+@interface EmailsInterface : NSObject
++ (instancetype)makeWithVerified:(nullable NSArray<NSString *> *)verified
+    unverified:(nullable NSArray<NSString *> *)unverified;
+@property(nonatomic, strong, nullable) NSArray<NSString *> * verified;
+@property(nonatomic, strong, nullable) NSArray<NSString *> * unverified;
+@end
+
+@interface ProfileInterface : NSObject
++ (instancetype)makeWithUid:(nullable NSString *)uid
+    givenName:(nullable NSString *)givenName
+    middleName:(nullable NSString *)middleName
+    familyName:(nullable NSString *)familyName
+    name:(nullable NSString *)name
+    nickname:(nullable NSString *)nickname
+    birthdate:(nullable NSString *)birthdate
+    profileURL:(nullable NSString *)profileURL
+    picture:(nullable NSString *)picture
+    externalId:(nullable NSString *)externalId
+    authTypes:(nullable NSArray<NSString *> *)authTypes
+    loginSummary:(nullable LoginSummaryInterface *)loginSummary
+    username:(nullable NSString *)username
+    gender:(nullable NSString *)gender
+    email:(nullable NSString *)email
+    emailVerified:(nullable NSNumber *)emailVerified
+    emails:(nullable EmailsInterface *)emails
+    phoneNumber:(nullable NSString *)phoneNumber
+    phoneNumberVerified:(nullable NSNumber *)phoneNumberVerified
+    addresses:(nullable NSArray<ProfileAddressInterface *> *)addresses
+    locale:(nullable NSString *)locale
+    bio:(nullable NSString *)bio
+    customFields:(nullable NSDictionary<NSString *, id> *)customFields
+    consents:(nullable NSDictionary<NSString *, ConsentInterface *> *)consents
+    createdAt:(nullable NSString *)createdAt
+    updatedAt:(nullable NSString *)updatedAt
+    liteOnly:(nullable NSNumber *)liteOnly
+    company:(nullable NSString *)company;
+@property(nonatomic, copy, nullable) NSString * uid;
+@property(nonatomic, copy, nullable) NSString * givenName;
+@property(nonatomic, copy, nullable) NSString * middleName;
+@property(nonatomic, copy, nullable) NSString * familyName;
+@property(nonatomic, copy, nullable) NSString * name;
+@property(nonatomic, copy, nullable) NSString * nickname;
+@property(nonatomic, copy, nullable) NSString * birthdate;
+@property(nonatomic, copy, nullable) NSString * profileURL;
+@property(nonatomic, copy, nullable) NSString * picture;
+@property(nonatomic, copy, nullable) NSString * externalId;
+@property(nonatomic, strong, nullable) NSArray<NSString *> * authTypes;
+@property(nonatomic, strong, nullable) LoginSummaryInterface * loginSummary;
+@property(nonatomic, copy, nullable) NSString * username;
+@property(nonatomic, copy, nullable) NSString * gender;
+@property(nonatomic, copy, nullable) NSString * email;
+@property(nonatomic, strong, nullable) NSNumber * emailVerified;
+@property(nonatomic, strong, nullable) EmailsInterface * emails;
+@property(nonatomic, copy, nullable) NSString * phoneNumber;
+@property(nonatomic, strong, nullable) NSNumber * phoneNumberVerified;
+@property(nonatomic, strong, nullable) NSArray<ProfileAddressInterface *> * addresses;
+@property(nonatomic, copy, nullable) NSString * locale;
+@property(nonatomic, copy, nullable) NSString * bio;
+@property(nonatomic, strong, nullable) NSDictionary<NSString *, id> * customFields;
+@property(nonatomic, strong, nullable) NSDictionary<NSString *, ConsentInterface *> * consents;
+@property(nonatomic, copy, nullable) NSString * createdAt;
+@property(nonatomic, copy, nullable) NSString * updatedAt;
+@property(nonatomic, strong, nullable) NSNumber * liteOnly;
+@property(nonatomic, copy, nullable) NSString * company;
+@end
+
+@interface UpdateProfileRequestInterface : NSObject
+/// `init` unavailable to enforce nonnull fields, see the `make` class method.
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
+    authToken:(AuthTokenInterface *)authToken
+    profile:(ProfileInterface *)profile
+    errorCodes:(ErrorCodesInterface *)errorCodes;
+@property(nonatomic, strong) ReachFiveKeyInterface * reachFiveKey;
+@property(nonatomic, strong) AuthTokenInterface * authToken;
+@property(nonatomic, strong) ProfileInterface * profile;
+@property(nonatomic, strong) ErrorCodesInterface * errorCodes;
+@end
+
 @interface RequestPasswordResetRequestInterface : NSObject
 /// `init` unavailable to enforce nonnull fields, see the `make` class method.
 - (instancetype)init NS_UNAVAILABLE;
@@ -377,6 +477,7 @@ NSObject<FlutterMessageCodec> *ReachFiveHostApiGetCodec(void);
 - (void)loginWithPasswordRequest:(LoginWithPasswordRequestInterface *)request completion:(void(^)(AuthTokenInterface *_Nullable, FlutterError *_Nullable))completion;
 - (void)loginWithProviderRequest:(LoginWithProviderRequestInterface *)request completion:(void(^)(AuthTokenInterface *_Nullable, FlutterError *_Nullable))completion;
 - (void)logoutReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey completion:(void(^)(FlutterError *_Nullable))completion;
+- (void)updateProfileRequest:(UpdateProfileRequestInterface *)request completion:(void(^)(ProfileInterface *_Nullable, FlutterError *_Nullable))completion;
 - (void)refreshAccessTokenRequest:(RefreshAccessTokenRequestInterface *)request completion:(void(^)(AuthTokenInterface *_Nullable, FlutterError *_Nullable))completion;
 - (void)requestPasswordResetRequest:(RequestPasswordResetRequestInterface *)request completion:(void(^)(FlutterError *_Nullable))completion;
 - (void)updatePasswordWithAccessTokenRequest:(UpdatePasswordWithAccessTokenRequestInterface *)request completion:(void(^)(FlutterError *_Nullable))completion;
