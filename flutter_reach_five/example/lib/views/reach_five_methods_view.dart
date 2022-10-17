@@ -10,6 +10,7 @@ import '../methods/refresh_access_token_method.dart';
 import '../methods/request_password_reset_method.dart';
 import '../methods/signup_method.dart';
 import '../methods/update_password_method.dart';
+import '../methods/update_profile_method.dart';
 
 enum ReachFiveMethod {
   initialize,
@@ -20,6 +21,7 @@ enum ReachFiveMethod {
   refreshAccessToken,
   requestPasswordReset,
   updatePassword,
+  updateProfile,
 }
 
 class ReachFiveMethodsView extends StatefulWidget {
@@ -205,6 +207,15 @@ class _ReachFiveMethodView extends StatelessWidget {
           );
         }
         return const Text('You should initialize Reach Five first');
+      case ReachFiveMethod.updateProfile:
+        if (reachFive != null && authToken != null) {
+          return UpdateProfileMethod(
+            dataSet: dataSet,
+            reachFive: reachFive,
+            authToken: authToken,
+          );
+        }
+        return const Text('You should login or signup first');
     }
   }
 }

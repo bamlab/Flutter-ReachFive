@@ -52,6 +52,7 @@ class LoginWithPasswordMethodState extends State<LoginWithPasswordMethod> {
           ScopeValue.email,
           ScopeValue.offlineAccess,
           ScopeValue.profile,
+          ScopeValue.fullWrite
         ],
       );
 
