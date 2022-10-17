@@ -13,3 +13,10 @@ class InvalidEmailOrPasswordException implements Exception {}
 /// with the wrong verification code
 /// {@endtemplate}
 class InvalidVerificationCodeException implements Exception {}
+
+/// {@template flutter_reach_five.errors.invalid_grant_code}
+/// Error thrown when trying to do an operation with an
+/// invalid access token
+/// It matches a 401 http error code
+/// {@endtemplate}
+class InvalidGrantCodeException implements Exception {}

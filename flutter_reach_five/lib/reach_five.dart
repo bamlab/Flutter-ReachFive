@@ -168,13 +168,24 @@ class ReachFive {
     required AuthToken authToken,
     required Profile profile,
   }) async {
-    final newProfileInterface = await _platform.updateProfile(
-      reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
-      authToken: AuthTokenConverter.toInterface(authToken),
-      profile: ProfileConverter.toInterface(profile),
-    );
+    try {
+      final newProfileInterface = await _platform.updateProfile(
+        reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
+        authToken: AuthTokenConverter.toInterface(authToken),
+        profile: ProfileConverter.toInterface(profile),
+      );
 
-    return ProfileConverter.fromInterface(newProfileInterface);
+      return ProfileConverter.fromInterface(newProfileInterface);
+    } catch (error, stackTrace) {
+      try {
+        _platform.parseError(error, stackTrace);
+      } catch (interfaceError, interfaceStackTrace) {
+        adaptErrors(
+          error: interfaceError,
+          stackTrace: interfaceStackTrace,
+        );
+      }
+    }
   }
 
   /// {@template flutter_reach_five.reachFive.refreshAccessToken}

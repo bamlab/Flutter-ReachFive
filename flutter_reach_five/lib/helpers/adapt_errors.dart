@@ -16,5 +16,8 @@ Never adaptErrors({
   if (error is InvalidVerificationCodeExceptionInterface) {
     throw InvalidVerificationCodeException();
   }
+  if (error is InvalidGrantCodeExceptionInterface) {
+    throw InvalidGrantCodeException();
+  }
   Error.throwWithStackTrace(error, stackTrace);
 }

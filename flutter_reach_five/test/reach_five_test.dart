@@ -369,6 +369,44 @@ void main() {
           receivedProfile,
         );
       });
+
+      test('parse throw error', () async {
+        const profile = Profile(
+          givenName: 'givenName',
+        );
+
+        const authToken = AuthToken(accessToken: 'accessToken');
+
+        registerFallbackValue(
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
+        );
+        registerFallbackValue(AuthTokenConverter.toInterface(authToken));
+        registerFallbackValue(ProfileConverter.toInterface(profile));
+        when(
+          () => flutterReachFivePlatform.updateProfile(
+            reachFiveKey: any(named: 'reachFiveKey'),
+            authToken: any(named: 'authToken'),
+            profile: any(named: 'profile'),
+          ),
+        ).thenThrow(Exception());
+
+        registerFallbackValue(
+          StackTrace.fromString('test'),
+        );
+        when(
+          () => flutterReachFivePlatform.parseError(any(), any()),
+        ).thenThrow(Exception());
+
+        try {
+          await reachFive.updateProfile(
+            authToken: authToken,
+            profile: profile,
+          );
+        } catch (_) {}
+
+        verify(() => flutterReachFivePlatform.parseError(any(), any()))
+            .called(1);
+      });
     });
 
     group('refreshAccessToken', () {
