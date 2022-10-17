@@ -18,11 +18,13 @@ class ErrorCodesInterface {
     required this.emailAlreadyInUseCode,
     required this.invalidEmailOrPasswordCode,
     required this.invalidVerificationCode,
+    required this.invalidGrant,
   });
 
   final String emailAlreadyInUseCode;
   final String invalidEmailOrPasswordCode;
   final String invalidVerificationCode;
+  final String invalidGrant;
 }
 
 class SdkConfigInterface {
@@ -392,11 +394,13 @@ class UpdateProfileRequestInterface {
     required this.reachFiveKey,
     required this.authToken,
     required this.profile,
+    required this.errorCodes,
   });
 
   final ReachFiveKeyInterface reachFiveKey;
   final AuthTokenInterface authToken;
   final ProfileInterface profile;
+  final ErrorCodesInterface errorCodes;
 }
 
 class RequestPasswordResetRequestInterface {

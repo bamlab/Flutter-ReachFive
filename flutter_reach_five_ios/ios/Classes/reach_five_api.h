@@ -49,10 +49,12 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithEmailAlreadyInUseCode:(NSString *)emailAlreadyInUseCode
     invalidEmailOrPasswordCode:(NSString *)invalidEmailOrPasswordCode
-    invalidVerificationCode:(NSString *)invalidVerificationCode;
+    invalidVerificationCode:(NSString *)invalidVerificationCode
+    invalidGrant:(NSString *)invalidGrant;
 @property(nonatomic, copy) NSString * emailAlreadyInUseCode;
 @property(nonatomic, copy) NSString * invalidEmailOrPasswordCode;
 @property(nonatomic, copy) NSString * invalidVerificationCode;
+@property(nonatomic, copy) NSString * invalidGrant;
 @end
 
 @interface SdkConfigInterface : NSObject
@@ -391,10 +393,12 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
     authToken:(AuthTokenInterface *)authToken
-    profile:(ProfileInterface *)profile;
+    profile:(ProfileInterface *)profile
+    errorCodes:(ErrorCodesInterface *)errorCodes;
 @property(nonatomic, strong) ReachFiveKeyInterface * reachFiveKey;
 @property(nonatomic, strong) AuthTokenInterface * authToken;
 @property(nonatomic, strong) ProfileInterface * profile;
+@property(nonatomic, strong) ErrorCodesInterface * errorCodes;
 @end
 
 @interface RequestPasswordResetRequestInterface : NSObject

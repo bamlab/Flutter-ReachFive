@@ -23,17 +23,20 @@ class ErrorCodesInterface {
     required this.emailAlreadyInUseCode,
     required this.invalidEmailOrPasswordCode,
     required this.invalidVerificationCode,
+    required this.invalidGrant,
   });
 
   String emailAlreadyInUseCode;
   String invalidEmailOrPasswordCode;
   String invalidVerificationCode;
+  String invalidGrant;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
     pigeonMap['emailAlreadyInUseCode'] = emailAlreadyInUseCode;
     pigeonMap['invalidEmailOrPasswordCode'] = invalidEmailOrPasswordCode;
     pigeonMap['invalidVerificationCode'] = invalidVerificationCode;
+    pigeonMap['invalidGrant'] = invalidGrant;
     return pigeonMap;
   }
 
@@ -44,6 +47,7 @@ class ErrorCodesInterface {
       invalidEmailOrPasswordCode:
           pigeonMap['invalidEmailOrPasswordCode']! as String,
       invalidVerificationCode: pigeonMap['invalidVerificationCode']! as String,
+      invalidGrant: pigeonMap['invalidGrant']! as String,
     );
   }
 }
@@ -875,17 +879,20 @@ class UpdateProfileRequestInterface {
     required this.reachFiveKey,
     required this.authToken,
     required this.profile,
+    required this.errorCodes,
   });
 
   ReachFiveKeyInterface reachFiveKey;
   AuthTokenInterface authToken;
   ProfileInterface profile;
+  ErrorCodesInterface errorCodes;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
     pigeonMap['reachFiveKey'] = reachFiveKey.encode();
     pigeonMap['authToken'] = authToken.encode();
     pigeonMap['profile'] = profile.encode();
+    pigeonMap['errorCodes'] = errorCodes.encode();
     return pigeonMap;
   }
 
@@ -895,6 +902,7 @@ class UpdateProfileRequestInterface {
       reachFiveKey: ReachFiveKeyInterface.decode(pigeonMap['reachFiveKey']!),
       authToken: AuthTokenInterface.decode(pigeonMap['authToken']!),
       profile: ProfileInterface.decode(pigeonMap['profile']!),
+      errorCodes: ErrorCodesInterface.decode(pigeonMap['errorCodes']!),
     );
   }
 }

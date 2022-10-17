@@ -72,6 +72,15 @@ public class ReachFiveApi {
       this.invalidVerificationCode = setterArg;
     }
 
+    private @NonNull String invalidGrant;
+    public @NonNull String getInvalidGrant() { return invalidGrant; }
+    public void setInvalidGrant(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"invalidGrant\" is null.");
+      }
+      this.invalidGrant = setterArg;
+    }
+
     /** Constructor is private to enforce null safety; use Builder. */
     private ErrorCodesInterface() {}
     public static final class Builder {
@@ -90,11 +99,17 @@ public class ReachFiveApi {
         this.invalidVerificationCode = setterArg;
         return this;
       }
+      private @Nullable String invalidGrant;
+      public @NonNull Builder setInvalidGrant(@NonNull String setterArg) {
+        this.invalidGrant = setterArg;
+        return this;
+      }
       public @NonNull ErrorCodesInterface build() {
         ErrorCodesInterface pigeonReturn = new ErrorCodesInterface();
         pigeonReturn.setEmailAlreadyInUseCode(emailAlreadyInUseCode);
         pigeonReturn.setInvalidEmailOrPasswordCode(invalidEmailOrPasswordCode);
         pigeonReturn.setInvalidVerificationCode(invalidVerificationCode);
+        pigeonReturn.setInvalidGrant(invalidGrant);
         return pigeonReturn;
       }
     }
@@ -103,6 +118,7 @@ public class ReachFiveApi {
       toMapResult.put("emailAlreadyInUseCode", emailAlreadyInUseCode);
       toMapResult.put("invalidEmailOrPasswordCode", invalidEmailOrPasswordCode);
       toMapResult.put("invalidVerificationCode", invalidVerificationCode);
+      toMapResult.put("invalidGrant", invalidGrant);
       return toMapResult;
     }
     static @NonNull ErrorCodesInterface fromMap(@NonNull Map<String, Object> map) {
@@ -113,6 +129,8 @@ public class ReachFiveApi {
       pigeonResult.setInvalidEmailOrPasswordCode((String)invalidEmailOrPasswordCode);
       Object invalidVerificationCode = map.get("invalidVerificationCode");
       pigeonResult.setInvalidVerificationCode((String)invalidVerificationCode);
+      Object invalidGrant = map.get("invalidGrant");
+      pigeonResult.setInvalidGrant((String)invalidGrant);
       return pigeonResult;
     }
   }
@@ -2481,6 +2499,15 @@ public class ReachFiveApi {
       this.profile = setterArg;
     }
 
+    private @NonNull ErrorCodesInterface errorCodes;
+    public @NonNull ErrorCodesInterface getErrorCodes() { return errorCodes; }
+    public void setErrorCodes(@NonNull ErrorCodesInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"errorCodes\" is null.");
+      }
+      this.errorCodes = setterArg;
+    }
+
     /** Constructor is private to enforce null safety; use Builder. */
     private UpdateProfileRequestInterface() {}
     public static final class Builder {
@@ -2499,11 +2526,17 @@ public class ReachFiveApi {
         this.profile = setterArg;
         return this;
       }
+      private @Nullable ErrorCodesInterface errorCodes;
+      public @NonNull Builder setErrorCodes(@NonNull ErrorCodesInterface setterArg) {
+        this.errorCodes = setterArg;
+        return this;
+      }
       public @NonNull UpdateProfileRequestInterface build() {
         UpdateProfileRequestInterface pigeonReturn = new UpdateProfileRequestInterface();
         pigeonReturn.setReachFiveKey(reachFiveKey);
         pigeonReturn.setAuthToken(authToken);
         pigeonReturn.setProfile(profile);
+        pigeonReturn.setErrorCodes(errorCodes);
         return pigeonReturn;
       }
     }
@@ -2512,6 +2545,7 @@ public class ReachFiveApi {
       toMapResult.put("reachFiveKey", (reachFiveKey == null) ? null : reachFiveKey.toMap());
       toMapResult.put("authToken", (authToken == null) ? null : authToken.toMap());
       toMapResult.put("profile", (profile == null) ? null : profile.toMap());
+      toMapResult.put("errorCodes", (errorCodes == null) ? null : errorCodes.toMap());
       return toMapResult;
     }
     static @NonNull UpdateProfileRequestInterface fromMap(@NonNull Map<String, Object> map) {
@@ -2522,6 +2556,8 @@ public class ReachFiveApi {
       pigeonResult.setAuthToken((authToken == null) ? null : AuthTokenInterface.fromMap((Map)authToken));
       Object profile = map.get("profile");
       pigeonResult.setProfile((profile == null) ? null : ProfileInterface.fromMap((Map)profile));
+      Object errorCodes = map.get("errorCodes");
+      pigeonResult.setErrorCodes((errorCodes == null) ? null : ErrorCodesInterface.fromMap((Map)errorCodes));
       return pigeonResult;
     }
   }

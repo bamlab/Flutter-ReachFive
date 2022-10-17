@@ -155,11 +155,13 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 @implementation ErrorCodesInterface
 + (instancetype)makeWithEmailAlreadyInUseCode:(NSString *)emailAlreadyInUseCode
     invalidEmailOrPasswordCode:(NSString *)invalidEmailOrPasswordCode
-    invalidVerificationCode:(NSString *)invalidVerificationCode {
+    invalidVerificationCode:(NSString *)invalidVerificationCode
+    invalidGrant:(NSString *)invalidGrant {
   ErrorCodesInterface* pigeonResult = [[ErrorCodesInterface alloc] init];
   pigeonResult.emailAlreadyInUseCode = emailAlreadyInUseCode;
   pigeonResult.invalidEmailOrPasswordCode = invalidEmailOrPasswordCode;
   pigeonResult.invalidVerificationCode = invalidVerificationCode;
+  pigeonResult.invalidGrant = invalidGrant;
   return pigeonResult;
 }
 + (ErrorCodesInterface *)fromMap:(NSDictionary *)dict {
@@ -170,6 +172,8 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
   NSAssert(pigeonResult.invalidEmailOrPasswordCode != nil, @"");
   pigeonResult.invalidVerificationCode = GetNullableObject(dict, @"invalidVerificationCode");
   NSAssert(pigeonResult.invalidVerificationCode != nil, @"");
+  pigeonResult.invalidGrant = GetNullableObject(dict, @"invalidGrant");
+  NSAssert(pigeonResult.invalidGrant != nil, @"");
   return pigeonResult;
 }
 + (nullable ErrorCodesInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [ErrorCodesInterface fromMap:dict] : nil; }
@@ -178,6 +182,7 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
     @"emailAlreadyInUseCode" : (self.emailAlreadyInUseCode ?: [NSNull null]),
     @"invalidEmailOrPasswordCode" : (self.invalidEmailOrPasswordCode ?: [NSNull null]),
     @"invalidVerificationCode" : (self.invalidVerificationCode ?: [NSNull null]),
+    @"invalidGrant" : (self.invalidGrant ?: [NSNull null]),
   };
 }
 @end
@@ -979,11 +984,13 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 @implementation UpdateProfileRequestInterface
 + (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
     authToken:(AuthTokenInterface *)authToken
-    profile:(ProfileInterface *)profile {
+    profile:(ProfileInterface *)profile
+    errorCodes:(ErrorCodesInterface *)errorCodes {
   UpdateProfileRequestInterface* pigeonResult = [[UpdateProfileRequestInterface alloc] init];
   pigeonResult.reachFiveKey = reachFiveKey;
   pigeonResult.authToken = authToken;
   pigeonResult.profile = profile;
+  pigeonResult.errorCodes = errorCodes;
   return pigeonResult;
 }
 + (UpdateProfileRequestInterface *)fromMap:(NSDictionary *)dict {
@@ -994,6 +1001,8 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
   NSAssert(pigeonResult.authToken != nil, @"");
   pigeonResult.profile = [ProfileInterface nullableFromMap:GetNullableObject(dict, @"profile")];
   NSAssert(pigeonResult.profile != nil, @"");
+  pigeonResult.errorCodes = [ErrorCodesInterface nullableFromMap:GetNullableObject(dict, @"errorCodes")];
+  NSAssert(pigeonResult.errorCodes != nil, @"");
   return pigeonResult;
 }
 + (nullable UpdateProfileRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [UpdateProfileRequestInterface fromMap:dict] : nil; }
@@ -1002,6 +1011,7 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
     @"reachFiveKey" : (self.reachFiveKey ? [self.reachFiveKey toMap] : [NSNull null]),
     @"authToken" : (self.authToken ? [self.authToken toMap] : [NSNull null]),
     @"profile" : (self.profile ? [self.profile toMap] : [NSNull null]),
+    @"errorCodes" : (self.errorCodes ? [self.errorCodes toMap] : [NSNull null]),
   };
 }
 @end
