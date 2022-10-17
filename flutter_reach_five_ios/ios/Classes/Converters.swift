@@ -123,11 +123,7 @@ public class Converters {
     static public func openIdUserFromInterface(
         openIdUserInterface: OpenIdUserInterface
         ) -> OpenIdUser {
-            
-            let emailVerified = openIdUserInterface.emailVerified as? Bool
-            
-            let phoneNumberVerified = openIdUserInterface.phoneNumberVerified as? Bool
-            
+
             let address = openIdUserInterface.address != nil
             ? addressFromInterface(
                 addressInterface: openIdUserInterface.address!
@@ -145,29 +141,29 @@ public class Converters {
                 picture: openIdUserInterface.picture,
                 website: openIdUserInterface.website,
                 email: openIdUserInterface.email,
-                emailVerified: emailVerified,
+                emailVerified: openIdUserInterface.emailVerified?.boolValue,
                 gender: openIdUserInterface.gender,
                 zoneinfo: openIdUserInterface.zoneinfo,
                 locale: openIdUserInterface.locale,
                 phoneNumber: openIdUserInterface.phoneNumber,
-                phoneNumberVerified: phoneNumberVerified,
+                phoneNumberVerified: openIdUserInterface.phoneNumberVerified?.boolValue,
                 address: address
             )
         }
-    
+
     static public func addressToInterface(
             address: ProfileAddress
-        ) -> AddressInterface {
+    ) -> AddressInterface {
 
         AddressInterface.make(
-            withFormatted: address.raw,
-            streetAddress: address.streetAddress,
-            locality: address.locality,
-            region: address.region,
-            postalCode: address.postalCode,
-            country: address.country
+                withFormatted: address.raw,
+                streetAddress: address.streetAddress,
+                locality: address.locality,
+                region: address.region,
+                postalCode: address.postalCode,
+                country: address.country
         )
-        }
+    }
     
     static public func addressFromInterface(
             addressInterface: AddressInterface
@@ -193,9 +189,7 @@ public class Converters {
     static public func signupRequestFromInterface(
             profileSignupRequestInterface: ProfileSignupRequestInterface
         ) -> ProfileSignupRequest {
-            
-            let liteOnly = profileSignupRequestInterface.liteOnly as? Bool
-            
+
             let addresses = profileSignupRequestInterface.addresses?
                 .map({ addressRequest in
                     profileAddressFromInterface(
@@ -233,8 +227,21 @@ public class Converters {
                 bio: profileSignupRequestInterface.bio,
                 consents: consents,
                 company: profileSignupRequestInterface.company,
-                liteOnly: liteOnly
+                liteOnly: profileSignupRequestInterface.liteOnly?.boolValue
             )
+        }
+
+    static public func addressTypeToInterface(
+                addressType: String?
+        ) -> ProfileAddressTypeInterface {
+            switch addressType {
+            case "billing":
+                return ProfileAddressTypeInterface.billing
+            case "delivery":
+                return ProfileAddressTypeInterface.delivery
+            default:
+                return ProfileAddressTypeInterface.delivery
+            }
         }
     
     static public func addressTypeFromInterface(
@@ -249,20 +256,45 @@ public class Converters {
                     return nil
                 }
             }
+
+    static public func profileAddressToInterface(
+            profileAddress: ProfileAddress
+    ) -> ProfileAddressInterface {
+
+        let isDefault = profileAddress.isDefault as? NSNumber
+
+        let addressType = addressTypeToInterface(
+                addressType: profileAddress.addressType
+        )
+
+        return ProfileAddressInterface.make(
+                withTitle: profileAddress.title,
+                isDefault: isDefault,
+                addressType: addressType,
+                streetAddress: profileAddress.streetAddress,
+                locality: profileAddress.locality,
+                region: profileAddress.region,
+                postalCode: profileAddress.postalCode,
+                country: profileAddress.country,
+                raw: profileAddress.raw,
+                deliveryNote: profileAddress.deliveryNote,
+                recipient: profileAddress.recipient,
+                company: profileAddress.company,
+                phoneNumber: profileAddress.phoneNumber
+        )
+    }
     
     static public func profileAddressFromInterface(
             profileAddressInterface: ProfileAddressInterface
         ) -> ProfileAddress {
-            
-            let isDefault = profileAddressInterface.isDefault as? Bool
-            
+
             let addressType = addressTypeFromInterface(
                 addressTypeInterface: profileAddressInterface.addressType
             )
         
             return ProfileAddress(
                 title: profileAddressInterface.title,
-                isDefault: isDefault,
+                isDefault: profileAddressInterface.isDefault?.boolValue,
                 addressType: addressType,
                 streetAddress: profileAddressInterface.streetAddress,
                 locality: profileAddressInterface.locality,
@@ -276,17 +308,28 @@ public class Converters {
                 phoneNumber: profileAddressInterface.phoneNumber
             )
         }
+
+    static public func consentToInterface(
+            consent: Consent
+    ) -> ConsentInterface {
+
+        ConsentInterface.make(
+                withGranted: NSNumber.init(booleanLiteral: consent.granted),
+                consentType: consent.consentType,
+                date: consent.date
+        )
+    }
     
     static public func consentFromInterface(
         consentInterface: ConsentInterface
         ) -> Consent {
 
         Consent(
-            granted: consentInterface.granted as! Bool,
+            granted: consentInterface.granted.boolValue,
             consentType: consentInterface.consentType,
             date: consentInterface.date
         )
-        }
+    }
     
     static public func providerCreatorFromInterface(
                 providerCreatorInterface: ProviderCreatorInterface
@@ -302,4 +345,161 @@ public class Converters {
                     return nil
                 }
             }
+
+    static public func loginSummaryToInterface(
+            loginSummary: LoginSummary
+    ) -> LoginSummaryInterface {
+        let firstLogin = loginSummary.firstLogin != nil ? NSNumber.init(floatLiteral: Double(loginSummary.firstLogin!)) : nil
+        let lastLogin = loginSummary.lastLogin != nil ? NSNumber.init(floatLiteral: Double(loginSummary.lastLogin!)) : nil
+        let total = loginSummary.total != nil ? NSNumber.init(value: loginSummary.total!) : nil
+
+        return LoginSummaryInterface.make(
+                withFirstLogin: firstLogin,
+                lastLogin: lastLogin,
+                total: total,
+                origins: loginSummary.origins,
+                devices: loginSummary.devices,
+                lastProvider: loginSummary.lastProvider
+        )
+    }
+
+    static public func loginSummaryFromInterface(
+            loginSummaryInterface: LoginSummaryInterface
+    ) -> LoginSummary {
+
+        LoginSummary(
+                firstLogin: loginSummaryInterface.firstLogin?.intValue,
+                lastLogin: loginSummaryInterface.lastLogin?.intValue,
+                total: loginSummaryInterface.total?.intValue,
+                origins: loginSummaryInterface.origins,
+                devices: loginSummaryInterface.devices,
+                lastProvider: loginSummaryInterface.lastProvider
+        )
+    }
+
+    static public func emailsToInterface(
+            emails: Emails
+    ) -> EmailsInterface {
+
+        EmailsInterface.make(
+                withVerified: emails.verified,
+                unverified: emails.unverified
+        )
+    }
+
+    static public func emailsFromInterface(
+            emailsInterface: EmailsInterface
+    ) -> Emails {
+
+        Emails(
+                verified: emailsInterface.verified,
+                unverified: emailsInterface.unverified
+        )
+    }
+
+    static public func profileToInterface(
+            profile: Profile
+    ) -> ProfileInterface {
+        let loginSummary = profile.loginSummary != nil ? loginSummaryToInterface(loginSummary: profile.loginSummary!) : nil
+        let emailVerified = profile.emailVerified != nil ? NSNumber.init(booleanLiteral: profile.emailVerified!) : nil
+        let emails = profile.emails != nil ? emailsToInterface(emails: profile.emails!) : nil
+        let phoneNumberVerified = profile.phoneNumberVerified != nil ? NSNumber.init(booleanLiteral: profile.phoneNumberVerified!) : nil
+        let liteOnly = profile.liteOnly != nil ? NSNumber.init(booleanLiteral: profile.liteOnly!) : nil
+
+        let addresses = profile.addresses?
+                .map({ profileAddress in
+                    profileAddressToInterface(profileAddress: profileAddress)
+                })
+
+        var consents = profile.consents != nil
+                ? [String: ConsentInterface]()
+                : nil
+
+        profile.consents?.forEach({
+            key, consent in
+            consents![key] = consentToInterface(consent: consent)
+        })
+
+        return ProfileInterface.make(
+                withUid: profile.uid,
+                givenName: profile.givenName,
+                middleName: profile.middleName,
+                familyName: profile.familyName,
+                name: profile.name,
+                nickname: profile.nickname,
+                birthdate: profile.birthdate,
+                profileURL: profile.profileURL,
+                picture: profile.picture,
+                externalId: profile.externalId,
+                authTypes: profile.authTypes,
+                loginSummary: loginSummary,
+                username: profile.username,
+                gender: profile.gender,
+                email: profile.email,
+                emailVerified: emailVerified,
+                emails: emails,
+                phoneNumber: profile.phoneNumber,
+                phoneNumberVerified: phoneNumberVerified,
+                addresses: addresses,
+                locale: profile.locale,
+                bio: profile.bio,
+                customFields: profile.customFields,
+                consents: consents,
+                createdAt: nil,
+                updatedAt: nil,
+                liteOnly: liteOnly,
+                company: nil
+        )
+    }
+
+    static public func profileFromInterface(
+            profileInterface: ProfileInterface
+    ) -> Profile {
+        let loginSummary = profileInterface.loginSummary != nil ? loginSummaryFromInterface(loginSummaryInterface: profileInterface.loginSummary!) : nil
+        let emails = profileInterface.emails != nil ? emailsFromInterface(emailsInterface: profileInterface.emails!) : nil
+
+        let addresses = profileInterface.addresses?
+                .map({ profileAddressInterface in
+                    profileAddressFromInterface(profileAddressInterface: profileAddressInterface)
+                })
+
+        var consents = profileInterface.consents != nil
+                ? [String: Consent]()
+                : nil
+
+        profileInterface.consents?.forEach({
+            key, consentInterface in
+            consents![key] = consentFromInterface(consentInterface: consentInterface)
+        })
+
+        return Profile(
+                uid: profileInterface.uid,
+                givenName: profileInterface.givenName,
+                middleName: profileInterface.middleName,
+                familyName: profileInterface.familyName,
+                name: profileInterface.name,
+                nickname: profileInterface.nickname,
+                birthdate: profileInterface.birthdate,
+                profileURL: profileInterface.profileURL,
+                picture: profileInterface.picture,
+                externalId: profileInterface.externalId,
+                authTypes: profileInterface.authTypes,
+                loginSummary: loginSummary,
+                username: profileInterface.username,
+                gender: profileInterface.gender,
+                email: profileInterface.email,
+                emailVerified: profileInterface.emailVerified?.boolValue,
+                emails: emails,
+                phoneNumber: profileInterface.phoneNumber,
+                phoneNumberVerified: profileInterface.phoneNumberVerified?.boolValue,
+                addresses: addresses,
+                locale: profileInterface.locale,
+                bio: profileInterface.bio,
+                consents: consents,
+                createdAt: profileInterface.createdAt,
+                updatedAt: profileInterface.updatedAt,
+                company: profileInterface.company,
+                liteOnly: profileInterface.liteOnly?.boolValue
+        )
+    }
 }

@@ -244,6 +244,47 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
             }
         )
     }
+
+    public func updateProfileRequest(_ request: UpdateProfileRequestInterface, completion: @escaping (ProfileInterface?, FlutterError?) -> Void) {
+        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
+        guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
+        else {
+            completion(
+                    nil,
+                    nonInitializedFlutterError
+            )
+            return
+        }
+
+        let authToken = Converters.authTokenFromInterface(
+                authTokenInterface: request.authToken
+        )
+
+        let profile = Converters.profileFromInterface(profileInterface: request.profile)
+
+        reachFive.updateProfile(
+                        authToken: authToken,
+                        profile: profile)
+                .onSuccess(
+                        callback: { profile in
+                            completion(
+                                    Converters.profileToInterface(profile: profile),
+                                    nil
+                            )
+                        }
+                ).onFailure(
+                        callback: { error in
+                            completion(
+                                    nil,
+                                    FlutterError(
+                                            code: "update_profile_error_code",
+                                            message: error.message(),
+                                            details: nil
+                                    )
+                            )
+                        }
+                )
+    }
     
     public func refreshAccessTokenRequest(_ request: RefreshAccessTokenRequestInterface, completion: @escaping (AuthTokenInterface?, FlutterError?) -> Void) {
         let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
@@ -429,7 +470,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
             )
             return
         }
-        
+
         reachFive.updatePassword(
             .SmsParams(
                 phoneNumber: request.phoneNumber,
