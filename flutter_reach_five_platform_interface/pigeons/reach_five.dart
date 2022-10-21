@@ -19,12 +19,14 @@ class ErrorCodesInterface {
     required this.invalidEmailOrPasswordCode,
     required this.invalidVerificationCode,
     required this.invalidGrant,
+    required this.userCancelledOrClosedTheWebFlow,
   });
 
   final String emailAlreadyInUseCode;
   final String invalidEmailOrPasswordCode;
   final String invalidVerificationCode;
   final String invalidGrant;
+  final String userCancelledOrClosedTheWebFlow;
 }
 
 class SdkConfigInterface {
@@ -281,12 +283,14 @@ class LoginWithProviderRequestInterface {
     required this.provider,
     required this.origin,
     required this.scope,
+    required this.errorCodes,
   });
 
   final ReachFiveKeyInterface reachFiveKey;
   final String provider;
   final String origin;
   final List<String?>? scope;
+  final ErrorCodesInterface errorCodes;
 }
 
 class RefreshAccessTokenRequestInterface {

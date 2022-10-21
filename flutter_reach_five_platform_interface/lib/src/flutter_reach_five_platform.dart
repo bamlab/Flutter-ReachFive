@@ -107,6 +107,7 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
           provider: provider,
           origin: origin,
           scope: scope,
+          errorCodes: errorCodesInterface,
         ),
       );
 

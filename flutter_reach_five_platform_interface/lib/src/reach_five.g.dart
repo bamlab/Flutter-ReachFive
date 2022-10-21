@@ -24,12 +24,14 @@ class ErrorCodesInterface {
     required this.invalidEmailOrPasswordCode,
     required this.invalidVerificationCode,
     required this.invalidGrant,
+    required this.userCancelledOrClosedTheWebFlow,
   });
 
   String emailAlreadyInUseCode;
   String invalidEmailOrPasswordCode;
   String invalidVerificationCode;
   String invalidGrant;
+  String userCancelledOrClosedTheWebFlow;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
@@ -37,6 +39,8 @@ class ErrorCodesInterface {
     pigeonMap['invalidEmailOrPasswordCode'] = invalidEmailOrPasswordCode;
     pigeonMap['invalidVerificationCode'] = invalidVerificationCode;
     pigeonMap['invalidGrant'] = invalidGrant;
+    pigeonMap['userCancelledOrClosedTheWebFlow'] =
+        userCancelledOrClosedTheWebFlow;
     return pigeonMap;
   }
 
@@ -48,6 +52,8 @@ class ErrorCodesInterface {
           pigeonMap['invalidEmailOrPasswordCode']! as String,
       invalidVerificationCode: pigeonMap['invalidVerificationCode']! as String,
       invalidGrant: pigeonMap['invalidGrant']! as String,
+      userCancelledOrClosedTheWebFlow:
+          pigeonMap['userCancelledOrClosedTheWebFlow']! as String,
     );
   }
 }
@@ -620,12 +626,14 @@ class LoginWithProviderRequestInterface {
     required this.provider,
     required this.origin,
     this.scope,
+    required this.errorCodes,
   });
 
   ReachFiveKeyInterface reachFiveKey;
   String provider;
   String origin;
   List<String?>? scope;
+  ErrorCodesInterface errorCodes;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
@@ -633,6 +641,7 @@ class LoginWithProviderRequestInterface {
     pigeonMap['provider'] = provider;
     pigeonMap['origin'] = origin;
     pigeonMap['scope'] = scope;
+    pigeonMap['errorCodes'] = errorCodes.encode();
     return pigeonMap;
   }
 
@@ -643,6 +652,7 @@ class LoginWithProviderRequestInterface {
       provider: pigeonMap['provider']! as String,
       origin: pigeonMap['origin']! as String,
       scope: (pigeonMap['scope'] as List<Object?>?)?.cast<String?>(),
+      errorCodes: ErrorCodesInterface.decode(pigeonMap['errorCodes']!),
     );
   }
 }
