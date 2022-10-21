@@ -135,6 +135,27 @@ void main() {
 
         expect(error, isA<InvalidGrantCodeExceptionInterface>());
       });
+
+      test('$UserCancelledOrClosedTheWebFlowCodeExceptionInterface', () {
+        final exception = PlatformException(
+          code: 'code',
+          message: errorCodesInterface.userCancelledOrClosedTheWebFlow,
+        );
+
+        Object? error;
+
+        try {
+          FlutterReachFiveAndroid()
+              .parseError(exception, StackTrace.fromString('test'));
+        } catch (e) {
+          error = e;
+        }
+
+        expect(
+          error,
+          isA<UserCancelledOrClosedTheWebFlowCodeExceptionInterface>(),
+        );
+      });
     });
   });
 }

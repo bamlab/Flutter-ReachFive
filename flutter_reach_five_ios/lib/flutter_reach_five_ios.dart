@@ -17,6 +17,9 @@ class FlutterReachFiveIOS extends FlutterReachFivePlatform {
         throw InvalidVerificationCodeExceptionInterface();
       } else if (error.code == errorCodesInterface.invalidGrant) {
         throw InvalidGrantCodeExceptionInterface();
+      } else if (error.code ==
+          errorCodesInterface.userCancelledOrClosedTheWebFlow) {
+        throw UserCancelledOrClosedTheWebFlowCodeExceptionInterface();
       }
     }
     return Error.throwWithStackTrace(error, stackTrace);

@@ -1,3 +1,7 @@
+# 0.1.4
+
+- Add Custom Error when user cancel auth web flow
+
 # 0.1.3
 
 - Add UpdateProfile function

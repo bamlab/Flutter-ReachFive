@@ -22,7 +22,8 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
     private var reachFiveInstances = mutableMapOf<String, ReachFive>()
     private var loginWithProviderReachFiveInstance: ReachFive? = null
     private var onLoginWithProviderSuccess: Success<AuthToken>? = null
-    private var onLoginWithProviderFailure: Failure<ReachFiveError>? = null
+    private var onLoginWithProviderFailure: Failure<FlutterError>? = null
+    private var errorCodes: ReachFiveApi.ErrorCodesInterface? = null
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         ReachFiveApi.ReachFiveHostApi.setup(flutterPluginBinding.binaryMessenger, this)
@@ -58,6 +59,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
         loginWithProviderReachFiveInstance = null
         onLoginWithProviderSuccess = null
         onLoginWithProviderFailure = null
+        errorCodes = null
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
@@ -65,13 +67,20 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
         val activity = this.activity
         val onLoginWithProviderSuccess = this.onLoginWithProviderSuccess
         val onLoginWithProviderFailure = this.onLoginWithProviderFailure
+        val errorCodes = this.errorCodes
 
-        if (loginWithProviderReachFiveInstance == null || onLoginWithProviderSuccess == null || onLoginWithProviderFailure ==null) {
+        if (loginWithProviderReachFiveInstance == null || onLoginWithProviderSuccess == null || onLoginWithProviderFailure ==null || errorCodes == null) {
             return true
         }
 
         if (activity == null) {
-            onLoginWithProviderFailure(ReachFiveError("No android activity attached to your application"))
+            onLoginWithProviderFailure(
+                FlutterError(
+                    code = "no_android_activity",
+                    message ="No android activity attached to your application",
+                    details = null
+                )
+            )
             resetLoginWithProviderVars()
             return true
         }
@@ -84,8 +93,17 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
                 onLoginWithProviderSuccess(authToken)
                 resetLoginWithProviderVars()
             },
-            failure = { error ->
-                onLoginWithProviderFailure(error)
+            failure = { error -> onLoginWithProviderFailure(
+                Converters.parseError(
+                    reachFiveError = error,
+                    errorCodesInterface = errorCodes,
+                    defaultFlutterError = FlutterError(
+                        code= "sign_up_error_code",
+                        message= error.message,
+                        details= null
+                    )
+                )
+            )
                 resetLoginWithProviderVars()
             },
             activity = activity
@@ -284,13 +302,9 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
             result.success(Converters.authTokenToInterface(authToken))
         }
         this.onLoginWithProviderFailure = {
-                error -> result.error(
-            FlutterError(
-                code= "login_with_provider_error_code",
-                message= error.message,
-                details= null
-            )
-        )}
+                error -> result.error(error)
+        }
+        this.errorCodes = request.errorCodes
 
         provider.login(
             origin = request.origin,

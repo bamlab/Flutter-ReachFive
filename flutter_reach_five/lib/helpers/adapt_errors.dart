@@ -19,5 +19,8 @@ Never adaptErrors({
   if (error is InvalidGrantCodeExceptionInterface) {
     throw InvalidGrantCodeException();
   }
+  if (error is UserCancelledOrClosedTheWebFlowCodeExceptionInterface) {
+    throw UserCancelledOrClosedTheWebFlowCodeException();
+  }
   Error.throwWithStackTrace(error, stackTrace);
 }

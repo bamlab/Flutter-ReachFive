@@ -44,7 +44,11 @@ public class Converters {
             }
             return defaultFlutterError
         case .AuthCanceled:
-            return defaultFlutterError
+            return FlutterError(
+                code: errorCodesInterface.userCancelledOrClosedTheWebFlow,
+                message: "Auth was cancelled by the user",
+                details: nil
+            )
         case .TechnicalError(reason: _, apiError: _):
             return defaultFlutterError
         }

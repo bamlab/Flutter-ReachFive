@@ -133,6 +133,7 @@ void main() {
             reachFiveKey: reachFiveKey,
             provider: provider,
             origin: origin,
+            errorCodes: errorCodesInterface,
           ),
         );
         when(() => mockReachFiveHostApi.loginWithProvider(any()))

@@ -50,11 +50,13 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 + (instancetype)makeWithEmailAlreadyInUseCode:(NSString *)emailAlreadyInUseCode
     invalidEmailOrPasswordCode:(NSString *)invalidEmailOrPasswordCode
     invalidVerificationCode:(NSString *)invalidVerificationCode
-    invalidGrant:(NSString *)invalidGrant;
+    invalidGrant:(NSString *)invalidGrant
+    userCancelledOrClosedTheWebFlow:(NSString *)userCancelledOrClosedTheWebFlow;
 @property(nonatomic, copy) NSString * emailAlreadyInUseCode;
 @property(nonatomic, copy) NSString * invalidEmailOrPasswordCode;
 @property(nonatomic, copy) NSString * invalidVerificationCode;
 @property(nonatomic, copy) NSString * invalidGrant;
+@property(nonatomic, copy) NSString * userCancelledOrClosedTheWebFlow;
 @end
 
 @interface SdkConfigInterface : NSObject
@@ -291,11 +293,13 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 + (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
     provider:(NSString *)provider
     origin:(NSString *)origin
-    scope:(nullable NSArray<NSString *> *)scope;
+    scope:(nullable NSArray<NSString *> *)scope
+    errorCodes:(ErrorCodesInterface *)errorCodes;
 @property(nonatomic, strong) ReachFiveKeyInterface * reachFiveKey;
 @property(nonatomic, copy) NSString * provider;
 @property(nonatomic, copy) NSString * origin;
 @property(nonatomic, strong, nullable) NSArray<NSString *> * scope;
+@property(nonatomic, strong) ErrorCodesInterface * errorCodes;
 @end
 
 @interface RefreshAccessTokenRequestInterface : NSObject
