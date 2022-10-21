@@ -207,12 +207,16 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
             ).onFailure(
                 callback: { error in
                     completion(
-                        nil,
-                        FlutterError(
-                            code: "login_with_provider_error_code",
-                            message: error.message(),
-                            details: nil
-                        )
+                            nil,
+                            Converters.parseError(
+                                    reachFiveError: error,
+                                    errorCodesInterface: request.errorCodes,
+                                    defaultFlutterError: FlutterError(
+                                            code: "login_with_provider_error_code",
+                                            message: error.message(),
+                                            details: nil
+                                    )
+                            )
                     )
                 }
             )

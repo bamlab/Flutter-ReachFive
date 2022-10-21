@@ -156,12 +156,14 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (instancetype)makeWithEmailAlreadyInUseCode:(NSString *)emailAlreadyInUseCode
     invalidEmailOrPasswordCode:(NSString *)invalidEmailOrPasswordCode
     invalidVerificationCode:(NSString *)invalidVerificationCode
-    invalidGrant:(NSString *)invalidGrant {
+    invalidGrant:(NSString *)invalidGrant
+    userCancelledOrClosedTheWebFlow:(NSString *)userCancelledOrClosedTheWebFlow {
   ErrorCodesInterface* pigeonResult = [[ErrorCodesInterface alloc] init];
   pigeonResult.emailAlreadyInUseCode = emailAlreadyInUseCode;
   pigeonResult.invalidEmailOrPasswordCode = invalidEmailOrPasswordCode;
   pigeonResult.invalidVerificationCode = invalidVerificationCode;
   pigeonResult.invalidGrant = invalidGrant;
+  pigeonResult.userCancelledOrClosedTheWebFlow = userCancelledOrClosedTheWebFlow;
   return pigeonResult;
 }
 + (ErrorCodesInterface *)fromMap:(NSDictionary *)dict {
@@ -174,6 +176,8 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
   NSAssert(pigeonResult.invalidVerificationCode != nil, @"");
   pigeonResult.invalidGrant = GetNullableObject(dict, @"invalidGrant");
   NSAssert(pigeonResult.invalidGrant != nil, @"");
+  pigeonResult.userCancelledOrClosedTheWebFlow = GetNullableObject(dict, @"userCancelledOrClosedTheWebFlow");
+  NSAssert(pigeonResult.userCancelledOrClosedTheWebFlow != nil, @"");
   return pigeonResult;
 }
 + (nullable ErrorCodesInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [ErrorCodesInterface fromMap:dict] : nil; }
@@ -183,6 +187,7 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
     @"invalidEmailOrPasswordCode" : (self.invalidEmailOrPasswordCode ?: [NSNull null]),
     @"invalidVerificationCode" : (self.invalidVerificationCode ?: [NSNull null]),
     @"invalidGrant" : (self.invalidGrant ?: [NSNull null]),
+    @"userCancelledOrClosedTheWebFlow" : (self.userCancelledOrClosedTheWebFlow ?: [NSNull null]),
   };
 }
 @end
@@ -737,12 +742,14 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
 + (instancetype)makeWithReachFiveKey:(ReachFiveKeyInterface *)reachFiveKey
     provider:(NSString *)provider
     origin:(NSString *)origin
-    scope:(nullable NSArray<NSString *> *)scope {
+    scope:(nullable NSArray<NSString *> *)scope
+    errorCodes:(ErrorCodesInterface *)errorCodes {
   LoginWithProviderRequestInterface* pigeonResult = [[LoginWithProviderRequestInterface alloc] init];
   pigeonResult.reachFiveKey = reachFiveKey;
   pigeonResult.provider = provider;
   pigeonResult.origin = origin;
   pigeonResult.scope = scope;
+  pigeonResult.errorCodes = errorCodes;
   return pigeonResult;
 }
 + (LoginWithProviderRequestInterface *)fromMap:(NSDictionary *)dict {
@@ -754,6 +761,8 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
   pigeonResult.origin = GetNullableObject(dict, @"origin");
   NSAssert(pigeonResult.origin != nil, @"");
   pigeonResult.scope = GetNullableObject(dict, @"scope");
+  pigeonResult.errorCodes = [ErrorCodesInterface nullableFromMap:GetNullableObject(dict, @"errorCodes")];
+  NSAssert(pigeonResult.errorCodes != nil, @"");
   return pigeonResult;
 }
 + (nullable LoginWithProviderRequestInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [LoginWithProviderRequestInterface fromMap:dict] : nil; }
@@ -763,6 +772,7 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
     @"provider" : (self.provider ?: [NSNull null]),
     @"origin" : (self.origin ?: [NSNull null]),
     @"scope" : (self.scope ?: [NSNull null]),
+    @"errorCodes" : (self.errorCodes ? [self.errorCodes toMap] : [NSNull null]),
   };
 }
 @end
