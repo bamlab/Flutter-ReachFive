@@ -56,6 +56,15 @@ class Converters {
                     details = null
                 )
             }
+            if (reachFiveError.code == 52001) {
+                val errorCode = errorCodesInterface.userCancelledOrClosedTheWebFlow
+                val errorMessage = reachFiveError.message
+                return FlutterError(
+                    code= errorCode,
+                    message= "$errorCode - $errorMessage",
+                    details = null
+                )
+            }
             return defaultFlutterError
         }
 

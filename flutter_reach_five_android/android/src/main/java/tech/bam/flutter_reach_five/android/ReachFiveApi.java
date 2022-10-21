@@ -81,6 +81,15 @@ public class ReachFiveApi {
       this.invalidGrant = setterArg;
     }
 
+    private @NonNull String userCancelledOrClosedTheWebFlow;
+    public @NonNull String getUserCancelledOrClosedTheWebFlow() { return userCancelledOrClosedTheWebFlow; }
+    public void setUserCancelledOrClosedTheWebFlow(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"userCancelledOrClosedTheWebFlow\" is null.");
+      }
+      this.userCancelledOrClosedTheWebFlow = setterArg;
+    }
+
     /** Constructor is private to enforce null safety; use Builder. */
     private ErrorCodesInterface() {}
     public static final class Builder {
@@ -104,12 +113,18 @@ public class ReachFiveApi {
         this.invalidGrant = setterArg;
         return this;
       }
+      private @Nullable String userCancelledOrClosedTheWebFlow;
+      public @NonNull Builder setUserCancelledOrClosedTheWebFlow(@NonNull String setterArg) {
+        this.userCancelledOrClosedTheWebFlow = setterArg;
+        return this;
+      }
       public @NonNull ErrorCodesInterface build() {
         ErrorCodesInterface pigeonReturn = new ErrorCodesInterface();
         pigeonReturn.setEmailAlreadyInUseCode(emailAlreadyInUseCode);
         pigeonReturn.setInvalidEmailOrPasswordCode(invalidEmailOrPasswordCode);
         pigeonReturn.setInvalidVerificationCode(invalidVerificationCode);
         pigeonReturn.setInvalidGrant(invalidGrant);
+        pigeonReturn.setUserCancelledOrClosedTheWebFlow(userCancelledOrClosedTheWebFlow);
         return pigeonReturn;
       }
     }
@@ -119,6 +134,7 @@ public class ReachFiveApi {
       toMapResult.put("invalidEmailOrPasswordCode", invalidEmailOrPasswordCode);
       toMapResult.put("invalidVerificationCode", invalidVerificationCode);
       toMapResult.put("invalidGrant", invalidGrant);
+      toMapResult.put("userCancelledOrClosedTheWebFlow", userCancelledOrClosedTheWebFlow);
       return toMapResult;
     }
     static @NonNull ErrorCodesInterface fromMap(@NonNull Map<String, Object> map) {
@@ -131,6 +147,8 @@ public class ReachFiveApi {
       pigeonResult.setInvalidVerificationCode((String)invalidVerificationCode);
       Object invalidGrant = map.get("invalidGrant");
       pigeonResult.setInvalidGrant((String)invalidGrant);
+      Object userCancelledOrClosedTheWebFlow = map.get("userCancelledOrClosedTheWebFlow");
+      pigeonResult.setUserCancelledOrClosedTheWebFlow((String)userCancelledOrClosedTheWebFlow);
       return pigeonResult;
     }
   }
@@ -1766,6 +1784,15 @@ public class ReachFiveApi {
       this.scope = setterArg;
     }
 
+    private @NonNull ErrorCodesInterface errorCodes;
+    public @NonNull ErrorCodesInterface getErrorCodes() { return errorCodes; }
+    public void setErrorCodes(@NonNull ErrorCodesInterface setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"errorCodes\" is null.");
+      }
+      this.errorCodes = setterArg;
+    }
+
     /** Constructor is private to enforce null safety; use Builder. */
     private LoginWithProviderRequestInterface() {}
     public static final class Builder {
@@ -1789,12 +1816,18 @@ public class ReachFiveApi {
         this.scope = setterArg;
         return this;
       }
+      private @Nullable ErrorCodesInterface errorCodes;
+      public @NonNull Builder setErrorCodes(@NonNull ErrorCodesInterface setterArg) {
+        this.errorCodes = setterArg;
+        return this;
+      }
       public @NonNull LoginWithProviderRequestInterface build() {
         LoginWithProviderRequestInterface pigeonReturn = new LoginWithProviderRequestInterface();
         pigeonReturn.setReachFiveKey(reachFiveKey);
         pigeonReturn.setProvider(provider);
         pigeonReturn.setOrigin(origin);
         pigeonReturn.setScope(scope);
+        pigeonReturn.setErrorCodes(errorCodes);
         return pigeonReturn;
       }
     }
@@ -1804,6 +1837,7 @@ public class ReachFiveApi {
       toMapResult.put("provider", provider);
       toMapResult.put("origin", origin);
       toMapResult.put("scope", scope);
+      toMapResult.put("errorCodes", (errorCodes == null) ? null : errorCodes.toMap());
       return toMapResult;
     }
     static @NonNull LoginWithProviderRequestInterface fromMap(@NonNull Map<String, Object> map) {
@@ -1816,6 +1850,8 @@ public class ReachFiveApi {
       pigeonResult.setOrigin((String)origin);
       Object scope = map.get("scope");
       pigeonResult.setScope((List<String>)scope);
+      Object errorCodes = map.get("errorCodes");
+      pigeonResult.setErrorCodes((errorCodes == null) ? null : ErrorCodesInterface.fromMap((Map)errorCodes));
       return pigeonResult;
     }
   }
