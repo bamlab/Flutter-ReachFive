@@ -124,16 +124,27 @@ class ReachFive {
     required String origin,
     List<ScopeValue>? scope,
   }) async {
-    final authTokenInterface = await _platform.loginWithProvider(
-      reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
-      provider: ProviderConverter.toInterface(provider),
-      origin: origin,
-      scope: scope?.map(ScopeValueConverter.toInterface).toList(),
-    );
+    try {
+      final authTokenInterface = await _platform.loginWithProvider(
+        reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
+        provider: ProviderConverter.toInterface(provider),
+        origin: origin,
+        scope: scope?.map(ScopeValueConverter.toInterface).toList(),
+      );
 
-    final authToken = AuthTokenConverter.fromInterface(authTokenInterface);
+      final authToken = AuthTokenConverter.fromInterface(authTokenInterface);
 
-    return authToken;
+      return authToken;
+    } catch (error, stackTrace) {
+      try {
+        _platform.parseError(error, stackTrace);
+      } catch (interfaceError, interfaceStackTrace) {
+        adaptErrors(
+          error: interfaceError,
+          stackTrace: interfaceStackTrace,
+        );
+      }
+    }
   }
 
   /// {@template flutter_reach_five.reachFive.logout}

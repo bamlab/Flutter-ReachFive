@@ -284,6 +284,45 @@ void main() {
           loginWithProviderAuthToken,
         );
       });
+
+      test('parse throw error', () async {
+        final provider = reachFive.providers.first;
+        const origin = 'origin';
+        const scope = [ScopeValue.events];
+
+        registerFallbackValue(
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
+        );
+        registerFallbackValue(
+          scope.map(ScopeValueConverter.toInterface).toList(),
+        );
+        when(
+          () => flutterReachFivePlatform.loginWithProvider(
+            reachFiveKey: any(named: 'reachFiveKey'),
+            provider: provider.name,
+            origin: origin,
+            scope: any(named: 'scope'),
+          ),
+        ).thenThrow(Exception());
+
+        registerFallbackValue(
+          StackTrace.fromString('test'),
+        );
+        when(
+          () => flutterReachFivePlatform.parseError(any(), any()),
+        ).thenThrow(Exception());
+
+        try {
+          await reachFive.loginWithProvider(
+            provider: provider,
+            origin: origin,
+            scope: scope,
+          );
+        } catch (_) {}
+
+        verify(() => flutterReachFivePlatform.parseError(any(), any()))
+            .called(1);
+      });
     });
 
     group('logout', () {

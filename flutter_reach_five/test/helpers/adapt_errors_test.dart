@@ -85,5 +85,20 @@ void main() {
 
       expect(error, isA<InvalidGrantCodeException>());
     });
+
+    test('$UserCancelledOrClosedTheWebFlowCodeException', () async {
+      Object? error;
+
+      try {
+        adaptErrors(
+          error: UserCancelledOrClosedTheWebFlowCodeExceptionInterface(),
+          stackTrace: StackTrace.fromString('test'),
+        );
+      } catch (e) {
+        error = e;
+      }
+
+      expect(error, isA<UserCancelledOrClosedTheWebFlowCodeException>());
+    });
   });
 }

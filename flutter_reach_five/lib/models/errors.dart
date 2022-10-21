@@ -20,3 +20,10 @@ class InvalidVerificationCodeException implements Exception {}
 /// It matches a 401 http error code
 /// {@endtemplate}
 class InvalidGrantCodeException implements Exception {}
+
+/// {@template flutter_reach_five.errors.user_cancelled_or_closed_the_web_flow}
+/// Error thrown when an user cancelled or close the web flow
+///
+/// Often thrown if the user close the webview when logging in with a provider
+/// {@endtemplate}
+class UserCancelledOrClosedTheWebFlowCodeException implements Exception {}
