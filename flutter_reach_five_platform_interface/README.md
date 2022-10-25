@@ -10,4 +10,4 @@ This interface allows platform-specific implementations of the `flutter_reach_fi
 
 # Usage
 
-To implement a new platform-specific implementation of `flutter_reach_five`, extend `LocationPlatform` with an implementation that performs the platform-specific behavior.
+To implement a new platform-specific implementation of `flutter_reach_five`, extend `FlutterReachFivePlatform` with an implementation that performs the platform-specific behavior.
