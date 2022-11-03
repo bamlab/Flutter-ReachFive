@@ -7,6 +7,7 @@
 .pub/
 .dart_tool/
 pubspec.lock
+custom_lint.log
 flutter_export_environment.sh
 coverage/
 
