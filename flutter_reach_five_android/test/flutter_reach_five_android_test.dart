@@ -156,6 +156,27 @@ void main() {
           isA<UserCancelledOrClosedTheWebFlowCodeExceptionInterface>(),
         );
       });
+
+      test('$SocialAccountEmailAlreadyInUseExceptionInterface', () {
+        final exception = PlatformException(
+          code: 'code',
+          message: errorCodesInterface.socialAccountEmailAlreadyInUse,
+        );
+
+        Object? error;
+
+        try {
+          FlutterReachFiveAndroid()
+              .parseError(exception, StackTrace.fromString('test'));
+        } catch (e) {
+          error = e;
+        }
+
+        expect(
+          error,
+          isA<SocialAccountEmailAlreadyInUseExceptionInterface>(),
+        );
+      });
     });
   });
 }

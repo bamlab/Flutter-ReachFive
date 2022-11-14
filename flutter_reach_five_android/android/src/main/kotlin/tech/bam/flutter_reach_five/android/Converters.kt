@@ -65,6 +65,15 @@ class Converters {
                     details = null
                 )
             }
+            if (reachFiveError.data?.errorMessageKey == "error.socialAccountEmailAlreadyInUse") {
+                val errorCode = errorCodesInterface.socialAccountEmailAlreadyInUse
+                val errorUsrMessage = reachFiveError.data?.errorDescription ?: ""
+                return FlutterError(
+                    code= errorCode,
+                    message= "$errorCode - $errorUsrMessage",
+                    details = null
+                )
+            }
             return defaultFlutterError
         }
 
