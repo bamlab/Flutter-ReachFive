@@ -20,6 +20,9 @@ class FlutterReachFiveIOS extends FlutterReachFivePlatform {
       } else if (error.code ==
           errorCodesInterface.userCancelledOrClosedTheWebFlow) {
         throw UserCancelledOrClosedTheWebFlowCodeExceptionInterface();
+      } else if (error.code ==
+          errorCodesInterface.socialAccountEmailAlreadyInUse) {
+        throw SocialAccountEmailAlreadyInUseExceptionInterface();
       }
     }
     return Error.throwWithStackTrace(error, stackTrace);

@@ -100,5 +100,20 @@ void main() {
 
       expect(error, isA<UserCancelledOrClosedTheWebFlowCodeException>());
     });
+
+    test('$SocialAccountEmailAlreadyInUseException', () async {
+      Object? error;
+
+      try {
+        adaptErrors(
+          error: SocialAccountEmailAlreadyInUseExceptionInterface(),
+          stackTrace: StackTrace.fromString('test'),
+        );
+      } catch (e) {
+        error = e;
+      }
+
+      expect(error, isA<SocialAccountEmailAlreadyInUseException>());
+    });
   });
 }

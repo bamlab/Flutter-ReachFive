@@ -26,7 +26,7 @@ pubName="${basename}_repo"
 pubLibrary=$pubName
 pubAuthor="CDA"
 pubAuthorEmail="matthieup@bam.tech"
-pubVersion="0.1.4"
+pubVersion="0.1.5"
 pubHomepage="https://github.com/bamlab/Flutter-ReachFive"
 
 # Moving LICENSE and CHANGELOD.md up to preserve them from deletion

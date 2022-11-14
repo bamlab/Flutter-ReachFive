@@ -42,6 +42,13 @@ public class Converters {
                         details: nil
                 )
             }
+            if (apiError?.errorMessageKey == "error.socialAccountEmailAlreadyInUse") {
+                return FlutterError(
+                        code: errorCodesInterface.socialAccountEmailAlreadyInUse,
+                        message: apiError?.errorUserMsg,
+                        details: nil
+                )
+            }
             return defaultFlutterError
         case .AuthCanceled:
             return FlutterError(

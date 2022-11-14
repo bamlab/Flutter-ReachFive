@@ -22,5 +22,8 @@ Never adaptErrors({
   if (error is UserCancelledOrClosedTheWebFlowCodeExceptionInterface) {
     throw UserCancelledOrClosedTheWebFlowCodeException();
   }
+  if (error is SocialAccountEmailAlreadyInUseExceptionInterface) {
+    throw SocialAccountEmailAlreadyInUseException();
+  }
   Error.throwWithStackTrace(error, stackTrace);
 }

@@ -1,3 +1,7 @@
+# 0.1.5
+
+- Add Custom Error when user try to social login but the email is already in use
+
 # 0.1.4
 
 - Add Custom Error when user cancel auth web flow

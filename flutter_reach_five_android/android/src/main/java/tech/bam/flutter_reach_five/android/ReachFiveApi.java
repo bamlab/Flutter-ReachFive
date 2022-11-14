@@ -90,6 +90,15 @@ public class ReachFiveApi {
       this.userCancelledOrClosedTheWebFlow = setterArg;
     }
 
+    private @NonNull String socialAccountEmailAlreadyInUse;
+    public @NonNull String getSocialAccountEmailAlreadyInUse() { return socialAccountEmailAlreadyInUse; }
+    public void setSocialAccountEmailAlreadyInUse(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"socialAccountEmailAlreadyInUse\" is null.");
+      }
+      this.socialAccountEmailAlreadyInUse = setterArg;
+    }
+
     /** Constructor is private to enforce null safety; use Builder. */
     private ErrorCodesInterface() {}
     public static final class Builder {
@@ -118,6 +127,11 @@ public class ReachFiveApi {
         this.userCancelledOrClosedTheWebFlow = setterArg;
         return this;
       }
+      private @Nullable String socialAccountEmailAlreadyInUse;
+      public @NonNull Builder setSocialAccountEmailAlreadyInUse(@NonNull String setterArg) {
+        this.socialAccountEmailAlreadyInUse = setterArg;
+        return this;
+      }
       public @NonNull ErrorCodesInterface build() {
         ErrorCodesInterface pigeonReturn = new ErrorCodesInterface();
         pigeonReturn.setEmailAlreadyInUseCode(emailAlreadyInUseCode);
@@ -125,6 +139,7 @@ public class ReachFiveApi {
         pigeonReturn.setInvalidVerificationCode(invalidVerificationCode);
         pigeonReturn.setInvalidGrant(invalidGrant);
         pigeonReturn.setUserCancelledOrClosedTheWebFlow(userCancelledOrClosedTheWebFlow);
+        pigeonReturn.setSocialAccountEmailAlreadyInUse(socialAccountEmailAlreadyInUse);
         return pigeonReturn;
       }
     }
@@ -135,6 +150,7 @@ public class ReachFiveApi {
       toMapResult.put("invalidVerificationCode", invalidVerificationCode);
       toMapResult.put("invalidGrant", invalidGrant);
       toMapResult.put("userCancelledOrClosedTheWebFlow", userCancelledOrClosedTheWebFlow);
+      toMapResult.put("socialAccountEmailAlreadyInUse", socialAccountEmailAlreadyInUse);
       return toMapResult;
     }
     static @NonNull ErrorCodesInterface fromMap(@NonNull Map<String, Object> map) {
@@ -149,6 +165,8 @@ public class ReachFiveApi {
       pigeonResult.setInvalidGrant((String)invalidGrant);
       Object userCancelledOrClosedTheWebFlow = map.get("userCancelledOrClosedTheWebFlow");
       pigeonResult.setUserCancelledOrClosedTheWebFlow((String)userCancelledOrClosedTheWebFlow);
+      Object socialAccountEmailAlreadyInUse = map.get("socialAccountEmailAlreadyInUse");
+      pigeonResult.setSocialAccountEmailAlreadyInUse((String)socialAccountEmailAlreadyInUse);
       return pigeonResult;
     }
   }

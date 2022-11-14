@@ -27,3 +27,9 @@ class InvalidGrantCodeException implements Exception {}
 /// Often thrown if the user close the webview when logging in with a provider
 /// {@endtemplate}
 class UserCancelledOrClosedTheWebFlowCodeException implements Exception {}
+
+/// {@template flutter_reach_five.errors.social_account_email_already_in_use}
+/// Error thrown when an user tried to login with a social provider
+/// But its email is already in use by another mean of connection
+/// {@endtemplate}
+class SocialAccountEmailAlreadyInUseException implements Exception {}
