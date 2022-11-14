@@ -1,6 +1,6 @@
 name: flutter_reach_five_example
 description: Demonstrates how to use the flutter_reach_five plugin.
-version: 0.1.4
+version: 0.1.5
 publish_to: none
 
 environment:
