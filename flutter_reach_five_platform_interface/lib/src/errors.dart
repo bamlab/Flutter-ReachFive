@@ -8,6 +8,7 @@ final errorCodesInterface = ErrorCodesInterface(
   invalidVerificationCode: 'invalid_verification_code',
   invalidGrant: 'invalid_grant_code',
   userCancelledOrClosedTheWebFlow: 'user_cancelled_or_closed_the_web_flow',
+  socialAccountEmailAlreadyInUse: 'social_account_email_already_in_use',
 );
 
 /// {@macro flutter_reach_five.errors.email_already_in_use}
@@ -25,3 +26,6 @@ class InvalidGrantCodeExceptionInterface implements Exception {}
 /// {@macro flutter_reach_five.errors.user_cancelled_or_closed_the_web_flow}
 class UserCancelledOrClosedTheWebFlowCodeExceptionInterface
     implements Exception {}
+
+/// {@macro flutter_reach_five.errors.social_account_email_already_in_use}
+class SocialAccountEmailAlreadyInUseExceptionInterface implements Exception {}

@@ -20,6 +20,7 @@ class ErrorCodesInterface {
     required this.invalidVerificationCode,
     required this.invalidGrant,
     required this.userCancelledOrClosedTheWebFlow,
+    required this.socialAccountEmailAlreadyInUse,
   });
 
   final String emailAlreadyInUseCode;
@@ -27,6 +28,7 @@ class ErrorCodesInterface {
   final String invalidVerificationCode;
   final String invalidGrant;
   final String userCancelledOrClosedTheWebFlow;
+  final String socialAccountEmailAlreadyInUse;
 }
 
 class SdkConfigInterface {

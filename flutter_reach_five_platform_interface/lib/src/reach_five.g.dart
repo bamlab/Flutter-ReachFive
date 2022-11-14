@@ -25,6 +25,7 @@ class ErrorCodesInterface {
     required this.invalidVerificationCode,
     required this.invalidGrant,
     required this.userCancelledOrClosedTheWebFlow,
+    required this.socialAccountEmailAlreadyInUse,
   });
 
   String emailAlreadyInUseCode;
@@ -32,6 +33,7 @@ class ErrorCodesInterface {
   String invalidVerificationCode;
   String invalidGrant;
   String userCancelledOrClosedTheWebFlow;
+  String socialAccountEmailAlreadyInUse;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
@@ -41,6 +43,8 @@ class ErrorCodesInterface {
     pigeonMap['invalidGrant'] = invalidGrant;
     pigeonMap['userCancelledOrClosedTheWebFlow'] =
         userCancelledOrClosedTheWebFlow;
+    pigeonMap['socialAccountEmailAlreadyInUse'] =
+        socialAccountEmailAlreadyInUse;
     return pigeonMap;
   }
 
@@ -54,6 +58,8 @@ class ErrorCodesInterface {
       invalidGrant: pigeonMap['invalidGrant']! as String,
       userCancelledOrClosedTheWebFlow:
           pigeonMap['userCancelledOrClosedTheWebFlow']! as String,
+      socialAccountEmailAlreadyInUse:
+          pigeonMap['socialAccountEmailAlreadyInUse']! as String,
     );
   }
 }
