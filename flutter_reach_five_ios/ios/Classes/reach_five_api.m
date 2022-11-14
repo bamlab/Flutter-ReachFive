@@ -157,13 +157,15 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
     invalidEmailOrPasswordCode:(NSString *)invalidEmailOrPasswordCode
     invalidVerificationCode:(NSString *)invalidVerificationCode
     invalidGrant:(NSString *)invalidGrant
-    userCancelledOrClosedTheWebFlow:(NSString *)userCancelledOrClosedTheWebFlow {
+    userCancelledOrClosedTheWebFlow:(NSString *)userCancelledOrClosedTheWebFlow
+    socialAccountEmailAlreadyInUse:(NSString *)socialAccountEmailAlreadyInUse {
   ErrorCodesInterface* pigeonResult = [[ErrorCodesInterface alloc] init];
   pigeonResult.emailAlreadyInUseCode = emailAlreadyInUseCode;
   pigeonResult.invalidEmailOrPasswordCode = invalidEmailOrPasswordCode;
   pigeonResult.invalidVerificationCode = invalidVerificationCode;
   pigeonResult.invalidGrant = invalidGrant;
   pigeonResult.userCancelledOrClosedTheWebFlow = userCancelledOrClosedTheWebFlow;
+  pigeonResult.socialAccountEmailAlreadyInUse = socialAccountEmailAlreadyInUse;
   return pigeonResult;
 }
 + (ErrorCodesInterface *)fromMap:(NSDictionary *)dict {
@@ -178,6 +180,8 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
   NSAssert(pigeonResult.invalidGrant != nil, @"");
   pigeonResult.userCancelledOrClosedTheWebFlow = GetNullableObject(dict, @"userCancelledOrClosedTheWebFlow");
   NSAssert(pigeonResult.userCancelledOrClosedTheWebFlow != nil, @"");
+  pigeonResult.socialAccountEmailAlreadyInUse = GetNullableObject(dict, @"socialAccountEmailAlreadyInUse");
+  NSAssert(pigeonResult.socialAccountEmailAlreadyInUse != nil, @"");
   return pigeonResult;
 }
 + (nullable ErrorCodesInterface *)nullableFromMap:(NSDictionary *)dict { return (dict) ? [ErrorCodesInterface fromMap:dict] : nil; }
@@ -188,6 +192,7 @@ static id GetNullableObjectAtIndex(NSArray* array, NSInteger key) {
     @"invalidVerificationCode" : (self.invalidVerificationCode ?: [NSNull null]),
     @"invalidGrant" : (self.invalidGrant ?: [NSNull null]),
     @"userCancelledOrClosedTheWebFlow" : (self.userCancelledOrClosedTheWebFlow ?: [NSNull null]),
+    @"socialAccountEmailAlreadyInUse" : (self.socialAccountEmailAlreadyInUse ?: [NSNull null]),
   };
 }
 @end
