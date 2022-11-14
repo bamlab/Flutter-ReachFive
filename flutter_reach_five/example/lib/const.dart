@@ -62,7 +62,7 @@ class _FirstDataSet extends DataSet {
 
   /// Your reach five ios scheme
   @override
-  String get initialIosScheme => '';
+  String get initialIosScheme => 'reachfive-$initialClientId://callback';
 
   /// Your reach five origin
   @override
