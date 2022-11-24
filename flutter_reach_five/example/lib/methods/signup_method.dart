@@ -77,6 +77,7 @@ class SignupMethodState extends State<SignupMethod> {
           ScopeValue.email,
           ScopeValue.offlineAccess,
           ScopeValue.profile,
+          ScopeValue.fullWrite,
         ],
       );
 
