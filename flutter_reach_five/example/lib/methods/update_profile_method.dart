@@ -28,6 +28,8 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
   String givenName = '';
   String middleName = '';
   String nickname = '';
+  List<MapEntry<String?, Object?>> customFields =
+      List.generate(3, (index) => const MapEntry(null, null));
 
   void setFamilyName(String newFamilyName) => setState(() {
         familyName = newFamilyName;
@@ -45,6 +47,16 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
         nickname = newNickname;
       });
 
+  void setCustomFieldKeyAtIndex(int index, String newCustomFieldKey) {
+    customFields.replaceRange(index, index + 1,
+        [MapEntry(newCustomFieldKey, customFields[index].value)]);
+  }
+
+  void setCustomFieldValueAtIndex(int index, String newCustomFieldValue) {
+    customFields.replaceRange(index, index + 1,
+        [MapEntry(customFields[index].key, newCustomFieldValue)]);
+  }
+
   Future<void> updateProfile(
     ReachFive reachFive,
     AuthToken authToken,
@@ -61,6 +73,10 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
           givenName: givenName.isNotEmpty ? givenName : null,
           middleName: middleName.isNotEmpty ? middleName : null,
           nickname: nickname.isNotEmpty ? nickname : null,
+          customFields: Map.fromEntries(
+            customFields.where((customField) => customField.key != null).map(
+                (entry) => MapEntry<String, Object?>(entry.key!, entry.value)),
+          ),
         ),
       );
 
@@ -119,6 +135,43 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
           value: nickname,
           hintText: 'nickname',
           setValue: setNickname,
+        ),
+        const SizedBox(height: 32),
+        Column(
+          children: [
+            const Text('Custom Fields', style: TextStyle(fontSize: 18)),
+            const Text(
+              'keys must be created in the ReachFive console',
+              style: TextStyle(fontStyle: FontStyle.italic),
+            ),
+            ...customFields.asMap().entries.map<Widget>(
+                  (entry) => Row(
+                    children: [
+                      Expanded(
+                        child: CustomTextField(
+                          value: entry.value.key != null
+                              ? entry.value.key.toString()
+                              : '',
+                          hintText: 'Key',
+                          setValue: (newKey) =>
+                              setCustomFieldKeyAtIndex(entry.key, newKey),
+                        ),
+                      ),
+                      const SizedBox(width: 32),
+                      Expanded(
+                        child: CustomTextField(
+                          value: entry.value.value != null
+                              ? entry.value.value.toString()
+                              : '',
+                          hintText: 'Value (String only)',
+                          setValue: (newValue) =>
+                              setCustomFieldValueAtIndex(entry.key, newValue),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+          ],
         ),
         const SizedBox(height: 32),
         ElevatedButton(
