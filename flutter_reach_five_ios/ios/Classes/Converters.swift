@@ -3,6 +3,32 @@ import IdentitySdkGoogle
 import IdentitySdkFacebook
 import IdentitySdkWebView
 
+enum CustomFieldError: Error {
+    case casting
+}
+
+extension CustomField {
+    var value: Any {
+        switch self {
+        case let .string(value): return value
+        case let .int(value): return value
+        case let .double(value): return value
+        case let .bool(value): return value
+        case let .array(value): return value
+        }
+    }
+    
+    init(value: Any) throws {
+        switch value {
+        case is String: self = .string(value as! String)
+        case is Int: self = .int(value as! Int)
+        case is Double: self = .double(value as! Double)
+        case is Bool: self = .bool(value as! Bool)
+        default: throw CustomFieldError.casting
+        }
+    }
+}
+
 public class Converters {
 
     static public func parseError(
@@ -437,7 +463,7 @@ public class Converters {
             key, consent in
             consents![key] = consentToInterface(consent: consent)
         })
-
+        
         return ProfileInterface.make(
                 withUid: profile.uid,
                 givenName: profile.givenName,
@@ -461,7 +487,7 @@ public class Converters {
                 addresses: addresses,
                 locale: profile.locale,
                 bio: profile.bio,
-                customFields: profile.customFields,
+                customFields: profile.customFields?.mapValues {customField in customField.value},
                 consents: consents,
                 createdAt: nil,
                 updatedAt: nil,
@@ -513,6 +539,7 @@ public class Converters {
                 addresses: addresses,
                 locale: profileInterface.locale,
                 bio: profileInterface.bio,
+                customFields: try? profileInterface.customFields?.mapValues { customFieldInterface in try CustomField(value: customFieldInterface)},
                 consents: consents,
                 createdAt: profileInterface.createdAt,
                 updatedAt: profileInterface.updatedAt,
