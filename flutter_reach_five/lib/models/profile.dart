@@ -105,9 +105,8 @@ class Profile extends Equatable {
   /// The user bio
   final String? bio;
 
-  /// (Android only) the custom fields linked to your user
+  /// The custom fields linked to your user
   /// It must match the ones you have created in your reachFive console
-  // TODO: implement it on iOS
   final Map<String, Object?>? customFields;
 
   /// The user consents
