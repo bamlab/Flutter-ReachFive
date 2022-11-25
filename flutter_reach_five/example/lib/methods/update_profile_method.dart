@@ -48,13 +48,19 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
       });
 
   void setCustomFieldKeyAtIndex(int index, String newCustomFieldKey) {
-    customFields.replaceRange(index, index + 1,
-        [MapEntry(newCustomFieldKey, customFields[index].value)]);
+    customFields.replaceRange(
+      index,
+      index + 1,
+      [MapEntry(newCustomFieldKey, customFields[index].value)],
+    );
   }
 
   void setCustomFieldValueAtIndex(int index, String newCustomFieldValue) {
-    customFields.replaceRange(index, index + 1,
-        [MapEntry(customFields[index].key, newCustomFieldValue)]);
+    customFields.replaceRange(
+      index,
+      index + 1,
+      [MapEntry(customFields[index].key, newCustomFieldValue)],
+    );
   }
 
   Future<void> updateProfile(
@@ -75,7 +81,8 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
           nickname: nickname.isNotEmpty ? nickname : null,
           customFields: Map.fromEntries(
             customFields.where((customField) => customField.key != null).map(
-                (entry) => MapEntry<String, Object?>(entry.key!, entry.value)),
+                  (entry) => MapEntry<String, Object?>(entry.key!, entry.value),
+                ),
           ),
         ),
       );
