@@ -43,6 +43,7 @@ class LoginWithProviderMethodState extends State<LoginWithProviderMethod> {
           ScopeValue.email,
           ScopeValue.offlineAccess,
           ScopeValue.profile,
+          ScopeValue.fullWrite,
         ],
       );
 
