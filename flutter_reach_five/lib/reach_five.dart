@@ -169,11 +169,38 @@ class ReachFive {
     );
   }
 
-  /// {@template flutter_reach_five.reachFive.updateProfile}
-  /// Update your user profile informations
+  /// {@template flutter_reach_five.reachFive.getProfile}
+  /// Get your user profile information
   ///
-  /// It needs a authToken with an valid accessToken to success
-  /// Every non null informations given in [profile] will be updated
+  /// It needs an authToken with an valid accessToken to succeed
+  /// {@endtemplate}
+  Future<Profile> getProfile({
+    required AuthToken authToken,
+  }) async {
+    try {
+      final newProfileInterface = await _platform.getProfile(
+        reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
+        authToken: AuthTokenConverter.toInterface(authToken),
+      );
+
+      return ProfileConverter.fromInterface(newProfileInterface);
+    } catch (error, stackTrace) {
+      try {
+        _platform.parseError(error, stackTrace);
+      } catch (interfaceError, interfaceStackTrace) {
+        adaptErrors(
+          error: interfaceError,
+          stackTrace: interfaceStackTrace,
+        );
+      }
+    }
+  }
+
+  /// {@template flutter_reach_five.reachFive.updateProfile}
+  /// Update your user profile information
+  ///
+  /// It needs an authToken with an valid accessToken to succeed
+  /// Every non null information given in [profile] will be updated
   /// {@endtemplate}
   Future<Profile> updateProfile({
     required AuthToken authToken,

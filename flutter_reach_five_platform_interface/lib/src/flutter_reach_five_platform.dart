@@ -117,6 +117,19 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
   }) =>
       reachFiveHostApi.logout(reachFiveKey);
 
+  /// {@macro flutter_reach_five.reachFive.getProfile}
+  Future<ProfileInterface> getProfile({
+    required ReachFiveKeyInterface reachFiveKey,
+    required AuthTokenInterface authToken,
+  }) =>
+      reachFiveHostApi.getProfile(
+        GetProfileRequestInterface(
+          reachFiveKey: reachFiveKey,
+          authToken: authToken,
+          errorCodes: errorCodesInterface,
+        ),
+      );
+
   /// {@macro flutter_reach_five.reachFive.updateProfile}
   Future<ProfileInterface> updateProfile({
     required ReachFiveKeyInterface reachFiveKey,
