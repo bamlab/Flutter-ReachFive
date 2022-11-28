@@ -372,6 +372,70 @@ void main() {
       });
     });
 
+    group('getProfile', () {
+      test('returns the expected profile instance', () async {
+        const expectedProfile = Profile(
+          givenName: 'expectedGivenName',
+        );
+
+        const authToken = AuthToken(accessToken: 'accessToken');
+
+        registerFallbackValue(
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
+        );
+        registerFallbackValue(AuthTokenConverter.toInterface(authToken));
+        when(
+          () => flutterReachFivePlatform.getProfile(
+            reachFiveKey: any(named: 'reachFiveKey'),
+            authToken: any(named: 'authToken'),
+          ),
+        ).thenAnswer(
+          (_) async => ProfileConverter.toInterface(expectedProfile),
+        );
+
+        final receivedProfile = await reachFive.getProfile(
+          authToken: authToken,
+        );
+
+        expect(expectedProfile, receivedProfile);
+      });
+
+      test('parse throw error', () async {
+        const profile = Profile(
+          givenName: 'givenName',
+        );
+
+        const authToken = AuthToken(accessToken: 'accessToken');
+
+        registerFallbackValue(
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
+        );
+        registerFallbackValue(AuthTokenConverter.toInterface(authToken));
+        when(
+          () => flutterReachFivePlatform.getProfile(
+            reachFiveKey: any(named: 'reachFiveKey'),
+            authToken: any(named: 'authToken'),
+          ),
+        ).thenThrow(Exception());
+
+        registerFallbackValue(
+          StackTrace.fromString('test'),
+        );
+        when(
+          () => flutterReachFivePlatform.parseError(any(), any()),
+        ).thenThrow(Exception());
+
+        try {
+          await reachFive.getProfile(
+            authToken: authToken,
+          );
+        } catch (_) {}
+
+        verify(() => flutterReachFivePlatform.parseError(any(), any()))
+            .called(1);
+      });
+    });
+
     group('updateProfile', () {
       test('returns correct profile instance', () async {
         const firstProfile = Profile(
