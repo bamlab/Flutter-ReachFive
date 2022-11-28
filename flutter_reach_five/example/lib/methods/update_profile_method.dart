@@ -28,10 +28,6 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
 
   bool isLoading = true;
 
-  String familyName = '';
-  String givenName = '';
-  String middleName = '';
-  String nickname = '';
   late Profile _profile;
   MapEntry<String?, Object?> _newCustomField = const MapEntry(null, null);
 
@@ -53,26 +49,33 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
   }
 
   Future<void> _refresh() async {
-    await _loadProfile();
     setState(() {
       _newCustomField = const MapEntry(null, null);
     });
   }
 
   void setFamilyName(String newFamilyName) => setState(() {
-        familyName = newFamilyName;
+        _profile = _profile.copyWith(
+          familyName: newFamilyName,
+        );
       });
 
   void setGivenName(String newGivenName) => setState(() {
-        givenName = newGivenName;
+        _profile = _profile.copyWith(
+          givenName: newGivenName,
+        );
       });
 
   void setMiddleName(String newMiddleName) => setState(() {
-        middleName = newMiddleName;
+        _profile = _profile.copyWith(
+          middleName: newMiddleName,
+        );
       });
 
   void setNickname(String newNickname) => setState(() {
-        nickname = newNickname;
+        _profile = _profile.copyWith(
+          nickname: newNickname,
+        );
       });
 
   static Map<String, Object?> _updateCustomFields({
@@ -112,11 +115,7 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
     try {
       final newProfile = await reachFive.updateProfile(
         authToken: authToken,
-        profile: Profile(
-          familyName: familyName.isNotEmpty ? familyName : null,
-          givenName: givenName.isNotEmpty ? givenName : null,
-          middleName: middleName.isNotEmpty ? middleName : null,
-          nickname: nickname.isNotEmpty ? nickname : null,
+        profile: _profile.copyWith(
           customFields: _newCustomField.key != null
               ? _updateCustomFields(
                   customFields: _profile.customFields ?? {},
@@ -128,10 +127,7 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
       );
 
       setState(() {
-        familyName = newProfile.familyName ?? '';
-        givenName = newProfile.givenName ?? '';
-        middleName = newProfile.middleName ?? '';
-        nickname = newProfile.nickname ?? '';
+        _profile = newProfile;
       });
 
       if (mounted) {
