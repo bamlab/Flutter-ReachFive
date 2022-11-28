@@ -26,12 +26,38 @@ class UpdateProfileMethod extends StatefulWidget {
 class UpdateProfileMethodState extends State<UpdateProfileMethod> {
   bool areInteractionsDisabled = false;
 
+  bool isLoading = true;
+
   String familyName = '';
   String givenName = '';
   String middleName = '';
   String nickname = '';
-  List<MapEntry<String?, Object?>> customFields =
-      List.generate(3, (index) => const MapEntry(null, null));
+  late Profile _profile;
+  MapEntry<String?, Object?> _newCustomField = const MapEntry(null, null);
+
+  Future<void> _loadProfile() async {
+    setState(() {
+      isLoading = true;
+    });
+    _profile = await widget.reachFive.getProfile(authToken: widget.authToken);
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    // ignore: discarded_futures
+    _loadProfile();
+    super.didChangeDependencies();
+  }
+
+  Future<void> _refresh() async {
+    await _loadProfile();
+    setState(() {
+      _newCustomField = const MapEntry(null, null);
+    });
+  }
 
   void setFamilyName(String newFamilyName) => setState(() {
         familyName = newFamilyName;
@@ -49,21 +75,31 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
         nickname = newNickname;
       });
 
-  void setCustomFieldKeyAtIndex(int index, String newCustomFieldKey) {
-    customFields.replaceRange(
-      index,
-      index + 1,
-      [MapEntry(newCustomFieldKey, customFields[index].value)],
+  static Map<String, Object?> _updateCustomFields({
+    required MapEntry<String, Object?> newCustomField,
+    Map<String, Object?> customFields = const <String, Object?>{},
+  }) {
+    final newCustomFields = Map<String, Object?>.of(customFields)
+      ..addAll({newCustomField.key: newCustomField.value});
+    return newCustomFields;
+  }
+
+  void setCustomField(MapEntry<String, Object?> customField) {
+    _profile = _profile.copyWith(
+      customFields: _updateCustomFields(
+        customFields: _profile.customFields ?? {},
+        newCustomField: customField,
+      ),
     );
   }
 
-  void setCustomFieldValueAtIndex(int index, String newCustomFieldValue) {
-    customFields.replaceRange(
-      index,
-      index + 1,
-      [MapEntry(customFields[index].key, newCustomFieldValue)],
-    );
-  }
+  void setNewCustomFieldKey(String newKey) => setState(() {
+        _newCustomField = MapEntry(newKey, _newCustomField.value);
+      });
+
+  void setNewCustomFieldValue(Object? newValue) => setState(() {
+        _newCustomField = MapEntry(_newCustomField.key, newValue);
+      });
 
   Future<void> updateProfile(
     ReachFive reachFive,
@@ -81,11 +117,13 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
           givenName: givenName.isNotEmpty ? givenName : null,
           middleName: middleName.isNotEmpty ? middleName : null,
           nickname: nickname.isNotEmpty ? nickname : null,
-          customFields: Map.fromEntries(
-            customFields.where((customField) => customField.key != null).map(
-                  (entry) => MapEntry<String, Object?>(entry.key!, entry.value),
-                ),
-          ),
+          customFields: _newCustomField.key != null
+              ? _updateCustomFields(
+                  customFields: _profile.customFields ?? {},
+                  newCustomField: MapEntry<String, Object?>(
+                      _newCustomField.key!, _newCustomField.value),
+                )
+              : _profile.customFields,
         ),
       );
 
@@ -102,6 +140,7 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
           message: 'Success - Update Profile - ${widget.dataSet.name}',
           type: SnackbarType.success,
         );
+        await _refresh();
       }
     } catch (error) {
       if (mounted) {
@@ -120,90 +159,96 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        // ignore: discarded_futures
-        future: widget.reachFive.getProfile(authToken: widget.authToken),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Text('Failed to load Profile');
-          }
-          if (!snapshot.hasData) {
-            return const CircularProgressIndicator();
-          }
-          final profile = snapshot.data! as Profile;
-          return ListView(
-            children: [
-              CustomTextField(
-                value: profile.familyName ?? '',
-                hintText: 'familyName',
-                setValue: setFamilyName,
+    if (isLoading) {
+      return const CircularProgressIndicator();
+    }
+    return ListView(
+      children: [
+        CustomTextField(
+          value: _profile.familyName ?? '',
+          hintText: 'familyName',
+          setValue: setFamilyName,
+        ),
+        const SizedBox(height: 16),
+        CustomTextField(
+          value: _profile.givenName ?? '',
+          hintText: 'givenName',
+          setValue: setGivenName,
+        ),
+        const SizedBox(height: 16),
+        CustomTextField(
+          value: _profile.middleName ?? '',
+          hintText: 'middleName',
+          setValue: setMiddleName,
+        ),
+        const SizedBox(height: 16),
+        CustomTextField(
+          value: _profile.nickname ?? '',
+          hintText: 'nickname',
+          setValue: setNickname,
+        ),
+        const SizedBox(height: 32),
+        Column(
+          children: [
+            const Text('Custom Fields', style: TextStyle(fontSize: 18)),
+            if (_profile.customFields != null)
+              ..._profile.customFields!.entries.map<Widget>(
+                (entry) => Row(
+                  children: [
+                    Expanded(child: Text('${entry.key} :')),
+                    Expanded(
+                      child: CustomTextField(
+                        value: entry.value.toString(),
+                        hintText: 'Value (String only)',
+                        setValue: (newValue) =>
+                            setCustomField(MapEntry(entry.key, newValue)),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: 16),
-              CustomTextField(
-                value: profile.givenName ?? '',
-                hintText: 'givenName',
-                setValue: setGivenName,
-              ),
-              const SizedBox(height: 16),
-              CustomTextField(
-                value: profile.middleName ?? '',
-                hintText: 'middleName',
-                setValue: setMiddleName,
-              ),
-              const SizedBox(height: 16),
-              CustomTextField(
-                value: profile.nickname ?? '',
-                hintText: 'nickname',
-                setValue: setNickname,
-              ),
-              const SizedBox(height: 32),
-              Column(
-                children: [
-                  const Text('Custom Fields', style: TextStyle(fontSize: 18)),
-                  const Text(
-                    'keys must be created in the ReachFive console',
-                    style: TextStyle(fontStyle: FontStyle.italic),
+            const SizedBox(height: 16),
+            const Text(
+              'New Custom Fields',
+              style: TextStyle(fontSize: 18),
+            ),
+            const Text(
+              'keys must be created in the ReachFive console',
+              style: TextStyle(fontStyle: FontStyle.italic),
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomTextField(
+                    value: _newCustomField.key != null
+                        ? _newCustomField.key.toString()
+                        : '',
+                    hintText: 'Key',
+                    setValue: setNewCustomFieldKey,
                   ),
-                  ...customFields.asMap().entries.map<Widget>(
-                        (entry) => Row(
-                          children: [
-                            Expanded(
-                              child: CustomTextField(
-                                value: entry.value.key != null
-                                    ? entry.value.key.toString()
-                                    : '',
-                                hintText: 'Key',
-                                setValue: (newKey) =>
-                                    setCustomFieldKeyAtIndex(entry.key, newKey),
-                              ),
-                            ),
-                            const SizedBox(width: 32),
-                            Expanded(
-                              child: CustomTextField(
-                                value: entry.value.value != null
-                                    ? entry.value.value.toString()
-                                    : '',
-                                hintText: 'Value (String only)',
-                                setValue: (newValue) =>
-                                    setCustomFieldValueAtIndex(
-                                        entry.key, newValue),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                ],
-              ),
-              const SizedBox(height: 32),
-              ElevatedButton(
-                onPressed: !areInteractionsDisabled
-                    ? () async =>
-                        updateProfile(widget.reachFive, widget.authToken)
-                    : null,
-                child: const Text('update Profile'),
-              ),
-            ],
-          );
-        });
+                ),
+                const SizedBox(width: 32),
+                Expanded(
+                  child: CustomTextField(
+                    value: _newCustomField.value != null
+                        ? _newCustomField.value.toString()
+                        : '',
+                    hintText: 'Value (String only)',
+                    setValue: setNewCustomFieldValue,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(height: 32),
+        ElevatedButton(
+          onPressed: !areInteractionsDisabled
+              ? () async => updateProfile(widget.reachFive, widget.authToken)
+              : null,
+          child: const Text('update Profile'),
+        ),
+      ],
+    );
   }
 }
