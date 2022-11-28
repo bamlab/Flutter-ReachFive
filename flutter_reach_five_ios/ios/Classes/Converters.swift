@@ -454,15 +454,6 @@ public class Converters {
                 .map({ profileAddress in
                     profileAddressToInterface(profileAddress: profileAddress)
                 })
-
-        var consents = profile.consents != nil
-                ? [String: ConsentInterface]()
-                : nil
-
-        profile.consents?.forEach({
-            key, consent in
-            consents![key] = consentToInterface(consent: consent)
-        })
         
         return ProfileInterface.make(
                 withUid: profile.uid,
@@ -488,7 +479,7 @@ public class Converters {
                 locale: profile.locale,
                 bio: profile.bio,
                 customFields: profile.customFields?.mapValues {customField in customField.value},
-                consents: consents,
+                consents: profile.consents?.mapValues {consent in consentToInterface(consent: consent)},
                 createdAt: nil,
                 updatedAt: nil,
                 liteOnly: liteOnly,
@@ -506,15 +497,6 @@ public class Converters {
                 .map({ profileAddressInterface in
                     profileAddressFromInterface(profileAddressInterface: profileAddressInterface)
                 })
-
-        var consents = profileInterface.consents != nil
-                ? [String: Consent]()
-                : nil
-
-        profileInterface.consents?.forEach({
-            key, consentInterface in
-            consents![key] = consentFromInterface(consentInterface: consentInterface)
-        })
 
         return Profile(
                 uid: profileInterface.uid,
@@ -540,7 +522,7 @@ public class Converters {
                 locale: profileInterface.locale,
                 bio: profileInterface.bio,
                 customFields: try? profileInterface.customFields?.mapValues { customFieldInterface in try CustomField(value: customFieldInterface)},
-                consents: consents,
+                consents: profileInterface.consents?.mapValues { consent in consentFromInterface(consentInterface: consent) },
                 createdAt: profileInterface.createdAt,
                 updatedAt: profileInterface.updatedAt,
                 company: profileInterface.company,
