@@ -143,7 +143,9 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
               ? _updateCustomFields(
                   customFields: _profile.customFields ?? {},
                   newCustomField: MapEntry<String, Object?>(
-                      _newCustomField.key!, _newCustomField.value),
+                    _newCustomField.key!,
+                    _newCustomField.value,
+                  ),
                 )
               : _profile.customFields,
         ),
@@ -219,7 +221,8 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
                 Checkbox(
                   tristate: true,
                   value: _convertConsentToBool(
-                      _profile.consents?[consentSupportedKey]),
+                    _profile.consents?[consentSupportedKey],
+                  ),
                   onChanged: (value) => setConsent(consentGranted: value),
                 ),
               ],

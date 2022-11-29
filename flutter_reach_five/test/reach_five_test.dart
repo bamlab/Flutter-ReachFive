@@ -401,10 +401,6 @@ void main() {
       });
 
       test('parse throw error', () async {
-        const profile = Profile(
-          givenName: 'givenName',
-        );
-
         const authToken = AuthToken(accessToken: 'accessToken');
 
         registerFallbackValue(
