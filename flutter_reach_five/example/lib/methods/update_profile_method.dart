@@ -30,6 +30,7 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
 
   late Profile _profile;
   MapEntry<String?, Object?> _newCustomField = const MapEntry(null, null);
+  final consentSupportedKey = 'test_consent';
 
   Future<void> _loadProfile() async {
     setState(() {
@@ -75,6 +76,28 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
   void setNickname(String newNickname) => setState(() {
         _profile = _profile.copyWith(
           nickname: newNickname,
+        );
+      });
+
+  bool? _convertConsentToBool(Consent? consent) {
+    if (consent == null) {
+      return null;
+    }
+    if (consent.granted) {
+      return true;
+    }
+    return false;
+  }
+
+  void setConsent({required bool? consentGranted}) => setState(() {
+        _profile = _profile.copyWith(
+          consents: {
+            if (consentGranted != null)
+              consentSupportedKey: Consent(
+                date: DateTime.now().toIso8601String(),
+                granted: consentGranted,
+              )
+          },
         );
       });
 
@@ -182,6 +205,30 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
           value: _profile.nickname ?? '',
           hintText: 'nickname',
           setValue: setNickname,
+        ),
+        const SizedBox(height: 32),
+        Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Consent ($consentSupportedKey): ${_profile.consents == null ? '(NEVER GIVEN)' : ''}',
+                  ),
+                ),
+                Checkbox(
+                  tristate: true,
+                  value: _convertConsentToBool(
+                      _profile.consents?[consentSupportedKey]),
+                  onChanged: (value) => setConsent(consentGranted: value),
+                ),
+              ],
+            ),
+            const Text(
+              '"test_consent" Consent must be created in the ReachFive console',
+              style: TextStyle(fontStyle: FontStyle.italic),
+            ),
+          ],
         ),
         const SizedBox(height: 32),
         Column(
