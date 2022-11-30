@@ -22,12 +22,12 @@ dependencies:
   equatable: ^2.0.5
   flutter:
     sdk: flutter
-  flutter_reach_five_android: ^0.1.6
-  flutter_reach_five_ios: ^0.1.6
-  flutter_reach_five_platform_interface: ^0.1.6
+  flutter_reach_five_android: ^0.1.7
+  flutter_reach_five_ios: ^0.1.7
+  flutter_reach_five_platform_interface: ^0.1.7
   freezed: ^2.1.0+1
   freezed_annotation: ^2.1.0
-  reach_five_identity_repo: ^0.1.6
+  reach_five_identity_repo: ^0.1.7
 
 dev_dependencies:
   analyzer: ^4.7.0
