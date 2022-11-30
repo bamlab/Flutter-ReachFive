@@ -94,7 +94,7 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
           consents: {
             if (consentGranted != null)
               consentSupportedKey: Consent(
-                date: DateTime.now().toIso8601String(),
+                date: DateTime.now(),
                 granted: consentGranted,
               )
           },

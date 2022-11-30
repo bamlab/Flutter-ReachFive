@@ -8,7 +8,7 @@ void main() {
     test('toInterface method', () async {
       expect(
         ConsentConverter.toInterface(
-          const Consent(granted: true, date: 'date'),
+          Consent(granted: true, date: DateTime.parse('2022-06-10')),
         ),
         isInstanceOf<ConsentInterface>(),
       );
@@ -17,7 +17,7 @@ void main() {
     test('fromInterface method', () async {
       expect(
         ConsentConverter.fromInterface(
-          ConsentInterface(granted: true, date: 'date'),
+          ConsentInterface(granted: true, date: '2022-06-10'),
         ),
         isInstanceOf<Consent>(),
       );

@@ -13,9 +13,7 @@ class Consent extends Equatable {
   final bool granted;
 
   /// The date the consent was last updated
-  /// Must be formatted in ISO 8601
-  /// example: DateTime.now().toIso8601String()
-  final String date;
+  final DateTime date;
 
   /// The consent type TODO: Find out if we can use a enum for that
   final String? consentType;

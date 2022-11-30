@@ -12,14 +12,14 @@ void main() {
     test('toInterface method', () async {
       expect(
         ProfileConverter.toInterface(
-          const Profile(
-            loginSummary: LoginSummary(),
-            emails: Emails(),
+          Profile(
+            loginSummary: const LoginSummary(),
+            emails: const Emails(),
             customFields: <String, Object?>{'key': 'objectValue'},
             consents: <String, Consent>{
-              'key': Consent(granted: true, date: 'date')
+              'key': Consent(granted: true, date: DateTime.parse('2022-03-24')),
             },
-            addresses: [ProfileAddress()],
+            addresses: const [ProfileAddress()],
           ),
         ),
         isInstanceOf<ProfileInterface>(),
@@ -34,7 +34,7 @@ void main() {
             emails: EmailsInterface(),
             customFields: <String, Object?>{'key': 'objectValue'},
             consents: <String, ConsentInterface>{
-              'key': ConsentInterface(granted: true, date: 'date')
+              'key': ConsentInterface(granted: true, date: '2022-06-10')
             },
             addresses: [ProfileAddressInterface()],
           ),

@@ -4,15 +4,19 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('$Consent', () {
     test('instances with same fields are equal', () async {
-      const firstInstance = Consent(granted: true, date: 'date');
-      const secondInstance = Consent(granted: true, date: 'date');
+      final firstInstance =
+          Consent(granted: true, date: DateTime.parse('2022-06-10'));
+      final secondInstance =
+          Consent(granted: true, date: DateTime.parse('2022-06-10'));
 
       expect(firstInstance == secondInstance, isTrue);
     });
 
-    test('instances with differents fields are not equal', () async {
-      const firstInstance = Consent(granted: true, date: 'date');
-      const secondInstance = Consent(granted: false, date: 'date');
+    test('instances with different fields are not equal', () async {
+      final firstInstance =
+          Consent(granted: true, date: DateTime.parse('2022-06-10'));
+      final secondInstance =
+          Consent(granted: false, date: DateTime.parse('2022-06-10'));
 
       expect(firstInstance == secondInstance, isFalse);
     });

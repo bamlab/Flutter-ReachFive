@@ -11,7 +11,7 @@ class ConsentConverter {
   ) =>
       ConsentInterface(
         granted: consent.granted,
-        date: consent.date,
+        date: consent.date.toIso8601String(),
         consentType: consent.consentType,
       );
 
@@ -21,7 +21,7 @@ class ConsentConverter {
   ) =>
       Consent(
         granted: consentInterface.granted,
-        date: consentInterface.date,
+        date: DateTime.parse(consentInterface.date),
         consentType: consentInterface.consentType,
       );
 }
