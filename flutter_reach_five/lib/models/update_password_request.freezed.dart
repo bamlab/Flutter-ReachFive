@@ -34,14 +34,15 @@ mixin _$UpdatePasswordRequest {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
+    TResult? Function(
             AuthToken authToken, String oldPassword, String newPassword)?
         withAccessToken,
-    TResult Function(AuthToken freshAuthToken, String newPassword)?
+    TResult? Function(AuthToken freshAuthToken, String newPassword)?
         withFreshAccessToken,
-    TResult Function(String email, String verificationCode, String newPassword)?
+    TResult? Function(
+            String email, String verificationCode, String newPassword)?
         withEmail,
-    TResult Function(
+    TResult? Function(
             String phoneNumber, String verificationCode, String newPassword)?
         withPhoneNumber,
   }) =>
@@ -74,12 +75,12 @@ mixin _$UpdatePasswordRequest {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UpdatePasswordRequestWithAccessToken value)?
+    TResult? Function(UpdatePasswordRequestWithAccessToken value)?
         withAccessToken,
-    TResult Function(UpdatePasswordRequestWithFreshAccessToken value)?
+    TResult? Function(UpdatePasswordRequestWithFreshAccessToken value)?
         withFreshAccessToken,
-    TResult Function(UpdatePasswordRequestWithEmail value)? withEmail,
-    TResult Function(UpdatePasswordRequestWithPhoneNumber value)?
+    TResult? Function(UpdatePasswordRequestWithEmail value)? withEmail,
+    TResult? Function(UpdatePasswordRequestWithPhoneNumber value)?
         withPhoneNumber,
   }) =>
       throw _privateConstructorUsedError;
@@ -105,29 +106,33 @@ mixin _$UpdatePasswordRequest {
 abstract class $UpdatePasswordRequestCopyWith<$Res> {
   factory $UpdatePasswordRequestCopyWith(UpdatePasswordRequest value,
           $Res Function(UpdatePasswordRequest) then) =
-      _$UpdatePasswordRequestCopyWithImpl<$Res>;
+      _$UpdatePasswordRequestCopyWithImpl<$Res, UpdatePasswordRequest>;
+  @useResult
   $Res call({String newPassword});
 }
 
 /// @nodoc
-class _$UpdatePasswordRequestCopyWithImpl<$Res>
+class _$UpdatePasswordRequestCopyWithImpl<$Res,
+        $Val extends UpdatePasswordRequest>
     implements $UpdatePasswordRequestCopyWith<$Res> {
   _$UpdatePasswordRequestCopyWithImpl(this._value, this._then);
 
-  final UpdatePasswordRequest _value;
   // ignore: unused_field
-  final $Res Function(UpdatePasswordRequest) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? newPassword = freezed,
+    Object? newPassword = null,
   }) {
     return _then(_value.copyWith(
-      newPassword: newPassword == freezed
+      newPassword: null == newPassword
           ? _value.newPassword
           : newPassword // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -139,39 +144,37 @@ abstract class _$$UpdatePasswordRequestWithAccessTokenCopyWith<$Res>
           $Res Function(_$UpdatePasswordRequestWithAccessToken) then) =
       __$$UpdatePasswordRequestWithAccessTokenCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({AuthToken authToken, String oldPassword, String newPassword});
 }
 
 /// @nodoc
 class __$$UpdatePasswordRequestWithAccessTokenCopyWithImpl<$Res>
-    extends _$UpdatePasswordRequestCopyWithImpl<$Res>
+    extends _$UpdatePasswordRequestCopyWithImpl<$Res,
+        _$UpdatePasswordRequestWithAccessToken>
     implements _$$UpdatePasswordRequestWithAccessTokenCopyWith<$Res> {
   __$$UpdatePasswordRequestWithAccessTokenCopyWithImpl(
       _$UpdatePasswordRequestWithAccessToken _value,
       $Res Function(_$UpdatePasswordRequestWithAccessToken) _then)
-      : super(
-            _value, (v) => _then(v as _$UpdatePasswordRequestWithAccessToken));
+      : super(_value, _then);
 
-  @override
-  _$UpdatePasswordRequestWithAccessToken get _value =>
-      super._value as _$UpdatePasswordRequestWithAccessToken;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? authToken = freezed,
-    Object? oldPassword = freezed,
-    Object? newPassword = freezed,
+    Object? authToken = null,
+    Object? oldPassword = null,
+    Object? newPassword = null,
   }) {
     return _then(_$UpdatePasswordRequestWithAccessToken(
-      authToken: authToken == freezed
+      authToken: null == authToken
           ? _value.authToken
           : authToken // ignore: cast_nullable_to_non_nullable
               as AuthToken,
-      oldPassword: oldPassword == freezed
+      oldPassword: null == oldPassword
           ? _value.oldPassword
           : oldPassword // ignore: cast_nullable_to_non_nullable
               as String,
-      newPassword: newPassword == freezed
+      newPassword: null == newPassword
           ? _value.newPassword
           : newPassword // ignore: cast_nullable_to_non_nullable
               as String,
@@ -205,22 +208,21 @@ class _$UpdatePasswordRequestWithAccessToken
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UpdatePasswordRequestWithAccessToken &&
-            const DeepCollectionEquality().equals(other.authToken, authToken) &&
-            const DeepCollectionEquality()
-                .equals(other.oldPassword, oldPassword) &&
-            const DeepCollectionEquality()
-                .equals(other.newPassword, newPassword));
+            (identical(other.authToken, authToken) ||
+                other.authToken == authToken) &&
+            (identical(other.oldPassword, oldPassword) ||
+                other.oldPassword == oldPassword) &&
+            (identical(other.newPassword, newPassword) ||
+                other.newPassword == newPassword));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(authToken),
-      const DeepCollectionEquality().hash(oldPassword),
-      const DeepCollectionEquality().hash(newPassword));
+  int get hashCode =>
+      Object.hash(runtimeType, authToken, oldPassword, newPassword);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$UpdatePasswordRequestWithAccessTokenCopyWith<
           _$UpdatePasswordRequestWithAccessToken>
       get copyWith => __$$UpdatePasswordRequestWithAccessTokenCopyWithImpl<
@@ -247,14 +249,15 @@ class _$UpdatePasswordRequestWithAccessToken
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
+    TResult? Function(
             AuthToken authToken, String oldPassword, String newPassword)?
         withAccessToken,
-    TResult Function(AuthToken freshAuthToken, String newPassword)?
+    TResult? Function(AuthToken freshAuthToken, String newPassword)?
         withFreshAccessToken,
-    TResult Function(String email, String verificationCode, String newPassword)?
+    TResult? Function(
+            String email, String verificationCode, String newPassword)?
         withEmail,
-    TResult Function(
+    TResult? Function(
             String phoneNumber, String verificationCode, String newPassword)?
         withPhoneNumber,
   }) {
@@ -299,12 +302,12 @@ class _$UpdatePasswordRequestWithAccessToken
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UpdatePasswordRequestWithAccessToken value)?
+    TResult? Function(UpdatePasswordRequestWithAccessToken value)?
         withAccessToken,
-    TResult Function(UpdatePasswordRequestWithFreshAccessToken value)?
+    TResult? Function(UpdatePasswordRequestWithFreshAccessToken value)?
         withFreshAccessToken,
-    TResult Function(UpdatePasswordRequestWithEmail value)? withEmail,
-    TResult Function(UpdatePasswordRequestWithPhoneNumber value)?
+    TResult? Function(UpdatePasswordRequestWithEmail value)? withEmail,
+    TResult? Function(UpdatePasswordRequestWithPhoneNumber value)?
         withPhoneNumber,
   }) {
     return withAccessToken?.call(this);
@@ -356,34 +359,32 @@ abstract class _$$UpdatePasswordRequestWithFreshAccessTokenCopyWith<$Res>
           $Res Function(_$UpdatePasswordRequestWithFreshAccessToken) then) =
       __$$UpdatePasswordRequestWithFreshAccessTokenCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({AuthToken freshAuthToken, String newPassword});
 }
 
 /// @nodoc
 class __$$UpdatePasswordRequestWithFreshAccessTokenCopyWithImpl<$Res>
-    extends _$UpdatePasswordRequestCopyWithImpl<$Res>
+    extends _$UpdatePasswordRequestCopyWithImpl<$Res,
+        _$UpdatePasswordRequestWithFreshAccessToken>
     implements _$$UpdatePasswordRequestWithFreshAccessTokenCopyWith<$Res> {
   __$$UpdatePasswordRequestWithFreshAccessTokenCopyWithImpl(
       _$UpdatePasswordRequestWithFreshAccessToken _value,
       $Res Function(_$UpdatePasswordRequestWithFreshAccessToken) _then)
-      : super(_value,
-            (v) => _then(v as _$UpdatePasswordRequestWithFreshAccessToken));
+      : super(_value, _then);
 
-  @override
-  _$UpdatePasswordRequestWithFreshAccessToken get _value =>
-      super._value as _$UpdatePasswordRequestWithFreshAccessToken;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? freshAuthToken = freezed,
-    Object? newPassword = freezed,
+    Object? freshAuthToken = null,
+    Object? newPassword = null,
   }) {
     return _then(_$UpdatePasswordRequestWithFreshAccessToken(
-      freshAuthToken: freshAuthToken == freezed
+      freshAuthToken: null == freshAuthToken
           ? _value.freshAuthToken
           : freshAuthToken // ignore: cast_nullable_to_non_nullable
               as AuthToken,
-      newPassword: newPassword == freezed
+      newPassword: null == newPassword
           ? _value.newPassword
           : newPassword // ignore: cast_nullable_to_non_nullable
               as String,
@@ -413,20 +414,18 @@ class _$UpdatePasswordRequestWithFreshAccessToken
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UpdatePasswordRequestWithFreshAccessToken &&
-            const DeepCollectionEquality()
-                .equals(other.freshAuthToken, freshAuthToken) &&
-            const DeepCollectionEquality()
-                .equals(other.newPassword, newPassword));
+            (identical(other.freshAuthToken, freshAuthToken) ||
+                other.freshAuthToken == freshAuthToken) &&
+            (identical(other.newPassword, newPassword) ||
+                other.newPassword == newPassword));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(freshAuthToken),
-      const DeepCollectionEquality().hash(newPassword));
+  int get hashCode => Object.hash(runtimeType, freshAuthToken, newPassword);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$UpdatePasswordRequestWithFreshAccessTokenCopyWith<
           _$UpdatePasswordRequestWithFreshAccessToken>
       get copyWith => __$$UpdatePasswordRequestWithFreshAccessTokenCopyWithImpl<
@@ -453,14 +452,15 @@ class _$UpdatePasswordRequestWithFreshAccessToken
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
+    TResult? Function(
             AuthToken authToken, String oldPassword, String newPassword)?
         withAccessToken,
-    TResult Function(AuthToken freshAuthToken, String newPassword)?
+    TResult? Function(AuthToken freshAuthToken, String newPassword)?
         withFreshAccessToken,
-    TResult Function(String email, String verificationCode, String newPassword)?
+    TResult? Function(
+            String email, String verificationCode, String newPassword)?
         withEmail,
-    TResult Function(
+    TResult? Function(
             String phoneNumber, String verificationCode, String newPassword)?
         withPhoneNumber,
   }) {
@@ -505,12 +505,12 @@ class _$UpdatePasswordRequestWithFreshAccessToken
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UpdatePasswordRequestWithAccessToken value)?
+    TResult? Function(UpdatePasswordRequestWithAccessToken value)?
         withAccessToken,
-    TResult Function(UpdatePasswordRequestWithFreshAccessToken value)?
+    TResult? Function(UpdatePasswordRequestWithFreshAccessToken value)?
         withFreshAccessToken,
-    TResult Function(UpdatePasswordRequestWithEmail value)? withEmail,
-    TResult Function(UpdatePasswordRequestWithPhoneNumber value)?
+    TResult? Function(UpdatePasswordRequestWithEmail value)? withEmail,
+    TResult? Function(UpdatePasswordRequestWithPhoneNumber value)?
         withPhoneNumber,
   }) {
     return withFreshAccessToken?.call(this);
@@ -560,38 +560,37 @@ abstract class _$$UpdatePasswordRequestWithEmailCopyWith<$Res>
           $Res Function(_$UpdatePasswordRequestWithEmail) then) =
       __$$UpdatePasswordRequestWithEmailCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String email, String verificationCode, String newPassword});
 }
 
 /// @nodoc
 class __$$UpdatePasswordRequestWithEmailCopyWithImpl<$Res>
-    extends _$UpdatePasswordRequestCopyWithImpl<$Res>
+    extends _$UpdatePasswordRequestCopyWithImpl<$Res,
+        _$UpdatePasswordRequestWithEmail>
     implements _$$UpdatePasswordRequestWithEmailCopyWith<$Res> {
   __$$UpdatePasswordRequestWithEmailCopyWithImpl(
       _$UpdatePasswordRequestWithEmail _value,
       $Res Function(_$UpdatePasswordRequestWithEmail) _then)
-      : super(_value, (v) => _then(v as _$UpdatePasswordRequestWithEmail));
+      : super(_value, _then);
 
-  @override
-  _$UpdatePasswordRequestWithEmail get _value =>
-      super._value as _$UpdatePasswordRequestWithEmail;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? email = freezed,
-    Object? verificationCode = freezed,
-    Object? newPassword = freezed,
+    Object? email = null,
+    Object? verificationCode = null,
+    Object? newPassword = null,
   }) {
     return _then(_$UpdatePasswordRequestWithEmail(
-      email: email == freezed
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      verificationCode: verificationCode == freezed
+      verificationCode: null == verificationCode
           ? _value.verificationCode
           : verificationCode // ignore: cast_nullable_to_non_nullable
               as String,
-      newPassword: newPassword == freezed
+      newPassword: null == newPassword
           ? _value.newPassword
           : newPassword // ignore: cast_nullable_to_non_nullable
               as String,
@@ -625,22 +624,20 @@ class _$UpdatePasswordRequestWithEmail
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UpdatePasswordRequestWithEmail &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality()
-                .equals(other.verificationCode, verificationCode) &&
-            const DeepCollectionEquality()
-                .equals(other.newPassword, newPassword));
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.verificationCode, verificationCode) ||
+                other.verificationCode == verificationCode) &&
+            (identical(other.newPassword, newPassword) ||
+                other.newPassword == newPassword));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(verificationCode),
-      const DeepCollectionEquality().hash(newPassword));
+  int get hashCode =>
+      Object.hash(runtimeType, email, verificationCode, newPassword);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$UpdatePasswordRequestWithEmailCopyWith<_$UpdatePasswordRequestWithEmail>
       get copyWith => __$$UpdatePasswordRequestWithEmailCopyWithImpl<
           _$UpdatePasswordRequestWithEmail>(this, _$identity);
@@ -666,14 +663,15 @@ class _$UpdatePasswordRequestWithEmail
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
+    TResult? Function(
             AuthToken authToken, String oldPassword, String newPassword)?
         withAccessToken,
-    TResult Function(AuthToken freshAuthToken, String newPassword)?
+    TResult? Function(AuthToken freshAuthToken, String newPassword)?
         withFreshAccessToken,
-    TResult Function(String email, String verificationCode, String newPassword)?
+    TResult? Function(
+            String email, String verificationCode, String newPassword)?
         withEmail,
-    TResult Function(
+    TResult? Function(
             String phoneNumber, String verificationCode, String newPassword)?
         withPhoneNumber,
   }) {
@@ -718,12 +716,12 @@ class _$UpdatePasswordRequestWithEmail
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UpdatePasswordRequestWithAccessToken value)?
+    TResult? Function(UpdatePasswordRequestWithAccessToken value)?
         withAccessToken,
-    TResult Function(UpdatePasswordRequestWithFreshAccessToken value)?
+    TResult? Function(UpdatePasswordRequestWithFreshAccessToken value)?
         withFreshAccessToken,
-    TResult Function(UpdatePasswordRequestWithEmail value)? withEmail,
-    TResult Function(UpdatePasswordRequestWithPhoneNumber value)?
+    TResult? Function(UpdatePasswordRequestWithEmail value)? withEmail,
+    TResult? Function(UpdatePasswordRequestWithPhoneNumber value)?
         withPhoneNumber,
   }) {
     return withEmail?.call(this);
@@ -772,39 +770,37 @@ abstract class _$$UpdatePasswordRequestWithPhoneNumberCopyWith<$Res>
           $Res Function(_$UpdatePasswordRequestWithPhoneNumber) then) =
       __$$UpdatePasswordRequestWithPhoneNumberCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String phoneNumber, String verificationCode, String newPassword});
 }
 
 /// @nodoc
 class __$$UpdatePasswordRequestWithPhoneNumberCopyWithImpl<$Res>
-    extends _$UpdatePasswordRequestCopyWithImpl<$Res>
+    extends _$UpdatePasswordRequestCopyWithImpl<$Res,
+        _$UpdatePasswordRequestWithPhoneNumber>
     implements _$$UpdatePasswordRequestWithPhoneNumberCopyWith<$Res> {
   __$$UpdatePasswordRequestWithPhoneNumberCopyWithImpl(
       _$UpdatePasswordRequestWithPhoneNumber _value,
       $Res Function(_$UpdatePasswordRequestWithPhoneNumber) _then)
-      : super(
-            _value, (v) => _then(v as _$UpdatePasswordRequestWithPhoneNumber));
+      : super(_value, _then);
 
-  @override
-  _$UpdatePasswordRequestWithPhoneNumber get _value =>
-      super._value as _$UpdatePasswordRequestWithPhoneNumber;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? phoneNumber = freezed,
-    Object? verificationCode = freezed,
-    Object? newPassword = freezed,
+    Object? phoneNumber = null,
+    Object? verificationCode = null,
+    Object? newPassword = null,
   }) {
     return _then(_$UpdatePasswordRequestWithPhoneNumber(
-      phoneNumber: phoneNumber == freezed
+      phoneNumber: null == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
-      verificationCode: verificationCode == freezed
+      verificationCode: null == verificationCode
           ? _value.verificationCode
           : verificationCode // ignore: cast_nullable_to_non_nullable
               as String,
-      newPassword: newPassword == freezed
+      newPassword: null == newPassword
           ? _value.newPassword
           : newPassword // ignore: cast_nullable_to_non_nullable
               as String,
@@ -838,23 +834,21 @@ class _$UpdatePasswordRequestWithPhoneNumber
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UpdatePasswordRequestWithPhoneNumber &&
-            const DeepCollectionEquality()
-                .equals(other.phoneNumber, phoneNumber) &&
-            const DeepCollectionEquality()
-                .equals(other.verificationCode, verificationCode) &&
-            const DeepCollectionEquality()
-                .equals(other.newPassword, newPassword));
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber) &&
+            (identical(other.verificationCode, verificationCode) ||
+                other.verificationCode == verificationCode) &&
+            (identical(other.newPassword, newPassword) ||
+                other.newPassword == newPassword));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(phoneNumber),
-      const DeepCollectionEquality().hash(verificationCode),
-      const DeepCollectionEquality().hash(newPassword));
+  int get hashCode =>
+      Object.hash(runtimeType, phoneNumber, verificationCode, newPassword);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$UpdatePasswordRequestWithPhoneNumberCopyWith<
           _$UpdatePasswordRequestWithPhoneNumber>
       get copyWith => __$$UpdatePasswordRequestWithPhoneNumberCopyWithImpl<
@@ -881,14 +875,15 @@ class _$UpdatePasswordRequestWithPhoneNumber
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
+    TResult? Function(
             AuthToken authToken, String oldPassword, String newPassword)?
         withAccessToken,
-    TResult Function(AuthToken freshAuthToken, String newPassword)?
+    TResult? Function(AuthToken freshAuthToken, String newPassword)?
         withFreshAccessToken,
-    TResult Function(String email, String verificationCode, String newPassword)?
+    TResult? Function(
+            String email, String verificationCode, String newPassword)?
         withEmail,
-    TResult Function(
+    TResult? Function(
             String phoneNumber, String verificationCode, String newPassword)?
         withPhoneNumber,
   }) {
@@ -933,12 +928,12 @@ class _$UpdatePasswordRequestWithPhoneNumber
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UpdatePasswordRequestWithAccessToken value)?
+    TResult? Function(UpdatePasswordRequestWithAccessToken value)?
         withAccessToken,
-    TResult Function(UpdatePasswordRequestWithFreshAccessToken value)?
+    TResult? Function(UpdatePasswordRequestWithFreshAccessToken value)?
         withFreshAccessToken,
-    TResult Function(UpdatePasswordRequestWithEmail value)? withEmail,
-    TResult Function(UpdatePasswordRequestWithPhoneNumber value)?
+    TResult? Function(UpdatePasswordRequestWithEmail value)? withEmail,
+    TResult? Function(UpdatePasswordRequestWithPhoneNumber value)?
         withPhoneNumber,
   }) {
     return withPhoneNumber?.call(this);

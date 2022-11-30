@@ -12,8 +12,8 @@ class Consent extends Equatable {
   /// The consent granted
   final bool granted;
 
-  /// The date the consent was granted TODO: confirm that and try to use DateTime with good conversion
-  final String date;
+  /// The date the consent was last updated
+  final DateTime date;
 
   /// The consent type TODO: Find out if we can use a enum for that
   final String? consentType;

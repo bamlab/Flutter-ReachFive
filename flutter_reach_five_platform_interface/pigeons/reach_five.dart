@@ -395,6 +395,18 @@ class ProfileInterface {
   final String? company;
 }
 
+class GetProfileRequestInterface {
+  const GetProfileRequestInterface({
+    required this.reachFiveKey,
+    required this.authToken,
+    required this.errorCodes,
+  });
+
+  final ReachFiveKeyInterface reachFiveKey;
+  final AuthTokenInterface authToken;
+  final ErrorCodesInterface errorCodes;
+}
+
 class UpdateProfileRequestInterface {
   const UpdateProfileRequestInterface({
     required this.reachFiveKey,
@@ -501,6 +513,11 @@ abstract class ReachFiveHostApi {
 
   @async
   void logout(ReachFiveKeyInterface reachFiveKey);
+
+  @async
+  ProfileInterface getProfile(
+    GetProfileRequestInterface request,
+  );
 
   @async
   ProfileInterface updateProfile(

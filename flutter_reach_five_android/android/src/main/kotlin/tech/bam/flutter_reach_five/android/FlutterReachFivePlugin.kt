@@ -340,6 +340,39 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
         )
     }
 
+    override fun getProfile(
+        request: ReachFiveApi.GetProfileRequestInterface,
+        result: ReachFiveApi.Result<ReachFiveApi.ProfileInterface>
+    ) {
+        val reachFive: ReachFive
+        try {
+            reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
+        } catch (error: FlutterError) {
+            result.error(error)
+            return
+        }
+
+        reachFive.getProfile(
+            authToken = Converters.authTokenFromInterface(request.authToken),
+            success = {
+                profile ->
+                result.success(Converters.profileToInterface(profile))
+            },
+            failure = {
+                error -> result.error(
+                Converters.parseError(
+                    reachFiveError = error,
+                    errorCodesInterface = request.errorCodes,
+                    defaultFlutterError = FlutterError(
+                        code= "get_profile_error_code",
+                        message= error.message,
+                        details= null
+                    )
+                )
+            )}
+        )
+    }
+
     override fun updateProfile(
         request: ReachFiveApi.UpdateProfileRequestInterface,
         result: ReachFiveApi.Result<ReachFiveApi.ProfileInterface>

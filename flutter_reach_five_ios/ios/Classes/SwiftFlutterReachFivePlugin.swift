@@ -248,6 +248,47 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
             }
         )
     }
+    
+    public func getProfileRequest(_ request: GetProfileRequestInterface, completion: @escaping (ProfileInterface?, FlutterError?) -> Void) {
+        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
+        guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
+        else {
+            completion(
+                    nil,
+                    nonInitializedFlutterError
+            )
+            return
+        }
+
+        let authToken = Converters.authTokenFromInterface(
+                authTokenInterface: request.authToken
+        )
+
+        reachFive.getProfile(authToken: authToken)
+                .onSuccess(
+                        callback: { profile in
+                            completion(
+                                    Converters.profileToInterface(profile: profile),
+                                    nil
+                            )
+                        }
+                ).onFailure(
+                        callback: { error in
+                            completion(
+                                    nil,
+                                    Converters.parseError(
+                                            reachFiveError: error,
+                                            errorCodesInterface: request.errorCodes,
+                                            defaultFlutterError: FlutterError(
+                                                    code: "get_profile_error_code",
+                                                    message: error.message(),
+                                                    details: nil
+                                            )
+                                    )
+                            )
+                        }
+                )
+    }
 
     public func updateProfileRequest(_ request: UpdateProfileRequestInterface, completion: @escaping (ProfileInterface?, FlutterError?) -> Void) {
         let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)

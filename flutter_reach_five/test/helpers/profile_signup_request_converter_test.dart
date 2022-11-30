@@ -10,12 +10,12 @@ void main() {
     test('toInterface method', () async {
       expect(
         ProfileSignupRequestConverter.toInterface(
-          const ProfileSignupRequest(
+          ProfileSignupRequest(
             password: 'password',
-            addresses: [ProfileAddress()],
-            customFields: <String, Object?>{'key': 'objectValue'},
+            addresses: const [ProfileAddress()],
+            customFields: const <String, Object?>{'key': 'objectValue'},
             consents: <String, Consent>{
-              'key': Consent(granted: true, date: 'date')
+              'key': Consent(granted: true, date: DateTime.parse('2022-06-10'))
             },
           ),
         ),
@@ -31,7 +31,7 @@ void main() {
             addresses: [ProfileAddressInterface()],
             customFields: <String, Object?>{'key': 'objectValue'},
             consents: <String, ConsentInterface>{
-              'key': ConsentInterface(granted: true, date: 'date')
+              'key': ConsentInterface(granted: true, date: '2022-06-10')
             },
           ),
         ),

@@ -58,7 +58,13 @@
       "**/coverage": true,
       "**/.dart_tool": true
     },
-    "cSpell.words": ["mocktail"],
+    "cSpell.words": [
+      "birthdate",
+      "mocktail",
+      "objc",
+      "Signup",
+      "zoneinfo"
+    ],
     "java.configuration.updateBuildConfiguration": "interactive"
   },
   "launch": {

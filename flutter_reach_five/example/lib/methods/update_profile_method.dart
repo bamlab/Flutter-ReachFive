@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_reach_five/flutter_reach_five.dart';
 
@@ -24,44 +26,106 @@ class UpdateProfileMethod extends StatefulWidget {
 class UpdateProfileMethodState extends State<UpdateProfileMethod> {
   bool areInteractionsDisabled = false;
 
-  String familyName = '';
-  String givenName = '';
-  String middleName = '';
-  String nickname = '';
-  List<MapEntry<String?, Object?>> customFields =
-      List.generate(3, (index) => const MapEntry(null, null));
+  bool isLoading = true;
+
+  late Profile _profile;
+  MapEntry<String?, Object?> _newCustomField = const MapEntry(null, null);
+  final consentSupportedKey = 'test_consent';
+
+  Future<void> _loadProfile() async {
+    setState(() {
+      isLoading = true;
+    });
+    _profile = await widget.reachFive.getProfile(authToken: widget.authToken);
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    // ignore: discarded_futures
+    _loadProfile();
+    super.didChangeDependencies();
+  }
+
+  Future<void> _refresh() async {
+    setState(() {
+      _newCustomField = const MapEntry(null, null);
+    });
+  }
 
   void setFamilyName(String newFamilyName) => setState(() {
-        familyName = newFamilyName;
+        _profile = _profile.copyWith(
+          familyName: newFamilyName,
+        );
       });
 
   void setGivenName(String newGivenName) => setState(() {
-        givenName = newGivenName;
+        _profile = _profile.copyWith(
+          givenName: newGivenName,
+        );
       });
 
   void setMiddleName(String newMiddleName) => setState(() {
-        middleName = newMiddleName;
+        _profile = _profile.copyWith(
+          middleName: newMiddleName,
+        );
       });
 
   void setNickname(String newNickname) => setState(() {
-        nickname = newNickname;
+        _profile = _profile.copyWith(
+          nickname: newNickname,
+        );
       });
 
-  void setCustomFieldKeyAtIndex(int index, String newCustomFieldKey) {
-    customFields.replaceRange(
-      index,
-      index + 1,
-      [MapEntry(newCustomFieldKey, customFields[index].value)],
+  bool? _convertConsentToBool(Consent? consent) {
+    if (consent == null) {
+      return null;
+    }
+    if (consent.granted) {
+      return true;
+    }
+    return false;
+  }
+
+  void setConsent({required bool? consentGranted}) => setState(() {
+        _profile = _profile.copyWith(
+          consents: {
+            if (consentGranted != null)
+              consentSupportedKey: Consent(
+                date: DateTime.now(),
+                granted: consentGranted,
+              )
+          },
+        );
+      });
+
+  static Map<String, Object?> _updateCustomFields({
+    required MapEntry<String, Object?> newCustomField,
+    Map<String, Object?> customFields = const <String, Object?>{},
+  }) {
+    final newCustomFields = Map<String, Object?>.of(customFields)
+      ..addAll({newCustomField.key: newCustomField.value});
+    return newCustomFields;
+  }
+
+  void setCustomField(MapEntry<String, Object?> customField) {
+    _profile = _profile.copyWith(
+      customFields: _updateCustomFields(
+        customFields: _profile.customFields ?? {},
+        newCustomField: customField,
+      ),
     );
   }
 
-  void setCustomFieldValueAtIndex(int index, String newCustomFieldValue) {
-    customFields.replaceRange(
-      index,
-      index + 1,
-      [MapEntry(customFields[index].key, newCustomFieldValue)],
-    );
-  }
+  void setNewCustomFieldKey(String newKey) => setState(() {
+        _newCustomField = MapEntry(newKey, _newCustomField.value);
+      });
+
+  void setNewCustomFieldValue(Object? newValue) => setState(() {
+        _newCustomField = MapEntry(_newCustomField.key, newValue);
+      });
 
   Future<void> updateProfile(
     ReachFive reachFive,
@@ -74,24 +138,21 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
     try {
       final newProfile = await reachFive.updateProfile(
         authToken: authToken,
-        profile: Profile(
-          familyName: familyName.isNotEmpty ? familyName : null,
-          givenName: givenName.isNotEmpty ? givenName : null,
-          middleName: middleName.isNotEmpty ? middleName : null,
-          nickname: nickname.isNotEmpty ? nickname : null,
-          customFields: Map.fromEntries(
-            customFields.where((customField) => customField.key != null).map(
-                  (entry) => MapEntry<String, Object?>(entry.key!, entry.value),
-                ),
-          ),
+        profile: _profile.copyWith(
+          customFields: _newCustomField.key != null
+              ? _updateCustomFields(
+                  customFields: _profile.customFields ?? {},
+                  newCustomField: MapEntry<String, Object?>(
+                    _newCustomField.key!,
+                    _newCustomField.value,
+                  ),
+                )
+              : _profile.customFields,
         ),
       );
 
       setState(() {
-        familyName = newProfile.familyName ?? '';
-        givenName = newProfile.givenName ?? '';
-        middleName = newProfile.middleName ?? '';
-        nickname = newProfile.nickname ?? '';
+        _profile = newProfile;
       });
 
       if (mounted) {
@@ -100,6 +161,7 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
           message: 'Success - Update Profile - ${widget.dataSet.name}',
           type: SnackbarType.success,
         );
+        await _refresh();
       }
     } catch (error) {
       if (mounted) {
@@ -118,66 +180,111 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return const CircularProgressIndicator();
+    }
     return ListView(
       children: [
         CustomTextField(
-          value: familyName,
+          value: _profile.familyName ?? '',
           hintText: 'familyName',
           setValue: setFamilyName,
         ),
         const SizedBox(height: 16),
         CustomTextField(
-          value: givenName,
+          value: _profile.givenName ?? '',
           hintText: 'givenName',
           setValue: setGivenName,
         ),
         const SizedBox(height: 16),
         CustomTextField(
-          value: middleName,
+          value: _profile.middleName ?? '',
           hintText: 'middleName',
           setValue: setMiddleName,
         ),
         const SizedBox(height: 16),
         CustomTextField(
-          value: nickname,
+          value: _profile.nickname ?? '',
           hintText: 'nickname',
           setValue: setNickname,
         ),
         const SizedBox(height: 32),
         Column(
           children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Consent ($consentSupportedKey): ${_profile.consents == null ? '(NEVER GIVEN)' : ''}',
+                  ),
+                ),
+                Checkbox(
+                  tristate: true,
+                  value: _convertConsentToBool(
+                    _profile.consents?[consentSupportedKey],
+                  ),
+                  onChanged: (value) => setConsent(consentGranted: value),
+                ),
+              ],
+            ),
+            const Text(
+              '"test_consent" Consent must be created in the ReachFive console',
+              style: TextStyle(fontStyle: FontStyle.italic),
+            ),
+          ],
+        ),
+        const SizedBox(height: 32),
+        Column(
+          children: [
             const Text('Custom Fields', style: TextStyle(fontSize: 18)),
+            if (_profile.customFields != null)
+              ..._profile.customFields!.entries.map<Widget>(
+                (entry) => Row(
+                  children: [
+                    Expanded(child: Text('${entry.key} :')),
+                    Expanded(
+                      child: CustomTextField(
+                        value: entry.value.toString(),
+                        hintText: 'Value (String only)',
+                        setValue: (newValue) =>
+                            setCustomField(MapEntry(entry.key, newValue)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            const SizedBox(height: 16),
+            const Text(
+              'New Custom Fields',
+              style: TextStyle(fontSize: 18),
+            ),
             const Text(
               'keys must be created in the ReachFive console',
               style: TextStyle(fontStyle: FontStyle.italic),
             ),
-            ...customFields.asMap().entries.map<Widget>(
-                  (entry) => Row(
-                    children: [
-                      Expanded(
-                        child: CustomTextField(
-                          value: entry.value.key != null
-                              ? entry.value.key.toString()
-                              : '',
-                          hintText: 'Key',
-                          setValue: (newKey) =>
-                              setCustomFieldKeyAtIndex(entry.key, newKey),
-                        ),
-                      ),
-                      const SizedBox(width: 32),
-                      Expanded(
-                        child: CustomTextField(
-                          value: entry.value.value != null
-                              ? entry.value.value.toString()
-                              : '',
-                          hintText: 'Value (String only)',
-                          setValue: (newValue) =>
-                              setCustomFieldValueAtIndex(entry.key, newValue),
-                        ),
-                      ),
-                    ],
+            Row(
+              children: [
+                Expanded(
+                  child: CustomTextField(
+                    value: _newCustomField.key != null
+                        ? _newCustomField.key.toString()
+                        : '',
+                    hintText: 'Key',
+                    setValue: setNewCustomFieldKey,
                   ),
-                )
+                ),
+                const SizedBox(width: 32),
+                Expanded(
+                  child: CustomTextField(
+                    value: _newCustomField.value != null
+                        ? _newCustomField.value.toString()
+                        : '',
+                    hintText: 'Value (String only)',
+                    setValue: setNewCustomFieldValue,
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
         const SizedBox(height: 32),
