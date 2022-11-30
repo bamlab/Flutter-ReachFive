@@ -1,3 +1,7 @@
+# 0.1.7
+
+- Add support for retrieving Profile with getProfile (nothing changed for reach_five_identity_repo)
+
 # 0.1.6
 
 - Keep up with other packages version (nothing changed for reach_five_identity_repo)
