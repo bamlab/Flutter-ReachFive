@@ -24,14 +24,14 @@ jobs:
         working-directory: ${{ matrix.dir }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3.3.0
         
       - id: dotenv
-        uses: falti/dotenv-action@v0.2.8
+        uses: falti/dotenv-action@v1.0.2
         with:
           path: .github/workflows/.env
 
-      - uses: subosito/flutter-action@v2.5.0
+      - uses: subosito/flutter-action@v2.8.0
         with:
           flutter-version: ${{ steps.dotenv.outputs.flutter_version }}
           channel: "stable"
@@ -43,7 +43,7 @@ jobs:
         run: flutter packages get
 
       - name: Format
-        run: flutter format --set-exit-if-changed lib test
+        run: dart format --set-exit-if-changed lib test
 
       - name: Analyze
         run: flutter analyze lib test
@@ -61,7 +61,7 @@ jobs:
         run: remove_from_coverage -f coverage/lcov.info -r '\.gql\.dart$|\.g\.dart$|\.freezed\.dart$'
 
       - name: Check Code Coverage
-        uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
+        uses: VeryGoodOpenSource/very_good_coverage@v2.1.0
         with:
           path: "./${{ matrix.dir }}/coverage/lcov.info"
           min_coverage: 100
