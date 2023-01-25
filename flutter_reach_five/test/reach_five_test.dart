@@ -12,8 +12,8 @@ import 'package:mocktail/mocktail.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:reach_five_identity_repo/reach_five_identity_repo.dart';
 
-mixin PlatformInterfaceMockMixin on Mock implements MockPlatformInterfaceMixin {
-}
+mixin PlatformInterfaceMockMixin on Mock
+    implements MockPlatformInterfaceMixin {}
 
 class MockReackFiveIdentityRepo extends Mock implements ReachFiveIdentityRepo {}
 
