@@ -45,17 +45,11 @@ jobs:
       - name: Format
         run: flutter format --set-exit-if-changed lib test
 
-      - name: Custom lint
-        run: flutter pub run custom_lint
-
-      # We need to remove custom lint before running the analyzer
-      # or the analyzer fails because the custom lint plugin is loading
-      # https://github.com/invertase/dart_custom_lint/issues/16
-      - name: Remove custom lint from analyzer
-        run: bash ../.github/remove_custom_lint_from_analyzer.bash
-
       - name: Analyze
         run: flutter analyze lib test
+
+      - name: Custom lint
+        run: flutter pub run custom_lint
 
       - name: Run tests
         run: flutter test --no-pub --coverage --test-randomize-ordering-seed random
