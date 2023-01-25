@@ -21,7 +21,7 @@ dependencies:
   flutter_reach_five_platform_interface: ^0.1.6
 
 dev_dependencies:
-  analyzer: ^4.7.0
+  analyzer: ^5.4.0
   flutter_test:
     sdk: flutter
   plugin_platform_interface: ^2.0.0
