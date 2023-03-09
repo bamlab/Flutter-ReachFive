@@ -66,8 +66,8 @@ void main() {
 
       test('$EmailAlreadyInUseExceptionInterface', () {
         final exception = PlatformException(
-          code: 'code',
-          message: errorCodesInterface.emailAlreadyInUseCode,
+          code: 'Error - ${errorCodesInterface.emailAlreadyInUseCode}',
+          message: 'FlutterError',
         );
 
         Object? error;
@@ -84,8 +84,8 @@ void main() {
 
       test('$InvalidEmailOrPasswordExceptionInterface', () {
         final exception = PlatformException(
-          code: 'code',
-          message: errorCodesInterface.invalidEmailOrPasswordCode,
+          code: 'Error - ${errorCodesInterface.invalidEmailOrPasswordCode}',
+          message: 'FlutterError',
         );
 
         Object? error;
@@ -102,8 +102,8 @@ void main() {
 
       test('$InvalidVerificationCodeExceptionInterface', () {
         final exception = PlatformException(
-          code: 'code',
-          message: errorCodesInterface.invalidVerificationCode,
+          code: 'Error ${errorCodesInterface.invalidVerificationCode}',
+          message: 'FlutterError',
         );
 
         Object? error;
@@ -120,8 +120,8 @@ void main() {
 
       test('$InvalidGrantCodeExceptionInterface', () {
         final exception = PlatformException(
-          code: 'code',
-          message: errorCodesInterface.invalidGrant,
+          code: 'Error - ${errorCodesInterface.invalidGrant}',
+          message: 'FlutterError',
         );
 
         Object? error;
@@ -138,8 +138,9 @@ void main() {
 
       test('$UserCancelledOrClosedTheWebFlowCodeExceptionInterface', () {
         final exception = PlatformException(
-          code: 'code',
-          message: errorCodesInterface.userCancelledOrClosedTheWebFlow,
+          code:
+              'Error - ${errorCodesInterface.userCancelledOrClosedTheWebFlow}',
+          message: 'FlutterError',
         );
 
         Object? error;
@@ -159,8 +160,8 @@ void main() {
 
       test('$SocialAccountEmailAlreadyInUseExceptionInterface', () {
         final exception = PlatformException(
-          code: 'code',
-          message: errorCodesInterface.socialAccountEmailAlreadyInUse,
+          code: 'Error - ${errorCodesInterface.socialAccountEmailAlreadyInUse}',
+          message: 'FlutterError',
         );
 
         Object? error;
