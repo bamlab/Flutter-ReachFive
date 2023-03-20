@@ -1,3 +1,7 @@
+# 0.2.0
+
+ - **BREAKING**: Update dio dependency to 5.0.0
+
 # 0.1.8
 
 - **FIX** 🤖 Update Android SDK to 8.1.1 to fix Intent Redirection warning.

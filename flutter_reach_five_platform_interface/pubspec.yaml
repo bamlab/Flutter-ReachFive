@@ -1,6 +1,6 @@
 name: flutter_reach_five_platform_interface
 description: A common platform interface for the flutter_reach_five plugin.
-version: 0.1.8
+version: 0.2.0
 homepage: https://github.com/bamlab/Flutter-ReachFive
 
 environment:
