@@ -9,25 +9,23 @@ class FlutterReachFiveAndroid extends FlutterReachFivePlatform {
   @override
   Never parseError(Object error, StackTrace stackTrace) {
     if (error is PlatformException) {
-      final errorMessage = error.message;
-      if (errorMessage != null) {
-        if (errorMessage.contains(errorCodesInterface.emailAlreadyInUseCode)) {
-          throw EmailAlreadyInUseExceptionInterface();
-        } else if (errorMessage
-            .contains(errorCodesInterface.invalidEmailOrPasswordCode)) {
-          throw InvalidEmailOrPasswordExceptionInterface();
-        } else if (errorMessage
-            .contains(errorCodesInterface.invalidVerificationCode)) {
-          throw InvalidVerificationCodeExceptionInterface();
-        } else if (errorMessage.contains(errorCodesInterface.invalidGrant)) {
-          throw InvalidGrantCodeExceptionInterface();
-        } else if (errorMessage
-            .contains(errorCodesInterface.userCancelledOrClosedTheWebFlow)) {
-          throw UserCancelledOrClosedTheWebFlowCodeExceptionInterface();
-        } else if (errorMessage
-            .contains(errorCodesInterface.socialAccountEmailAlreadyInUse)) {
-          throw SocialAccountEmailAlreadyInUseExceptionInterface();
-        }
+      final errorCode = error.code;
+      if (errorCode.contains(errorCodesInterface.emailAlreadyInUseCode)) {
+        throw EmailAlreadyInUseExceptionInterface();
+      } else if (errorCode
+          .contains(errorCodesInterface.invalidEmailOrPasswordCode)) {
+        throw InvalidEmailOrPasswordExceptionInterface();
+      } else if (errorCode
+          .contains(errorCodesInterface.invalidVerificationCode)) {
+        throw InvalidVerificationCodeExceptionInterface();
+      } else if (errorCode.contains(errorCodesInterface.invalidGrant)) {
+        throw InvalidGrantCodeExceptionInterface();
+      } else if (errorCode
+          .contains(errorCodesInterface.userCancelledOrClosedTheWebFlow)) {
+        throw UserCancelledOrClosedTheWebFlowCodeExceptionInterface();
+      } else if (errorCode
+          .contains(errorCodesInterface.socialAccountEmailAlreadyInUse)) {
+        throw SocialAccountEmailAlreadyInUseExceptionInterface();
       }
     }
     return Error.throwWithStackTrace(error, stackTrace);
