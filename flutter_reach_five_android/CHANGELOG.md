@@ -1,3 +1,7 @@
+# 0.1.8
+
+- **FIX** 🤖 Update Android SDK to 8.1.1 to fix Intent Redirection warning.
+
 # 0.1.7
 
 - Add support for retrieving Profile with getProfile
