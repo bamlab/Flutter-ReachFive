@@ -18,7 +18,7 @@ flutter:
 
 dependencies:
   built_value: ^8.4.1
-  dio: ^4.0.6
+  dio: ^5.0.0
   equatable: ^2.0.5
   flutter:
     sdk: flutter
