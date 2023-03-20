@@ -1,7 +1,7 @@
 #!/bin/bash
 
-openApiCLIVersion="6.0.1"
-openApiDartVersion="6.3"
+openApiCLIVersion="6.4.0"
+openApiDartVersion="7.2"
 
 # yaml basename
 basename="reach_five_identity"
