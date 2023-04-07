@@ -10,21 +10,19 @@ class FlutterReachFiveAndroid extends FlutterReachFivePlatform {
   Never parseError(Object error, StackTrace stackTrace) {
     if (error is PlatformException) {
       final errorCode = error.code;
-      if (errorCode.contains(errorCodesInterface.emailAlreadyInUseCode)) {
+      if (errorCode == errorCodesInterface.emailAlreadyInUseCode) {
         throw EmailAlreadyInUseExceptionInterface();
-      } else if (errorCode
-          .contains(errorCodesInterface.invalidEmailOrPasswordCode)) {
+      } else if (errorCode == errorCodesInterface.invalidEmailOrPasswordCode) {
         throw InvalidEmailOrPasswordExceptionInterface();
-      } else if (errorCode
-          .contains(errorCodesInterface.invalidVerificationCode)) {
+      } else if (errorCode == errorCodesInterface.invalidVerificationCode) {
         throw InvalidVerificationCodeExceptionInterface();
-      } else if (errorCode.contains(errorCodesInterface.invalidGrant)) {
+      } else if (errorCode == errorCodesInterface.invalidGrant) {
         throw InvalidGrantCodeExceptionInterface();
-      } else if (errorCode
-          .contains(errorCodesInterface.userCancelledOrClosedTheWebFlow)) {
+      } else if (errorCode ==
+          errorCodesInterface.userCancelledOrClosedTheWebFlow) {
         throw UserCancelledOrClosedTheWebFlowCodeExceptionInterface();
-      } else if (errorCode
-          .contains(errorCodesInterface.socialAccountEmailAlreadyInUse)) {
+      } else if (errorCode ==
+          errorCodesInterface.socialAccountEmailAlreadyInUse) {
         throw SocialAccountEmailAlreadyInUseExceptionInterface();
       }
     }

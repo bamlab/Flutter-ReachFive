@@ -66,7 +66,7 @@ void main() {
 
       test('$EmailAlreadyInUseExceptionInterface', () {
         final exception = PlatformException(
-          code: 'Error - ${errorCodesInterface.emailAlreadyInUseCode}',
+          code: errorCodesInterface.emailAlreadyInUseCode,
           message: 'FlutterError',
         );
 
@@ -84,7 +84,7 @@ void main() {
 
       test('$InvalidEmailOrPasswordExceptionInterface', () {
         final exception = PlatformException(
-          code: 'Error - ${errorCodesInterface.invalidEmailOrPasswordCode}',
+          code: errorCodesInterface.invalidEmailOrPasswordCode,
           message: 'FlutterError',
         );
 
@@ -102,7 +102,7 @@ void main() {
 
       test('$InvalidVerificationCodeExceptionInterface', () {
         final exception = PlatformException(
-          code: 'Error ${errorCodesInterface.invalidVerificationCode}',
+          code: errorCodesInterface.invalidVerificationCode,
           message: 'FlutterError',
         );
 
@@ -120,7 +120,7 @@ void main() {
 
       test('$InvalidGrantCodeExceptionInterface', () {
         final exception = PlatformException(
-          code: 'Error - ${errorCodesInterface.invalidGrant}',
+          code: errorCodesInterface.invalidGrant,
           message: 'FlutterError',
         );
 
@@ -138,8 +138,7 @@ void main() {
 
       test('$UserCancelledOrClosedTheWebFlowCodeExceptionInterface', () {
         final exception = PlatformException(
-          code:
-              'Error - ${errorCodesInterface.userCancelledOrClosedTheWebFlow}',
+          code: errorCodesInterface.userCancelledOrClosedTheWebFlow,
           message: 'FlutterError',
         );
 
@@ -160,7 +159,7 @@ void main() {
 
       test('$SocialAccountEmailAlreadyInUseExceptionInterface', () {
         final exception = PlatformException(
-          code: 'Error - ${errorCodesInterface.socialAccountEmailAlreadyInUse}',
+          code: errorCodesInterface.socialAccountEmailAlreadyInUse,
           message: 'FlutterError',
         );
 
