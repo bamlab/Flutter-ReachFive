@@ -3,11 +3,10 @@ import 'package:pigeon/pigeon.dart';
 @ConfigurePigeon(
   PigeonOptions(
     dartOut: 'lib/src/reach_five.g.dart',
-    javaOut:
-        '../flutter_reach_five_android/android/src/main/java/tech/bam/flutter_reach_five/android/ReachFiveApi.java',
-    javaOptions: JavaOptions(
+    kotlinOut:
+        '../flutter_reach_five_android/android/src/main/kotlin/tech/bam/flutter_reach_five/android/ReachFiveApi.kt',
+    kotlinOptions: KotlinOptions(
       package: 'tech.bam.flutter_reach_five.android',
-      className: 'ReachFiveApi',
     ),
     objcHeaderOut: '../flutter_reach_five_ios/ios/Classes/reach_five_api.h',
     objcSourceOut: '../flutter_reach_five_ios/ios/Classes/reach_five_api.m',
