@@ -3,7 +3,7 @@ version '1.0-SNAPSHOT'
 
 buildscript {
     ext {
-        sdk_version = "8.1.1"
+        sdk_version = "fix-intent-redirect-v1"
         kotlin_version = '1.7.10'
 
         androidSettings = [
@@ -26,6 +26,7 @@ buildscript {
 rootProject.allprojects {
     repositories {
         google()
+        maven { url 'https://jitpack.io' }
         mavenCentral()
     }
 }
@@ -56,8 +57,9 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "co.reachfive.identity:sdk-core:$sdk_version"
-    implementation "co.reachfive.identity:sdk-facebook:$sdk_version"
-    implementation "co.reachfive.identity:sdk-google:$sdk_version"
-    implementation "co.reachfive.identity:sdk-webview:$sdk_version"
+    implementation "com.github.bamlab.identity-android-sdk:sdk-core:$sdk_version"
+    implementation "com.github.bamlab.identity-android-sdk:sdk-facebook:$sdk_version"
+    implementation "com.github.bamlab.identity-android-sdk:sdk-google:$sdk_version"
+    implementation "com.github.bamlab.identity-android-sdk:sdk-webview:$sdk_version"
+
 }
