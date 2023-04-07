@@ -8,8 +8,8 @@ import 'package:pigeon/pigeon.dart';
     kotlinOptions: KotlinOptions(
       package: 'tech.bam.flutter_reach_five.android',
     ),
-    objcHeaderOut: '../flutter_reach_five_ios/ios/Classes/reach_five_api.h',
-    objcSourceOut: '../flutter_reach_five_ios/ios/Classes/reach_five_api.m',
+    swiftOut: '../flutter_reach_five_ios/ios/Classes/ReachFiveApi.swift',
+    swiftOptions: SwiftOptions(),
   ),
 )
 class ErrorCodesInterface {

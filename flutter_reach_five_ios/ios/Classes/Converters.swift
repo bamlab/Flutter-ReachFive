@@ -29,7 +29,7 @@ extension CustomField {
     }
 }
 
-public class Converters {
+class Converters {
 
     static public func parseError(
             reachFiveError: ReachFiveError,
@@ -91,18 +91,18 @@ public class Converters {
             authToken: AuthToken
         ) -> AuthTokenInterface {
             
-            let expriresIn = authToken.expiresIn as NSNumber?
+            let expriresIn = authToken.expiresIn
             
             let user = authToken.user != nil
             ? openIdUserToInterface(openIdUser: authToken.user!)
             : nil
             
-            return AuthTokenInterface.make(
-                withIdToken: authToken.idToken,
+            return AuthTokenInterface(
+                idToken: authToken.idToken,
                 accessToken: authToken.accessToken,
                 refreshToken: authToken.refreshToken,
                 tokenType: authToken.tokenType,
-                expiresIn: expriresIn,
+                expiresIn: expriresIn != nil ? Int64(expriresIn!) : nil,
                 user: user
             )
         }
@@ -111,7 +111,7 @@ public class Converters {
             authTokenInterface: AuthTokenInterface
         ) -> AuthToken {
             
-            let expriresIn = authTokenInterface.expiresIn as? Int
+            let expriresIn = authTokenInterface.expiresIn
             
             let user = authTokenInterface.user != nil
             ? openIdUserFromInterface(
@@ -124,7 +124,7 @@ public class Converters {
                 accessToken: authTokenInterface.accessToken,
                 refreshToken: authTokenInterface.refreshToken,
                 tokenType: authTokenInterface.tokenType,
-                expiresIn: expriresIn,
+                expiresIn: expriresIn != nil ? Int(expriresIn!) : nil,
                 user: user
             )
         }
@@ -141,8 +141,8 @@ public class Converters {
             ? addressToInterface(address: openIdUser.address!)
             : nil
             
-            return OpenIdUserInterface.make(
-                withId: openIdUser.id,
+            return OpenIdUserInterface(
+                id: openIdUser.id,
                 name: openIdUser.name,
                 preferredUsername: openIdUser.preferredUsername,
                 givenName: openIdUser.givenName,
@@ -152,12 +152,12 @@ public class Converters {
                 picture: openIdUser.picture,
                 website: openIdUser.website,
                 email: openIdUser.email,
-                emailVerified: emailVerified,
+                emailVerified: emailVerified?.boolValue,
                 gender: openIdUser.gender,
                 zoneinfo: openIdUser.zoneinfo,
                 locale: openIdUser.locale,
                 phoneNumber: openIdUser.phoneNumber,
-                phoneNumberVerified: phoneNumberVerified,
+                phoneNumberVerified: phoneNumberVerified?.boolValue,
                 address: address,
                 birthdate: nil,
                 externalId: nil
@@ -185,12 +185,12 @@ public class Converters {
                 picture: openIdUserInterface.picture,
                 website: openIdUserInterface.website,
                 email: openIdUserInterface.email,
-                emailVerified: openIdUserInterface.emailVerified?.boolValue,
+                emailVerified: openIdUserInterface.emailVerified,
                 gender: openIdUserInterface.gender,
                 zoneinfo: openIdUserInterface.zoneinfo,
                 locale: openIdUserInterface.locale,
                 phoneNumber: openIdUserInterface.phoneNumber,
-                phoneNumberVerified: openIdUserInterface.phoneNumberVerified?.boolValue,
+                phoneNumberVerified: openIdUserInterface.phoneNumberVerified,
                 address: address
             )
         }
@@ -199,8 +199,8 @@ public class Converters {
             address: ProfileAddress
     ) -> AddressInterface {
 
-        AddressInterface.make(
-                withFormatted: address.raw,
+        AddressInterface(
+                formatted: address.raw,
                 streetAddress: address.streetAddress,
                 locality: address.locality,
                 region: address.region,
@@ -236,10 +236,13 @@ public class Converters {
 
             let addresses = profileSignupRequestInterface.addresses?
                 .map({ addressRequest in
-                    profileAddressFromInterface(
-                            profileAddressInterface: addressRequest
-                    )
-                })
+                    addressRequest != nil ? profileAddressFromInterface(
+                            profileAddressInterface: addressRequest!
+                    ) : nil
+                }).filter({
+                    address in
+                            address != nil
+                }) as? Array<ProfileAddress>
             
             var consents = profileSignupRequestInterface.consents != nil
             ? [String: Consent]()
@@ -247,9 +250,11 @@ public class Converters {
             
             profileSignupRequestInterface.consents?.forEach({
                 key, consentInterface in
-                consents![key] = consentFromInterface(
-                    consentInterface: consentInterface
-                )
+                if (key != nil && consentInterface != nil) {
+                    consents![key!] = consentFromInterface(
+                        consentInterface: consentInterface!
+                    )
+                }
             })
         
             return ProfileSignupRequest(
@@ -271,7 +276,7 @@ public class Converters {
                 bio: profileSignupRequestInterface.bio,
                 consents: consents,
                 company: profileSignupRequestInterface.company,
-                liteOnly: profileSignupRequestInterface.liteOnly?.boolValue
+                liteOnly: profileSignupRequestInterface.liteOnly
             )
         }
 
@@ -296,8 +301,6 @@ public class Converters {
                     return "billing"
                 case ProfileAddressTypeInterface.delivery:
                     return "delivery"
-                @unknown default:
-                    return nil
                 }
             }
 
@@ -311,9 +314,9 @@ public class Converters {
                 addressType: profileAddress.addressType
         )
 
-        return ProfileAddressInterface.make(
-                withTitle: profileAddress.title,
-                isDefault: isDefault,
+        return ProfileAddressInterface(
+                title: profileAddress.title,
+                isDefault: isDefault?.boolValue,
                 addressType: addressType,
                 streetAddress: profileAddress.streetAddress,
                 locality: profileAddress.locality,
@@ -332,13 +335,13 @@ public class Converters {
             profileAddressInterface: ProfileAddressInterface
         ) -> ProfileAddress {
 
-            let addressType = addressTypeFromInterface(
-                addressTypeInterface: profileAddressInterface.addressType
-            )
+            let addressType = profileAddressInterface.addressType != nil ? addressTypeFromInterface(
+                addressTypeInterface: profileAddressInterface.addressType!
+            ) : nil
         
             return ProfileAddress(
                 title: profileAddressInterface.title,
-                isDefault: profileAddressInterface.isDefault?.boolValue,
+                isDefault: profileAddressInterface.isDefault,
                 addressType: addressType,
                 streetAddress: profileAddressInterface.streetAddress,
                 locality: profileAddressInterface.locality,
@@ -352,27 +355,40 @@ public class Converters {
                 phoneNumber: profileAddressInterface.phoneNumber
             )
         }
-
+    
     static public func consentToInterface(
             consent: Consent
     ) -> ConsentInterface {
-
-        ConsentInterface.make(
-                withGranted: NSNumber.init(booleanLiteral: consent.granted),
+        return ConsentInterface(
+                granted: consent.granted,
                 consentType: consent.consentType,
                 date: consent.date
         )
     }
     
+    static public func consentsToInterface(
+        consents: [String: Consent]
+    ) -> [String?: ConsentInterface?] {
+        return consents.mapValues {consent in consentToInterface(consent: consent)}
+    }
+    
     static public func consentFromInterface(
         consentInterface: ConsentInterface
         ) -> Consent {
-
-        Consent(
-            granted: consentInterface.granted.boolValue,
+        return Consent(
+            granted: consentInterface.granted,
             consentType: consentInterface.consentType,
             date: consentInterface.date
         )
+    }
+    
+    static public func consentsFromInterface(
+        consentsInterface: [String?: ConsentInterface?]
+    ) -> [String: Consent]? {
+        return consentsInterface.mapValues { consent in
+            consent != nil ? consentFromInterface(consentInterface: consent!) : nil }.filter({(key, consent) in
+                        key != nil && consent != nil
+            }) as? [String : Consent]
     }
     
     static public func providerCreatorFromInterface(
@@ -385,22 +401,17 @@ public class Converters {
                     return FacebookProvider()
                 case ProviderCreatorTypeInterface.webview:
                     return WebViewProvider()
-                @unknown default:
-                    return nil
+
                 }
             }
 
     static public func loginSummaryToInterface(
             loginSummary: LoginSummary
     ) -> LoginSummaryInterface {
-        let firstLogin = loginSummary.firstLogin != nil ? NSNumber.init(floatLiteral: Double(loginSummary.firstLogin!)) : nil
-        let lastLogin = loginSummary.lastLogin != nil ? NSNumber.init(floatLiteral: Double(loginSummary.lastLogin!)) : nil
-        let total = loginSummary.total != nil ? NSNumber.init(value: loginSummary.total!) : nil
-
-        return LoginSummaryInterface.make(
-                withFirstLogin: firstLogin,
-                lastLogin: lastLogin,
-                total: total,
+        return LoginSummaryInterface(
+                firstLogin: loginSummary.firstLogin != nil ? Double(loginSummary.firstLogin!) : nil,
+                lastLogin: loginSummary.lastLogin != nil ? Double(loginSummary.lastLogin!) : nil,
+                total: loginSummary.total != nil ? Int64(loginSummary.total!) : nil,
                 origins: loginSummary.origins,
                 devices: loginSummary.devices,
                 lastProvider: loginSummary.lastProvider
@@ -410,13 +421,18 @@ public class Converters {
     static public func loginSummaryFromInterface(
             loginSummaryInterface: LoginSummaryInterface
     ) -> LoginSummary {
-
-        LoginSummary(
-                firstLogin: loginSummaryInterface.firstLogin?.intValue,
-                lastLogin: loginSummaryInterface.lastLogin?.intValue,
-                total: loginSummaryInterface.total?.intValue,
-                origins: loginSummaryInterface.origins,
-                devices: loginSummaryInterface.devices,
+        return LoginSummary(
+                firstLogin: loginSummaryInterface.firstLogin != nil ? Int(loginSummaryInterface.firstLogin!) : nil,
+                lastLogin: loginSummaryInterface.lastLogin != nil ? Int(loginSummaryInterface.lastLogin!) : nil,
+                total: loginSummaryInterface.total != nil ? Int(loginSummaryInterface.total!) : nil,
+                origins: loginSummaryInterface.origins?.filter({
+                    origin in
+                            origin != nil
+                }) as? [String],
+                devices: loginSummaryInterface.devices?.filter({
+                    device in
+                            device != nil
+                }) as? [String],
                 lastProvider: loginSummaryInterface.lastProvider
         )
     }
@@ -425,8 +441,8 @@ public class Converters {
             emails: Emails
     ) -> EmailsInterface {
 
-        EmailsInterface.make(
-                withVerified: emails.verified,
+        return EmailsInterface(
+                verified: emails.verified,
                 unverified: emails.unverified
         )
     }
@@ -435,9 +451,15 @@ public class Converters {
             emailsInterface: EmailsInterface
     ) -> Emails {
 
-        Emails(
-                verified: emailsInterface.verified,
-                unverified: emailsInterface.unverified
+        return Emails(
+                verified: emailsInterface.verified?.filter({
+                    origin in
+                            origin != nil
+                }) as? [String],
+                unverified: emailsInterface.unverified?.filter({
+                    origin in
+                            origin != nil
+                }) as? [String]
         )
     }
 
@@ -455,8 +477,8 @@ public class Converters {
                     profileAddressToInterface(profileAddress: profileAddress)
                 })
         
-        return ProfileInterface.make(
-                withUid: profile.uid,
+        return ProfileInterface(
+                uid: profile.uid,
                 givenName: profile.givenName,
                 middleName: profile.middleName,
                 familyName: profile.familyName,
@@ -471,18 +493,18 @@ public class Converters {
                 username: profile.username,
                 gender: profile.gender,
                 email: profile.email,
-                emailVerified: emailVerified,
+                emailVerified: emailVerified?.boolValue,
                 emails: emails,
                 phoneNumber: profile.phoneNumber,
-                phoneNumberVerified: phoneNumberVerified,
+                phoneNumberVerified: phoneNumberVerified?.boolValue,
                 addresses: addresses,
                 locale: profile.locale,
                 bio: profile.bio,
-                customFields: profile.customFields?.mapValues {customField in customField.value},
-                consents: profile.consents?.mapValues {consent in consentToInterface(consent: consent)},
+                customFields: profile.customFields?.mapValues {customField in customField.value} as? [String? : Any?],
+                consents: profile.consents != nil ? consentsToInterface(consents: profile.consents!) : nil,
                 createdAt: nil,
                 updatedAt: nil,
-                liteOnly: liteOnly,
+                liteOnly: liteOnly?.boolValue,
                 company: nil
         )
     }
@@ -492,11 +514,24 @@ public class Converters {
     ) -> Profile {
         let loginSummary = profileInterface.loginSummary != nil ? loginSummaryFromInterface(loginSummaryInterface: profileInterface.loginSummary!) : nil
         let emails = profileInterface.emails != nil ? emailsFromInterface(emailsInterface: profileInterface.emails!) : nil
+        
+        let authTypes = profileInterface.authTypes?.filter({
+            authType in
+            authType != nil
+        }) as? [String]
 
         let addresses = profileInterface.addresses?
                 .map({ profileAddressInterface in
-                    profileAddressFromInterface(profileAddressInterface: profileAddressInterface)
-                })
+                    profileAddressInterface != nil ?
+                    profileAddressFromInterface(profileAddressInterface: profileAddressInterface!) : nil
+                }).filter({
+                    address in
+                    address != nil
+                }) as? [ProfileAddress]
+        
+        let consents = profileInterface.consents != nil ? consentsFromInterface(consentsInterface: profileInterface.consents!) : nil
+        
+        let customFields = try? profileInterface.customFields?.mapValues { customFieldInterface in try CustomField(value: customFieldInterface as Any)} as? [String: CustomField]
 
         return Profile(
                 uid: profileInterface.uid,
@@ -509,24 +544,26 @@ public class Converters {
                 profileURL: profileInterface.profileURL,
                 picture: profileInterface.picture,
                 externalId: profileInterface.externalId,
-                authTypes: profileInterface.authTypes,
+                authTypes: authTypes,
                 loginSummary: loginSummary,
                 username: profileInterface.username,
                 gender: profileInterface.gender,
                 email: profileInterface.email,
-                emailVerified: profileInterface.emailVerified?.boolValue,
+                emailVerified: profileInterface.emailVerified,
                 emails: emails,
                 phoneNumber: profileInterface.phoneNumber,
-                phoneNumberVerified: profileInterface.phoneNumberVerified?.boolValue,
+                phoneNumberVerified: profileInterface.phoneNumberVerified,
                 addresses: addresses,
                 locale: profileInterface.locale,
                 bio: profileInterface.bio,
-                customFields: try? profileInterface.customFields?.mapValues { customFieldInterface in try CustomField(value: customFieldInterface)},
-                consents: profileInterface.consents?.mapValues { consent in consentFromInterface(consentInterface: consent) },
+                customFields: customFields,
+                consents: consents,
                 createdAt: profileInterface.createdAt,
                 updatedAt: profileInterface.updatedAt,
                 company: profileInterface.company,
-                liteOnly: profileInterface.liteOnly?.boolValue
+                liteOnly: profileInterface.liteOnly
         )
     }
 }
+
+extension FlutterError: Error {}
