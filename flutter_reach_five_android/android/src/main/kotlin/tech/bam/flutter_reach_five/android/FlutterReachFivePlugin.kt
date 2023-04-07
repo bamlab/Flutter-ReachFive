@@ -13,7 +13,7 @@ import co.reachfive.identity.sdk.core.utils.Failure
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.PluginRegistry
 
-class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListener, ActivityAware, ReachFiveApi.ReachFiveHostApi
+class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListener, ActivityAware, ReachFiveHostApi
 {
     private var context: Context? = null
     private var activity: Activity? = null
@@ -23,15 +23,15 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
     private var loginWithProviderReachFiveInstance: ReachFive? = null
     private var onLoginWithProviderSuccess: Success<AuthToken>? = null
     private var onLoginWithProviderFailure: Failure<FlutterError>? = null
-    private var errorCodes: ReachFiveApi.ErrorCodesInterface? = null
+    private var errorCodes: ErrorCodesInterface? = null
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        ReachFiveApi.ReachFiveHostApi.setup(flutterPluginBinding.binaryMessenger, this)
+        ReachFiveHostApi.setUp(flutterPluginBinding.binaryMessenger, this)
         context = flutterPluginBinding.applicationContext
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-        ReachFiveApi.ReachFiveHostApi.setup(binding.binaryMessenger, null)
+        ReachFiveHostApi.setUp(binding.binaryMessenger, null)
         context = null
     }
 
@@ -112,15 +112,15 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
         return true
     }
 
-    private fun getReachFiveInstanceKey(reachFiveKey: ReachFiveApi.ReachFiveKeyInterface): String {
+    private fun getReachFiveInstanceKey(reachFiveKey: ReachFiveKeyInterface): String {
         var key = reachFiveKey.sdkConfig.domain + reachFiveKey.sdkConfig.clientId + reachFiveKey.sdkConfig.androidScheme
         reachFiveKey.providerCreators.forEach { providerCreatorInterface ->
-            key += providerCreatorInterface.type.name
+            key += providerCreatorInterface?.type?.name
         }
         return key
     }
 
-    private fun getReachFiveInstance(reachFiveKey: ReachFiveApi.ReachFiveKeyInterface): ReachFive {
+    private fun getReachFiveInstance(reachFiveKey: ReachFiveKeyInterface): ReachFive {
         val reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey = reachFiveKey)
 
         return reachFiveInstances[reachFiveInstanceKey]
@@ -131,10 +131,10 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
             )
     }
 
-    private fun loadSocialProviders(reachFive: ReachFive, reachFiveKey: ReachFiveApi.ReachFiveKeyInterface, result: ReachFiveApi.Result<ReachFiveApi.ReachFiveConfigInterface>) {
+    private fun loadSocialProviders(reachFive: ReachFive, reachFiveKey: ReachFiveKeyInterface, callback: (Result<ReachFiveConfigInterface>) -> Unit) {
         val context = this.context
         if(context == null) {
-            result.error(Error("No android context attached to your application"))
+            callback(Result.failure(Error("No android context attached to your application")))
             return
         }
 
@@ -144,451 +144,423 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
             context,
             success = { providers ->
                 this.reachFiveInstances[reachFiveInstanceKey] = reachFive
-                result.success(
-                    ReachFiveApi.ReachFiveConfigInterface
-                        .Builder()
-                        .setReachFiveKey(reachFiveKey)
-                        .setProviders(providers.map {
-                                provider ->
-                            provider.name
-                        })
-                        .build()
-                )
+                callback(Result.success(
+                        ReachFiveConfigInterface(
+                                reachFiveKey = reachFiveKey,
+                                providers = providers.map {
+                                    provider -> provider.name
+                                },
+                        )
+                ))
             },
-            failure = {
-                    error -> result.error(
-                FlutterError(
-                    code= "loading_social_providers_error_code",
-                    message= error.message,
-                    details= null
-                )
+            failure = { error -> callback(
+                    Result.failure(
+                            FlutterError(
+                                    code= "loading_social_providers_error_code",
+                                    message= error.message,
+                                    details= null
+                            )
+                    )
             )}
         )
     }
 
-    override fun initialize(reachFiveKey: ReachFiveApi.ReachFiveKeyInterface, result: ReachFiveApi.Result<ReachFiveApi.ReachFiveConfigInterface>) {
+    override fun initialize(reachFiveKey: ReachFiveKeyInterface, callback: (Result<ReachFiveConfigInterface>) -> Unit) {
         val reachFive = ReachFive(
-            sdkConfig = SdkConfig(
-                domain = reachFiveKey.sdkConfig.domain,
-                clientId = reachFiveKey.sdkConfig.clientId,
-                scheme = reachFiveKey.sdkConfig.androidScheme
-            ),
-            providersCreators = reachFiveKey.providerCreators.map { providerCreatorInterface ->
-                Converters.providerCreatorFromInterface(providerCreatorInterface)
-            }
+                sdkConfig = SdkConfig(
+                        domain = reachFiveKey.sdkConfig.domain,
+                        clientId = reachFiveKey.sdkConfig.clientId,
+                        scheme = reachFiveKey.sdkConfig.androidScheme
+                ),
+                providersCreators = reachFiveKey.providerCreators.mapNotNull { providerCreatorInterface ->
+                    if (providerCreatorInterface != null) Converters.providerCreatorFromInterface(providerCreatorInterface) else null
+                }
         )
+
+
 
         reachFive.initialize(
-            success = {
-                loadSocialProviders(
-                    reachFive = reachFive,
-                    reachFiveKey = reachFiveKey,
-                    result = result
-                )
-            },
-            failure = {
-                    error -> result.error(
-                FlutterError(
-                    code= "initialization_error_code",
-                    message= error.message,
-                    details= null
-                )
-            )}
+                success = {
+                    loadSocialProviders(
+                            reachFive = reachFive,
+                            reachFiveKey = reachFiveKey,
+                            callback = callback
+                    )
+                },
+                failure = { error -> callback(
+                        Result.failure(
+                                FlutterError(
+                                        code= "initialization_error_code",
+                                        message= error.message,
+                                        details= null
+                                )
+                        )
+                )}
         )
     }
 
-    override fun signup(
-        request: ReachFiveApi.SignupRequestInterface,
-        result: ReachFiveApi.Result<ReachFiveApi.AuthTokenInterface>
-    ) {
+    override fun signup(request: SignupRequestInterface, callback: (Result<AuthTokenInterface>) -> Unit) {
         val reachFive: ReachFive
         try {
             reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
         } catch (error: FlutterError) {
-            result.error(error)
+            callback(Result.failure(error))
             return
         }
 
         val signupRequest = Converters.signupRequestFromInterface(request.profile)
 
         reachFive.signup(
-            profile = signupRequest,
-            scope = request.scope?.toList() ?: listOf(),
-            success = { authToken ->
-                result.success(Converters.authTokenToInterface(authToken))
-            },
-            failure = {
-                    error -> result.error(
-                Converters.parseError(
-                    reachFiveError = error,
-                    errorCodesInterface = request.errorCodes,
-                    defaultFlutterError = FlutterError(
-                        code= "sign_up_error_code",
-                        message= error.message,
-                        details= null
-                    )
-                )
-            )}
+                profile = signupRequest,
+                scope = request.scope?.filterNotNull() ?: listOf(),
+                success = { authToken ->
+                    callback(Result.success(Converters.authTokenToInterface(authToken)))
+                },
+                failure = {
+                    error -> callback(
+                        Result.failure(
+                                Converters.parseError(
+                                        reachFiveError = error,
+                                        errorCodesInterface = request.errorCodes,
+                                        defaultFlutterError = FlutterError(
+                                                code= "sign_up_error_code",
+                                                message= error.message,
+                                                details= null
+                                        )
+                                )
+                        )
+                    )}
         )
     }
 
-    override fun loginWithPassword(
-        request: ReachFiveApi.LoginWithPasswordRequestInterface,
-        result: ReachFiveApi.Result<ReachFiveApi.AuthTokenInterface>
-    ) {
+    override fun loginWithPassword(request: LoginWithPasswordRequestInterface, callback: (Result<AuthTokenInterface>) -> Unit) {
         val reachFive: ReachFive
         try {
             reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
         } catch (error: FlutterError) {
-            result.error(error)
+            callback(Result.failure(error))
             return
         }
 
         reachFive.loginWithPassword(
-            email = request.email,
-            phoneNumber = request.phoneNumber,
-            password = request.password,
-            scope = request.scope?.toList() ?: listOf(),
-            success = { authToken ->
-                result.success(Converters.authTokenToInterface(authToken))
-            },
-            failure = {
-                    error -> result.error(
-                Converters.parseError(
-                    reachFiveError = error,
-                    errorCodesInterface = request.errorCodes,
-                    defaultFlutterError = FlutterError(
-                        code= "login_with_password_error_code",
-                        message= error.message,
-                        details= null
-                    )
-                )
-            )}
+                email = request.email,
+                phoneNumber = request.phoneNumber,
+                password = request.password,
+                scope = request.scope?.filterNotNull() ?: listOf(),
+                success = { authToken ->
+                    callback(Result.success(Converters.authTokenToInterface(authToken)))
+                },
+                failure = {
+                    error -> callback(
+                        Result.failure(
+                                Converters.parseError(
+                                        reachFiveError = error,
+                                        errorCodesInterface = request.errorCodes,
+                                        defaultFlutterError = FlutterError(
+                                                code= "login_with_password_error_code",
+                                                message= error.message,
+                                                details= null
+                                        )
+                                )
+                        )
+                    )}
         )
     }
 
-    override fun loginWithProvider(
-        request: ReachFiveApi.LoginWithProviderRequestInterface,
-        result: ReachFiveApi.Result<ReachFiveApi.AuthTokenInterface>
-    ) {
+    override fun loginWithProvider(request: LoginWithProviderRequestInterface, callback: (Result<AuthTokenInterface>) -> Unit) {
         val reachFive: ReachFive
         try {
             reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
         } catch (error: FlutterError) {
-            result.error(error)
+            callback(Result.failure(error))
             return
         }
 
         val provider = reachFive.getProvider(request.provider)
         if(provider == null) {
-            result.error(Error("This provider is not available in this reachFive instance"))
+            callback(Result.failure(Error("This provider is not available in this reachFive instance")))
             return
         }
 
         val activity = this.activity
         if(activity == null) {
-            result.error(
-                FlutterError(
-                code= "not_available_provider_error_code",
-                message= "The provider was not found in your reachFive instance",
-                details= null
+            callback(Result.failure(
+                    FlutterError(
+                            code= "not_available_provider_error_code",
+                            message= "The provider was not found in your reachFive instance",
+                            details= null
+                    )
             ))
             return
         }
 
         this.loginWithProviderReachFiveInstance = reachFive
         this.onLoginWithProviderSuccess = {
-                authToken ->
-            result.success(Converters.authTokenToInterface(authToken))
+            authToken ->
+            callback(Result.success(Converters.authTokenToInterface(authToken)))
         }
         this.onLoginWithProviderFailure = {
-                error -> result.error(error)
+            error -> callback(Result.failure(error))
         }
         this.errorCodes = request.errorCodes
 
         provider.login(
-            origin = request.origin,
-            scope = request.scope?.toList() ?: listOf(),
-            activity = activity
+                origin = request.origin,
+                scope = request.scope?.filterNotNull() ?: listOf(),
+                activity = activity
         )
     }
 
-    override fun logout(
-        reachFiveKey: ReachFiveApi.ReachFiveKeyInterface,
-        result: ReachFiveApi.Result<Void>
-    ) {
+    override fun logout(reachFiveKey: ReachFiveKeyInterface, callback: (Result<Unit>) -> Unit) {
         val reachFive: ReachFive
         try {
             reachFive = getReachFiveInstance(reachFiveKey = reachFiveKey)
         } catch (error: FlutterError) {
-            result.error(error)
+            callback(Result.failure(error))
             return
         }
 
         reachFive.logout(
-            success = {
-                result.success(null)
-            },
-            failure = {
-                    error -> result.error(
-                FlutterError(
-                    code= "logout_error_code",
-                    message= error.message,
-                    details= null
-                )
-            )}
+                success = {
+                    unit ->
+                    callback(Result.success(unit))
+                },
+                failure = {
+                    error -> callback(Result.failure(
+                        FlutterError(
+                                code= "logout_error_code",
+                                message= error.message,
+                                details= null
+                        ))
+                )}
         )
     }
 
-    override fun getProfile(
-        request: ReachFiveApi.GetProfileRequestInterface,
-        result: ReachFiveApi.Result<ReachFiveApi.ProfileInterface>
-    ) {
+    override fun getProfile(request: GetProfileRequestInterface, callback: (Result<ProfileInterface>) -> Unit) {
         val reachFive: ReachFive
         try {
             reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
         } catch (error: FlutterError) {
-            result.error(error)
+            callback(Result.failure(error))
             return
         }
 
         reachFive.getProfile(
-            authToken = Converters.authTokenFromInterface(request.authToken),
-            success = {
-                profile ->
-                result.success(Converters.profileToInterface(profile))
-            },
-            failure = {
-                error -> result.error(
-                Converters.parseError(
-                    reachFiveError = error,
-                    errorCodesInterface = request.errorCodes,
-                    defaultFlutterError = FlutterError(
-                        code= "get_profile_error_code",
-                        message= error.message,
-                        details= null
-                    )
-                )
-            )}
+                authToken = Converters.authTokenFromInterface(request.authToken),
+                success = {
+                    profile ->
+                    callback(Result.success(Converters.profileToInterface(profile)))
+                },
+                failure = {
+                    error -> callback(Result.failure(
+                        Converters.parseError(
+                                reachFiveError = error,
+                                errorCodesInterface = request.errorCodes,
+                                defaultFlutterError = FlutterError(
+                                        code= "get_profile_error_code",
+                                        message= error.message,
+                                        details= null
+                                )
+                        ))
+                )}
         )
     }
 
-    override fun updateProfile(
-        request: ReachFiveApi.UpdateProfileRequestInterface,
-        result: ReachFiveApi.Result<ReachFiveApi.ProfileInterface>
-    ) {
+    override fun updateProfile(request: UpdateProfileRequestInterface, callback: (Result<ProfileInterface>) -> Unit) {
         val reachFive: ReachFive
         try {
             reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
         } catch (error: FlutterError) {
-            result.error(error)
+            callback(Result.failure(error))
             return
         }
 
         reachFive.updateProfile(
-            authToken = Converters.authTokenFromInterface(request.authToken),
-            profile = Converters.profileFromInterface(request.profile),
-            success = {
-                profile ->
-                result.success(Converters.profileToInterface(profile))
-            },
-            failure = {
-                error -> result.error(
-                Converters.parseError(
-                    reachFiveError = error,
-                    errorCodesInterface = request.errorCodes,
-                    defaultFlutterError = FlutterError(
-                        code= "update_profile_error_code",
-                        message= error.message,
-                        details= null
-                    )
-                )
-            )}
+                authToken = Converters.authTokenFromInterface(request.authToken),
+                profile = Converters.profileFromInterface(request.profile),
+                success = {
+                    profile ->
+                    callback(Result.success(Converters.profileToInterface(profile)))
+                },
+                failure = {
+                    error -> callback(Result.failure(
+                        Converters.parseError(
+                                reachFiveError = error,
+                                errorCodesInterface = request.errorCodes,
+                                defaultFlutterError = FlutterError(
+                                        code= "update_profile_error_code",
+                                        message= error.message,
+                                        details= null
+                                )
+                        ))
+                )}
         )
     }
 
-    override fun refreshAccessToken(
-        request: ReachFiveApi.RefreshAccessTokenRequestInterface,
-        result: ReachFiveApi.Result<ReachFiveApi.AuthTokenInterface>
-    ) {
+    override fun refreshAccessToken(request: RefreshAccessTokenRequestInterface, callback: (Result<AuthTokenInterface>) -> Unit) {
         val reachFive: ReachFive
         try {
             reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
         } catch (error: FlutterError) {
-            result.error(error)
+            callback(Result.failure(error))
             return
         }
 
         val requestAuthToken = request.authToken
 
         reachFive.refreshAccessToken(
-            authToken = Converters.authTokenFromInterface(requestAuthToken),
-            success = { authToken ->
-                result.success(Converters.authTokenToInterface(authToken))
-            },
-            failure = {
-                    error -> result.error(
-                FlutterError(
-                    code= "refresh_access_token_error_code",
-                    message= error.message,
-                    details= null
-                )
-            )}
+                authToken = Converters.authTokenFromInterface(requestAuthToken),
+                success = { authToken ->
+                    callback(Result.success(Converters.authTokenToInterface(authToken)))
+                },
+                failure = {
+                    error -> callback(Result.failure(
+                        FlutterError(
+                                code= "refresh_access_token_error_code",
+                                message= error.message,
+                                details= null
+                        ))
+                )}
         )
     }
 
-    override fun requestPasswordReset(
-        request: ReachFiveApi.RequestPasswordResetRequestInterface,
-        result: ReachFiveApi.Result<Void>
-    ) {
+    override fun requestPasswordReset(request: RequestPasswordResetRequestInterface, callback: (Result<Unit>) -> Unit) {
         val reachFive: ReachFive
         try {
             reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
         } catch (error: FlutterError) {
-            result.error(error)
+            callback(Result.failure(error))
             return
         }
-        
+
         reachFive.requestPasswordReset(
-            email = request.email,
-            phoneNumber = request.phoneNumber,
-            redirectUrl = request.redirectUrl,
-            success = { result.success(null)},
-            failure = {
-                    error -> result.error(
-                FlutterError(
-                    code= "request_password_reset_error_code",
-                    message= error.message,
-                    details= null
-                )
-            )}
-        )
-    }
-
-    override fun updatePasswordWithAccessToken(
-        request: ReachFiveApi.UpdatePasswordWithAccessTokenRequestInterface,
-        result: ReachFiveApi.Result<Void>
-    ) {
-        val reachFive: ReachFive
-        try {
-            reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
-        } catch (error: FlutterError) {
-            result.error(error)
-            return
-        }
-
-        reachFive.updatePassword(
-            updatePasswordRequest = AccessTokenParams(
-                authToken = Converters.authTokenFromInterface(request.authToken),
-                oldPassword = request.oldPassword,
-                password = request.password
-            ),
-            success = { result.success(null) },
-            failure = {
-                    error -> result.error(
-                FlutterError(
-                    code= "update_password_with_access_token_error_code",
-                    message= error.message,
-                    details= null
-                )
-            )}
-        )
-    }
-
-    override fun updatePasswordWithFreshAccessToken(
-        request: ReachFiveApi.UpdatePasswordWithFreshAccessTokenRequestInterface,
-        result: ReachFiveApi.Result<Void>
-    ) {
-        val reachFive: ReachFive
-        try {
-            reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
-        } catch (error: FlutterError) {
-            result.error(error)
-            return
-        }
-
-        reachFive.updatePassword(
-            updatePasswordRequest = FreshAccessTokenParams(
-                freshAuthToken = Converters.authTokenFromInterface(request.freshAuthToken),
-                password = request.password
-            ),
-            success = { result.success(null) },
-            failure = {
-                    error -> result.error(
-                FlutterError(
-                    code= "update_password_with_fresh_access_token_error_code",
-                    message= error.message,
-                    details= null
-                )
-            )}
-        )
-    }
-
-    override fun updatePasswordWithEmail(
-        request: ReachFiveApi.UpdatePasswordWithEmailRequestInterface,
-        result: ReachFiveApi.Result<Void>
-    ) {
-        val reachFive: ReachFive
-        try {
-            reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
-        } catch (error: FlutterError) {
-            result.error(error)
-            return
-        }
-
-        reachFive.updatePassword(
-            updatePasswordRequest = EmailParams(
                 email = request.email,
-                verificationCode = request.verificationCode,
-                password = request.password
-            ),
-            success = { result.success(null) },
-            failure = {
-                    error -> result.error(
-                Converters.parseError(
-                    reachFiveError = error,
-                    errorCodesInterface = request.errorCodes,
-                    defaultFlutterError = FlutterError(
-                        code= "update_password_with_email_request_error_code",
-                        message= error.message,
-                        details= null
-                    )
-                )
-            )}
+                phoneNumber = request.phoneNumber,
+                redirectUrl = request.redirectUrl,
+                success = { unit -> callback(Result.success(unit))},
+                failure = {
+                    error -> callback(Result.failure(
+                        FlutterError(
+                                code= "request_password_reset_error_code",
+                                message= error.message,
+                                details= null
+                        ))
+                )}
         )
     }
 
-    override fun updatePasswordWithPhoneNumber(
-        request: ReachFiveApi.UpdatePasswordWithPhoneNumberRequestInterface,
-        result: ReachFiveApi.Result<Void>
-    ) {
+    override fun updatePasswordWithAccessToken(request: UpdatePasswordWithAccessTokenRequestInterface, callback: (Result<Unit>) -> Unit) {
         val reachFive: ReachFive
         try {
             reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
         } catch (error: FlutterError) {
-            result.error(error)
+            callback(Result.failure(error))
             return
         }
 
         reachFive.updatePassword(
-            updatePasswordRequest = SmsParams(
-                phoneNumber = request.phoneNumber,
-                verificationCode = request.verificationCode,
-                password = request.password
-            ),
-            success = { result.success(null) },
-            failure = {
-                    error -> result.error(
-                Converters.parseError(
-                    reachFiveError = error,
-                    errorCodesInterface = request.errorCodes,
-                    defaultFlutterError = FlutterError(
-                        code= "update_password_with_phone_number_request_error_code",
-                        message= error.message,
-                        details= null
-                    )
-                )
-            )}
+                updatePasswordRequest = AccessTokenParams(
+                        authToken = Converters.authTokenFromInterface(request.authToken),
+                        oldPassword = request.oldPassword,
+                        password = request.password
+                ),
+                success = { unit -> callback(Result.success(unit)) },
+                failure = {
+                    error -> callback(Result.failure(
+                        FlutterError(
+                                code= "update_password_with_access_token_error_code",
+                                message= error.message,
+                                details= null
+                        ))
+                )}
+        )
+    }
+
+    override fun updatePasswordWithFreshAccessToken(request: UpdatePasswordWithFreshAccessTokenRequestInterface, callback: (Result<Unit>) -> Unit) {
+        val reachFive: ReachFive
+        try {
+            reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
+        } catch (error: FlutterError) {
+            callback(Result.failure(error))
+            return
+        }
+
+        reachFive.updatePassword(
+                updatePasswordRequest = FreshAccessTokenParams(
+                        freshAuthToken = Converters.authTokenFromInterface(request.freshAuthToken),
+                        password = request.password
+                ),
+                success = { unit -> callback(Result.success(unit)) },
+                failure = {
+                    error -> callback(Result.failure(
+                        FlutterError(
+                                code= "update_password_with_fresh_access_token_error_code",
+                                message= error.message,
+                                details= null
+                        ))
+                )}
+        )
+    }
+
+    override fun updatePasswordWithEmail(request: UpdatePasswordWithEmailRequestInterface, callback: (Result<Unit>) -> Unit) {
+        val reachFive: ReachFive
+        try {
+            reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
+        } catch (error: FlutterError) {
+            callback(Result.failure(error))
+            return
+        }
+
+        reachFive.updatePassword(
+                updatePasswordRequest = EmailParams(
+                        email = request.email,
+                        verificationCode = request.verificationCode,
+                        password = request.password
+                ),
+                success = { unit -> callback(Result.success(unit)) },
+                failure = {
+                    error -> callback(Result.failure(
+                        Converters.parseError(
+                                reachFiveError = error,
+                                errorCodesInterface = request.errorCodes,
+                                defaultFlutterError = FlutterError(
+                                        code= "update_password_with_email_request_error_code",
+                                        message= error.message,
+                                        details= null
+                                )
+                        ))
+                )}
+        )
+    }
+
+    override fun updatePasswordWithPhoneNumber(request: UpdatePasswordWithPhoneNumberRequestInterface, callback: (Result<Unit>) -> Unit) {
+        val reachFive: ReachFive
+        try {
+            reachFive = getReachFiveInstance(reachFiveKey = request.reachFiveKey)
+        } catch (error: FlutterError) {
+            callback(Result.failure(error))
+            return
+        }
+
+        reachFive.updatePassword(
+                updatePasswordRequest = SmsParams(
+                        phoneNumber = request.phoneNumber,
+                        verificationCode = request.verificationCode,
+                        password = request.password
+                ),
+                success = { unit -> callback(Result.success(unit)) },
+                failure = {
+                    error -> callback(Result.failure(
+                        Converters.parseError(
+                                reachFiveError = error,
+                                errorCodesInterface = request.errorCodes,
+                                defaultFlutterError = FlutterError(
+                                        code= "update_password_with_phone_number_request_error_code",
+                                        message= error.message,
+                                        details= null
+                                )
+                        ))
+                )}
         )
     }
 }

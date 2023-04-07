@@ -17,27 +17,27 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
         let messenger : FlutterBinaryMessenger = registrar.messenger()
         let api : ReachFiveHostApi & NSObjectProtocol = SwiftFlutterReachFivePlugin.init()
         
-        ReachFiveHostApiSetup(messenger, api);
-        
+        ReachFiveHostApiSetup.setUp(binaryMessenger: messenger, api: api);
     }
     
     private func getReachFiveInstanceKey(reachFiveKey: ReachFiveKeyInterface) -> String {
         var key: String =  reachFiveKey.sdkConfig.domain + reachFiveKey.sdkConfig.clientId + reachFiveKey.sdkConfig.iosScheme
         reachFiveKey.providerCreators.forEach({
             providerCreator in
-            key += Converters.providerCreatorFromInterface(
-                providerCreatorInterface: providerCreator
-            )?.name ?? ""
+            key += (providerCreator != nil ? Converters.providerCreatorFromInterface(
+                providerCreatorInterface: providerCreator!
+            )?.name : nil) ?? ""
         })
         return key
     }
-
-    public func initializeReachFiveKey(_ reachFiveKey: ReachFiveKeyInterface, completion: @escaping (ReachFiveConfigInterface?, FlutterError?) -> Void) {
+    
+    func initialize(reachFiveKey: ReachFiveKeyInterface, completion: @escaping (Result<ReachFiveConfigInterface, Error>) -> Void) {
         let providersCreators = reachFiveKey.providerCreators.map({
             providerCreatorInterface in
+            providerCreatorInterface != nil ?
                     Converters.providerCreatorFromInterface(
-                            providerCreatorInterface: providerCreatorInterface
-                    )
+                        providerCreatorInterface: providerCreatorInterface!
+                    ) : nil
         }).filter({
             providerCreator in
                     providerCreator != nil
@@ -60,36 +60,33 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
             .onSuccess { providers in
                 self.reachFiveInstances[reachFiveInstanceKey] = reachFive
                 completion(
-                    ReachFiveConfigInterface.make(
-                        withReachFiveKey: reachFiveKey,
-                        providers: providers.map({
-                            provider in
-                            provider.name
-                        })
-                    ),
-                    nil
+                    Result.success(
+                        ReachFiveConfigInterface(
+                            reachFiveKey: reachFiveKey,
+                            providers: providers.map({
+                                provider in
+                                provider.name
+                            })
+                        )
+                    )
                 )
             }
             .onFailure { error in
                 completion(
-                    nil,
-                    FlutterError(
+                    Result.failure(FlutterError(
                         code: "initialization_error_code",
                         message: error.message(),
                         details: nil
-                    )
+                    ))
                 )
             }
     }
     
-    public func signupRequest(_ request: SignupRequestInterface, completion: @escaping (AuthTokenInterface?, FlutterError?) -> Void) {
+    func signup(request: SignupRequestInterface, completion: @escaping (Result<AuthTokenInterface, Error>) -> Void) {
         let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
         guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
         else {
-            completion(
-                nil,
-                nonInitializedFlutterError
-            )
+            completion(Result.failure(nonInitializedFlutterError))
             return
         }
         
@@ -97,21 +94,27 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
             profileSignupRequestInterface: request.profile
         )
         
-        reachFive.signup(
+        let signupCall = reachFive.signup(
             profile: signupRequest,
             redirectUrl: request.redirectUrl,
-            scope: request.scope
-        ).onSuccess(
+            scope: request.scope?.filter({scopeValue in
+                scopeValue != nil}) as? [String]
+        )
+        
+        signupCall.onSuccess(
             callback: { authToken in
                 completion(
-                    Converters.authTokenToInterface(authToken: authToken),
-                    nil
+                    Result.success(
+                        Converters.authTokenToInterface(authToken: authToken)
+                    )
                 )
             }
-        ).onFailure(
+        )
+        
+        signupCall.onFailure(
             callback: { error in
                 completion(
-                        nil,
+                    Result.failure(
                         Converters.parseError(
                                 reachFiveError: error,
                                 errorCodesInterface: request.errorCodes,
@@ -121,38 +124,44 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                                         details: nil
                                 )
                         )
+                    )
                 )
             }
         )
+
     }
     
-    public func login(withPasswordRequest request: LoginWithPasswordRequestInterface, completion: @escaping (AuthTokenInterface?, FlutterError?) -> Void) {
+    func loginWithPassword(request: LoginWithPasswordRequestInterface, completion: @escaping (Result<AuthTokenInterface, Error>) -> Void) {
         let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
         guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
         else {
-            completion(
-                nil,
-                nonInitializedFlutterError
-            )
+            completion(Result.failure(nonInitializedFlutterError))
             return
         }
         
-        reachFive.loginWithPassword(
+        let loginWithPasswordCall = reachFive.loginWithPassword(
             email: request.email,
             phoneNumber: request.phoneNumber,
             password: request.password,
-            scope: request.scope
-        ).onSuccess(
+            scope: request.scope?.filter({scopeValue in
+                scopeValue != nil}) as? [String]
+        )
+            
+        loginWithPasswordCall.onSuccess(
             callback: { authToken in
                 completion(
-                    Converters.authTokenToInterface(authToken: authToken),
-                    nil
+                    Result.success(
+                        Converters.authTokenToInterface(authToken: authToken)
+                    )
                 )
+
             }
-        ).onFailure(
+        )
+            
+        loginWithPasswordCall.onFailure(
             callback: { error in
                 completion(
-                        nil,
+                    Result.failure(
                         Converters.parseError(
                                 reachFiveError: error,
                                 errorCodesInterface: request.errorCodes,
@@ -162,101 +171,102 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                                         details: nil
                                 )
                         )
+                    )
                 )
             }
         )
     }
     
-    public func login(withProviderRequest request: LoginWithProviderRequestInterface, completion: @escaping (AuthTokenInterface?, FlutterError?) -> Void) {
-            let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
-            guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
-            else {
-                completion(
-                    nil,
-                    nonInitializedFlutterError
-                )
-                return
-            }
-
-            let viewController = ((UIApplication.shared.delegate?.window!)!).rootViewController
-
-            guard let provider = reachFive.getProvider(name: request.provider)
-            else {
-                completion(
-                    nil,
-                    FlutterError(
-                        code: "not_available_provider_error_code",
-                        message: "The provider was not found in your reachFive instance",
-                        details: nil
-                    )
-                )
-                return
-            }
-
-            provider.login(
-                scope: request.scope,
-                origin: request.origin,
-                viewController: viewController
-            ).onSuccess(
-                callback: { authToken in
-                    completion(
-                        Converters.authTokenToInterface(authToken: authToken),
-                        nil
-                    )
-                }
-            ).onFailure(
-                callback: { error in
-                    completion(
-                            nil,
-                            Converters.parseError(
-                                    reachFiveError: error,
-                                    errorCodesInterface: request.errorCodes,
-                                    defaultFlutterError: FlutterError(
-                                            code: "login_with_provider_error_code",
-                                            message: error.message(),
-                                            details: nil
-                                    )
-                            )
-                    )
-                }
-            )
+    func loginWithProvider(request: LoginWithProviderRequestInterface, completion: @escaping (Result<AuthTokenInterface, Error>) -> Void) {
+        let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
+        guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
+        else {
+            completion(Result.failure(nonInitializedFlutterError))
+            return
         }
+
+        let viewController = ((UIApplication.shared.delegate?.window!)!).rootViewController
+
+        guard let provider = reachFive.getProvider(name: request.provider)
+        else {
+            completion(Result.failure(
+                FlutterError(
+                    code: "not_available_provider_error_code",
+                    message: "The provider was not found in your reachFive instance",
+                    details: nil
+                )
+            ))
+            return
+        }
+
+        let loginWithProviderCall = provider.login(
+            scope: request.scope?.filter({scopeValue in
+                scopeValue != nil}) as? [String],
+            origin: request.origin,
+            viewController: viewController
+        )
+            
+        loginWithProviderCall.onSuccess(
+            callback: { authToken in
+                completion(
+                    Result.success(
+                        Converters.authTokenToInterface(authToken: authToken)
+                    )
+                )
+            }
+        )
+        
+        loginWithProviderCall.onFailure(
+            callback: { error in
+                completion(
+                    Result.failure(
+                        Converters.parseError(
+                                reachFiveError: error,
+                                errorCodesInterface: request.errorCodes,
+                                defaultFlutterError: FlutterError(
+                                        code: "login_with_provider_error_code",
+                                        message: error.message(),
+                                        details: nil
+                                )
+                        )
+                    )
+                )
+            }
+        )
+    }
     
-    public func logoutReachFiveKey(_ reachFiveKey: ReachFiveKeyInterface, completion: @escaping (FlutterError?) -> Void) {
+    func logout(reachFiveKey: ReachFiveKeyInterface, completion: @escaping (Result<Void, Error>) -> Void) {
         let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: reachFiveKey)
         guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
         else {
-            completion(
-                nonInitializedFlutterError
-            )
+            completion(Result.failure(nonInitializedFlutterError))
             return
         }
         
         reachFive.logout().onSuccess(
-            callback: { _ in
-                completion(nil)
+            callback: { unit in
+                completion(Result.success(unit))
             }
         ).onFailure(
             callback: { error in
                 completion(
-                    FlutterError(
-                        code: "logout_error_code",
-                        message: error.message(),
-                        details: nil
+                    Result.failure(
+                        FlutterError(
+                            code: "logout_error_code",
+                            message: error.message(),
+                            details: nil
+                        )
                     )
                 )
             }
         )
     }
     
-    public func getProfileRequest(_ request: GetProfileRequestInterface, completion: @escaping (ProfileInterface?, FlutterError?) -> Void) {
+    func getProfile(request: GetProfileRequestInterface, completion: @escaping (Result<ProfileInterface, Error>) -> Void) {
         let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
         guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
         else {
-            completion(
-                    nil,
-                    nonInitializedFlutterError
-            )
+            completion(Result.failure(nonInitializedFlutterError))
             return
         }
 
@@ -268,14 +278,15 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                 .onSuccess(
                         callback: { profile in
                             completion(
-                                    Converters.profileToInterface(profile: profile),
-                                    nil
+                                Result.success(
+                                    Converters.profileToInterface(profile: profile)
+                                )
                             )
                         }
                 ).onFailure(
                         callback: { error in
                             completion(
-                                    nil,
+                                Result.failure(
                                     Converters.parseError(
                                             reachFiveError: error,
                                             errorCodesInterface: request.errorCodes,
@@ -285,19 +296,17 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                                                     details: nil
                                             )
                                     )
+                                )
                             )
                         }
                 )
     }
-
-    public func updateProfileRequest(_ request: UpdateProfileRequestInterface, completion: @escaping (ProfileInterface?, FlutterError?) -> Void) {
+    
+    func updateProfile(request: UpdateProfileRequestInterface, completion: @escaping (Result<ProfileInterface, Error>) -> Void) {
         let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
         guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
         else {
-            completion(
-                    nil,
-                    nonInitializedFlutterError
-            )
+            completion(Result.failure(nonInitializedFlutterError))
             return
         }
 
@@ -313,14 +322,15 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                 .onSuccess(
                         callback: { profile in
                             completion(
-                                    Converters.profileToInterface(profile: profile),
-                                    nil
+                                Result.success(
+                                    Converters.profileToInterface(profile: profile)
+                                )
                             )
                         }
                 ).onFailure(
                         callback: { error in
                             completion(
-                                    nil,
+                                Result.failure(
                                     Converters.parseError(
                                             reachFiveError: error,
                                             errorCodesInterface: request.errorCodes,
@@ -330,19 +340,17 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                                                     details: nil
                                             )
                                     )
+                                )
                             )
                         }
                 )
     }
     
-    public func refreshAccessTokenRequest(_ request: RefreshAccessTokenRequestInterface, completion: @escaping (AuthTokenInterface?, FlutterError?) -> Void) {
+    func refreshAccessToken(request: RefreshAccessTokenRequestInterface, completion: @escaping (Result<AuthTokenInterface, Error>) -> Void) {
         let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
         guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
         else {
-            completion(
-                nil,
-                nonInitializedFlutterError
-            )
+            completion(Result.failure(nonInitializedFlutterError))
             return
         }
         
@@ -355,31 +363,31 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
         ).onSuccess(
             callback: { authToken in
                 completion(
-                    Converters.authTokenToInterface(authToken: authToken),
-                    nil
+                    Result.success(
+                        Converters.authTokenToInterface(authToken: authToken)
+                    )
                 )
             }
         ).onFailure(
             callback: { error in
                 completion(
-                    nil,
-                    FlutterError(
-                        code: "refresh_access_token_error_code",
-                        message: error.message(),
-                        details: nil
+                    Result.failure(
+                        FlutterError(
+                            code: "refresh_access_token_error_code",
+                            message: error.message(),
+                            details: nil
+                        )
                     )
                 )
             }
         )
     }
     
-    public func requestPasswordResetRequest(_ request: RequestPasswordResetRequestInterface, completion: @escaping (FlutterError?) -> Void) {
+    func requestPasswordReset(request: RequestPasswordResetRequestInterface, completion: @escaping (Result<Void, Error>) -> Void) {
         let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
         guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
         else {
-            completion(
-                nonInitializedFlutterError
-            )
+            completion(Result.failure(nonInitializedFlutterError))
             return
         }
         
@@ -388,29 +396,29 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
             phoneNumber: request.phoneNumber,
             redirectUrl: request.redirectUrl
         ).onSuccess(
-            callback: {_ in
-                completion(nil)
+            callback: { unit in
+                completion(Result.success(unit))
             }
         ).onFailure(
             callback: {error in
                 completion(
-                    FlutterError(
-                        code: "request_password_reset_error_code",
-                        message: error.message(),
-                        details: nil
+                    Result.failure(
+                        FlutterError(
+                            code: "request_password_reset_error_code",
+                            message: error.message(),
+                            details: nil
+                        )
                     )
                 )
             }
         )
     }
     
-    public func updatePassword(withAccessTokenRequest request: UpdatePasswordWithAccessTokenRequestInterface, completion: @escaping (FlutterError?) -> Void) {
+    func updatePasswordWithAccessToken(request: UpdatePasswordWithAccessTokenRequestInterface, completion: @escaping (Result<Void, Error>) -> Void) {
         let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
         guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
         else {
-            completion(
-                nonInitializedFlutterError
-            )
+            completion(Result.failure(nonInitializedFlutterError))
             return
         }
         
@@ -423,29 +431,29 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                 oldPassword: request.oldPassword
             )
         ).onSuccess(
-            callback: {_ in
-                completion(nil)
+            callback: { unit in
+                completion(Result.success(unit))
             }
         ).onFailure(
             callback: {error in
                 completion(
-                    FlutterError(
-                        code: "update_password_with_access_token_error_code",
-                        message: error.message(),
-                        details: nil
+                    Result.failure(
+                        FlutterError(
+                            code: "update_password_with_access_token_error_code",
+                            message: error.message(),
+                            details: nil
+                        )
                     )
                 )
             }
         )
     }
     
-    public func updatePassword(withFreshAccessTokenRequest request: UpdatePasswordWithFreshAccessTokenRequestInterface, completion: @escaping (FlutterError?) -> Void) {
+    func updatePasswordWithFreshAccessToken(request: UpdatePasswordWithFreshAccessTokenRequestInterface, completion: @escaping (Result<Void, Error>) -> Void) {
         let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
         guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
         else {
-            completion(
-                nonInitializedFlutterError
-            )
+            completion(Result.failure(nonInitializedFlutterError))
             return
         }
         
@@ -457,29 +465,29 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                 password: request.password
             )
         ).onSuccess(
-            callback: {_ in
-                completion(nil)
+            callback: { unit in
+                completion(Result.success(unit))
             }
         ).onFailure(
             callback: {error in
                 completion(
-                    FlutterError(
-                        code: "update_password_with_fresh_access_token_error_code",
-                        message: error.message(),
-                        details: nil
+                    Result.failure(
+                        FlutterError(
+                            code: "update_password_with_fresh_access_token_error_code",
+                            message: error.message(),
+                            details: nil
+                        )
                     )
                 )
             }
         )
     }
     
-    public func updatePassword(withEmailRequest request: UpdatePasswordWithEmailRequestInterface, completion: @escaping (FlutterError?) -> Void) {
+    func updatePasswordWithEmail(request: UpdatePasswordWithEmailRequestInterface, completion: @escaping (Result<Void, Error>) -> Void) {
         let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
         guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
         else {
-            completion(
-                nonInitializedFlutterError
-            )
+            completion(Result.failure(nonInitializedFlutterError))
             return
         }
         
@@ -490,12 +498,13 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                 password: request.password
             )
         ).onSuccess(
-            callback: {_ in
-                completion(nil)
+            callback: { unit in
+                completion(Result.success(unit))
             }
         ).onFailure(
             callback: {error in
                 completion(
+                    Result.failure(
                         Converters.parseError(
                                 reachFiveError: error,
                                 errorCodesInterface: request.errorCodes,
@@ -505,18 +514,18 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                                         details: nil
                                 )
                         )
+
+                    )
                 )
             }
         )
     }
     
-    public func updatePassword(withPhoneNumberRequest request: UpdatePasswordWithPhoneNumberRequestInterface, completion: @escaping (FlutterError?) -> Void) {
+    func updatePasswordWithPhoneNumber(request: UpdatePasswordWithPhoneNumberRequestInterface, completion: @escaping (Result<Void, Error>) -> Void) {
         let reachFiveInstanceKey = getReachFiveInstanceKey(reachFiveKey: request.reachFiveKey)
         guard let reachFive = reachFiveInstances[reachFiveInstanceKey]
         else {
-            completion(
-                nonInitializedFlutterError
-            )
+            completion(Result.failure(nonInitializedFlutterError))
             return
         }
 
@@ -527,26 +536,27 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
                 password: request.password
             )
         ).onSuccess(
-            callback: {_ in
-                completion(nil)
+            callback: { unit in
+                completion(Result.success(unit))
             }
         ).onFailure(
             callback: {error in
                 completion(
-                    Converters.parseError(
-                            reachFiveError: error,
-                            errorCodesInterface: request.errorCodes,
-                            defaultFlutterError: FlutterError(
-                                    code: "update_password_with_phone_number_request_error_code",
-                                    message: error.message(),
-                                    details: nil
-                            )
+                    Result.failure(
+                        Converters.parseError(
+                                reachFiveError: error,
+                                errorCodesInterface: request.errorCodes,
+                                defaultFlutterError: FlutterError(
+                                        code: "update_password_with_phone_number_request_error_code",
+                                        message: error.message(),
+                                        details: nil
+                                )
+                        )
                     )
                 )
             }
         )
     }
-    
 }
 
 extension UIViewController: ASWebAuthenticationPresentationContextProviding {
