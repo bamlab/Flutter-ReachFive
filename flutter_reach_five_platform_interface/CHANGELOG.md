@@ -1,3 +1,8 @@
+# 0.2.1
+
+ - **FIX**: Secure intent redirection on Android
+ - **CHORE**: Update dev dependencies
+
 # 0.2.0
 
  - **BREAKING**: Update dio dependency to 5.0.0
