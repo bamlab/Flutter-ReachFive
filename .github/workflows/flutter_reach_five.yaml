@@ -48,8 +48,10 @@ jobs:
       - name: Analyze
         run: flutter analyze lib test
 
-      - name: Custom lint
-        run: flutter pub run custom_lint
+      # Disabled because of this custom lint issue
+      # https://github.com/invertase/dart_custom_lint/issues/111
+      # - name: Custom lint
+      #   run: flutter pub run custom_lint
 
       - name: Run tests
         run: flutter test --no-pub --coverage --test-randomize-ordering-seed random
