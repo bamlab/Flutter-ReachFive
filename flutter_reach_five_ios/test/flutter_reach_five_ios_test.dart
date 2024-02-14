@@ -115,6 +115,23 @@ void main() {
         expect(error, isA<InvalidVerificationCodeExceptionInterface>());
       });
 
+      test('$UpdateSamePasswordExceptionInterface', () {
+        final exception = PlatformException(
+          code: errorCodesInterface.updateSamePassword,
+        );
+
+        Object? error;
+
+        try {
+          FlutterReachFiveIOS()
+              .parseError(exception, StackTrace.fromString('test'));
+        } catch (e) {
+          error = e;
+        }
+
+        expect(error, isA<UpdateSamePasswordExceptionInterface>());
+      });
+
       test('$InvalidGrantCodeExceptionInterface', () {
         final exception = PlatformException(
           code: errorCodesInterface.invalidGrant,
