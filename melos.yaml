@@ -25,12 +25,12 @@ scripts:
     description: |
       Run `dart analyze` in all packages.
        - Note: you can also rely on your IDEs Dart Analysis / Issues window.
-         
+
   generate:pigeon:
-    run: melos exec -- "flutter pub run pigeon --input ./pigeons/reach_five.dart && flutter format lib test"
+    run: melos exec -- "flutter pub run pigeon --input ./pigeons/reach_five.dart && dart format lib test"
     select-package:
       file-exists: "pigeons/reach_five.dart"
-         
+
   test:all:
     run: |
       melos run test --no-select
@@ -46,8 +46,8 @@ scripts:
       dir-exists:
         - test
       ignore:
-        - '*web*'
-        - '*example*'
+        - "*web*"
+        - "*example*"
 
   test_coverage:all:
     run: |
@@ -66,9 +66,9 @@ scripts:
       dir-exists:
         - test
       ignore:
-        - '*web*'
-        - '*example*'
-  
+        - "*web*"
+        - "*example*"
+
   open_coverage:all:
     run: |
       melos run open_coverage --no-select
@@ -83,9 +83,9 @@ scripts:
       dir-exists:
         - test
       ignore:
-        - '*web*'
-        - '*example*'
-         
+        - "*web*"
+        - "*example*"
+
   # Additional cleanup lifecycle script, executed when `melos clean` is run.
   postclean: >
     melos exec -c 6 -- "flutter clean"
