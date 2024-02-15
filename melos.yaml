@@ -9,7 +9,6 @@ packages:
 
 command:
   bootstrap:
-    usePubspecOverrides: true
     # It seems so that running "pub get" in parallel has some issues (like
     # https://github.com/dart-lang/pub/issues/3404). Disabling this feature
     # makes the CI much more stable.
@@ -28,8 +27,8 @@ scripts:
 
   generate:pigeon:
     run: melos exec -- "flutter pub run pigeon --input ./pigeons/reach_five.dart && dart format lib test"
-    select-package:
-      file-exists: "pigeons/reach_five.dart"
+    packageFilters:
+      fileExists: "pigeons/reach_five.dart"
 
   test:all:
     run: |
@@ -42,8 +41,8 @@ scripts:
       melos exec -c 6 --fail-fast -- \
         "flutter test --no-pub --test-randomize-ordering-seed random"
     description: Run `flutter test` for a specific package.
-    select-package:
-      dir-exists:
+    packageFilters:
+      dirExists:
         - test
       ignore:
         - "*web*"
@@ -59,11 +58,11 @@ scripts:
     run: |
       melos exec -c 6 --fail-fast -- \
         "flutter test --coverage --no-pub --test-randomize-ordering-seed random && \
-           remove_from_coverage -f coverage/lcov.info -r '\.g\.dart' && \ 
+           remove_from_coverage -f coverage/lcov.info -r '\.g\.dart' && \
            genhtml coverage/lcov.info -o coverage"
     description: Run `flutter test` for a specific package.
-    select-package:
-      dir-exists:
+    packageFilters:
+      dirExists:
         - test
       ignore:
         - "*web*"
@@ -79,8 +78,8 @@ scripts:
       melos exec -c 6 --fail-fast -- \
         "open coverage/index.html"
     description: Open coverage for a specific package.
-    select-package:
-      dir-exists:
+    packageFilters:
+      dirExists:
         - test
       ignore:
         - "*web*"
