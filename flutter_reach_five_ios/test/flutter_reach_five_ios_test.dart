@@ -15,7 +15,7 @@ void main() {
       flutterReachFive = FlutterReachFiveIOS();
 
       log = <MethodCall>[];
-      TestDefaultBinaryMessengerBinding.instance!.defaultBinaryMessenger
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
           .setMockMethodCallHandler(flutterReachFive.methodChannel,
               (methodCall) async {
         log.add(methodCall);
