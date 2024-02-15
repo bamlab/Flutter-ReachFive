@@ -1,11 +1,15 @@
+# 0.3.0
+
+- **BREAKING**: Add Custom Error when user try to update password with the same password
+
 # 0.2.1
 
- - **FIX**: Secure intent redirection on Android
- - **CHORE**: Update dev dependencies
+- **FIX**: Secure intent redirection on Android
+- **CHORE**: Update dev dependencies
 
 # 0.2.0
 
- - **BREAKING**: Update dio dependency to 5.0.0
+- **BREAKING**: Update dio dependency to 5.0.0
 
 # 0.1.8
 

@@ -18,6 +18,8 @@ class FlutterReachFiveAndroid extends FlutterReachFivePlatform {
       } else if (errorCode
           .contains(errorCodesInterface.invalidVerificationCode)) {
         throw InvalidVerificationCodeExceptionInterface();
+      } else if (errorCode.contains(errorCodesInterface.updateSamePassword)) {
+        throw UpdateSamePasswordExceptionInterface();
       } else if (errorCode.contains(errorCodesInterface.invalidGrant)) {
         throw InvalidGrantCodeExceptionInterface();
       } else if (errorCode

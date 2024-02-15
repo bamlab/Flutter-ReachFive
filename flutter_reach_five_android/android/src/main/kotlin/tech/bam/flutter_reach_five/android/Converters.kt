@@ -47,6 +47,15 @@ class Converters {
                     details = null
                 )
             }
+            if (reachFiveError.data?.errorMessageKey == "error.updateSamePassword") {
+                val errorCode = errorCodesInterface.updateSamePassword
+                val errorUsrMessage = reachFiveError.data?.errorUserMsg ?: ""
+                return FlutterError(
+                    code= errorCode,
+                    message= "$errorCode - $errorUsrMessage",
+                    details = null
+                )
+            }
             if (reachFiveError.data?.error == "invalid_grant") {
                 val errorCode = errorCodesInterface.invalidGrant
                 val errorUsrMessage = reachFiveError.data?.errorDescription ?: ""

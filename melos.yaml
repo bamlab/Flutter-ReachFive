@@ -9,7 +9,6 @@ packages:
 
 command:
   bootstrap:
-    usePubspecOverrides: true
     # It seems so that running "pub get" in parallel has some issues (like
     # https://github.com/dart-lang/pub/issues/3404). Disabling this feature
     # makes the CI much more stable.
@@ -25,12 +24,12 @@ scripts:
     description: |
       Run `dart analyze` in all packages.
        - Note: you can also rely on your IDEs Dart Analysis / Issues window.
-         
+
   generate:pigeon:
-    run: melos exec -- "flutter pub run pigeon --input ./pigeons/reach_five.dart && flutter format lib test"
-    select-package:
-      file-exists: "pigeons/reach_five.dart"
-         
+    run: melos exec -- "flutter pub run pigeon --input ./pigeons/reach_five.dart && dart format lib test"
+    packageFilters:
+      fileExists: "pigeons/reach_five.dart"
+
   test:all:
     run: |
       melos run test --no-select
@@ -42,12 +41,12 @@ scripts:
       melos exec -c 6 --fail-fast -- \
         "flutter test --no-pub --test-randomize-ordering-seed random"
     description: Run `flutter test` for a specific package.
-    select-package:
-      dir-exists:
+    packageFilters:
+      dirExists:
         - test
       ignore:
-        - '*web*'
-        - '*example*'
+        - "*web*"
+        - "*example*"
 
   test_coverage:all:
     run: |
@@ -59,16 +58,16 @@ scripts:
     run: |
       melos exec -c 6 --fail-fast -- \
         "flutter test --coverage --no-pub --test-randomize-ordering-seed random && \
-           remove_from_coverage -f coverage/lcov.info -r '\.g\.dart' && \ 
+           remove_from_coverage -f coverage/lcov.info -r '\.g\.dart' && \
            genhtml coverage/lcov.info -o coverage"
     description: Run `flutter test` for a specific package.
-    select-package:
-      dir-exists:
+    packageFilters:
+      dirExists:
         - test
       ignore:
-        - '*web*'
-        - '*example*'
-  
+        - "*web*"
+        - "*example*"
+
   open_coverage:all:
     run: |
       melos run open_coverage --no-select
@@ -79,13 +78,13 @@ scripts:
       melos exec -c 6 --fail-fast -- \
         "open coverage/index.html"
     description: Open coverage for a specific package.
-    select-package:
-      dir-exists:
+    packageFilters:
+      dirExists:
         - test
       ignore:
-        - '*web*'
-        - '*example*'
-         
+        - "*web*"
+        - "*example*"
+
   # Additional cleanup lifecycle script, executed when `melos clean` is run.
   postclean: >
     melos exec -c 6 -- "flutter clean"

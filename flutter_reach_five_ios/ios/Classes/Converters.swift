@@ -45,6 +45,13 @@ public class Converters {
                         details: nil
                 )
             }
+            if (apiError.errorMessageKey == "error.updateSamePassword") {
+                return FlutterError(
+                        code: errorCodesInterface.updateSamePassword,
+                        message: apiError.errorUserMsg,
+                        details: nil
+                )
+            }
             return defaultFlutterError
         case .AuthFailure(reason: _, apiError: let apiError):
             if (apiError?.errorMessageKey == "error.invalidEmailOrPassword") {

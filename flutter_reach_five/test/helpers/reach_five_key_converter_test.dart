@@ -35,7 +35,7 @@ void main() {
             providerCreators: [
               ProviderCreatorInterface(
                 type: ProviderCreatorTypeInterface.google,
-              )
+              ),
             ],
           ),
         ),

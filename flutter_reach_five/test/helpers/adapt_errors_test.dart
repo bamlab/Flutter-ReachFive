@@ -71,6 +71,21 @@ void main() {
       expect(error, isA<InvalidVerificationCodeException>());
     });
 
+    test('$UpdateSamePasswordException', () async {
+      Object? error;
+
+      try {
+        adaptErrors(
+          error: UpdateSamePasswordExceptionInterface(),
+          stackTrace: StackTrace.fromString('test'),
+        );
+      } catch (e) {
+        error = e;
+      }
+
+      expect(error, isA<UpdateSamePasswordException>());
+    });
+
     test('$InvalidGrantCodeException', () async {
       Object? error;
 

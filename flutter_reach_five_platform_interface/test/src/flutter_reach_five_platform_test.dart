@@ -35,7 +35,7 @@ void main() {
         androidScheme: 'androidScheme',
       );
       final providerCreators = [
-        ProviderCreatorInterface(type: ProviderCreatorTypeInterface.webview)
+        ProviderCreatorInterface(type: ProviderCreatorTypeInterface.webview),
       ];
 
       reachFiveKey = ReachFiveKeyInterface(

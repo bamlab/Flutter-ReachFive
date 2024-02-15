@@ -34,7 +34,7 @@ void main() {
             emails: EmailsInterface(),
             customFields: <String, Object?>{'key': 'objectValue'},
             consents: <String, ConsentInterface>{
-              'key': ConsentInterface(granted: true, date: '2022-06-10')
+              'key': ConsentInterface(granted: true, date: '2022-06-10'),
             },
             addresses: [ProfileAddressInterface()],
           ),

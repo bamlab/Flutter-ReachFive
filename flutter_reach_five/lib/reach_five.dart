@@ -24,7 +24,7 @@ class ReachFive {
     required this.identityRepo,
   });
 
-  /// @template flutter_reach_five.reachFive.reachFiveKey}
+  /// {@template flutter_reach_five.reachFive.reachFiveKey}
   /// [ReachFive] instance key, kept in memory here to be given in every
   /// reachFive native sdk methods
   /// It allows us to select the correct instance in the native part
@@ -32,19 +32,19 @@ class ReachFive {
   /// {@endtemplate}
   final ReachFiveKey reachFiveKey;
 
-  /// @template flutter_reach_five.reachFive.providers}
+  /// {@template flutter_reach_five.reachFive.providers}
   /// [ReachFive] available providers, kept in memory here to be given in every
   /// reachFive native sdk methods that needs providers
   /// {@endtemplate}
   final List<Provider> providers;
 
-  /// @template flutter_reach_five.reachFive.repo}
+  /// {@template flutter_reach_five.reachFive.repo}
   /// [ReachFiveIdentityRepo] instance, kept in memory here to be create
   /// every api linked to it
   /// {@endtemplate}
   final ReachFiveIdentityRepo identityRepo;
 
-  /// @template flutter_reach_five.reachFive.oAuthApi}
+  /// {@template flutter_reach_five.reachFive.oAuthApi}
   /// [OAuthApi] instance from [identityRepo] to be given in every
   /// reachFive api methods that needs it
   /// {@endtemplate}

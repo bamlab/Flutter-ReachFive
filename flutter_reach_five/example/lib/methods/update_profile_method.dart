@@ -96,7 +96,7 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
               consentSupportedKey: Consent(
                 date: DateTime.now(),
                 granted: consentGranted,
-              )
+              ),
           },
         );
       });

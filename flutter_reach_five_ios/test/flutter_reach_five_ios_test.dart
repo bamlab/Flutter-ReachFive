@@ -15,7 +15,7 @@ void main() {
       flutterReachFive = FlutterReachFiveIOS();
 
       log = <MethodCall>[];
-      TestDefaultBinaryMessengerBinding.instance!.defaultBinaryMessenger
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
           .setMockMethodCallHandler(flutterReachFive.methodChannel,
               (methodCall) async {
         log.add(methodCall);
@@ -113,6 +113,23 @@ void main() {
         }
 
         expect(error, isA<InvalidVerificationCodeExceptionInterface>());
+      });
+
+      test('$UpdateSamePasswordExceptionInterface', () {
+        final exception = PlatformException(
+          code: errorCodesInterface.updateSamePassword,
+        );
+
+        Object? error;
+
+        try {
+          FlutterReachFiveIOS()
+              .parseError(exception, StackTrace.fromString('test'));
+        } catch (e) {
+          error = e;
+        }
+
+        expect(error, isA<UpdateSamePasswordExceptionInterface>());
       });
 
       test('$InvalidGrantCodeExceptionInterface', () {

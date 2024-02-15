@@ -30,7 +30,7 @@ class _InitializeMethodState extends State<InitializeMethod> {
   late String iosScheme = widget.dataSet.initialIosScheme;
 
   late List<ProviderCreator> selectedProviderCreators = [
-    ProviderCreator.webview
+    ProviderCreator.webview,
   ];
 
   void setDomain(String newDomain) => setState(() {
