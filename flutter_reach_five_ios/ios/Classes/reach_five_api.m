@@ -180,6 +180,7 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
 + (instancetype)makeWithEmailAlreadyInUseCode:(NSString *)emailAlreadyInUseCode
     invalidEmailOrPasswordCode:(NSString *)invalidEmailOrPasswordCode
     invalidVerificationCode:(NSString *)invalidVerificationCode
+    updateSamePassword:(NSString *)updateSamePassword
     invalidGrant:(NSString *)invalidGrant
     userCancelledOrClosedTheWebFlow:(NSString *)userCancelledOrClosedTheWebFlow
     socialAccountEmailAlreadyInUse:(NSString *)socialAccountEmailAlreadyInUse {
@@ -187,6 +188,7 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
   pigeonResult.emailAlreadyInUseCode = emailAlreadyInUseCode;
   pigeonResult.invalidEmailOrPasswordCode = invalidEmailOrPasswordCode;
   pigeonResult.invalidVerificationCode = invalidVerificationCode;
+  pigeonResult.updateSamePassword = updateSamePassword;
   pigeonResult.invalidGrant = invalidGrant;
   pigeonResult.userCancelledOrClosedTheWebFlow = userCancelledOrClosedTheWebFlow;
   pigeonResult.socialAccountEmailAlreadyInUse = socialAccountEmailAlreadyInUse;
@@ -200,11 +202,13 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
   NSAssert(pigeonResult.invalidEmailOrPasswordCode != nil, @"");
   pigeonResult.invalidVerificationCode = GetNullableObjectAtIndex(list, 2);
   NSAssert(pigeonResult.invalidVerificationCode != nil, @"");
-  pigeonResult.invalidGrant = GetNullableObjectAtIndex(list, 3);
+  pigeonResult.updateSamePassword = GetNullableObjectAtIndex(list, 3);
+  NSAssert(pigeonResult.updateSamePassword != nil, @"");
+  pigeonResult.invalidGrant = GetNullableObjectAtIndex(list, 4);
   NSAssert(pigeonResult.invalidGrant != nil, @"");
-  pigeonResult.userCancelledOrClosedTheWebFlow = GetNullableObjectAtIndex(list, 4);
+  pigeonResult.userCancelledOrClosedTheWebFlow = GetNullableObjectAtIndex(list, 5);
   NSAssert(pigeonResult.userCancelledOrClosedTheWebFlow != nil, @"");
-  pigeonResult.socialAccountEmailAlreadyInUse = GetNullableObjectAtIndex(list, 5);
+  pigeonResult.socialAccountEmailAlreadyInUse = GetNullableObjectAtIndex(list, 6);
   NSAssert(pigeonResult.socialAccountEmailAlreadyInUse != nil, @"");
   return pigeonResult;
 }
@@ -216,6 +220,7 @@ static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
     (self.emailAlreadyInUseCode ?: [NSNull null]),
     (self.invalidEmailOrPasswordCode ?: [NSNull null]),
     (self.invalidVerificationCode ?: [NSNull null]),
+    (self.updateSamePassword ?: [NSNull null]),
     (self.invalidGrant ?: [NSNull null]),
     (self.userCancelledOrClosedTheWebFlow ?: [NSNull null]),
     (self.socialAccountEmailAlreadyInUse ?: [NSNull null]),

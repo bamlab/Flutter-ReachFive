@@ -53,12 +53,14 @@ typedef NS_ENUM(NSUInteger, ProfileAddressTypeInterface) {
 + (instancetype)makeWithEmailAlreadyInUseCode:(NSString *)emailAlreadyInUseCode
     invalidEmailOrPasswordCode:(NSString *)invalidEmailOrPasswordCode
     invalidVerificationCode:(NSString *)invalidVerificationCode
+    updateSamePassword:(NSString *)updateSamePassword
     invalidGrant:(NSString *)invalidGrant
     userCancelledOrClosedTheWebFlow:(NSString *)userCancelledOrClosedTheWebFlow
     socialAccountEmailAlreadyInUse:(NSString *)socialAccountEmailAlreadyInUse;
 @property(nonatomic, copy) NSString * emailAlreadyInUseCode;
 @property(nonatomic, copy) NSString * invalidEmailOrPasswordCode;
 @property(nonatomic, copy) NSString * invalidVerificationCode;
+@property(nonatomic, copy) NSString * updateSamePassword;
 @property(nonatomic, copy) NSString * invalidGrant;
 @property(nonatomic, copy) NSString * userCancelledOrClosedTheWebFlow;
 @property(nonatomic, copy) NSString * socialAccountEmailAlreadyInUse;

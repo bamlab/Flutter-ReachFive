@@ -14,6 +14,12 @@ class InvalidEmailOrPasswordException implements Exception {}
 /// {@endtemplate}
 class InvalidVerificationCodeException implements Exception {}
 
+/// {@template flutter_reach_five.errors.update_same_password}
+/// Error thrown when trying to update your password
+/// with the same password
+/// {@endtemplate}
+class UpdateSamePasswordException implements Exception {}
+
 /// {@template flutter_reach_five.errors.invalid_grant_code}
 /// Error thrown when trying to do an operation with an
 /// invalid access token

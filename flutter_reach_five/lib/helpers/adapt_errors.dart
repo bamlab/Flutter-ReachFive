@@ -16,6 +16,9 @@ Never adaptErrors({
   if (error is InvalidVerificationCodeExceptionInterface) {
     throw InvalidVerificationCodeException();
   }
+  if (error is UpdateSamePasswordExceptionInterface) {
+    throw UpdateSamePasswordException();
+  }
   if (error is InvalidGrantCodeExceptionInterface) {
     throw InvalidGrantCodeException();
   }

@@ -24,6 +24,7 @@ class ErrorCodesInterface {
     required this.emailAlreadyInUseCode,
     required this.invalidEmailOrPasswordCode,
     required this.invalidVerificationCode,
+    required this.updateSamePassword,
     required this.invalidGrant,
     required this.userCancelledOrClosedTheWebFlow,
     required this.socialAccountEmailAlreadyInUse,
@@ -34,6 +35,8 @@ class ErrorCodesInterface {
   String invalidEmailOrPasswordCode;
 
   String invalidVerificationCode;
+
+  String updateSamePassword;
 
   String invalidGrant;
 
@@ -46,6 +49,7 @@ class ErrorCodesInterface {
       emailAlreadyInUseCode,
       invalidEmailOrPasswordCode,
       invalidVerificationCode,
+      updateSamePassword,
       invalidGrant,
       userCancelledOrClosedTheWebFlow,
       socialAccountEmailAlreadyInUse,
@@ -58,9 +62,10 @@ class ErrorCodesInterface {
       emailAlreadyInUseCode: result[0]! as String,
       invalidEmailOrPasswordCode: result[1]! as String,
       invalidVerificationCode: result[2]! as String,
-      invalidGrant: result[3]! as String,
-      userCancelledOrClosedTheWebFlow: result[4]! as String,
-      socialAccountEmailAlreadyInUse: result[5]! as String,
+      updateSamePassword: result[3]! as String,
+      invalidGrant: result[4]! as String,
+      userCancelledOrClosedTheWebFlow: result[5]! as String,
+      socialAccountEmailAlreadyInUse: result[6]! as String,
     );
   }
 }

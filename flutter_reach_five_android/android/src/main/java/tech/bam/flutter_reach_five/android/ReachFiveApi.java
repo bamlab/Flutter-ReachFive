@@ -121,6 +121,19 @@ public class ReachFiveApi {
       this.invalidVerificationCode = setterArg;
     }
 
+    private @NonNull String updateSamePassword;
+
+    public @NonNull String getUpdateSamePassword() {
+      return updateSamePassword;
+    }
+
+    public void setUpdateSamePassword(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"updateSamePassword\" is null.");
+      }
+      this.updateSamePassword = setterArg;
+    }
+
     private @NonNull String invalidGrant;
 
     public @NonNull String getInvalidGrant() {
@@ -186,6 +199,13 @@ public class ReachFiveApi {
         return this;
       }
 
+      private @Nullable String updateSamePassword;
+
+      public @NonNull Builder setUpdateSamePassword(@NonNull String setterArg) {
+        this.updateSamePassword = setterArg;
+        return this;
+      }
+
       private @Nullable String invalidGrant;
 
       public @NonNull Builder setInvalidGrant(@NonNull String setterArg) {
@@ -212,6 +232,7 @@ public class ReachFiveApi {
         pigeonReturn.setEmailAlreadyInUseCode(emailAlreadyInUseCode);
         pigeonReturn.setInvalidEmailOrPasswordCode(invalidEmailOrPasswordCode);
         pigeonReturn.setInvalidVerificationCode(invalidVerificationCode);
+        pigeonReturn.setUpdateSamePassword(updateSamePassword);
         pigeonReturn.setInvalidGrant(invalidGrant);
         pigeonReturn.setUserCancelledOrClosedTheWebFlow(userCancelledOrClosedTheWebFlow);
         pigeonReturn.setSocialAccountEmailAlreadyInUse(socialAccountEmailAlreadyInUse);
@@ -221,10 +242,11 @@ public class ReachFiveApi {
 
     @NonNull
     ArrayList<Object> toList() {
-      ArrayList<Object> toListResult = new ArrayList<Object>(6);
+      ArrayList<Object> toListResult = new ArrayList<Object>(7);
       toListResult.add(emailAlreadyInUseCode);
       toListResult.add(invalidEmailOrPasswordCode);
       toListResult.add(invalidVerificationCode);
+      toListResult.add(updateSamePassword);
       toListResult.add(invalidGrant);
       toListResult.add(userCancelledOrClosedTheWebFlow);
       toListResult.add(socialAccountEmailAlreadyInUse);
@@ -239,11 +261,13 @@ public class ReachFiveApi {
       pigeonResult.setInvalidEmailOrPasswordCode((String) invalidEmailOrPasswordCode);
       Object invalidVerificationCode = list.get(2);
       pigeonResult.setInvalidVerificationCode((String) invalidVerificationCode);
-      Object invalidGrant = list.get(3);
+      Object updateSamePassword = list.get(3);
+      pigeonResult.setUpdateSamePassword((String) updateSamePassword);
+      Object invalidGrant = list.get(4);
       pigeonResult.setInvalidGrant((String) invalidGrant);
-      Object userCancelledOrClosedTheWebFlow = list.get(4);
+      Object userCancelledOrClosedTheWebFlow = list.get(5);
       pigeonResult.setUserCancelledOrClosedTheWebFlow((String) userCancelledOrClosedTheWebFlow);
-      Object socialAccountEmailAlreadyInUse = list.get(5);
+      Object socialAccountEmailAlreadyInUse = list.get(6);
       pigeonResult.setSocialAccountEmailAlreadyInUse((String) socialAccountEmailAlreadyInUse);
       return pigeonResult;
     }
