@@ -1,7 +1,6 @@
 import IdentitySdkCore
 import IdentitySdkGoogle
 import IdentitySdkFacebook
-import IdentitySdkWebView
 
 enum CustomFieldError: Error {
     case casting
@@ -225,6 +224,7 @@ public class Converters {
             isDefault: nil,
             addressType: nil,
             streetAddress: addressInterface.streetAddress,
+            addressComplement: nil,
             locality: addressInterface.locality,
             region: addressInterface.region,
             postalCode: addressInterface.postalCode,
@@ -233,7 +233,8 @@ public class Converters {
             deliveryNote: nil,
             recipient: nil,
             company: nil,
-            phoneNumber: nil
+            phoneNumber: nil,
+            customFields: nil
         )
         }
     
@@ -348,6 +349,8 @@ public class Converters {
                 isDefault: profileAddressInterface.isDefault?.boolValue,
                 addressType: addressType,
                 streetAddress: profileAddressInterface.streetAddress,
+                addressComplement: nil,
+
                 locality: profileAddressInterface.locality,
                 region: profileAddressInterface.region,
                 postalCode: profileAddressInterface.postalCode,
@@ -356,7 +359,8 @@ public class Converters {
                 deliveryNote: profileAddressInterface.deliveryNote,
                 recipient: profileAddressInterface.recipient,
                 company: profileAddressInterface.company,
-                phoneNumber: profileAddressInterface.phoneNumber
+                phoneNumber: profileAddressInterface.phoneNumber,
+                customFields: nil
             )
         }
 
@@ -391,7 +395,7 @@ public class Converters {
                 case ProviderCreatorTypeInterface.facebook:
                     return FacebookProvider()
                 case ProviderCreatorTypeInterface.webview:
-                    return WebViewProvider()
+                    return nil
                 @unknown default:
                     return nil
                 }

@@ -35,10 +35,9 @@ target 'Runner' do
 
   # Add the next line in your Podfile to use webview providers
   # It is because of an issue causing the flutter app to lose the web authentification session otherwise
-  pod 'IdentitySdkWebView', :git => 'git@github.com:bamlab/identity-ios-sdk.git', :tag => '5.7.0.fork'
-  pod 'IdentitySdkCore', '5.7.1'
-  pod 'IdentitySdkGoogle', '5.7.1'
-  pod 'IdentitySdkFacebook', '5.7.1'
+  pod 'IdentitySdkCore', :git => 'git@github.com:bamlab/identity-ios-sdk.git', :tag => '6.1.0.fork'
+  pod 'IdentitySdkGoogle', '6.1.0'
+  pod 'IdentitySdkFacebook', '6.1.0'
 end
 
 post_install do |installer|
