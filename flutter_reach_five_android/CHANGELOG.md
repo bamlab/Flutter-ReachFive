@@ -1,3 +1,7 @@
+# 0.4.0
+
+- **BREAKING**: Update Android SDK version to 9.1.0 and iOS SDK version to 6.1.0
+
 # 0.3.0
 
 - **BREAKING**: Add Custom Error when user try to update password with the same password
