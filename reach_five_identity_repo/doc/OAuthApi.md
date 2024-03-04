@@ -28,7 +28,7 @@ final RevokeTokenRequest revokeTokenRequest = ; // RevokeTokenRequest |
 
 try {
     api.revokeToken(revokeTokenRequest);
-} catch on DioError (e) {
+} catch on DioException (e) {
     print('Exception when calling OAuthApi->revokeToken: $e\n');
 }
 ```

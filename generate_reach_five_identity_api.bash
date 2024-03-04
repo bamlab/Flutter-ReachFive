@@ -1,6 +1,6 @@
 #!/bin/bash
 
-openApiCLIVersion="6.4.0"
+openApiCLIVersion="7.1.0"
 openApiDartVersion="7.2"
 
 # yaml basename
