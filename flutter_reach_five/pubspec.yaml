@@ -17,8 +17,8 @@ flutter:
         default_package: flutter_reach_five_ios
 
 dependencies:
-  built_value: ^8.4.1
-  dio: ^5.0.0
+  built_value: ^8.9.1
+  dio: ^5.4.1
   equatable: ^2.0.5
   flutter:
     sdk: flutter
@@ -30,10 +30,10 @@ dependencies:
   reach_five_identity_repo: ^0.4.0
 
 dev_dependencies:
-  build_runner: ^2.3.3
+  build_runner: ^2.4.8
   custom_lint: ^0.2.12
   equatable_lint: ^0.2.1
   flutter_test:
     sdk: flutter
   mocktail: ^1.0.3
-  plugin_platform_interface: ^2.1.4
+  plugin_platform_interface: ^2.1.8
