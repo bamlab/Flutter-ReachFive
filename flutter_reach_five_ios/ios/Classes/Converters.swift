@@ -297,9 +297,13 @@ public class Converters {
         }
     
     static public func addressTypeFromInterface(
-                addressTypeInterface: ProfileAddressTypeInterface
+                addressTypeInterface: ProfileAddressTypeInterface?
             ) -> String? {
-                switch addressTypeInterface {
+                guard let addressType = addressTypeInterface else {
+                    // Handle the nil case or return nil directly
+                    return nil
+                }
+                switch addressType {
                 case ProfileAddressTypeInterface.billing:
                     return "billing"
                 case ProfileAddressTypeInterface.delivery:
@@ -322,7 +326,7 @@ public class Converters {
         return ProfileAddressInterface.make(
                 withTitle: profileAddress.title,
                 isDefault: isDefault,
-                addressType: addressType,
+                addressType:ProfileAddressTypeInterfaceBox(value:  addressType),
                 streetAddress: profileAddress.streetAddress,
                 locality: profileAddress.locality,
                 region: profileAddress.region,
@@ -341,7 +345,7 @@ public class Converters {
         ) -> ProfileAddress {
 
             let addressType = addressTypeFromInterface(
-                addressTypeInterface: profileAddressInterface.addressType
+                addressTypeInterface: profileAddressInterface.addressType?.value
             )
         
             return ProfileAddress(
@@ -369,7 +373,7 @@ public class Converters {
     ) -> ConsentInterface {
 
         ConsentInterface.make(
-                withGranted: NSNumber.init(booleanLiteral: consent.granted),
+                withGranted: consent.granted,
                 consentType: consent.consentType,
                 date: consent.date
         )
@@ -380,7 +384,7 @@ public class Converters {
         ) -> Consent {
 
         Consent(
-            granted: consentInterface.granted.boolValue,
+            granted: consentInterface.granted,
             consentType: consentInterface.consentType,
             date: consentInterface.date
         )
