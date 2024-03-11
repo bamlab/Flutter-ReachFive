@@ -17,7 +17,7 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
         let messenger : FlutterBinaryMessenger = registrar.messenger()
         let api : ReachFiveHostApi & NSObjectProtocol = SwiftFlutterReachFivePlugin.init()
         
-        ReachFiveHostApiSetup(messenger, api);
+        SetUpReachFiveHostApi(messenger, api);
         
     }
     

@@ -23,10 +23,9 @@ Pod::Spec.new do |s|
   s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'}
   s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'}
 
-  s.dependency 'IdentitySdkCore', '~> 5.7.0'
-  s.dependency 'IdentitySdkFacebook', '~> 5.7.0'
-  s.dependency 'IdentitySdkWebView', '~> 5.7.0'
+  s.dependency 'IdentitySdkCore', '~> 6.1.0'
+  s.dependency 'IdentitySdkFacebook', '~> 6.1.0'
 
   s.static_framework = true # Needed because IdentitySdkGoogle isn't a framework but a static library
-  s.dependency 'IdentitySdkGoogle', '~> 5.7.0'
+  s.dependency 'IdentitySdkGoogle', '~> 6.1.0'
 end

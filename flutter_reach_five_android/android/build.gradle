@@ -3,7 +3,7 @@ version '1.0-SNAPSHOT'
 
 buildscript {
     ext {
-        sdk_version = "8.1.2"
+        sdk_version = "9.1.0"
         kotlin_version = '1.7.10'
 
         androidSettings = [

@@ -1,7 +1,6 @@
 import IdentitySdkCore
 import IdentitySdkGoogle
 import IdentitySdkFacebook
-import IdentitySdkWebView
 
 enum CustomFieldError: Error {
     case casting
@@ -225,6 +224,7 @@ public class Converters {
             isDefault: nil,
             addressType: nil,
             streetAddress: addressInterface.streetAddress,
+            addressComplement: nil,
             locality: addressInterface.locality,
             region: addressInterface.region,
             postalCode: addressInterface.postalCode,
@@ -233,7 +233,8 @@ public class Converters {
             deliveryNote: nil,
             recipient: nil,
             company: nil,
-            phoneNumber: nil
+            phoneNumber: nil,
+            customFields: nil
         )
         }
     
@@ -296,9 +297,13 @@ public class Converters {
         }
     
     static public func addressTypeFromInterface(
-                addressTypeInterface: ProfileAddressTypeInterface
+                addressTypeInterface: ProfileAddressTypeInterface?
             ) -> String? {
-                switch addressTypeInterface {
+                guard let addressType = addressTypeInterface else {
+                    // Handle the nil case or return nil directly
+                    return nil
+                }
+                switch addressType {
                 case ProfileAddressTypeInterface.billing:
                     return "billing"
                 case ProfileAddressTypeInterface.delivery:
@@ -321,7 +326,7 @@ public class Converters {
         return ProfileAddressInterface.make(
                 withTitle: profileAddress.title,
                 isDefault: isDefault,
-                addressType: addressType,
+                addressType:ProfileAddressTypeInterfaceBox(value:  addressType),
                 streetAddress: profileAddress.streetAddress,
                 locality: profileAddress.locality,
                 region: profileAddress.region,
@@ -340,7 +345,7 @@ public class Converters {
         ) -> ProfileAddress {
 
             let addressType = addressTypeFromInterface(
-                addressTypeInterface: profileAddressInterface.addressType
+                addressTypeInterface: profileAddressInterface.addressType?.value
             )
         
             return ProfileAddress(
@@ -348,6 +353,8 @@ public class Converters {
                 isDefault: profileAddressInterface.isDefault?.boolValue,
                 addressType: addressType,
                 streetAddress: profileAddressInterface.streetAddress,
+                addressComplement: nil,
+
                 locality: profileAddressInterface.locality,
                 region: profileAddressInterface.region,
                 postalCode: profileAddressInterface.postalCode,
@@ -356,7 +363,8 @@ public class Converters {
                 deliveryNote: profileAddressInterface.deliveryNote,
                 recipient: profileAddressInterface.recipient,
                 company: profileAddressInterface.company,
-                phoneNumber: profileAddressInterface.phoneNumber
+                phoneNumber: profileAddressInterface.phoneNumber,
+                customFields: nil
             )
         }
 
@@ -365,7 +373,7 @@ public class Converters {
     ) -> ConsentInterface {
 
         ConsentInterface.make(
-                withGranted: NSNumber.init(booleanLiteral: consent.granted),
+                withGranted: consent.granted,
                 consentType: consent.consentType,
                 date: consent.date
         )
@@ -376,7 +384,7 @@ public class Converters {
         ) -> Consent {
 
         Consent(
-            granted: consentInterface.granted.boolValue,
+            granted: consentInterface.granted,
             consentType: consentInterface.consentType,
             date: consentInterface.date
         )
@@ -391,7 +399,7 @@ public class Converters {
                 case ProviderCreatorTypeInterface.facebook:
                     return FacebookProvider()
                 case ProviderCreatorTypeInterface.webview:
-                    return WebViewProvider()
+                    return nil
                 @unknown default:
                     return nil
                 }

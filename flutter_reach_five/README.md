@@ -73,9 +73,9 @@ target 'Runner' do
   use_modular_headers!
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
-
+  
   # Add the next line in your Podfile to use webview providers
-  pod 'IdentitySdkWebView', :git => 'git@github.com:bamlab/identity-ios-sdk.git', :tag => '5.7.0.fork'
+  pod 'IdentitySdkCore', :git => 'git@github.com:bamlab/identity-ios-sdk.git', :tag => '6.1.0.fork'
 end
 ```
 
