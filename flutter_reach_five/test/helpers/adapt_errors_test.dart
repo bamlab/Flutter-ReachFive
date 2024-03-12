@@ -130,5 +130,20 @@ void main() {
 
       expect(error, isA<SocialAccountEmailAlreadyInUseException>());
     });
+
+    test('$UnauthorizedRefreshTokenException', () async {
+      Object? error;
+
+      try {
+        adaptErrors(
+          error: UnauthorizedRefreshTokenExceptionInterface(),
+          stackTrace: StackTrace.fromString('test'),
+        );
+      } catch (e) {
+        error = e;
+      }
+
+      expect(error, isA<UnauthorizedRefreshTokenException>());
+    });
   });
 }
