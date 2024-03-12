@@ -538,6 +538,37 @@ void main() {
           refreshAccessTokenAuthToken,
         );
       });
+
+      test('parse throw error', () async {
+        const firstAuthToken = AuthToken(
+          accessToken: 'firstAccessToken',
+        );
+
+        registerFallbackValue(
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
+        );
+        registerFallbackValue(AuthTokenConverter.toInterface(firstAuthToken));
+        when(
+          () => flutterReachFivePlatform.refreshAccessToken(
+            reachFiveKey: any(named: 'reachFiveKey'),
+            authToken: any(named: 'authToken'),
+          ),
+        ).thenThrow(Exception());
+
+        registerFallbackValue(
+          StackTrace.fromString('test'),
+        );
+        when(
+          () => flutterReachFivePlatform.parseError(any(), any()),
+        ).thenThrow(Exception());
+
+        try {
+          await reachFive.refreshAccessToken(firstAuthToken);
+        } catch (_) {}
+
+        verify(() => flutterReachFivePlatform.parseError(any(), any()))
+            .called(1);
+      });
     });
 
     group('revokeToken', () {
