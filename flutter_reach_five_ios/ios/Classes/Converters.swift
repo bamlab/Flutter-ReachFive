@@ -88,7 +88,14 @@ public class Converters {
                 message: "Auth was cancelled by the user",
                 details: nil
             )
-        case .TechnicalError(reason: _, apiError: _):
+        case .TechnicalError(reason: let reason, apiError: _):
+            if (reason == "Response status code was unacceptable: 401.") {
+                return FlutterError(
+                    code: errorCodesInterface.unauthorizedRefreshToken,
+                    message: nil,
+                    details: nil
+                )
+            }
             return defaultFlutterError
         }
     }

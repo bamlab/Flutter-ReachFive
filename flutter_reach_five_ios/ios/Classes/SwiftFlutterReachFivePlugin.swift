@@ -363,10 +363,14 @@ public class SwiftFlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHost
             callback: { error in
                 completion(
                     nil,
-                    FlutterError(
-                        code: "refresh_access_token_error_code",
-                        message: error.message(),
-                        details: nil
+                    Converters.parseError(
+                        reachFiveError: error,
+                        errorCodesInterface: request.errorCodes,
+                        defaultFlutterError: FlutterError(
+                            code: "refresh_access_token_error_code",
+                            message: error.message(),
+                            details: nil
+                        )
                     )
                 )
             }
