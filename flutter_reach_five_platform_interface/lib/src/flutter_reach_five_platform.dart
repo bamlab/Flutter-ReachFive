@@ -154,6 +154,7 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
         RefreshAccessTokenRequestInterface(
           reachFiveKey: reachFiveKey,
           authToken: authToken,
+          errorCodes: errorCodesInterface,
         ),
       );
 

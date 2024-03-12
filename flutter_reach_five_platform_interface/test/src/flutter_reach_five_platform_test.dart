@@ -230,6 +230,7 @@ void main() {
           RefreshAccessTokenRequestInterface(
             authToken: firstAuthToken,
             reachFiveKey: reachFiveKey,
+            errorCodes: errorCodesInterface,
           ),
         );
         when(() => mockReachFiveHostApi.refreshAccessToken(any()))
