@@ -39,3 +39,10 @@ class UserCancelledOrClosedTheWebFlowCodeException implements Exception {}
 /// But its email is already in use by another mean of connection
 /// {@endtemplate}
 class SocialAccountEmailAlreadyInUseException implements Exception {}
+
+/// {@template flutter_reach_five.errors.unauthorized_refresh_token}
+/// Error thrown when a user tries to refresh its token but it's not authorized
+/// anymore (either because it's expired or because it's been revoked
+/// for example)
+/// {@endtemplate}
+class UnauthorizedRefreshTokenException implements Exception {}

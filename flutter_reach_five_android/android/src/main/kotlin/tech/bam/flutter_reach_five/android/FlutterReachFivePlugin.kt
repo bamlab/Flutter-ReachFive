@@ -26,12 +26,12 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
     private var errorCodes: ReachFiveApi.ErrorCodesInterface? = null
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        ReachFiveApi.ReachFiveHostApi.setup(flutterPluginBinding.binaryMessenger, this)
+        ReachFiveApi.ReachFiveHostApi.setUp(flutterPluginBinding.binaryMessenger, this)
         context = flutterPluginBinding.applicationContext
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-        ReachFiveApi.ReachFiveHostApi.setup(binding.binaryMessenger, null)
+        ReachFiveApi.ReachFiveHostApi.setUp(binding.binaryMessenger, null)
         context = null
     }
 
@@ -315,7 +315,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
 
     override fun logout(
         reachFiveKey: ReachFiveApi.ReachFiveKeyInterface,
-        result: ReachFiveApi.Result<Void>
+        result: ReachFiveApi.VoidResult
     ) {
         val reachFive: ReachFive
         try {
@@ -327,7 +327,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
 
         reachFive.logout(
             success = {
-                result.success(null)
+                result.success()
             },
             failure = {
                     error -> result.error(
@@ -428,10 +428,14 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
             },
             failure = {
                     error -> result.error(
-                FlutterError(
-                    code= "refresh_access_token_error_code",
-                    message= error.message,
-                    details= null
+                Converters.parseError(
+                    reachFiveError = error,
+                    errorCodesInterface = request.errorCodes,
+                    defaultFlutterError = FlutterError(
+                        code= "refresh_access_token_error_code",
+                        message= error.message,
+                        details= null
+                    )
                 )
             )}
         )
@@ -439,7 +443,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
 
     override fun requestPasswordReset(
         request: ReachFiveApi.RequestPasswordResetRequestInterface,
-        result: ReachFiveApi.Result<Void>
+        result: ReachFiveApi.VoidResult
     ) {
         val reachFive: ReachFive
         try {
@@ -453,7 +457,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
             email = request.email,
             phoneNumber = request.phoneNumber,
             redirectUrl = request.redirectUrl,
-            success = { result.success(null)},
+            success = { result.success()},
             failure = {
                     error -> result.error(
                 FlutterError(
@@ -467,7 +471,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
 
     override fun updatePasswordWithAccessToken(
         request: ReachFiveApi.UpdatePasswordWithAccessTokenRequestInterface,
-        result: ReachFiveApi.Result<Void>
+        result: ReachFiveApi.VoidResult
     ) {
         val reachFive: ReachFive
         try {
@@ -483,7 +487,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
                 oldPassword = request.oldPassword,
                 password = request.password
             ),
-            success = { result.success(null) },
+            success = { result.success() },
             failure = {
                     error -> result.error(
                 FlutterError(
@@ -497,7 +501,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
 
     override fun updatePasswordWithFreshAccessToken(
         request: ReachFiveApi.UpdatePasswordWithFreshAccessTokenRequestInterface,
-        result: ReachFiveApi.Result<Void>
+        result: ReachFiveApi.VoidResult
     ) {
         val reachFive: ReachFive
         try {
@@ -512,7 +516,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
                 freshAuthToken = Converters.authTokenFromInterface(request.freshAuthToken),
                 password = request.password
             ),
-            success = { result.success(null) },
+            success = { result.success() },
             failure = {
                     error -> result.error(
                 FlutterError(
@@ -526,7 +530,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
 
     override fun updatePasswordWithEmail(
         request: ReachFiveApi.UpdatePasswordWithEmailRequestInterface,
-        result: ReachFiveApi.Result<Void>
+        result: ReachFiveApi.VoidResult
     ) {
         val reachFive: ReachFive
         try {
@@ -542,7 +546,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
                 verificationCode = request.verificationCode,
                 password = request.password
             ),
-            success = { result.success(null) },
+            success = { result.success() },
             failure = {
                     error -> result.error(
                 Converters.parseError(
@@ -560,7 +564,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
 
     override fun updatePasswordWithPhoneNumber(
         request: ReachFiveApi.UpdatePasswordWithPhoneNumberRequestInterface,
-        result: ReachFiveApi.Result<Void>
+        result: ReachFiveApi.VoidResult
     ) {
         val reachFive: ReachFive
         try {
@@ -576,7 +580,7 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
                 verificationCode = request.verificationCode,
                 password = request.password
             ),
-            success = { result.success(null) },
+            success = { result.success() },
             failure = {
                     error -> result.error(
                 Converters.parseError(

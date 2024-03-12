@@ -28,5 +28,8 @@ Never adaptErrors({
   if (error is SocialAccountEmailAlreadyInUseExceptionInterface) {
     throw SocialAccountEmailAlreadyInUseException();
   }
+  if (error is UnauthorizedRefreshTokenExceptionInterface) {
+    throw UnauthorizedRefreshTokenException();
+  }
   Error.throwWithStackTrace(error, stackTrace);
 }

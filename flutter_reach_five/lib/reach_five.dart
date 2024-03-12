@@ -237,12 +237,23 @@ class ReachFive {
   /// For more on refresh tokens, check out the [Refresh Tokens](https://developer.reachfive.com/docs/refresh-tokens.html) page.
   /// {@endtemplate}
   Future<AuthToken> refreshAccessToken(AuthToken authToken) async {
-    final authTokenInterface = await _platform.refreshAccessToken(
-      reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
-      authToken: AuthTokenConverter.toInterface(authToken),
-    );
+    try {
+      final authTokenInterface = await _platform.refreshAccessToken(
+        reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
+        authToken: AuthTokenConverter.toInterface(authToken),
+      );
 
-    return AuthTokenConverter.fromInterface(authTokenInterface);
+      return AuthTokenConverter.fromInterface(authTokenInterface);
+    } catch (error, stackTrace) {
+      try {
+        _platform.parseError(error, stackTrace);
+      } catch (interfaceError, interfaceStackTrace) {
+        adaptErrors(
+          error: interfaceError,
+          stackTrace: interfaceStackTrace,
+        );
+      }
+    }
   }
 
   /// {@template flutter_reach_five.reachFive.revokeToken}

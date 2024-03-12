@@ -1,3 +1,7 @@
+# 0.4.1
+
+- **FEAT**: Add a custom exception thrown when the refresh token is not valid anymore
+
 # 0.4.0
 
 - **BREAKING**: Update Android SDK version to 9.1.0 and iOS SDK version to 6.1.0

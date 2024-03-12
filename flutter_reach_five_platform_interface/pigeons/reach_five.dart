@@ -22,6 +22,7 @@ class ErrorCodesInterface {
     required this.invalidGrant,
     required this.userCancelledOrClosedTheWebFlow,
     required this.socialAccountEmailAlreadyInUse,
+    required this.unauthorizedRefreshToken,
   });
 
   final String emailAlreadyInUseCode;
@@ -31,6 +32,7 @@ class ErrorCodesInterface {
   final String invalidGrant;
   final String userCancelledOrClosedTheWebFlow;
   final String socialAccountEmailAlreadyInUse;
+  final String unauthorizedRefreshToken;
 }
 
 class SdkConfigInterface {
@@ -301,10 +303,12 @@ class RefreshAccessTokenRequestInterface {
   const RefreshAccessTokenRequestInterface({
     required this.reachFiveKey,
     required this.authToken,
+    required this.errorCodes,
   });
 
   final ReachFiveKeyInterface reachFiveKey;
   final AuthTokenInterface authToken;
+  final ErrorCodesInterface errorCodes;
 }
 
 class LoginSummaryInterface {
