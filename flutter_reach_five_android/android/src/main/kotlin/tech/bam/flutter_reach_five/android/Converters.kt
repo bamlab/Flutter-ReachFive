@@ -56,6 +56,16 @@ class Converters {
                     details = null
                 )
             }
+            if (reachFiveError.data?.errorMessageKey == "error.refreshToken.revoked"
+                || reachFiveError.data?.errorMessageKey == "error.refreshToken.expired") {
+                val errorCode = errorCodesInterface.unauthorizedRefreshToken
+                val errorUsrMessage = reachFiveError.data?.errorDescription ?: ""
+                return FlutterError(
+                    code= errorCode,
+                    message= "$errorCode - $errorUsrMessage",
+                    details = null
+                )
+            }
             if (reachFiveError.data?.error == "invalid_grant") {
                 val errorCode = errorCodesInterface.invalidGrant
                 val errorUsrMessage = reachFiveError.data?.errorDescription ?: ""

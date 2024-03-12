@@ -428,10 +428,14 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
             },
             failure = {
                     error -> result.error(
-                FlutterError(
-                    code= "refresh_access_token_error_code",
-                    message= error.message,
-                    details= null
+                Converters.parseError(
+                    reachFiveError = error,
+                    errorCodesInterface = request.errorCodes,
+                    defaultFlutterError = FlutterError(
+                        code= "refresh_access_token_error_code",
+                        message= error.message,
+                        details= null
+                    )
                 )
             )}
         )

@@ -196,6 +196,27 @@ void main() {
           isA<SocialAccountEmailAlreadyInUseExceptionInterface>(),
         );
       });
+
+      test('$UnauthorizedRefreshTokenExceptionInterface', () {
+        final exception = PlatformException(
+          code: 'Error - ${errorCodesInterface.unauthorizedRefreshToken}',
+          message: 'FlutterError',
+        );
+
+        Object? error;
+
+        try {
+          FlutterReachFiveAndroid()
+              .parseError(exception, StackTrace.fromString('test'));
+        } catch (e) {
+          error = e;
+        }
+
+        expect(
+          error,
+          isA<UnauthorizedRefreshTokenExceptionInterface>(),
+        );
+      });
     });
   });
 }
