@@ -41,6 +41,9 @@ scripts:
     run: melos exec -- "flutter pub run pigeon --input ./pigeons/reach_five.dart && dart format lib test"
     packageFilters:
       fileExists: "pigeons/reach_five.dart"
+  
+  generate:identity_api:
+    run: bash generate_reach_five_identity_api.bash
 
   test:all:
     run: |
