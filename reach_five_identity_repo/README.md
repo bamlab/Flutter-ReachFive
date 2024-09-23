@@ -145,13 +145,17 @@ Please follow the [installation procedure](#installation--usage) and then run th
 import 'package:reach_five_identity_repo/reach_five_identity_repo.dart';
 
 
-final api = ReachFiveIdentityRepo().getOAuthApi();
-final RevokeTokenRequest revokeTokenRequest = ; // RevokeTokenRequest | 
+final api = ReachFiveIdentityRepo().getEmailApi();
+final String authorization = authorization_example; // String | Bearer `{token}` for a valid OAuth token.
+final String trueClientIP = 224.136.62.167; // String | An optional header field; IP to protect requests from the backend.  **Note**: For more details, see [Identity Fraud Protection](https://developer.reachfive.com/docs/ifp.html#enable-true-client-ip-key). 
+final String trueClientIPKey = Isdaf03#@Rasdfj!j3jkl; // String | An optional header field; the secret that must match the True-Client-IP-Key generated in the ReachFive console.  **Note**: For more details, see [Identity Fraud Protection](https://developer.reachfive.com/docs/ifp.html#enable-true-client-ip-key). 
+final SendEmailVerificationRequest sendEmailVerificationRequest = ; // SendEmailVerificationRequest | 
 
 try {
-    api.revokeToken(revokeTokenRequest);
+    final response = await api.sendEmailVerification(authorization, trueClientIP, trueClientIPKey, sendEmailVerificationRequest);
+    print(response);
 } catch on DioException (e) {
-    print("Exception when calling OAuthApi->revokeToken: $e\n");
+    print("Exception when calling EmailApi->sendEmailVerification: $e\n");
 }
 
 ```
@@ -162,12 +166,15 @@ All URIs are relative to *https://YOUR_DOMAIN*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+[*EmailApi*](doc/EmailApi.md) | [**sendEmailVerification**](doc/EmailApi.md#sendemailverification) | **POST** /identity/v1/send-email-verification | Request verification of the email address
 [*OAuthApi*](doc/OAuthApi.md) | [**revokeToken**](doc/OAuthApi.md#revoketoken) | **POST** /oauth/revoke | Revoke a token
 
 
 ## Documentation For Models
 
  - [RevokeTokenRequest](doc/RevokeTokenRequest.md)
+ - [SendEmailVerification200Response](doc/SendEmailVerification200Response.md)
+ - [SendEmailVerificationRequest](doc/SendEmailVerificationRequest.md)
 
 
 ## Documentation For Authorization

@@ -7,6 +7,7 @@ import 'package:reach_five_identity_repo/src/auth/api_key_auth.dart';
 import 'package:reach_five_identity_repo/src/auth/basic_auth.dart';
 import 'package:reach_five_identity_repo/src/auth/bearer_auth.dart';
 import 'package:reach_five_identity_repo/src/auth/oauth.dart';
+import 'package:reach_five_identity_repo/src/api/email_api.dart';
 import 'package:reach_five_identity_repo/src/api/o_auth_api.dart';
 
 class ReachFiveIdentityRepo {
@@ -68,6 +69,12 @@ class ReachFiveIdentityRepo {
               as ApiKeyAuthInterceptor)
           .apiKeys[name] = apiKey;
     }
+  }
+
+  /// Get EmailApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  EmailApi getEmailApi() {
+    return EmailApi(dio);
   }
 
   /// Get OAuthApi instance, base route and serializer can be overridden by a given but be careful,

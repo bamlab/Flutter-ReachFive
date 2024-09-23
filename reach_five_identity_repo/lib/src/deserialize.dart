@@ -1,4 +1,6 @@
 import 'package:reach_five_identity_repo/src/model/revoke_token_request.dart';
+import 'package:reach_five_identity_repo/src/model/send_email_verification200_response.dart';
+import 'package:reach_five_identity_repo/src/model/send_email_verification_request.dart';
 
 final _regList = RegExp(r'^List<(.*)>$');
 final _regSet = RegExp(r'^Set<(.*)>$');
@@ -22,6 +24,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'RevokeTokenRequest':
       return RevokeTokenRequest.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'SendEmailVerification200Response':
+      return SendEmailVerification200Response.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'SendEmailVerificationRequest':
+      return SendEmailVerificationRequest.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     default:
       RegExpMatch? match;
 

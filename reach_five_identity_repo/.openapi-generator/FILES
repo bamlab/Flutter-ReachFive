@@ -3,10 +3,14 @@
 README.md
 analysis_options.yaml
 build.yaml
+doc/EmailApi.md
 doc/OAuthApi.md
 doc/RevokeTokenRequest.md
+doc/SendEmailVerification200Response.md
+doc/SendEmailVerificationRequest.md
 lib/reach_five_identity_repo.dart
 lib/src/api.dart
+lib/src/api/email_api.dart
 lib/src/api/o_auth_api.dart
 lib/src/auth/api_key_auth.dart
 lib/src/auth/auth.dart
@@ -15,6 +19,11 @@ lib/src/auth/bearer_auth.dart
 lib/src/auth/oauth.dart
 lib/src/deserialize.dart
 lib/src/model/revoke_token_request.dart
+lib/src/model/send_email_verification200_response.dart
+lib/src/model/send_email_verification_request.dart
 pubspec.yaml
+test/email_api_test.dart
 test/o_auth_api_test.dart
 test/revoke_token_request_test.dart
+test/send_email_verification200_response_test.dart
+test/send_email_verification_request_test.dart
