@@ -50,6 +50,12 @@ class ReachFive {
   /// {@endtemplate}
   OAuthApi get oAuthApi => identityRepo.getOAuthApi();
 
+  /// {@template flutter_reach_five.reachFive.emailApi}
+  /// [EmailApi] instance from [identityRepo] to be given in every
+  /// reachFive api methods that needs it
+  /// {@endtemplate}
+  EmailApi get emailApi => identityRepo.getEmailApi();
+
   /// {@template flutter_reach_five.reachFive.signup}
   /// Create and authenticate a new user with the specified data.
   /// {@endtemplate}
