@@ -176,8 +176,9 @@ class ReachFive {
   }
 
   /// {@template flutter_reach_five.reachFive.sendEmailVerification}
-  /// Request verification of the email address
   /// Request the verification of the email address of a profile. If there is an email address configured in the profile that was not already verified, sends an email to verify it.
+  ///
+  /// Returns a [bool] that indicates if the email was sent (`false` if the email was already verified).
   ///
   /// Parameters:
   /// * [authorization] - Bearer `{token}` for a valid OAuth token.
@@ -185,46 +186,28 @@ class ReachFive {
   /// * [trueClientIPKey] - An optional header field; the secret that must match the True-Client-IP-Key generated in the ReachFive console.  **Note**: For more details, see [Identity Fraud Protection](https://developer.reachfive.com/docs/ifp.html#enable-true-client-ip-key).
   /// * [redirectUrl] - The URL sent in the verification email to which the profile is redirected. This URL must be whitelisted in the `Allowed Callback URLs` field of your ReachFive client settings.
   /// * [returnToAfterEmailConfirmation] - Returned in the `redirect_url` as a query parameter, this parameter is used as the post-email confirmation URL. It must be a valid URL.
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extra] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [SendEmailVerification200Response] as data
-  /// Throws [DioException] if API call or serialization fails
   /// {@endtemplate}
-  Future<void> sendEmailVerification({
+  Future<bool> sendEmailVerification({
     required String authorization,
     String? trueClientIP,
     String? trueClientIPKey,
     String? redirectUrl,
     String? returnToAfterEmailConfirmation,
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
   }) async {
     final sendEmailVerificationRequest = SendEmailVerificationRequest(
       redirectUrl: redirectUrl,
       returnToAfterEmailConfirmation: returnToAfterEmailConfirmation,
     );
 
-    await emailApi.sendEmailVerification(
+    final response = await emailApi.sendEmailVerification(
       authorization: authorization,
       trueClientIP: trueClientIP,
       trueClientIPKey: trueClientIPKey,
       sendEmailVerificationRequest: sendEmailVerificationRequest,
-      cancelToken: cancelToken,
-      headers: headers,
-      extra: extra,
-      validateStatus: validateStatus,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
     );
+
+    return response.data?.verificationEmailSent ?? false;
   }
 
   /// {@template flutter_reach_five.reachFive.getProfile}
