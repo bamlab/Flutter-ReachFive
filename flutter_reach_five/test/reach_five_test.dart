@@ -19,6 +19,8 @@ class MockReackFiveIdentityRepo extends Mock implements ReachFiveIdentityRepo {}
 
 class MockOAuthApi extends Mock implements OAuthApi {}
 
+class MockEmailApi extends Mock implements EmailApi {}
+
 class MockFlutterReachFivePlatform extends Mock
     with PlatformInterfaceMockMixin
     implements FlutterReachFivePlatform {}
@@ -30,6 +32,7 @@ void main() {
     late FlutterReachFivePlatform flutterReachFivePlatform;
     late MockReackFiveIdentityRepo mockReachFiveIdentityRepo;
     late MockOAuthApi mockOAuthApi;
+    late MockEmailApi mockEmailApi;
 
     late ReachFive reachFive;
 
@@ -39,8 +42,10 @@ void main() {
 
       mockReachFiveIdentityRepo = MockReackFiveIdentityRepo();
       mockOAuthApi = MockOAuthApi();
+      mockEmailApi = MockEmailApi();
 
       when(mockReachFiveIdentityRepo.getOAuthApi).thenReturn(mockOAuthApi);
+      when(mockReachFiveIdentityRepo.getEmailApi).thenReturn(mockEmailApi);
 
       const sdkConfig = SdkConfig(
         domain: 'domain',
@@ -601,6 +606,39 @@ void main() {
 
         verify(
           () => mockOAuthApi.revokeToken(revokeTokenRequest: request),
+        ).called(1);
+      });
+    });
+
+    group('send email verification', () {
+      test('launch sendEmailVerification api call ', () async {
+        const authToken = AuthToken(
+          accessToken: 'accessToken',
+          refreshToken: 'refreshToken',
+          tokenType: 'Bearer',
+        );
+
+        when(
+          () => mockEmailApi.sendEmailVerification(
+            authorization: any(named: 'authorization'),
+            sendEmailVerificationRequest:
+                any(named: 'sendEmailVerificationRequest'),
+          ),
+        ).thenAnswer(
+          (_) async {
+            return Response(requestOptions: RequestOptions(path: 'path'));
+          },
+        );
+
+        await reachFive.sendEmailVerification(
+          authorization: authToken.toString(),
+        );
+
+        verify(
+          () => mockEmailApi.sendEmailVerification(
+            authorization: authToken.toString(),
+            sendEmailVerificationRequest: SendEmailVerificationRequest(),
+          ),
         ).called(1);
       });
     });
