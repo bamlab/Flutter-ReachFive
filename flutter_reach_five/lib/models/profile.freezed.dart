@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'profile.dart';
 
@@ -580,6 +580,7 @@ class _$_Profile implements _Profile {
   List<String>? get authTypes {
     final value = _authTypes;
     if (value == null) return null;
+    if (_authTypes is EqualUnmodifiableListView) return _authTypes;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -624,6 +625,7 @@ class _$_Profile implements _Profile {
   List<ProfileAddress>? get addresses {
     final value = _addresses;
     if (value == null) return null;
+    if (_addresses is EqualUnmodifiableListView) return _addresses;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -646,6 +648,7 @@ class _$_Profile implements _Profile {
   Map<String, Object?>? get customFields {
     final value = _customFields;
     if (value == null) return null;
+    if (_customFields is EqualUnmodifiableMapView) return _customFields;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(value);
   }
@@ -660,6 +663,7 @@ class _$_Profile implements _Profile {
   Map<String, Consent>? get consents {
     final value = _consents;
     if (value == null) return null;
+    if (_consents is EqualUnmodifiableMapView) return _consents;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(value);
   }
