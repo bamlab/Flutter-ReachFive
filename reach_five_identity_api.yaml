@@ -284,6 +284,56 @@ paths:
                   "client_secret": "dYEa3...3z2m2",
                   "token": "XpcgV...5sSY5"
             }'
+  /identity/v1/send-email-verification:
+    post:
+      security:
+        - OAuth2:
+            - "none"
+      summary: Request verification of the email address
+      tags:
+        - Email
+      description: |
+        Request the verification of the email address of a profile.
+        If there is an email address configured in the profile that was not already verified, sends an email to verify it.
+
+      operationId: sendEmailVerification
+      parameters:
+        - $ref: "#/components/parameters/Authorization"
+        - $ref: "#/components/parameters/trueClientIp"
+        - $ref: "#/components/parameters/trueClientIpKey"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                redirect_url:
+                  description: The URL sent in the verification email to which the profile is redirected. This URL must be whitelisted in the `Allowed Callback URLs` field of your ReachFive client settings.
+                  type: string
+                return_to_after_email_confirmation:
+                  description: Returned in the `redirect_url` as a query parameter, this parameter is used as the post-email confirmation URL. It must be a valid URL.
+                  type: string
+      responses:
+        "200":
+          description: User receives an email to verify their email address.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  verification_email_sent:
+                    type: boolean
+                    description: Whether the email was sent (`false` if the email address was already verified)
+                example: { "verification_email_sent": true }
+      x-codeSamples:
+        - lang: "cURL"
+          source: |
+            curl --request POST \
+              --url https://YOUR_DOMAIN/identity/v1/send-email-verification \
+              --header 'Authorization: Bearer eyJ0eX...ll4Q2NT'
+              --data '{
+                "redirect_url": "https://example-email-verification.com"
+            }'
 
 components:
   responses:
@@ -331,3 +381,25 @@ components:
         type: string
       required: false
       description: Bearer `{token}` for a valid OAuth token.
+    trueClientIp:
+      name: True-Client-IP
+      in: header
+      schema:
+        type: string
+      description: |
+        An optional header field; IP to protect requests from the backend.
+
+        **Note**: For more details, see [Identity Fraud Protection](https://developer.reachfive.com/docs/ifp.html#enable-true-client-ip-key).
+
+      example: "224.136.62.167"
+    trueClientIpKey:
+      name: True-Client-IP-Key
+      in: header
+      schema:
+        type: string
+      description: |
+        An optional header field; the secret that must match the True-Client-IP-Key generated in the ReachFive console.
+
+        **Note**: For more details, see [Identity Fraud Protection](https://developer.reachfive.com/docs/ifp.html#enable-true-client-ip-key).
+
+      example: "Isdaf03#@Rasdfj!j3jkl"
