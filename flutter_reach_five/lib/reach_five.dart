@@ -50,6 +50,12 @@ class ReachFive {
   /// {@endtemplate}
   OAuthApi get oAuthApi => identityRepo.getOAuthApi();
 
+  /// {@template flutter_reach_five.reachFive.emailApi}
+  /// [EmailApi] instance from [identityRepo] to be given in every
+  /// reachFive api methods that needs it
+  /// {@endtemplate}
+  EmailApi get emailApi => identityRepo.getEmailApi();
+
   /// {@template flutter_reach_five.reachFive.signup}
   /// Create and authenticate a new user with the specified data.
   /// {@endtemplate}
@@ -167,6 +173,41 @@ class ReachFive {
     await _platform.logout(
       reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
     );
+  }
+
+  /// {@template flutter_reach_five.reachFive.sendEmailVerification}
+  /// Request the verification of the email address of a profile. If there is an email address configured in the profile that was not already verified, sends an email to verify it.
+  ///
+  /// Returns a [bool] that indicates if the email was sent (`false` if the email was already verified).
+  ///
+  /// Parameters:
+  /// * [authorization] - Bearer `{token}` for a valid OAuth token.
+  /// * [trueClientIP] - An optional header field; IP to protect requests from the backend.  **Note**: For more details, see [Identity Fraud Protection](https://developer.reachfive.com/docs/ifp.html#enable-true-client-ip-key).
+  /// * [trueClientIPKey] - An optional header field; the secret that must match the True-Client-IP-Key generated in the ReachFive console.  **Note**: For more details, see [Identity Fraud Protection](https://developer.reachfive.com/docs/ifp.html#enable-true-client-ip-key).
+  /// * [redirectUrl] - The URL sent in the verification email to which the profile is redirected. This URL must be whitelisted in the `Allowed Callback URLs` field of your ReachFive client settings.
+  /// * [returnToAfterEmailConfirmation] - Returned in the `redirect_url` as a query parameter, this parameter is used as the post-email confirmation URL. It must be a valid URL.
+  ///
+  /// {@endtemplate}
+  Future<bool> sendEmailVerification({
+    required String authorization,
+    String? trueClientIP,
+    String? trueClientIPKey,
+    String? redirectUrl,
+    String? returnToAfterEmailConfirmation,
+  }) async {
+    final sendEmailVerificationRequest = SendEmailVerificationRequest(
+      redirectUrl: redirectUrl,
+      returnToAfterEmailConfirmation: returnToAfterEmailConfirmation,
+    );
+
+    final response = await emailApi.sendEmailVerification(
+      authorization: authorization,
+      trueClientIP: trueClientIP,
+      trueClientIPKey: trueClientIPKey,
+      sendEmailVerificationRequest: sendEmailVerificationRequest,
+    );
+
+    return response.data?.verificationEmailSent ?? false;
   }
 
   /// {@template flutter_reach_five.reachFive.getProfile}

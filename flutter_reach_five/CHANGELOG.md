@@ -1,3 +1,7 @@
+# 0.5.0
+
+- **FEAT**: Add a method to handle user email verification
+
 # 0.4.1
 
 - **FEAT**: Add a custom exception thrown when the refresh token is not valid anymore

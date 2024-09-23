@@ -2,6 +2,7 @@ include: all_lint_rules.yaml
 analyzer:
   exclude:
     - "**/*.g.dart"
+    - "**/*.freezed.dart"
   language:
     strict-casts: true
     strict-raw-types: true
