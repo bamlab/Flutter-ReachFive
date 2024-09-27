@@ -1,3 +1,7 @@
+# 0.6.0
+
+- **FEAT**: In the API of sendEmailVerification, instead of taking `authorization: 'Bearer $accessToken'` as a parameter, it now takes `accessToken: accessToken` to formats the header internally.
+
 # 0.5.0
 
 - **FEAT**: Add a method to handle user email verification
