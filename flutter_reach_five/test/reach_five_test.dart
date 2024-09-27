@@ -631,12 +631,12 @@ void main() {
         );
 
         await reachFive.sendEmailVerification(
-          authorization: authToken.toString(),
+          accessToken: authToken.accessToken,
         );
 
         verify(
           () => mockEmailApi.sendEmailVerification(
-            authorization: authToken.toString(),
+            authorization: 'Bearer ${authToken.accessToken}',
             sendEmailVerificationRequest: SendEmailVerificationRequest(),
           ),
         ).called(1);
