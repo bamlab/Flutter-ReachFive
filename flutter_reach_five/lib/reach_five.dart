@@ -181,7 +181,7 @@ class ReachFive {
   /// Returns a [bool] that indicates if the email was sent (`false` if the email was already verified).
   ///
   /// Parameters:
-  /// * [authorization] - Bearer `{token}` for a valid OAuth token.
+  /// * [accessToken] - Considering `authToken` a valid OAuth token, accessToken is `authToken.accessToken`.
   /// * [trueClientIP] - An optional header field; IP to protect requests from the backend.  **Note**: For more details, see [Identity Fraud Protection](https://developer.reachfive.com/docs/ifp.html#enable-true-client-ip-key).
   /// * [trueClientIPKey] - An optional header field; the secret that must match the True-Client-IP-Key generated in the ReachFive console.  **Note**: For more details, see [Identity Fraud Protection](https://developer.reachfive.com/docs/ifp.html#enable-true-client-ip-key).
   /// * [redirectUrl] - The URL sent in the verification email to which the profile is redirected. This URL must be whitelisted in the `Allowed Callback URLs` field of your ReachFive client settings.
@@ -189,7 +189,7 @@ class ReachFive {
   ///
   /// {@endtemplate}
   Future<bool> sendEmailVerification({
-    required String authorization,
+    required String accessToken,
     String? trueClientIP,
     String? trueClientIPKey,
     String? redirectUrl,
@@ -199,6 +199,8 @@ class ReachFive {
       redirectUrl: redirectUrl,
       returnToAfterEmailConfirmation: returnToAfterEmailConfirmation,
     );
+
+    final authorization = 'Bearer $accessToken';
 
     final response = await emailApi.sendEmailVerification(
       authorization: authorization,
