@@ -1,3 +1,7 @@
+# 0.7.0
+
+- **BREAKING**: On android: add support for AGP 8.3.0. Breaks compatibility with AGP 7.2.2 and below.
+
 # 0.6.0
 
 - **FEAT**: In the API of sendEmailVerification, instead of taking `authorization: 'Bearer $accessToken'` as a parameter, it now takes `accessToken: accessToken` to formats the header internally.

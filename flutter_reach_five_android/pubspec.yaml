@@ -1,6 +1,6 @@
 name: flutter_reach_five_android
 description: Android implementation of the flutter_reach_five plugin
-version: 0.4.1
+version: 0.5.0
 homepage: https://github.com/bamlab/Flutter-ReachFive
 
 environment:
