@@ -53,6 +53,12 @@ buildTypes {
     }
 ```
 
+- to use the sdk in release mode, you also need to add these lines in your `android/gradle.properties` :
+
+```gradle
+android.enableR8.fullMode=false
+```
+
 ---
 
 ## iOS
