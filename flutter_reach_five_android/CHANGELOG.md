@@ -1,3 +1,7 @@
+# 0.5.0
+
+- **BREAKING**: On android: add support for AGP 8.3.0. Breaks compatibility with AGP 7.2.2 and below.
+
 # 0.4.1
 
 - **FEAT**: Add a custom exception thrown when the refresh token is not valid anymore
