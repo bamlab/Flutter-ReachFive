@@ -1,3 +1,7 @@
+# 0.7.1
+
+- **Fix**: Update android dependencie.
+
 # 0.7.0
 
 - **BREAKING**: On android: add support for AGP 8.3.0. Breaks compatibility with AGP 7.2.2 and below.
