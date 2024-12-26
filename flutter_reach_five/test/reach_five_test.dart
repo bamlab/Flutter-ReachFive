@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_reach_five/flutter_reach_five.dart';
 import 'package:flutter_reach_five/helpers/auth_token.dart';
 import 'package:flutter_reach_five/helpers/profile_converter.dart';
@@ -632,12 +633,14 @@ void main() {
 
         await reachFive.sendEmailVerification(
           accessToken: authToken.accessToken,
+          customLocale: const Locale('en', 'US'),
         );
 
         verify(
           () => mockEmailApi.sendEmailVerification(
             authorization: 'Bearer ${authToken.accessToken}',
             sendEmailVerificationRequest: SendEmailVerificationRequest(),
+            customLocale: 'en-US',
           ),
         ).called(1);
       });
