@@ -24,10 +24,11 @@ class EmailApi {
   /// * [authorization] - Bearer `{token}` for a valid OAuth token.
   /// * [trueClientIP] - An optional header field; IP to protect requests from the backend.  **Note**: For more details, see [Identity Fraud Protection](https://developer.reachfive.com/docs/ifp.html#enable-true-client-ip-key).
   /// * [trueClientIPKey] - An optional header field; the secret that must match the True-Client-IP-Key generated in the ReachFive console.  **Note**: For more details, see [Identity Fraud Protection](https://developer.reachfive.com/docs/ifp.html#enable-true-client-ip-key).
+  /// * [customLocale] - For any endpoint in this specification that generates an email or SMS, you can pass the Custom-Locale attribute as a header parameter.
   /// * [sendEmailVerificationRequest]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
-  /// * [extra] - Can be used to add flags to the request
+  /// * [extras] - Can be used to add flags to the request
   /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
@@ -38,6 +39,7 @@ class EmailApi {
     required String authorization,
     String? trueClientIP,
     String? trueClientIPKey,
+    String? customLocale,
     SendEmailVerificationRequest? sendEmailVerificationRequest,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -53,6 +55,7 @@ class EmailApi {
         r'Authorization': authorization,
         if (trueClientIP != null) r'True-Client-IP': trueClientIP,
         if (trueClientIPKey != null) r'True-Client-IP-Key': trueClientIPKey,
+        if (customLocale != null) r'Custom-Locale': customLocale,
         ...?headers,
       },
       extra: <String, dynamic>{

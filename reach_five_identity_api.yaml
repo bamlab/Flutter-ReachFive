@@ -301,6 +301,7 @@ paths:
         - $ref: "#/components/parameters/Authorization"
         - $ref: "#/components/parameters/trueClientIp"
         - $ref: "#/components/parameters/trueClientIpKey"
+        - $ref: "#/components/parameters/Custom-Locale"
       requestBody:
         content:
           application/json:
@@ -381,6 +382,17 @@ components:
         type: string
       required: false
       description: Bearer `{token}` for a valid OAuth token.
+    Custom-Locale:
+      name: Custom-Locale
+      in: header
+      schema:
+        type: string
+      required: false
+      description: |
+        For any endpoint in this specification that generates an
+        email or SMS, you can pass the Custom-Locale attribute as a header
+        parameter.
+      example: fr-FR
     trueClientIp:
       name: True-Client-IP
       in: header
