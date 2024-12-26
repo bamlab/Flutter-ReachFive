@@ -1,3 +1,18 @@
+## 0.7.2
+
+ - **REFACTOR**(reach_five): cleaner API.
+ - **REFACTOR**(android): clean build file structure.
+ - **FIX**(example): R8 after APG 8+.
+ - **FIX**: fix iOS version for reach five sdk.
+ - **FIX**: add missing brackets.
+ - **FEAT**: add a custom locale to the send verification email method.
+ - **FEAT**(public reachfive): sendEmailVerif cleaner API.
+ - **FEAT**(reach5): expose sendEmailVerification.
+ - **FEAT**(reach_five): add emailApi.
+ - **FEAT**(package): parse the unauthorize refresh token exception.
+ - **FEAT**(package): add a proper error for unauthorized refresh token.
+ - **FEAT**: add UpdateSamePassword exception to interface.
+
 # 0.7.1
 
 - **Fix**: Update android dependencie.

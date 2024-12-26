@@ -1,3 +1,9 @@
+## 0.5.1
+
+ - **REFACTOR**(reach_five_repo): rename in reach_five_identity_repo.
+ - **FIX**: correct version for identity repo.
+ - **FEAT**: add custom local for send email endpoint.
+
 # 0.5.0
 
 - **FEAT**: Add a method to handle user email verification
