@@ -1,3 +1,22 @@
+## 0.4.2
+
+ - **REFACTOR**(platform interface): rename error exception classes.
+ - **REFACTOR**(platform): use ReachFiveKeyInterface.
+ - **REFACTOR**(pigeon): add ReachFiveKeyInterface.
+ - **REFACTOR**(platform interface test): extract ReachFiveConfigInterface.
+ - **FIX**(platform errors): use correct docs links.
+ - **FIX**(platform interface): fix typo in readme.
+ - **FIX**(errors): export new errors from reach five main package.
+ - **FIX**(changelog): use correct versions.
+ - **FIX**(pigeon): format after file generation.
+ - **FIX**(profilesignuprequest): make email optional.
+ - **FEAT**(package): add a proper error for unauthorized refresh token.
+ - **FEAT**: add UpdateSamePassword exception to interface.
+ - **FEAT**(platform_interface): add refreshAccessToken method.
+ - **FEAT**(platform interface): add signup method.
+ - **DOCS**(all_packages): link differents documentations.
+ - **DOCS**(every packages): complete readme files.
+
 # 0.4.1
 
 - **FEAT**: Add a custom exception thrown when the refresh token is not valid anymore

@@ -42,9 +42,9 @@ tags:
       > **The Step Up Flow**
       > - [startPhoneNumberRegistration](#operation/startPhoneNumberRegistration)
       > - [verifyPhoneNumberRegistration](#operation/verifyPhoneNumberRegistration)
-      
+
       **OR**
-      
+
       > - [startEmailRegistration](#operation/startEmailRegistration)
       > - [verifyEmailRegistration](#operation/verifyEmailRegistration)
 
@@ -205,7 +205,7 @@ info:
 
     # Security Schemes
     <SecurityDefinitions />
-  version: 'latest'
+  version: "latest"
   title: ReachFive Identity API
   termsOfService: https://www.reachfive.com/terms-policies
   contact:
@@ -237,7 +237,7 @@ paths:
         - **access_token**: When an access token is revoked, only the tokens associated with the same specific grant are revoked.
       operationId: revokeToken
       requestBody:
-        description: ''
+        description: ""
         required: true
         content:
           application/json:
@@ -271,10 +271,10 @@ paths:
                 - client_secret
                 - token
       responses:
-        '204':
+        "204":
           description: No Content.
       x-codeSamples:
-        - lang: 'cURL'
+        - lang: "cURL"
           source: |
             curl --request POST \
               --url https://DOMAIN/oauth/revoke \
@@ -301,6 +301,7 @@ paths:
         - $ref: "#/components/parameters/Authorization"
         - $ref: "#/components/parameters/trueClientIp"
         - $ref: "#/components/parameters/trueClientIpKey"
+        - $ref: "#/components/parameters/Custom-Locale"
       requestBody:
         content:
           application/json:
@@ -355,10 +356,10 @@ components:
       in: header
       schema:
         type: string
-      description: | 
+      description: |
         Bearer `{access_token}` for a valid OAuth token. *(3)*
-        
-        > **Note**: The `access_token` is not required if you are passing the `tkn` as part of the request body or are using an active SSO session by passing the session cookie. 
+
+        > **Note**: The `access_token` is not required if you are passing the `tkn` as part of the request body or are using an active SSO session by passing the session cookie.
       example: 1pz032..32Ld0a
     fields:
       name: fields
@@ -372,7 +373,7 @@ components:
         items:
           type: string
       explode: false
-      example: [name,email,gender,emails.unverified] # https://github.com/Redocly/redoc/issues/1010
+      example: [name, email, gender, emails.unverified] # https://github.com/Redocly/redoc/issues/1010
       allowReserved: true # https://github.com/Redocly/redoc/issues/1010
     Authorization_optional:
       name: Authorization
@@ -381,6 +382,17 @@ components:
         type: string
       required: false
       description: Bearer `{token}` for a valid OAuth token.
+    Custom-Locale:
+      name: Custom-Locale
+      in: header
+      schema:
+        type: string
+      required: false
+      description: |
+        For any endpoint in this specification that generates an
+        email or SMS, you can pass the Custom-Locale attribute as a header
+        parameter.
+      example: fr-FR
     trueClientIp:
       name: True-Client-IP
       in: header

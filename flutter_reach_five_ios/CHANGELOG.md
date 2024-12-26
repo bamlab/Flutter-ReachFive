@@ -1,3 +1,24 @@
+## 0.4.2
+
+ - **REFACTOR**(platform interface): rename error exception classes.
+ - **REFACTOR**(ios flutterreachfiveplugin): remove redundant return.
+ - **REFACTOR**(ios converters): remove redondant return.
+ - **REFACTOR**(ios converters): extract addressTypeFromInterface.
+ - **REFACTOR**(ios): use ReachFiveKeyInterface.
+ - **REFACTOR**(pigeon): add ReachFiveKeyInterface.
+ - **FIX**(ios converters): use liteOnly variable.
+ - **FIX**(changelog): use correct versions.
+ - **FIX**(profilesignuprequest): make email optional.
+ - **FEAT**(ios): handle unauthorize refresh token exception.
+ - **FEAT**(package): add a proper error for unauthorized refresh token.
+ - **FEAT**: add error handling for updateSamePassword error in iOS.
+ - **FEAT**: add UpdateSamePassword exception to interface.
+ - **FEAT**(ios): add refreshAccessToken method.
+ - **FEAT**(ios): add signup method.
+ - **FEAT**(ios): initialize reachFive.
+ - **DOCS**(all_packages): link differents documentations.
+ - **DOCS**(every packages): complete readme files.
+
 # 0.4.1
 
 - **FEAT**: Add a custom exception thrown when the refresh token is not valid anymore

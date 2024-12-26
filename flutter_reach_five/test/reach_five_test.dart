@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_reach_five/flutter_reach_five.dart';
 import 'package:flutter_reach_five/helpers/auth_token.dart';
 import 'package:flutter_reach_five/helpers/profile_converter.dart';
@@ -638,6 +639,40 @@ void main() {
           () => mockEmailApi.sendEmailVerification(
             authorization: 'Bearer ${authToken.accessToken}',
             sendEmailVerificationRequest: SendEmailVerificationRequest(),
+          ),
+        ).called(1);
+      });
+
+      test('format custom locale correctly ', () async {
+        const authToken = AuthToken(
+          accessToken: 'accessToken',
+          refreshToken: 'refreshToken',
+          tokenType: 'Bearer',
+        );
+
+        when(
+          () => mockEmailApi.sendEmailVerification(
+            authorization: any(named: 'authorization'),
+            sendEmailVerificationRequest:
+                any(named: 'sendEmailVerificationRequest'),
+            customLocale: any(named: 'customLocale'),
+          ),
+        ).thenAnswer(
+          (_) async {
+            return Response(requestOptions: RequestOptions(path: 'path'));
+          },
+        );
+
+        await reachFive.sendEmailVerification(
+          accessToken: authToken.accessToken,
+          customLocale: const Locale('en', 'US'),
+        );
+
+        verify(
+          () => mockEmailApi.sendEmailVerification(
+            authorization: 'Bearer ${authToken.accessToken}',
+            sendEmailVerificationRequest: SendEmailVerificationRequest(),
+            customLocale: 'en-US',
           ),
         ).called(1);
       });

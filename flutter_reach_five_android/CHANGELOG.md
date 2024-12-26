@@ -1,3 +1,28 @@
+## 0.5.1
+
+ - **REFACTOR**(android plugin): improve result type.
+ - **REFACTOR**(platform interface): rename error exception classes.
+ - **REFACTOR**(android converters): extract addressTypeFromInterface.
+ - **REFACTOR**(android): use ReachFiveKeyInterface.
+ - **REFACTOR**(pigeon): add ReachFiveKeyInterface.
+ - **REFACTOR**(android): create and use getReachFiveInstance function.
+ - **FIX**(android): plugin works with AGP 8.3.0.
+ - **FIX**(android): use the correct result class after pigeon update.
+ - **FIX**(android): bump android sdk version that secure intent redirect.
+ - **FIX**(Android parseError): use code instead of message.
+ - **FIX**(android plugin): load social providers after initialization.
+ - **FIX**(android): remove very_good_analysis dev dep.
+ - **FIX**(changelog): use correct versions.
+ - **FIX**(profilesignuprequest): make email optional.
+ - **FEAT**(android): handle unauthorize refresh token exception.
+ - **FEAT**(package): add a proper error for unauthorized refresh token.
+ - **FEAT**: add error handling for updateSamePassword error in android.
+ - **FEAT**: add UpdateSamePassword exception to interface.
+ - **FEAT**(android): add signup method.
+ - **FEAT**(android): initialize reachFive.
+ - **DOCS**(all_packages): link differents documentations.
+ - **DOCS**(every packages): complete readme files.
+
 # 0.5.0
 
 - **BREAKING**: On android: add support for AGP 8.3.0. Breaks compatibility with AGP 7.2.2 and below.

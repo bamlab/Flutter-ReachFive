@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **sendEmailVerification**
-> SendEmailVerification200Response sendEmailVerification(authorization, trueClientIP, trueClientIPKey, sendEmailVerificationRequest)
+> SendEmailVerification200Response sendEmailVerification(authorization, trueClientIP, trueClientIPKey, customLocale, sendEmailVerificationRequest)
 
 Request verification of the email address
 
@@ -27,10 +27,11 @@ final api = ReachFiveIdentityRepo().getEmailApi();
 final String authorization = authorization_example; // String | Bearer `{token}` for a valid OAuth token.
 final String trueClientIP = 224.136.62.167; // String | An optional header field; IP to protect requests from the backend.  **Note**: For more details, see [Identity Fraud Protection](https://developer.reachfive.com/docs/ifp.html#enable-true-client-ip-key). 
 final String trueClientIPKey = Isdaf03#@Rasdfj!j3jkl; // String | An optional header field; the secret that must match the True-Client-IP-Key generated in the ReachFive console.  **Note**: For more details, see [Identity Fraud Protection](https://developer.reachfive.com/docs/ifp.html#enable-true-client-ip-key). 
+final String customLocale = fr-FR; // String | For any endpoint in this specification that generates an email or SMS, you can pass the Custom-Locale attribute as a header parameter. 
 final SendEmailVerificationRequest sendEmailVerificationRequest = ; // SendEmailVerificationRequest | 
 
 try {
-    final response = api.sendEmailVerification(authorization, trueClientIP, trueClientIPKey, sendEmailVerificationRequest);
+    final response = api.sendEmailVerification(authorization, trueClientIP, trueClientIPKey, customLocale, sendEmailVerificationRequest);
     print(response);
 } catch on DioException (e) {
     print('Exception when calling EmailApi->sendEmailVerification: $e\n');
@@ -44,6 +45,7 @@ Name | Type | Description  | Notes
  **authorization** | **String**| Bearer `{token}` for a valid OAuth token. | 
  **trueClientIP** | **String**| An optional header field; IP to protect requests from the backend.  **Note**: For more details, see [Identity Fraud Protection](https://developer.reachfive.com/docs/ifp.html#enable-true-client-ip-key).  | [optional] 
  **trueClientIPKey** | **String**| An optional header field; the secret that must match the True-Client-IP-Key generated in the ReachFive console.  **Note**: For more details, see [Identity Fraud Protection](https://developer.reachfive.com/docs/ifp.html#enable-true-client-ip-key).  | [optional] 
+ **customLocale** | **String**| For any endpoint in this specification that generates an email or SMS, you can pass the Custom-Locale attribute as a header parameter.  | [optional] 
  **sendEmailVerificationRequest** | [**SendEmailVerificationRequest**](SendEmailVerificationRequest.md)|  | [optional] 
 
 ### Return type

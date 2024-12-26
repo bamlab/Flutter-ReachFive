@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platform_interface.dart';
 import 'package:reach_five_identity_repo/reach_five_identity_repo.dart';
 
@@ -186,6 +187,7 @@ class ReachFive {
   /// * [trueClientIPKey] - An optional header field; the secret that must match the True-Client-IP-Key generated in the ReachFive console.  **Note**: For more details, see [Identity Fraud Protection](https://developer.reachfive.com/docs/ifp.html#enable-true-client-ip-key).
   /// * [redirectUrl] - The URL sent in the verification email to which the profile is redirected. This URL must be whitelisted in the `Allowed Callback URLs` field of your ReachFive client settings.
   /// * [returnToAfterEmailConfirmation] - Returned in the `redirect_url` as a query parameter, this parameter is used as the post-email confirmation URL. It must be a valid URL.
+  /// * [customLocale] - For any endpoint in this specification that generates an email or SMS, you can pass the Custom-Locale attribute as a header parameter.
   ///
   /// {@endtemplate}
   Future<bool> sendEmailVerification({
@@ -194,6 +196,7 @@ class ReachFive {
     String? trueClientIPKey,
     String? redirectUrl,
     String? returnToAfterEmailConfirmation,
+    Locale? customLocale,
   }) async {
     final sendEmailVerificationRequest = SendEmailVerificationRequest(
       redirectUrl: redirectUrl,
@@ -207,6 +210,7 @@ class ReachFive {
       trueClientIP: trueClientIP,
       trueClientIPKey: trueClientIPKey,
       sendEmailVerificationRequest: sendEmailVerificationRequest,
+      customLocale: customLocale?.toLanguageTag(),
     );
 
     return response.data?.verificationEmailSent ?? false;
