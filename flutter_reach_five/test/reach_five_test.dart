@@ -633,6 +633,38 @@ void main() {
 
         await reachFive.sendEmailVerification(
           accessToken: authToken.accessToken,
+        );
+
+        verify(
+          () => mockEmailApi.sendEmailVerification(
+            authorization: 'Bearer ${authToken.accessToken}',
+            sendEmailVerificationRequest: SendEmailVerificationRequest(),
+          ),
+        ).called(1);
+      });
+
+      test('format custom locale correctly ', () async {
+        const authToken = AuthToken(
+          accessToken: 'accessToken',
+          refreshToken: 'refreshToken',
+          tokenType: 'Bearer',
+        );
+
+        when(
+          () => mockEmailApi.sendEmailVerification(
+            authorization: any(named: 'authorization'),
+            sendEmailVerificationRequest:
+                any(named: 'sendEmailVerificationRequest'),
+            customLocale: any(named: 'customLocale'),
+          ),
+        ).thenAnswer(
+          (_) async {
+            return Response(requestOptions: RequestOptions(path: 'path'));
+          },
+        );
+
+        await reachFive.sendEmailVerification(
+          accessToken: authToken.accessToken,
           customLocale: const Locale('en', 'US'),
         );
 
