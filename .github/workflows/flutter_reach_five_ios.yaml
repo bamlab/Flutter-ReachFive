@@ -3,29 +3,29 @@ name: Test Flutter Reach Five iOS
 on:
   push:
     paths:
-      - "flutter_reach_five_ios/**"
-      - ".github/workflows/flutter_reach_five_ios.yaml"
+      - 'flutter_reach_five_ios/**'
+      - '.github/workflows/flutter_reach_five_ios.yaml'
     branches:
       - main
   pull_request:
     paths:
-      - "flutter_reach_five_ios/**"
-      - ".github/workflows/flutter_reach_five_ios.yaml"
+      - 'flutter_reach_five_ios/**'
+      - '.github/workflows/flutter_reach_five_ios.yaml'
     branches:
       - main
 
 jobs:
   test:
     strategy:
-      matrix: {dir: ["flutter_reach_five_ios"]}
-    runs-on: ubuntu-20.04
+      matrix: { dir: ['flutter_reach_five_ios'] }
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ${{ matrix.dir }}
 
     steps:
       - uses: actions/checkout@v3.3.0
-        
+
       - id: dotenv
         uses: falti/dotenv-action@v1.0.2
         with:
@@ -34,7 +34,7 @@ jobs:
       - uses: subosito/flutter-action@v2.8.0
         with:
           flutter-version: ${{ steps.dotenv.outputs.flutter_version }}
-          channel: "stable"
+          channel: 'stable'
           cache: true
           cache-key: ${{ runner.os }}-flutter-${{ steps.dotenv.outputs.flutter_version }}
           cache-path: ${{ runner.tool_cache }}/flutter-${{ steps.dotenv.outputs.flutter_version }}
@@ -60,5 +60,5 @@ jobs:
       - name: Check Code Coverage
         uses: VeryGoodOpenSource/very_good_coverage@v2.1.0
         with:
-          path: "./${{ matrix.dir }}/coverage/lcov.info"
+          path: './${{ matrix.dir }}/coverage/lcov.info'
           min_coverage: 100
