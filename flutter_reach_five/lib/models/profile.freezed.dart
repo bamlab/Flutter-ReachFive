@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,304 +9,198 @@ part of 'profile.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$Profile {
   /// The user id
-  String? get uid => throw _privateConstructorUsedError;
+  String? get uid;
 
   /// The user given name
-  String? get givenName => throw _privateConstructorUsedError;
+  String? get givenName;
 
   /// The user middle name
-  String? get middleName => throw _privateConstructorUsedError;
+  String? get middleName;
 
   /// The user family name
-  String? get familyName => throw _privateConstructorUsedError;
+  String? get familyName;
 
   /// The user name
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
 
   /// The user nickname
-  String? get nickname => throw _privateConstructorUsedError;
+  String? get nickname;
 
   /// The user birthdate
-  String? get birthdate => throw _privateConstructorUsedError;
+  String? get birthdate;
 
   /// The user profile url
-  String? get profileURL => throw _privateConstructorUsedError;
+  String? get profileURL;
 
   /// The user picture
-  String? get picture => throw _privateConstructorUsedError;
+  String? get picture;
 
   /// The user external id
-  String? get externalId => throw _privateConstructorUsedError;
+  String? get externalId;
 
   /// The user list of authentication types
-  List<String>? get authTypes => throw _privateConstructorUsedError;
+  List<String>? get authTypes;
 
   /// The user [LoginSummary]
-  LoginSummary? get loginSummary => throw _privateConstructorUsedError;
+  LoginSummary? get loginSummary;
 
   /// The user username
-  String? get username => throw _privateConstructorUsedError;
+  String? get username;
 
   /// The user gender
-  String? get gender => throw _privateConstructorUsedError;
+  String? get gender;
 
   /// The user email
-  String? get email => throw _privateConstructorUsedError;
+  String? get email;
 
   /// Used to check if an user [email] is verified or not
-  bool? get emailVerified => throw _privateConstructorUsedError;
+  bool? get emailVerified;
 
   /// The user list of verified/unverified emails
-  Emails? get emails => throw _privateConstructorUsedError;
+  Emails? get emails;
 
   /// The user phone number
-  String? get phoneNumber => throw _privateConstructorUsedError;
+  String? get phoneNumber;
 
   /// Used to check if an user [phoneNumber] is verified or not
-  bool? get phoneNumberVerified => throw _privateConstructorUsedError;
+  bool? get phoneNumberVerified;
 
   /// The user list of addresses
-  List<ProfileAddress>? get addresses => throw _privateConstructorUsedError;
+  List<ProfileAddress>? get addresses;
 
   /// The user locale
-  String? get locale => throw _privateConstructorUsedError;
+  String? get locale;
 
   /// The user bio
-  String? get bio => throw _privateConstructorUsedError;
+  String? get bio;
 
   /// The custom fields linked to your user
   /// It must match the ones you have created in your reachFive console
-  Map<String, Object?>? get customFields => throw _privateConstructorUsedError;
+  Map<String, Object?>? get customFields;
 
   /// The user consents
 // TODO: find the consents we can put in here
-  Map<String, Consent>? get consents => throw _privateConstructorUsedError;
+  Map<String, Consent>? get consents;
 
   /// The time the user's profile was created
-  String? get createdAt => throw _privateConstructorUsedError;
+  String? get createdAt;
 
   /// The last time the user's profile was updated
-  String? get updatedAt => throw _privateConstructorUsedError;
+  String? get updatedAt;
 
   /// Used to know if the user profile is lite or not
-  bool? get liteOnly => throw _privateConstructorUsedError;
+  bool? get liteOnly;
 
   /// The user company
-  String? get company => throw _privateConstructorUsedError;
+  String? get company;
 
-  @JsonKey(ignore: true)
-  $ProfileCopyWith<Profile> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ProfileCopyWith<$Res> {
-  factory $ProfileCopyWith(Profile value, $Res Function(Profile) then) =
-      _$ProfileCopyWithImpl<$Res, Profile>;
-  @useResult
-  $Res call(
-      {String? uid,
-      String? givenName,
-      String? middleName,
-      String? familyName,
-      String? name,
-      String? nickname,
-      String? birthdate,
-      String? profileURL,
-      String? picture,
-      String? externalId,
-      List<String>? authTypes,
-      LoginSummary? loginSummary,
-      String? username,
-      String? gender,
-      String? email,
-      bool? emailVerified,
-      Emails? emails,
-      String? phoneNumber,
-      bool? phoneNumberVerified,
-      List<ProfileAddress>? addresses,
-      String? locale,
-      String? bio,
-      Map<String, Object?>? customFields,
-      Map<String, Consent>? consents,
-      String? createdAt,
-      String? updatedAt,
-      bool? liteOnly,
-      String? company});
-}
-
-/// @nodoc
-class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
-    implements $ProfileCopyWith<$Res> {
-  _$ProfileCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
+  /// Create a copy of Profile
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
+  $ProfileCopyWith<Profile> get copyWith =>
+      _$ProfileCopyWithImpl<Profile>(this as Profile, _$identity);
+
   @override
-  $Res call({
-    Object? uid = freezed,
-    Object? givenName = freezed,
-    Object? middleName = freezed,
-    Object? familyName = freezed,
-    Object? name = freezed,
-    Object? nickname = freezed,
-    Object? birthdate = freezed,
-    Object? profileURL = freezed,
-    Object? picture = freezed,
-    Object? externalId = freezed,
-    Object? authTypes = freezed,
-    Object? loginSummary = freezed,
-    Object? username = freezed,
-    Object? gender = freezed,
-    Object? email = freezed,
-    Object? emailVerified = freezed,
-    Object? emails = freezed,
-    Object? phoneNumber = freezed,
-    Object? phoneNumberVerified = freezed,
-    Object? addresses = freezed,
-    Object? locale = freezed,
-    Object? bio = freezed,
-    Object? customFields = freezed,
-    Object? consents = freezed,
-    Object? createdAt = freezed,
-    Object? updatedAt = freezed,
-    Object? liteOnly = freezed,
-    Object? company = freezed,
-  }) {
-    return _then(_value.copyWith(
-      uid: freezed == uid
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      givenName: freezed == givenName
-          ? _value.givenName
-          : givenName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      middleName: freezed == middleName
-          ? _value.middleName
-          : middleName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      familyName: freezed == familyName
-          ? _value.familyName
-          : familyName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      nickname: freezed == nickname
-          ? _value.nickname
-          : nickname // ignore: cast_nullable_to_non_nullable
-              as String?,
-      birthdate: freezed == birthdate
-          ? _value.birthdate
-          : birthdate // ignore: cast_nullable_to_non_nullable
-              as String?,
-      profileURL: freezed == profileURL
-          ? _value.profileURL
-          : profileURL // ignore: cast_nullable_to_non_nullable
-              as String?,
-      picture: freezed == picture
-          ? _value.picture
-          : picture // ignore: cast_nullable_to_non_nullable
-              as String?,
-      externalId: freezed == externalId
-          ? _value.externalId
-          : externalId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      authTypes: freezed == authTypes
-          ? _value.authTypes
-          : authTypes // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      loginSummary: freezed == loginSummary
-          ? _value.loginSummary
-          : loginSummary // ignore: cast_nullable_to_non_nullable
-              as LoginSummary?,
-      username: freezed == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
-              as String?,
-      gender: freezed == gender
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
-              as String?,
-      email: freezed == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String?,
-      emailVerified: freezed == emailVerified
-          ? _value.emailVerified
-          : emailVerified // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      emails: freezed == emails
-          ? _value.emails
-          : emails // ignore: cast_nullable_to_non_nullable
-              as Emails?,
-      phoneNumber: freezed == phoneNumber
-          ? _value.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String?,
-      phoneNumberVerified: freezed == phoneNumberVerified
-          ? _value.phoneNumberVerified
-          : phoneNumberVerified // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      addresses: freezed == addresses
-          ? _value.addresses
-          : addresses // ignore: cast_nullable_to_non_nullable
-              as List<ProfileAddress>?,
-      locale: freezed == locale
-          ? _value.locale
-          : locale // ignore: cast_nullable_to_non_nullable
-              as String?,
-      bio: freezed == bio
-          ? _value.bio
-          : bio // ignore: cast_nullable_to_non_nullable
-              as String?,
-      customFields: freezed == customFields
-          ? _value.customFields
-          : customFields // ignore: cast_nullable_to_non_nullable
-              as Map<String, Object?>?,
-      consents: freezed == consents
-          ? _value.consents
-          : consents // ignore: cast_nullable_to_non_nullable
-              as Map<String, Consent>?,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as String?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String?,
-      liteOnly: freezed == liteOnly
-          ? _value.liteOnly
-          : liteOnly // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      company: freezed == company
-          ? _value.company
-          : company // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Profile &&
+            (identical(other.uid, uid) || other.uid == uid) &&
+            (identical(other.givenName, givenName) ||
+                other.givenName == givenName) &&
+            (identical(other.middleName, middleName) ||
+                other.middleName == middleName) &&
+            (identical(other.familyName, familyName) ||
+                other.familyName == familyName) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.nickname, nickname) ||
+                other.nickname == nickname) &&
+            (identical(other.birthdate, birthdate) ||
+                other.birthdate == birthdate) &&
+            (identical(other.profileURL, profileURL) ||
+                other.profileURL == profileURL) &&
+            (identical(other.picture, picture) || other.picture == picture) &&
+            (identical(other.externalId, externalId) ||
+                other.externalId == externalId) &&
+            const DeepCollectionEquality().equals(other.authTypes, authTypes) &&
+            (identical(other.loginSummary, loginSummary) ||
+                other.loginSummary == loginSummary) &&
+            (identical(other.username, username) ||
+                other.username == username) &&
+            (identical(other.gender, gender) || other.gender == gender) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.emailVerified, emailVerified) ||
+                other.emailVerified == emailVerified) &&
+            (identical(other.emails, emails) || other.emails == emails) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber) &&
+            (identical(other.phoneNumberVerified, phoneNumberVerified) ||
+                other.phoneNumberVerified == phoneNumberVerified) &&
+            const DeepCollectionEquality().equals(other.addresses, addresses) &&
+            (identical(other.locale, locale) || other.locale == locale) &&
+            (identical(other.bio, bio) || other.bio == bio) &&
+            const DeepCollectionEquality()
+                .equals(other.customFields, customFields) &&
+            const DeepCollectionEquality().equals(other.consents, consents) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.liteOnly, liteOnly) ||
+                other.liteOnly == liteOnly) &&
+            (identical(other.company, company) || other.company == company));
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        uid,
+        givenName,
+        middleName,
+        familyName,
+        name,
+        nickname,
+        birthdate,
+        profileURL,
+        picture,
+        externalId,
+        const DeepCollectionEquality().hash(authTypes),
+        loginSummary,
+        username,
+        gender,
+        email,
+        emailVerified,
+        emails,
+        phoneNumber,
+        phoneNumberVerified,
+        const DeepCollectionEquality().hash(addresses),
+        locale,
+        bio,
+        const DeepCollectionEquality().hash(customFields),
+        const DeepCollectionEquality().hash(consents),
+        createdAt,
+        updatedAt,
+        liteOnly,
+        company
+      ]);
+
+  @override
+  String toString() {
+    return 'Profile(uid: $uid, givenName: $givenName, middleName: $middleName, familyName: $familyName, name: $name, nickname: $nickname, birthdate: $birthdate, profileURL: $profileURL, picture: $picture, externalId: $externalId, authTypes: $authTypes, loginSummary: $loginSummary, username: $username, gender: $gender, email: $email, emailVerified: $emailVerified, emails: $emails, phoneNumber: $phoneNumber, phoneNumberVerified: $phoneNumberVerified, addresses: $addresses, locale: $locale, bio: $bio, customFields: $customFields, consents: $consents, createdAt: $createdAt, updatedAt: $updatedAt, liteOnly: $liteOnly, company: $company)';
   }
 }
 
 /// @nodoc
-abstract class _$$_ProfileCopyWith<$Res> implements $ProfileCopyWith<$Res> {
-  factory _$$_ProfileCopyWith(
-          _$_Profile value, $Res Function(_$_Profile) then) =
-      __$$_ProfileCopyWithImpl<$Res>;
-  @override
+abstract mixin class $ProfileCopyWith<$Res> {
+  factory $ProfileCopyWith(Profile value, $Res Function(Profile) _then) =
+      _$ProfileCopyWithImpl;
   @useResult
   $Res call(
       {String? uid,
@@ -340,12 +234,14 @@ abstract class _$$_ProfileCopyWith<$Res> implements $ProfileCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ProfileCopyWithImpl<$Res>
-    extends _$ProfileCopyWithImpl<$Res, _$_Profile>
-    implements _$$_ProfileCopyWith<$Res> {
-  __$$_ProfileCopyWithImpl(_$_Profile _value, $Res Function(_$_Profile) _then)
-      : super(_value, _then);
+class _$ProfileCopyWithImpl<$Res> implements $ProfileCopyWith<$Res> {
+  _$ProfileCopyWithImpl(this._self, this._then);
 
+  final Profile _self;
+  final $Res Function(Profile) _then;
+
+  /// Create a copy of Profile
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -378,127 +274,455 @@ class __$$_ProfileCopyWithImpl<$Res>
     Object? liteOnly = freezed,
     Object? company = freezed,
   }) {
-    return _then(_$_Profile(
+    return _then(_self.copyWith(
       uid: freezed == uid
-          ? _value.uid
+          ? _self.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String?,
       givenName: freezed == givenName
-          ? _value.givenName
+          ? _self.givenName
           : givenName // ignore: cast_nullable_to_non_nullable
               as String?,
       middleName: freezed == middleName
-          ? _value.middleName
+          ? _self.middleName
           : middleName // ignore: cast_nullable_to_non_nullable
               as String?,
       familyName: freezed == familyName
-          ? _value.familyName
+          ? _self.familyName
           : familyName // ignore: cast_nullable_to_non_nullable
               as String?,
       name: freezed == name
-          ? _value.name
+          ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
       nickname: freezed == nickname
-          ? _value.nickname
+          ? _self.nickname
           : nickname // ignore: cast_nullable_to_non_nullable
               as String?,
       birthdate: freezed == birthdate
-          ? _value.birthdate
+          ? _self.birthdate
           : birthdate // ignore: cast_nullable_to_non_nullable
               as String?,
       profileURL: freezed == profileURL
-          ? _value.profileURL
+          ? _self.profileURL
           : profileURL // ignore: cast_nullable_to_non_nullable
               as String?,
       picture: freezed == picture
-          ? _value.picture
+          ? _self.picture
           : picture // ignore: cast_nullable_to_non_nullable
               as String?,
       externalId: freezed == externalId
-          ? _value.externalId
+          ? _self.externalId
           : externalId // ignore: cast_nullable_to_non_nullable
               as String?,
       authTypes: freezed == authTypes
-          ? _value._authTypes
+          ? _self.authTypes
           : authTypes // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       loginSummary: freezed == loginSummary
-          ? _value.loginSummary
+          ? _self.loginSummary
           : loginSummary // ignore: cast_nullable_to_non_nullable
               as LoginSummary?,
       username: freezed == username
-          ? _value.username
+          ? _self.username
           : username // ignore: cast_nullable_to_non_nullable
               as String?,
       gender: freezed == gender
-          ? _value.gender
+          ? _self.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
       email: freezed == email
-          ? _value.email
+          ? _self.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
       emailVerified: freezed == emailVerified
-          ? _value.emailVerified
+          ? _self.emailVerified
           : emailVerified // ignore: cast_nullable_to_non_nullable
               as bool?,
       emails: freezed == emails
-          ? _value.emails
+          ? _self.emails
           : emails // ignore: cast_nullable_to_non_nullable
               as Emails?,
       phoneNumber: freezed == phoneNumber
-          ? _value.phoneNumber
+          ? _self.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String?,
       phoneNumberVerified: freezed == phoneNumberVerified
-          ? _value.phoneNumberVerified
+          ? _self.phoneNumberVerified
           : phoneNumberVerified // ignore: cast_nullable_to_non_nullable
               as bool?,
       addresses: freezed == addresses
-          ? _value._addresses
+          ? _self.addresses
           : addresses // ignore: cast_nullable_to_non_nullable
               as List<ProfileAddress>?,
       locale: freezed == locale
-          ? _value.locale
+          ? _self.locale
           : locale // ignore: cast_nullable_to_non_nullable
               as String?,
       bio: freezed == bio
-          ? _value.bio
+          ? _self.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as String?,
       customFields: freezed == customFields
-          ? _value._customFields
+          ? _self.customFields
           : customFields // ignore: cast_nullable_to_non_nullable
               as Map<String, Object?>?,
       consents: freezed == consents
-          ? _value._consents
+          ? _self.consents
           : consents // ignore: cast_nullable_to_non_nullable
               as Map<String, Consent>?,
       createdAt: freezed == createdAt
-          ? _value.createdAt
+          ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
       updatedAt: freezed == updatedAt
-          ? _value.updatedAt
+          ? _self.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
       liteOnly: freezed == liteOnly
-          ? _value.liteOnly
+          ? _self.liteOnly
           : liteOnly // ignore: cast_nullable_to_non_nullable
               as bool?,
       company: freezed == company
-          ? _value.company
+          ? _self.company
           : company // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [Profile].
+extension ProfilePatterns on Profile {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_Profile value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Profile() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_Profile value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Profile():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_Profile value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Profile() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            String? uid,
+            String? givenName,
+            String? middleName,
+            String? familyName,
+            String? name,
+            String? nickname,
+            String? birthdate,
+            String? profileURL,
+            String? picture,
+            String? externalId,
+            List<String>? authTypes,
+            LoginSummary? loginSummary,
+            String? username,
+            String? gender,
+            String? email,
+            bool? emailVerified,
+            Emails? emails,
+            String? phoneNumber,
+            bool? phoneNumberVerified,
+            List<ProfileAddress>? addresses,
+            String? locale,
+            String? bio,
+            Map<String, Object?>? customFields,
+            Map<String, Consent>? consents,
+            String? createdAt,
+            String? updatedAt,
+            bool? liteOnly,
+            String? company)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Profile() when $default != null:
+        return $default(
+            _that.uid,
+            _that.givenName,
+            _that.middleName,
+            _that.familyName,
+            _that.name,
+            _that.nickname,
+            _that.birthdate,
+            _that.profileURL,
+            _that.picture,
+            _that.externalId,
+            _that.authTypes,
+            _that.loginSummary,
+            _that.username,
+            _that.gender,
+            _that.email,
+            _that.emailVerified,
+            _that.emails,
+            _that.phoneNumber,
+            _that.phoneNumberVerified,
+            _that.addresses,
+            _that.locale,
+            _that.bio,
+            _that.customFields,
+            _that.consents,
+            _that.createdAt,
+            _that.updatedAt,
+            _that.liteOnly,
+            _that.company);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            String? uid,
+            String? givenName,
+            String? middleName,
+            String? familyName,
+            String? name,
+            String? nickname,
+            String? birthdate,
+            String? profileURL,
+            String? picture,
+            String? externalId,
+            List<String>? authTypes,
+            LoginSummary? loginSummary,
+            String? username,
+            String? gender,
+            String? email,
+            bool? emailVerified,
+            Emails? emails,
+            String? phoneNumber,
+            bool? phoneNumberVerified,
+            List<ProfileAddress>? addresses,
+            String? locale,
+            String? bio,
+            Map<String, Object?>? customFields,
+            Map<String, Consent>? consents,
+            String? createdAt,
+            String? updatedAt,
+            bool? liteOnly,
+            String? company)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Profile():
+        return $default(
+            _that.uid,
+            _that.givenName,
+            _that.middleName,
+            _that.familyName,
+            _that.name,
+            _that.nickname,
+            _that.birthdate,
+            _that.profileURL,
+            _that.picture,
+            _that.externalId,
+            _that.authTypes,
+            _that.loginSummary,
+            _that.username,
+            _that.gender,
+            _that.email,
+            _that.emailVerified,
+            _that.emails,
+            _that.phoneNumber,
+            _that.phoneNumberVerified,
+            _that.addresses,
+            _that.locale,
+            _that.bio,
+            _that.customFields,
+            _that.consents,
+            _that.createdAt,
+            _that.updatedAt,
+            _that.liteOnly,
+            _that.company);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            String? uid,
+            String? givenName,
+            String? middleName,
+            String? familyName,
+            String? name,
+            String? nickname,
+            String? birthdate,
+            String? profileURL,
+            String? picture,
+            String? externalId,
+            List<String>? authTypes,
+            LoginSummary? loginSummary,
+            String? username,
+            String? gender,
+            String? email,
+            bool? emailVerified,
+            Emails? emails,
+            String? phoneNumber,
+            bool? phoneNumberVerified,
+            List<ProfileAddress>? addresses,
+            String? locale,
+            String? bio,
+            Map<String, Object?>? customFields,
+            Map<String, Consent>? consents,
+            String? createdAt,
+            String? updatedAt,
+            bool? liteOnly,
+            String? company)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Profile() when $default != null:
+        return $default(
+            _that.uid,
+            _that.givenName,
+            _that.middleName,
+            _that.familyName,
+            _that.name,
+            _that.nickname,
+            _that.birthdate,
+            _that.profileURL,
+            _that.picture,
+            _that.externalId,
+            _that.authTypes,
+            _that.loginSummary,
+            _that.username,
+            _that.gender,
+            _that.email,
+            _that.emailVerified,
+            _that.emails,
+            _that.phoneNumber,
+            _that.phoneNumberVerified,
+            _that.addresses,
+            _that.locale,
+            _that.bio,
+            _that.customFields,
+            _that.consents,
+            _that.createdAt,
+            _that.updatedAt,
+            _that.liteOnly,
+            _that.company);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 
-class _$_Profile implements _Profile {
-  const _$_Profile(
+class _Profile implements Profile {
+  const _Profile(
       {this.uid,
       this.givenName,
       this.middleName,
@@ -684,16 +908,19 @@ class _$_Profile implements _Profile {
   @override
   final String? company;
 
+  /// Create a copy of Profile
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'Profile(uid: $uid, givenName: $givenName, middleName: $middleName, familyName: $familyName, name: $name, nickname: $nickname, birthdate: $birthdate, profileURL: $profileURL, picture: $picture, externalId: $externalId, authTypes: $authTypes, loginSummary: $loginSummary, username: $username, gender: $gender, email: $email, emailVerified: $emailVerified, emails: $emails, phoneNumber: $phoneNumber, phoneNumberVerified: $phoneNumberVerified, addresses: $addresses, locale: $locale, bio: $bio, customFields: $customFields, consents: $consents, createdAt: $createdAt, updatedAt: $updatedAt, liteOnly: $liteOnly, company: $company)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ProfileCopyWith<_Profile> get copyWith =>
+      __$ProfileCopyWithImpl<_Profile>(this, _$identity);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Profile &&
+            other is _Profile &&
             (identical(other.uid, uid) || other.uid == uid) &&
             (identical(other.givenName, givenName) ||
                 other.givenName == givenName) &&
@@ -775,160 +1002,205 @@ class _$_Profile implements _Profile {
         company
       ]);
 
-  @JsonKey(ignore: true)
+  @override
+  String toString() {
+    return 'Profile(uid: $uid, givenName: $givenName, middleName: $middleName, familyName: $familyName, name: $name, nickname: $nickname, birthdate: $birthdate, profileURL: $profileURL, picture: $picture, externalId: $externalId, authTypes: $authTypes, loginSummary: $loginSummary, username: $username, gender: $gender, email: $email, emailVerified: $emailVerified, emails: $emails, phoneNumber: $phoneNumber, phoneNumberVerified: $phoneNumberVerified, addresses: $addresses, locale: $locale, bio: $bio, customFields: $customFields, consents: $consents, createdAt: $createdAt, updatedAt: $updatedAt, liteOnly: $liteOnly, company: $company)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$ProfileCopyWith<$Res> implements $ProfileCopyWith<$Res> {
+  factory _$ProfileCopyWith(_Profile value, $Res Function(_Profile) _then) =
+      __$ProfileCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String? uid,
+      String? givenName,
+      String? middleName,
+      String? familyName,
+      String? name,
+      String? nickname,
+      String? birthdate,
+      String? profileURL,
+      String? picture,
+      String? externalId,
+      List<String>? authTypes,
+      LoginSummary? loginSummary,
+      String? username,
+      String? gender,
+      String? email,
+      bool? emailVerified,
+      Emails? emails,
+      String? phoneNumber,
+      bool? phoneNumberVerified,
+      List<ProfileAddress>? addresses,
+      String? locale,
+      String? bio,
+      Map<String, Object?>? customFields,
+      Map<String, Consent>? consents,
+      String? createdAt,
+      String? updatedAt,
+      bool? liteOnly,
+      String? company});
+}
+
+/// @nodoc
+class __$ProfileCopyWithImpl<$Res> implements _$ProfileCopyWith<$Res> {
+  __$ProfileCopyWithImpl(this._self, this._then);
+
+  final _Profile _self;
+  final $Res Function(_Profile) _then;
+
+  /// Create a copy of Profile
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  _$$_ProfileCopyWith<_$_Profile> get copyWith =>
-      __$$_ProfileCopyWithImpl<_$_Profile>(this, _$identity);
+  $Res call({
+    Object? uid = freezed,
+    Object? givenName = freezed,
+    Object? middleName = freezed,
+    Object? familyName = freezed,
+    Object? name = freezed,
+    Object? nickname = freezed,
+    Object? birthdate = freezed,
+    Object? profileURL = freezed,
+    Object? picture = freezed,
+    Object? externalId = freezed,
+    Object? authTypes = freezed,
+    Object? loginSummary = freezed,
+    Object? username = freezed,
+    Object? gender = freezed,
+    Object? email = freezed,
+    Object? emailVerified = freezed,
+    Object? emails = freezed,
+    Object? phoneNumber = freezed,
+    Object? phoneNumberVerified = freezed,
+    Object? addresses = freezed,
+    Object? locale = freezed,
+    Object? bio = freezed,
+    Object? customFields = freezed,
+    Object? consents = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? liteOnly = freezed,
+    Object? company = freezed,
+  }) {
+    return _then(_Profile(
+      uid: freezed == uid
+          ? _self.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      givenName: freezed == givenName
+          ? _self.givenName
+          : givenName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      middleName: freezed == middleName
+          ? _self.middleName
+          : middleName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      familyName: freezed == familyName
+          ? _self.familyName
+          : familyName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: freezed == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      nickname: freezed == nickname
+          ? _self.nickname
+          : nickname // ignore: cast_nullable_to_non_nullable
+              as String?,
+      birthdate: freezed == birthdate
+          ? _self.birthdate
+          : birthdate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      profileURL: freezed == profileURL
+          ? _self.profileURL
+          : profileURL // ignore: cast_nullable_to_non_nullable
+              as String?,
+      picture: freezed == picture
+          ? _self.picture
+          : picture // ignore: cast_nullable_to_non_nullable
+              as String?,
+      externalId: freezed == externalId
+          ? _self.externalId
+          : externalId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      authTypes: freezed == authTypes
+          ? _self._authTypes
+          : authTypes // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      loginSummary: freezed == loginSummary
+          ? _self.loginSummary
+          : loginSummary // ignore: cast_nullable_to_non_nullable
+              as LoginSummary?,
+      username: freezed == username
+          ? _self.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String?,
+      gender: freezed == gender
+          ? _self.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: freezed == email
+          ? _self.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      emailVerified: freezed == emailVerified
+          ? _self.emailVerified
+          : emailVerified // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      emails: freezed == emails
+          ? _self.emails
+          : emails // ignore: cast_nullable_to_non_nullable
+              as Emails?,
+      phoneNumber: freezed == phoneNumber
+          ? _self.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phoneNumberVerified: freezed == phoneNumberVerified
+          ? _self.phoneNumberVerified
+          : phoneNumberVerified // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      addresses: freezed == addresses
+          ? _self._addresses
+          : addresses // ignore: cast_nullable_to_non_nullable
+              as List<ProfileAddress>?,
+      locale: freezed == locale
+          ? _self.locale
+          : locale // ignore: cast_nullable_to_non_nullable
+              as String?,
+      bio: freezed == bio
+          ? _self.bio
+          : bio // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customFields: freezed == customFields
+          ? _self._customFields
+          : customFields // ignore: cast_nullable_to_non_nullable
+              as Map<String, Object?>?,
+      consents: freezed == consents
+          ? _self._consents
+          : consents // ignore: cast_nullable_to_non_nullable
+              as Map<String, Consent>?,
+      createdAt: freezed == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      updatedAt: freezed == updatedAt
+          ? _self.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      liteOnly: freezed == liteOnly
+          ? _self.liteOnly
+          : liteOnly // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      company: freezed == company
+          ? _self.company
+          : company // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
-abstract class _Profile implements Profile {
-  const factory _Profile(
-      {final String? uid,
-      final String? givenName,
-      final String? middleName,
-      final String? familyName,
-      final String? name,
-      final String? nickname,
-      final String? birthdate,
-      final String? profileURL,
-      final String? picture,
-      final String? externalId,
-      final List<String>? authTypes,
-      final LoginSummary? loginSummary,
-      final String? username,
-      final String? gender,
-      final String? email,
-      final bool? emailVerified,
-      final Emails? emails,
-      final String? phoneNumber,
-      final bool? phoneNumberVerified,
-      final List<ProfileAddress>? addresses,
-      final String? locale,
-      final String? bio,
-      final Map<String, Object?>? customFields,
-      final Map<String, Consent>? consents,
-      final String? createdAt,
-      final String? updatedAt,
-      final bool? liteOnly,
-      final String? company}) = _$_Profile;
-
-  @override
-
-  /// The user id
-  String? get uid;
-  @override
-
-  /// The user given name
-  String? get givenName;
-  @override
-
-  /// The user middle name
-  String? get middleName;
-  @override
-
-  /// The user family name
-  String? get familyName;
-  @override
-
-  /// The user name
-  String? get name;
-  @override
-
-  /// The user nickname
-  String? get nickname;
-  @override
-
-  /// The user birthdate
-  String? get birthdate;
-  @override
-
-  /// The user profile url
-  String? get profileURL;
-  @override
-
-  /// The user picture
-  String? get picture;
-  @override
-
-  /// The user external id
-  String? get externalId;
-  @override
-
-  /// The user list of authentication types
-  List<String>? get authTypes;
-  @override
-
-  /// The user [LoginSummary]
-  LoginSummary? get loginSummary;
-  @override
-
-  /// The user username
-  String? get username;
-  @override
-
-  /// The user gender
-  String? get gender;
-  @override
-
-  /// The user email
-  String? get email;
-  @override
-
-  /// Used to check if an user [email] is verified or not
-  bool? get emailVerified;
-  @override
-
-  /// The user list of verified/unverified emails
-  Emails? get emails;
-  @override
-
-  /// The user phone number
-  String? get phoneNumber;
-  @override
-
-  /// Used to check if an user [phoneNumber] is verified or not
-  bool? get phoneNumberVerified;
-  @override
-
-  /// The user list of addresses
-  List<ProfileAddress>? get addresses;
-  @override
-
-  /// The user locale
-  String? get locale;
-  @override
-
-  /// The user bio
-  String? get bio;
-  @override
-
-  /// The custom fields linked to your user
-  /// It must match the ones you have created in your reachFive console
-  Map<String, Object?>? get customFields;
-  @override
-
-  /// The user consents
-// TODO: find the consents we can put in here
-  Map<String, Consent>? get consents;
-  @override
-
-  /// The time the user's profile was created
-  String? get createdAt;
-  @override
-
-  /// The last time the user's profile was updated
-  String? get updatedAt;
-  @override
-
-  /// Used to know if the user profile is lite or not
-  bool? get liteOnly;
-  @override
-
-  /// The user company
-  String? get company;
-  @override
-  @JsonKey(ignore: true)
-  _$$_ProfileCopyWith<_$_Profile> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

@@ -3,29 +3,29 @@ name: Test Flutter Reach Five Identity Repo
 on:
   push:
     paths:
-      - "reach_five_identity_repo/**"
-      - ".github/workflows/reach_five_identity_repo.yaml"
+      - 'reach_five_identity_repo/**'
+      - '.github/workflows/reach_five_identity_repo.yaml'
     branches:
       - main
   pull_request:
     paths:
-      - "reach_five_identity_repo/**"
-      - ".github/workflows/reach_five_identity_repo.yaml"
+      - 'reach_five_identity_repo/**'
+      - '.github/workflows/reach_five_identity_repo.yaml'
     branches:
       - main
 
 jobs:
   test:
     strategy:
-      matrix: {dir: ["reach_five_identity_repo"]}
-    runs-on: ubuntu-20.04
+      matrix: { dir: ['reach_five_identity_repo'] }
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ${{ matrix.dir }}
 
     steps:
       - uses: actions/checkout@v3.3.0
-        
+
       - id: dotenv
         uses: falti/dotenv-action@v1.0.2
         with:
@@ -34,7 +34,7 @@ jobs:
       - uses: subosito/flutter-action@v2.8.0
         with:
           flutter-version: ${{ steps.dotenv.outputs.flutter_version }}
-          channel: "stable"
+          channel: 'stable'
           cache: true
           cache-key: ${{ runner.os }}-flutter-${{ steps.dotenv.outputs.flutter_version }}
           cache-path: ${{ runner.tool_cache }}/flutter-${{ steps.dotenv.outputs.flutter_version }}
