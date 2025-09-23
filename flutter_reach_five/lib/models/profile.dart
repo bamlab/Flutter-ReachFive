@@ -9,7 +9,7 @@ part 'profile.freezed.dart';
 
 /// [Profile] class, contains the infos of an user
 @freezed
-class Profile with _$Profile {
+abstract class Profile with _$Profile {
   /// [Profile] default constructor
   const factory Profile({
     /// The user id

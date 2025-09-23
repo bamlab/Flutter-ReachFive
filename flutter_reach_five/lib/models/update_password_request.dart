@@ -7,7 +7,7 @@ part 'update_password_request.freezed.dart';
 @freezed
 
 /// Update password request
-class UpdatePasswordRequest with _$UpdatePasswordRequest {
+sealed class UpdatePasswordRequest with _$UpdatePasswordRequest {
   /// Update password request model using an access token and the old password
   const factory UpdatePasswordRequest.withAccessToken({
     required AuthToken authToken,

@@ -378,40 +378,50 @@ class ReachFive {
     UpdatePasswordRequest updatePasswordRequest,
   ) async {
     try {
-      await updatePasswordRequest.map<Future<void>>(
-        withAccessToken: (updatePasswordRequestWithAccessToken) =>
+      await switch (updatePasswordRequest) {
+        UpdatePasswordRequestWithAccessToken(
+          :final authToken,
+          :final oldPassword,
+          :final newPassword
+        ) =>
           _platform.updatePasswordWithAccessToken(
             reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
-          authToken: AuthTokenConverter.toInterface(
-            updatePasswordRequestWithAccessToken.authToken,
+            authToken: AuthTokenConverter.toInterface(authToken),
+            oldPassword: oldPassword,
+            newPassword: newPassword,
           ),
-          oldPassword: updatePasswordRequestWithAccessToken.oldPassword,
-          newPassword: updatePasswordRequestWithAccessToken.newPassword,
-          ),
-        withFreshAccessToken: (updatePasswordRequestWithFreshAccessToken) =>
+        UpdatePasswordRequestWithFreshAccessToken(
+          :final freshAuthToken,
+          :final newPassword
+        ) =>
           _platform.updatePasswordWithFreshAccessToken(
             reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
-          freshAuthToken: AuthTokenConverter.toInterface(
-            updatePasswordRequestWithFreshAccessToken.freshAuthToken,
+            freshAuthToken: AuthTokenConverter.toInterface(freshAuthToken),
+            newPassword: newPassword,
           ),
-          newPassword: updatePasswordRequestWithFreshAccessToken.newPassword,
-          ),
-        withEmail: (updatePasswordRequestWithEmail) =>
+        UpdatePasswordRequestWithEmail(
+          :final email,
+          :final verificationCode,
+          :final newPassword
+        ) =>
           _platform.updatePasswordWithEmail(
             reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
-          email: updatePasswordRequestWithEmail.email,
-          verificationCode: updatePasswordRequestWithEmail.verificationCode,
-          newPassword: updatePasswordRequestWithEmail.newPassword,
+            email: email,
+            verificationCode: verificationCode,
+            newPassword: newPassword,
           ),
-        withPhoneNumber: (updatePasswordRequestWithPhoneNumber) =>
+        UpdatePasswordRequestWithPhoneNumber(
+          :final phoneNumber,
+          :final verificationCode,
+          :final newPassword
+        ) =>
           _platform.updatePasswordWithPhoneNumber(
             reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
-          phoneNumber: updatePasswordRequestWithPhoneNumber.phoneNumber,
-          verificationCode:
-              updatePasswordRequestWithPhoneNumber.verificationCode,
-          newPassword: updatePasswordRequestWithPhoneNumber.newPassword,
+            phoneNumber: phoneNumber,
+            verificationCode: verificationCode,
+            newPassword: newPassword,
           ),
-      );
+      };
     } catch (error, stackTrace) {
       try {
         _platform.parseError(error, stackTrace);
