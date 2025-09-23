@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-09-23
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`flutter_reach_five` - `v0.8.0`](#flutter_reach_five---v080)
+
+Packages with other changes:
+
+ - There are no other changes in this release.
+
+---
+
+#### `flutter_reach_five` - `v0.8.0`
+
+ - **REFACTOR**(reach_five): use modern switch statement instead of map syntax.
+ - **FEAT**(reach_five): deprecate RevokeTokenType "map" extension.
+ - **BREAKING** **FEAT**(reach_five): update freezed to v3 and custom_lint to v0.8.
+
+
 ## 2024-12-26
 
 ### Changes

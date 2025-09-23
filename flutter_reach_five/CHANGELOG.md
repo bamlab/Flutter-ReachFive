@@ -1,3 +1,11 @@
+## 0.8.0
+
+> Note: This release has breaking changes.
+
+ - **REFACTOR**(reach_five): use modern switch statement instead of map syntax.
+ - **FEAT**(reach_five): deprecate RevokeTokenType "map" extension.
+ - **BREAKING** **FEAT**(reach_five): update freezed to v3 and custom_lint to v0.8.
+
 ## 0.7.2
 
  - **REFACTOR**(reach_five): cleaner API.
