@@ -56,11 +56,12 @@ void main() {
           providers: providers,
         );
 
-        when(() => mockReachFiveHostApi.initialize(reachFiveKey))
-            .thenAnswer((_) async => reachFiveConfig);
+        when(
+          () => mockReachFiveHostApi.initialize(reachFiveKey),
+        ).thenAnswer((_) async => reachFiveConfig);
 
-        final receivedReachFiveConfig =
-            await FlutterReachFivePlatform.instance.initialize(reachFiveKey);
+        final receivedReachFiveConfig = await FlutterReachFivePlatform.instance
+            .initialize(reachFiveKey);
 
         expect(reachFiveConfig, receivedReachFiveConfig);
       });
@@ -79,14 +80,12 @@ void main() {
             errorCodes: errorCodesInterface,
           ),
         );
-        when(() => mockReachFiveHostApi.signup(any()))
-            .thenAnswer((_) async => authToken);
+        when(
+          () => mockReachFiveHostApi.signup(any()),
+        ).thenAnswer((_) async => authToken);
 
-        final receivedAuthToken =
-            await FlutterReachFivePlatform.instance.signup(
-          reachFiveKey: reachFiveKey,
-          profile: profile,
-        );
+        final receivedAuthToken = await FlutterReachFivePlatform.instance
+            .signup(reachFiveKey: reachFiveKey, profile: profile);
 
         expect(authToken, receivedAuthToken);
       });
@@ -107,15 +106,16 @@ void main() {
             errorCodes: errorCodesInterface,
           ),
         );
-        when(() => mockReachFiveHostApi.loginWithPassword(any()))
-            .thenAnswer((_) async => authToken);
+        when(
+          () => mockReachFiveHostApi.loginWithPassword(any()),
+        ).thenAnswer((_) async => authToken);
 
-        final receivedAuthToken =
-            await FlutterReachFivePlatform.instance.loginWithPassword(
-          reachFiveKey: reachFiveKey,
-          email: email,
-          password: password,
-        );
+        final receivedAuthToken = await FlutterReachFivePlatform.instance
+            .loginWithPassword(
+              reachFiveKey: reachFiveKey,
+              email: email,
+              password: password,
+            );
 
         expect(authToken, receivedAuthToken);
       });
@@ -136,15 +136,16 @@ void main() {
             errorCodes: errorCodesInterface,
           ),
         );
-        when(() => mockReachFiveHostApi.loginWithProvider(any()))
-            .thenAnswer((_) async => authToken);
+        when(
+          () => mockReachFiveHostApi.loginWithProvider(any()),
+        ).thenAnswer((_) async => authToken);
 
-        final receivedAuthToken =
-            await FlutterReachFivePlatform.instance.loginWithProvider(
-          reachFiveKey: reachFiveKey,
-          provider: provider,
-          origin: origin,
-        );
+        final receivedAuthToken = await FlutterReachFivePlatform.instance
+            .loginWithProvider(
+              reachFiveKey: reachFiveKey,
+              provider: provider,
+              origin: origin,
+            );
 
         expect(authToken, receivedAuthToken);
       });
@@ -152,11 +153,13 @@ void main() {
 
     group('logout', () {
       test('execute reach five host api logout method', () async {
-        when(() => mockReachFiveHostApi.logout(reachFiveKey))
-            .thenAnswer((_) async {});
+        when(
+          () => mockReachFiveHostApi.logout(reachFiveKey),
+        ).thenAnswer((_) async {});
 
-        await FlutterReachFivePlatform.instance
-            .logout(reachFiveKey: reachFiveKey);
+        await FlutterReachFivePlatform.instance.logout(
+          reachFiveKey: reachFiveKey,
+        );
 
         verify(() => mockReachFiveHostApi.logout(reachFiveKey)).called(1);
       });
@@ -175,14 +178,12 @@ void main() {
             errorCodes: errorCodesInterface,
           ),
         );
-        when(() => mockReachFiveHostApi.getProfile(any()))
-            .thenAnswer((_) async => expectedProfile);
+        when(
+          () => mockReachFiveHostApi.getProfile(any()),
+        ).thenAnswer((_) async => expectedProfile);
 
-        final receivedProfile =
-            await FlutterReachFivePlatform.instance.getProfile(
-          reachFiveKey: reachFiveKey,
-          authToken: authToken,
-        );
+        final receivedProfile = await FlutterReachFivePlatform.instance
+            .getProfile(reachFiveKey: reachFiveKey, authToken: authToken);
 
         expect(expectedProfile, receivedProfile);
       });
@@ -204,15 +205,16 @@ void main() {
             errorCodes: errorCodesInterface,
           ),
         );
-        when(() => mockReachFiveHostApi.updateProfile(any()))
-            .thenAnswer((_) async => secondProfile);
+        when(
+          () => mockReachFiveHostApi.updateProfile(any()),
+        ).thenAnswer((_) async => secondProfile);
 
-        final receivedProfile =
-            await FlutterReachFivePlatform.instance.updateProfile(
-          reachFiveKey: reachFiveKey,
-          authToken: authToken,
-          profile: firstProfile,
-        );
+        final receivedProfile = await FlutterReachFivePlatform.instance
+            .updateProfile(
+              reachFiveKey: reachFiveKey,
+              authToken: authToken,
+              profile: firstProfile,
+            );
 
         expect(secondProfile, receivedProfile);
       });
@@ -220,11 +222,13 @@ void main() {
 
     group('refreshAccessToken', () {
       test('returns correct auth token', () async {
-        final firstAuthToken =
-            AuthTokenInterface(accessToken: 'firstAccessToken');
+        final firstAuthToken = AuthTokenInterface(
+          accessToken: 'firstAccessToken',
+        );
 
-        final secondAuthToken =
-            AuthTokenInterface(accessToken: 'firstAccessToken');
+        final secondAuthToken = AuthTokenInterface(
+          accessToken: 'firstAccessToken',
+        );
 
         registerFallbackValue(
           RefreshAccessTokenRequestInterface(
@@ -233,14 +237,15 @@ void main() {
             errorCodes: errorCodesInterface,
           ),
         );
-        when(() => mockReachFiveHostApi.refreshAccessToken(any()))
-            .thenAnswer((_) async => secondAuthToken);
+        when(
+          () => mockReachFiveHostApi.refreshAccessToken(any()),
+        ).thenAnswer((_) async => secondAuthToken);
 
-        final receivedAuthToken =
-            await FlutterReachFivePlatform.instance.refreshAccessToken(
-          reachFiveKey: reachFiveKey,
-          authToken: firstAuthToken,
-        );
+        final receivedAuthToken = await FlutterReachFivePlatform.instance
+            .refreshAccessToken(
+              reachFiveKey: reachFiveKey,
+              authToken: firstAuthToken,
+            );
 
         expect(secondAuthToken, receivedAuthToken);
       });
@@ -255,8 +260,9 @@ void main() {
         );
 
         registerFallbackValue(request);
-        when(() => mockReachFiveHostApi.requestPasswordReset(any()))
-            .thenAnswer((_) async {});
+        when(
+          () => mockReachFiveHostApi.requestPasswordReset(any()),
+        ).thenAnswer((_) async {});
 
         await FlutterReachFivePlatform.instance.requestPasswordReset(
           reachFiveKey: reachFiveKey,
@@ -264,115 +270,127 @@ void main() {
           redirectUrl: request.redirectUrl,
         );
 
-        verify(() => mockReachFiveHostApi.requestPasswordReset(any()))
-            .called(1);
+        verify(
+          () => mockReachFiveHostApi.requestPasswordReset(any()),
+        ).called(1);
       });
     });
 
     group('updatePassword', () {
-      test('execute reach five host api updatePasswordWithAccessToken method',
-          () async {
-        final request = UpdatePasswordWithAccessTokenRequestInterface(
-          reachFiveKey: reachFiveKey,
-          authToken: AuthTokenInterface(accessToken: 'accessToken'),
-          oldPassword: 'oldPassword',
-          password: 'newPassword',
-        );
+      test(
+        'execute reach five host api updatePasswordWithAccessToken method',
+        () async {
+          final request = UpdatePasswordWithAccessTokenRequestInterface(
+            reachFiveKey: reachFiveKey,
+            authToken: AuthTokenInterface(accessToken: 'accessToken'),
+            oldPassword: 'oldPassword',
+            password: 'newPassword',
+          );
 
-        registerFallbackValue(request);
-        when(() => mockReachFiveHostApi.updatePasswordWithAccessToken(any()))
-            .thenAnswer((_) async {});
+          registerFallbackValue(request);
+          when(
+            () => mockReachFiveHostApi.updatePasswordWithAccessToken(any()),
+          ).thenAnswer((_) async {});
 
-        await FlutterReachFivePlatform.instance.updatePasswordWithAccessToken(
-          reachFiveKey: reachFiveKey,
-          authToken: request.authToken,
-          oldPassword: request.oldPassword,
-          newPassword: request.password,
-        );
+          await FlutterReachFivePlatform.instance.updatePasswordWithAccessToken(
+            reachFiveKey: reachFiveKey,
+            authToken: request.authToken,
+            oldPassword: request.oldPassword,
+            newPassword: request.password,
+          );
 
-        verify(() => mockReachFiveHostApi.updatePasswordWithAccessToken(any()))
-            .called(1);
-      });
+          verify(
+            () => mockReachFiveHostApi.updatePasswordWithAccessToken(any()),
+          ).called(1);
+        },
+      );
 
       test(
-          'execute reach five host api updatePasswordWithFreshAccessToken method',
-          () async {
-        final request = UpdatePasswordWithFreshAccessTokenRequestInterface(
-          reachFiveKey: reachFiveKey,
-          freshAuthToken: AuthTokenInterface(accessToken: 'accessToken'),
-          password: 'newPassword',
-        );
+        'execute reach five host api updatePasswordWithFreshAccessToken method',
+        () async {
+          final request = UpdatePasswordWithFreshAccessTokenRequestInterface(
+            reachFiveKey: reachFiveKey,
+            freshAuthToken: AuthTokenInterface(accessToken: 'accessToken'),
+            password: 'newPassword',
+          );
 
-        registerFallbackValue(request);
-        when(
-          () => mockReachFiveHostApi.updatePasswordWithFreshAccessToken(any()),
-        ).thenAnswer((_) async {});
+          registerFallbackValue(request);
+          when(
+            () =>
+                mockReachFiveHostApi.updatePasswordWithFreshAccessToken(any()),
+          ).thenAnswer((_) async {});
 
-        await FlutterReachFivePlatform.instance
-            .updatePasswordWithFreshAccessToken(
-          reachFiveKey: reachFiveKey,
-          freshAuthToken: request.freshAuthToken,
-          newPassword: request.password,
-        );
+          await FlutterReachFivePlatform.instance
+              .updatePasswordWithFreshAccessToken(
+                reachFiveKey: reachFiveKey,
+                freshAuthToken: request.freshAuthToken,
+                newPassword: request.password,
+              );
 
-        verify(
-          () => mockReachFiveHostApi.updatePasswordWithFreshAccessToken(any()),
-        ).called(1);
-      });
+          verify(
+            () =>
+                mockReachFiveHostApi.updatePasswordWithFreshAccessToken(any()),
+          ).called(1);
+        },
+      );
 
-      test('execute reach five host api updatePasswordWithEmail method',
-          () async {
-        final request = UpdatePasswordWithEmailRequestInterface(
-          reachFiveKey: reachFiveKey,
-          email: 'email',
-          verificationCode: 'verificationCode',
-          password: 'newPassword',
-          errorCodes: errorCodesInterface,
-        );
+      test(
+        'execute reach five host api updatePasswordWithEmail method',
+        () async {
+          final request = UpdatePasswordWithEmailRequestInterface(
+            reachFiveKey: reachFiveKey,
+            email: 'email',
+            verificationCode: 'verificationCode',
+            password: 'newPassword',
+            errorCodes: errorCodesInterface,
+          );
 
-        registerFallbackValue(request);
-        when(
-          () => mockReachFiveHostApi.updatePasswordWithEmail(any()),
-        ).thenAnswer((_) async {});
+          registerFallbackValue(request);
+          when(
+            () => mockReachFiveHostApi.updatePasswordWithEmail(any()),
+          ).thenAnswer((_) async {});
 
-        await FlutterReachFivePlatform.instance.updatePasswordWithEmail(
-          reachFiveKey: reachFiveKey,
-          email: request.email,
-          verificationCode: request.verificationCode,
-          newPassword: request.password,
-        );
+          await FlutterReachFivePlatform.instance.updatePasswordWithEmail(
+            reachFiveKey: reachFiveKey,
+            email: request.email,
+            verificationCode: request.verificationCode,
+            newPassword: request.password,
+          );
 
-        verify(
-          () => mockReachFiveHostApi.updatePasswordWithEmail(any()),
-        ).called(1);
-      });
+          verify(
+            () => mockReachFiveHostApi.updatePasswordWithEmail(any()),
+          ).called(1);
+        },
+      );
 
-      test('execute reach five host api updatePasswordWithPhoneNumber method',
-          () async {
-        final request = UpdatePasswordWithPhoneNumberRequestInterface(
-          reachFiveKey: reachFiveKey,
-          phoneNumber: 'phoneNumber',
-          verificationCode: 'verificationCode',
-          password: 'newPassword',
-          errorCodes: errorCodesInterface,
-        );
+      test(
+        'execute reach five host api updatePasswordWithPhoneNumber method',
+        () async {
+          final request = UpdatePasswordWithPhoneNumberRequestInterface(
+            reachFiveKey: reachFiveKey,
+            phoneNumber: 'phoneNumber',
+            verificationCode: 'verificationCode',
+            password: 'newPassword',
+            errorCodes: errorCodesInterface,
+          );
 
-        registerFallbackValue(request);
-        when(
-          () => mockReachFiveHostApi.updatePasswordWithPhoneNumber(any()),
-        ).thenAnswer((_) async {});
+          registerFallbackValue(request);
+          when(
+            () => mockReachFiveHostApi.updatePasswordWithPhoneNumber(any()),
+          ).thenAnswer((_) async {});
 
-        await FlutterReachFivePlatform.instance.updatePasswordWithPhoneNumber(
-          reachFiveKey: reachFiveKey,
-          phoneNumber: request.phoneNumber,
-          verificationCode: request.verificationCode,
-          newPassword: request.password,
-        );
+          await FlutterReachFivePlatform.instance.updatePasswordWithPhoneNumber(
+            reachFiveKey: reachFiveKey,
+            phoneNumber: request.phoneNumber,
+            verificationCode: request.verificationCode,
+            newPassword: request.password,
+          );
 
-        verify(
-          () => mockReachFiveHostApi.updatePasswordWithPhoneNumber(any()),
-        ).called(1);
-      });
+          verify(
+            () => mockReachFiveHostApi.updatePasswordWithPhoneNumber(any()),
+          ).called(1);
+        },
+      );
     });
   });
 }

@@ -1,6 +1,6 @@
-import IdentitySdkCore
-import IdentitySdkGoogle
-import IdentitySdkFacebook
+import Reach5
+import Reach5Google
+import Reach5Facebook
 
 enum CustomFieldError: Error {
     case casting
@@ -30,22 +30,22 @@ extension CustomField {
 
 public class Converters {
 
-    static public func parseError(
+    static func parseError(
             reachFiveError: ReachFiveError,
             errorCodesInterface: ErrorCodesInterface,
-            defaultFlutterError: FlutterError
-    ) -> FlutterError {
+            defaultFlutterError: PigeonError
+    ) -> PigeonError {
         switch reachFiveError {
         case .RequestError(apiError: let apiError):
             if (apiError.errorMessageKey == "error.email.alreadyInUse") {
-                return FlutterError(
+                return PigeonError(
                         code: errorCodesInterface.emailAlreadyInUseCode,
                         message: apiError.errorUserMsg,
                         details: nil
                 )
             }
             if (apiError.errorMessageKey == "error.updateSamePassword") {
-                return FlutterError(
+                return PigeonError(
                         code: errorCodesInterface.updateSamePassword,
                         message: apiError.errorUserMsg,
                         details: nil
@@ -54,28 +54,28 @@ public class Converters {
             return defaultFlutterError
         case .AuthFailure(reason: _, apiError: let apiError):
             if (apiError?.errorMessageKey == "error.invalidEmailOrPassword") {
-                return FlutterError(
+                return PigeonError(
                         code: errorCodesInterface.invalidEmailOrPasswordCode,
                         message: apiError?.errorUserMsg,
                         details: nil
                 )
             }
             if (apiError?.errorMessageKey == "error.invalidVerificationCode") {
-                return FlutterError(
+                return PigeonError(
                         code: errorCodesInterface.invalidVerificationCode,
                         message: apiError?.errorUserMsg,
                         details: nil
                 )
             }
             if (apiError?.error == "invalid_grant") {
-                return FlutterError(
+                return PigeonError(
                         code: errorCodesInterface.invalidGrant,
                         message: apiError?.errorUserMsg,
                         details: nil
                 )
             }
             if (apiError?.errorMessageKey == "error.socialAccountEmailAlreadyInUse") {
-                return FlutterError(
+                return PigeonError(
                         code: errorCodesInterface.socialAccountEmailAlreadyInUse,
                         message: apiError?.errorUserMsg,
                         details: nil
@@ -83,14 +83,14 @@ public class Converters {
             }
             return defaultFlutterError
         case .AuthCanceled:
-            return FlutterError(
+            return PigeonError(
                 code: errorCodesInterface.userCancelledOrClosedTheWebFlow,
                 message: "Auth was cancelled by the user",
                 details: nil
             )
         case .TechnicalError(reason: let reason, apiError: _):
             if (reason == "Response status code was unacceptable: 401.") {
-                return FlutterError(
+                return PigeonError(
                     code: errorCodesInterface.unauthorizedRefreshToken,
                     message: nil,
                     details: nil
@@ -100,32 +100,28 @@ public class Converters {
         }
     }
     
-    static public func authTokenToInterface(
+    static func authTokenToInterface(
             authToken: AuthToken
         ) -> AuthTokenInterface {
-            
-            let expriresIn = authToken.expiresIn as NSNumber?
-            
+            let expiresIn = authToken.expiresIn.map { Int64($0) }
             let user = authToken.user != nil
             ? openIdUserToInterface(openIdUser: authToken.user!)
             : nil
             
-            return AuthTokenInterface.make(
-                withIdToken: authToken.idToken,
+            return AuthTokenInterface(
+                idToken: authToken.idToken,
                 accessToken: authToken.accessToken,
                 refreshToken: authToken.refreshToken,
                 tokenType: authToken.tokenType,
-                expiresIn: expriresIn,
+                expiresIn: expiresIn,
                 user: user
             )
         }
     
-    static public func authTokenFromInterface(
+    static func authTokenFromInterface(
             authTokenInterface: AuthTokenInterface
         ) -> AuthToken {
-            
-            let expriresIn = authTokenInterface.expiresIn as? Int
-            
+            let expiresIn = authTokenInterface.expiresIn.map { Int(truncatingIfNeeded: $0) }
             let user = authTokenInterface.user != nil
             ? openIdUserFromInterface(
                 openIdUserInterface: authTokenInterface.user!
@@ -137,25 +133,22 @@ public class Converters {
                 accessToken: authTokenInterface.accessToken,
                 refreshToken: authTokenInterface.refreshToken,
                 tokenType: authTokenInterface.tokenType,
-                expiresIn: expriresIn,
+                expiresIn: expiresIn,
                 user: user
             )
         }
     
-    static public func openIdUserToInterface(
+    static func openIdUserToInterface(
             openIdUser: OpenIdUser
         ) -> OpenIdUserInterface {
-            
-            let emailVerified = openIdUser.emailVerified as? NSNumber
-            
-            let phoneNumberVerified = openIdUser.phoneNumberVerified as? NSNumber
-            
+            let emailVerified = openIdUser.emailVerified ?? false
+            let phoneNumberVerified = openIdUser.phoneNumberVerified ?? false
             let address = openIdUser.address != nil
             ? addressToInterface(address: openIdUser.address!)
             : nil
             
-            return OpenIdUserInterface.make(
-                withId: openIdUser.id,
+            return OpenIdUserInterface(
+                id: openIdUser.id,
                 name: openIdUser.name,
                 preferredUsername: openIdUser.preferredUsername,
                 givenName: openIdUser.givenName,
@@ -177,7 +170,7 @@ public class Converters {
             )
         }
     
-    static public func openIdUserFromInterface(
+    static func openIdUserFromInterface(
         openIdUserInterface: OpenIdUserInterface
         ) -> OpenIdUser {
 
@@ -198,22 +191,22 @@ public class Converters {
                 picture: openIdUserInterface.picture,
                 website: openIdUserInterface.website,
                 email: openIdUserInterface.email,
-                emailVerified: openIdUserInterface.emailVerified?.boolValue,
+                emailVerified: openIdUserInterface.emailVerified,
                 gender: openIdUserInterface.gender,
                 zoneinfo: openIdUserInterface.zoneinfo,
                 locale: openIdUserInterface.locale,
                 phoneNumber: openIdUserInterface.phoneNumber,
-                phoneNumberVerified: openIdUserInterface.phoneNumberVerified?.boolValue,
+                phoneNumberVerified: openIdUserInterface.phoneNumberVerified,
                 address: address
             )
         }
 
-    static public func addressToInterface(
+    static func addressToInterface(
             address: ProfileAddress
     ) -> AddressInterface {
 
-        AddressInterface.make(
-                withFormatted: address.raw,
+        AddressInterface(
+                formatted: address.raw,
                 streetAddress: address.streetAddress,
                 locality: address.locality,
                 region: address.region,
@@ -222,7 +215,7 @@ public class Converters {
         )
     }
     
-    static public func addressFromInterface(
+    static func addressFromInterface(
             addressInterface: AddressInterface
         ) -> ProfileAddress {
 
@@ -245,7 +238,7 @@ public class Converters {
         )
         }
     
-    static public func signupRequestFromInterface(
+    static func signupRequestFromInterface(
             profileSignupRequestInterface: ProfileSignupRequestInterface
         ) -> ProfileSignupRequest {
 
@@ -286,11 +279,11 @@ public class Converters {
                 bio: profileSignupRequestInterface.bio,
                 consents: consents,
                 company: profileSignupRequestInterface.company,
-                liteOnly: profileSignupRequestInterface.liteOnly?.boolValue
+                liteOnly: profileSignupRequestInterface.liteOnly
             )
         }
 
-    static public func addressTypeToInterface(
+    static func addressTypeToInterface(
                 addressType: String?
         ) -> ProfileAddressTypeInterface {
             switch addressType {
@@ -303,7 +296,7 @@ public class Converters {
             }
         }
     
-    static public func addressTypeFromInterface(
+    static func addressTypeFromInterface(
                 addressTypeInterface: ProfileAddressTypeInterface?
             ) -> String? {
                 guard let addressType = addressTypeInterface else {
@@ -320,20 +313,20 @@ public class Converters {
                 }
             }
 
-    static public func profileAddressToInterface(
+    static func profileAddressToInterface(
             profileAddress: ProfileAddress
     ) -> ProfileAddressInterface {
 
-        let isDefault = profileAddress.isDefault as? NSNumber
+        let isDefault = profileAddress.isDefault ?? false
 
         let addressType = addressTypeToInterface(
                 addressType: profileAddress.addressType
         )
 
-        return ProfileAddressInterface.make(
-                withTitle: profileAddress.title,
+        return ProfileAddressInterface(
+                title: profileAddress.title,
                 isDefault: isDefault,
-                addressType:ProfileAddressTypeInterfaceBox(value:  addressType),
+                addressType: addressType,
                 streetAddress: profileAddress.streetAddress,
                 locality: profileAddress.locality,
                 region: profileAddress.region,
@@ -347,17 +340,17 @@ public class Converters {
         )
     }
     
-    static public func profileAddressFromInterface(
+    static func profileAddressFromInterface(
             profileAddressInterface: ProfileAddressInterface
         ) -> ProfileAddress {
 
             let addressType = addressTypeFromInterface(
-                addressTypeInterface: profileAddressInterface.addressType?.value
+                addressTypeInterface: profileAddressInterface.addressType
             )
         
             return ProfileAddress(
                 title: profileAddressInterface.title,
-                isDefault: profileAddressInterface.isDefault?.boolValue,
+                isDefault: profileAddressInterface.isDefault,
                 addressType: addressType,
                 streetAddress: profileAddressInterface.streetAddress,
                 addressComplement: nil,
@@ -375,18 +368,18 @@ public class Converters {
             )
         }
 
-    static public func consentToInterface(
+    static func consentToInterface(
             consent: Consent
     ) -> ConsentInterface {
 
-        ConsentInterface.make(
-                withGranted: consent.granted,
+        ConsentInterface(
+                granted: consent.granted,
                 consentType: consent.consentType,
                 date: consent.date
         )
     }
     
-    static public func consentFromInterface(
+    static func consentFromInterface(
         consentInterface: ConsentInterface
         ) -> Consent {
 
@@ -397,63 +390,59 @@ public class Converters {
         )
     }
     
-    static public func providerCreatorFromInterface(
-                providerCreatorInterface: ProviderCreatorInterface
-            ) -> ProviderCreator? {
-                switch providerCreatorInterface.type {
-                case ProviderCreatorTypeInterface.google:
-                    return GoogleProvider()
-                case ProviderCreatorTypeInterface.facebook:
-                    return FacebookProvider()
-                case ProviderCreatorTypeInterface.webview:
-                    return nil
-                @unknown default:
-                    return nil
-                }
-            }
+    static func providerCreatorFromInterface(
+        providerCreatorInterface: ProviderCreatorInterface
+    ) -> ProviderCreator? {
+        switch providerCreatorInterface.type {
+        case ProviderCreatorTypeInterface.google:
+            return GoogleProvider()
+        case ProviderCreatorTypeInterface.facebook:
+            return FacebookProvider()
+        case ProviderCreatorTypeInterface.webview:
+            return nil
+        @unknown default:
+            return nil
+        }
+    }
 
-    static public func loginSummaryToInterface(
+    static func loginSummaryToInterface(
             loginSummary: LoginSummary
     ) -> LoginSummaryInterface {
-        let firstLogin = loginSummary.firstLogin != nil ? NSNumber.init(floatLiteral: Double(loginSummary.firstLogin!)) : nil
-        let lastLogin = loginSummary.lastLogin != nil ? NSNumber.init(floatLiteral: Double(loginSummary.lastLogin!)) : nil
-        let total = loginSummary.total != nil ? NSNumber.init(value: loginSummary.total!) : nil
-
-        return LoginSummaryInterface.make(
-                withFirstLogin: firstLogin,
-                lastLogin: lastLogin,
-                total: total,
+        return LoginSummaryInterface(
+                firstLogin: loginSummary.firstLogin.map { Double($0) },
+                lastLogin: loginSummary.lastLogin.map { Double($0) },
+                total: loginSummary.total.map { Int64($0) },
                 origins: loginSummary.origins,
                 devices: loginSummary.devices,
                 lastProvider: loginSummary.lastProvider
         )
     }
 
-    static public func loginSummaryFromInterface(
+    static func loginSummaryFromInterface(
             loginSummaryInterface: LoginSummaryInterface
     ) -> LoginSummary {
 
         LoginSummary(
-                firstLogin: loginSummaryInterface.firstLogin?.intValue,
-                lastLogin: loginSummaryInterface.lastLogin?.intValue,
-                total: loginSummaryInterface.total?.intValue,
+                firstLogin: loginSummaryInterface.firstLogin.map { Int($0) },
+                lastLogin: loginSummaryInterface.lastLogin.map { Int($0) },
+                total: loginSummaryInterface.total.map { Int(truncatingIfNeeded: $0) },
                 origins: loginSummaryInterface.origins,
                 devices: loginSummaryInterface.devices,
                 lastProvider: loginSummaryInterface.lastProvider
         )
     }
 
-    static public func emailsToInterface(
+    static func emailsToInterface(
             emails: Emails
     ) -> EmailsInterface {
 
-        EmailsInterface.make(
-                withVerified: emails.verified,
+        EmailsInterface(
+                verified: emails.verified,
                 unverified: emails.unverified
         )
     }
 
-    static public func emailsFromInterface(
+    static func emailsFromInterface(
             emailsInterface: EmailsInterface
     ) -> Emails {
 
@@ -463,22 +452,19 @@ public class Converters {
         )
     }
 
-    static public func profileToInterface(
+    static func profileToInterface(
             profile: Profile
     ) -> ProfileInterface {
         let loginSummary = profile.loginSummary != nil ? loginSummaryToInterface(loginSummary: profile.loginSummary!) : nil
-        let emailVerified = profile.emailVerified != nil ? NSNumber.init(booleanLiteral: profile.emailVerified!) : nil
         let emails = profile.emails != nil ? emailsToInterface(emails: profile.emails!) : nil
-        let phoneNumberVerified = profile.phoneNumberVerified != nil ? NSNumber.init(booleanLiteral: profile.phoneNumberVerified!) : nil
-        let liteOnly = profile.liteOnly != nil ? NSNumber.init(booleanLiteral: profile.liteOnly!) : nil
 
         let addresses = profile.addresses?
                 .map({ profileAddress in
                     profileAddressToInterface(profileAddress: profileAddress)
                 })
         
-        return ProfileInterface.make(
-                withUid: profile.uid,
+        return ProfileInterface(
+                uid: profile.uid,
                 givenName: profile.givenName,
                 middleName: profile.middleName,
                 familyName: profile.familyName,
@@ -493,10 +479,10 @@ public class Converters {
                 username: profile.username,
                 gender: profile.gender,
                 email: profile.email,
-                emailVerified: emailVerified,
+                emailVerified: profile.emailVerified,
                 emails: emails,
                 phoneNumber: profile.phoneNumber,
-                phoneNumberVerified: phoneNumberVerified,
+                phoneNumberVerified: profile.phoneNumberVerified,
                 addresses: addresses,
                 locale: profile.locale,
                 bio: profile.bio,
@@ -504,12 +490,12 @@ public class Converters {
                 consents: profile.consents?.mapValues {consent in consentToInterface(consent: consent)},
                 createdAt: nil,
                 updatedAt: nil,
-                liteOnly: liteOnly,
+                liteOnly: profile.liteOnly,
                 company: nil
         )
     }
 
-    static public func profileFromInterface(
+    static func profileFromInterface(
             profileInterface: ProfileInterface
     ) -> Profile {
         let loginSummary = profileInterface.loginSummary != nil ? loginSummaryFromInterface(loginSummaryInterface: profileInterface.loginSummary!) : nil
@@ -536,10 +522,10 @@ public class Converters {
                 username: profileInterface.username,
                 gender: profileInterface.gender,
                 email: profileInterface.email,
-                emailVerified: profileInterface.emailVerified?.boolValue,
+                emailVerified: profileInterface.emailVerified,
                 emails: emails,
                 phoneNumber: profileInterface.phoneNumber,
-                phoneNumberVerified: profileInterface.phoneNumberVerified?.boolValue,
+                phoneNumberVerified: profileInterface.phoneNumberVerified,
                 addresses: addresses,
                 locale: profileInterface.locale,
                 bio: profileInterface.bio,
@@ -548,7 +534,7 @@ public class Converters {
                 createdAt: profileInterface.createdAt,
                 updatedAt: profileInterface.updatedAt,
                 company: profileInterface.company,
-                liteOnly: profileInterface.liteOnly?.boolValue
+                liteOnly: profileInterface.liteOnly
         )
     }
 }

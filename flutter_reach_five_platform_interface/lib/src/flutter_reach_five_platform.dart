@@ -55,8 +55,7 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
   /// {@macro flutter_reach_five.reachFiveManager.initialize}
   Future<ReachFiveConfigInterface> initialize(
     ReachFiveKeyInterface reachFiveKey,
-  ) =>
-      reachFiveHostApi.initialize(reachFiveKey);
+  ) => reachFiveHostApi.initialize(reachFiveKey);
 
   /// {@macro flutter_reach_five.reachFive.signup}
   Future<AuthTokenInterface> signup({
@@ -64,16 +63,15 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
     required ProfileSignupRequestInterface profile,
     String? redirectUrl,
     List<String>? scope,
-  }) =>
-      reachFiveHostApi.signup(
-        SignupRequestInterface(
-          reachFiveKey: reachFiveKey,
-          profile: profile,
-          redirectUrl: redirectUrl,
-          scope: scope,
-          errorCodes: errorCodesInterface,
-        ),
-      );
+  }) => reachFiveHostApi.signup(
+    SignupRequestInterface(
+      reachFiveKey: reachFiveKey,
+      profile: profile,
+      redirectUrl: redirectUrl,
+      scope: scope,
+      errorCodes: errorCodesInterface,
+    ),
+  );
 
   /// {@macro flutter_reach_five.reachFive.loginWithPassword}
   Future<AuthTokenInterface> loginWithPassword({
@@ -82,17 +80,16 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
     String? email,
     String? phoneNumber,
     List<String>? scope,
-  }) =>
-      reachFiveHostApi.loginWithPassword(
-        LoginWithPasswordRequestInterface(
-          reachFiveKey: reachFiveKey,
-          password: password,
-          email: email,
-          phoneNumber: phoneNumber,
-          scope: scope,
-          errorCodes: errorCodesInterface,
-        ),
-      );
+  }) => reachFiveHostApi.loginWithPassword(
+    LoginWithPasswordRequestInterface(
+      reachFiveKey: reachFiveKey,
+      password: password,
+      email: email,
+      phoneNumber: phoneNumber,
+      scope: scope,
+      errorCodes: errorCodesInterface,
+    ),
+  );
 
   /// {@macro flutter_reach_five.reachFive.loginWithProvider}
   Future<AuthTokenInterface> loginWithProvider({
@@ -100,63 +97,57 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
     required String provider,
     required String origin,
     List<String>? scope,
-  }) =>
-      reachFiveHostApi.loginWithProvider(
-        LoginWithProviderRequestInterface(
-          reachFiveKey: reachFiveKey,
-          provider: provider,
-          origin: origin,
-          scope: scope,
-          errorCodes: errorCodesInterface,
-        ),
-      );
+  }) => reachFiveHostApi.loginWithProvider(
+    LoginWithProviderRequestInterface(
+      reachFiveKey: reachFiveKey,
+      provider: provider,
+      origin: origin,
+      scope: scope,
+      errorCodes: errorCodesInterface,
+    ),
+  );
 
   /// {@macro flutter_reach_five.reachFive.logout}
-  Future<void> logout({
-    required ReachFiveKeyInterface reachFiveKey,
-  }) =>
+  Future<void> logout({required ReachFiveKeyInterface reachFiveKey}) =>
       reachFiveHostApi.logout(reachFiveKey);
 
   /// {@macro flutter_reach_five.reachFive.getProfile}
   Future<ProfileInterface> getProfile({
     required ReachFiveKeyInterface reachFiveKey,
     required AuthTokenInterface authToken,
-  }) =>
-      reachFiveHostApi.getProfile(
-        GetProfileRequestInterface(
-          reachFiveKey: reachFiveKey,
-          authToken: authToken,
-          errorCodes: errorCodesInterface,
-        ),
-      );
+  }) => reachFiveHostApi.getProfile(
+    GetProfileRequestInterface(
+      reachFiveKey: reachFiveKey,
+      authToken: authToken,
+      errorCodes: errorCodesInterface,
+    ),
+  );
 
   /// {@macro flutter_reach_five.reachFive.updateProfile}
   Future<ProfileInterface> updateProfile({
     required ReachFiveKeyInterface reachFiveKey,
     required AuthTokenInterface authToken,
     required ProfileInterface profile,
-  }) =>
-      reachFiveHostApi.updateProfile(
-        UpdateProfileRequestInterface(
-          reachFiveKey: reachFiveKey,
-          authToken: authToken,
-          profile: profile,
-          errorCodes: errorCodesInterface,
-        ),
-      );
+  }) => reachFiveHostApi.updateProfile(
+    UpdateProfileRequestInterface(
+      reachFiveKey: reachFiveKey,
+      authToken: authToken,
+      profile: profile,
+      errorCodes: errorCodesInterface,
+    ),
+  );
 
   /// {@macro flutter_reach_five.reachFive.refreshAccessToken}
   Future<AuthTokenInterface> refreshAccessToken({
     required ReachFiveKeyInterface reachFiveKey,
     required AuthTokenInterface authToken,
-  }) =>
-      reachFiveHostApi.refreshAccessToken(
-        RefreshAccessTokenRequestInterface(
-          reachFiveKey: reachFiveKey,
-          authToken: authToken,
-          errorCodes: errorCodesInterface,
-        ),
-      );
+  }) => reachFiveHostApi.refreshAccessToken(
+    RefreshAccessTokenRequestInterface(
+      reachFiveKey: reachFiveKey,
+      authToken: authToken,
+      errorCodes: errorCodesInterface,
+    ),
+  );
 
   /// {@macro flutter_reach_five.reachFive.requestPasswordReset}
   Future<void> requestPasswordReset({
@@ -164,15 +155,14 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
     String? email,
     String? phoneNumber,
     String? redirectUrl,
-  }) =>
-      reachFiveHostApi.requestPasswordReset(
-        RequestPasswordResetRequestInterface(
-          reachFiveKey: reachFiveKey,
-          email: email,
-          phoneNumber: phoneNumber,
-          redirectUrl: redirectUrl,
-        ),
-      );
+  }) => reachFiveHostApi.requestPasswordReset(
+    RequestPasswordResetRequestInterface(
+      reachFiveKey: reachFiveKey,
+      email: email,
+      phoneNumber: phoneNumber,
+      redirectUrl: redirectUrl,
+    ),
+  );
 
   /// {@macro flutter_reach_five.reachFive.updatePassword}
   Future<void> updatePasswordWithAccessToken({
@@ -180,29 +170,27 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
     required AuthTokenInterface authToken,
     required String oldPassword,
     required String newPassword,
-  }) =>
-      reachFiveHostApi.updatePasswordWithAccessToken(
-        UpdatePasswordWithAccessTokenRequestInterface(
-          reachFiveKey: reachFiveKey,
-          authToken: authToken,
-          oldPassword: oldPassword,
-          password: newPassword,
-        ),
-      );
+  }) => reachFiveHostApi.updatePasswordWithAccessToken(
+    UpdatePasswordWithAccessTokenRequestInterface(
+      reachFiveKey: reachFiveKey,
+      authToken: authToken,
+      oldPassword: oldPassword,
+      password: newPassword,
+    ),
+  );
 
   /// {@macro flutter_reach_five.reachFive.updatePassword}
   Future<void> updatePasswordWithFreshAccessToken({
     required ReachFiveKeyInterface reachFiveKey,
     required AuthTokenInterface freshAuthToken,
     required String newPassword,
-  }) =>
-      reachFiveHostApi.updatePasswordWithFreshAccessToken(
-        UpdatePasswordWithFreshAccessTokenRequestInterface(
-          reachFiveKey: reachFiveKey,
-          freshAuthToken: freshAuthToken,
-          password: newPassword,
-        ),
-      );
+  }) => reachFiveHostApi.updatePasswordWithFreshAccessToken(
+    UpdatePasswordWithFreshAccessTokenRequestInterface(
+      reachFiveKey: reachFiveKey,
+      freshAuthToken: freshAuthToken,
+      password: newPassword,
+    ),
+  );
 
   /// {@macro flutter_reach_five.reachFive.updatePassword}
   Future<void> updatePasswordWithEmail({
@@ -210,16 +198,15 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
     required String email,
     required String verificationCode,
     required String newPassword,
-  }) =>
-      reachFiveHostApi.updatePasswordWithEmail(
-        UpdatePasswordWithEmailRequestInterface(
-          reachFiveKey: reachFiveKey,
-          email: email,
-          verificationCode: verificationCode,
-          password: newPassword,
-          errorCodes: errorCodesInterface,
-        ),
-      );
+  }) => reachFiveHostApi.updatePasswordWithEmail(
+    UpdatePasswordWithEmailRequestInterface(
+      reachFiveKey: reachFiveKey,
+      email: email,
+      verificationCode: verificationCode,
+      password: newPassword,
+      errorCodes: errorCodesInterface,
+    ),
+  );
 
   /// {@macro flutter_reach_five.reachFive.updatePassword}
   Future<void> updatePasswordWithPhoneNumber({
@@ -227,14 +214,13 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
     required String phoneNumber,
     required String verificationCode,
     required String newPassword,
-  }) =>
-      reachFiveHostApi.updatePasswordWithPhoneNumber(
-        UpdatePasswordWithPhoneNumberRequestInterface(
-          reachFiveKey: reachFiveKey,
-          phoneNumber: phoneNumber,
-          verificationCode: verificationCode,
-          password: newPassword,
-          errorCodes: errorCodesInterface,
-        ),
-      );
+  }) => reachFiveHostApi.updatePasswordWithPhoneNumber(
+    UpdatePasswordWithPhoneNumberRequestInterface(
+      reachFiveKey: reachFiveKey,
+      phoneNumber: phoneNumber,
+      verificationCode: verificationCode,
+      password: newPassword,
+      errorCodes: errorCodesInterface,
+    ),
+  );
 }

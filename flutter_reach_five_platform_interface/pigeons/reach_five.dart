@@ -9,8 +9,7 @@ import 'package:pigeon/pigeon.dart';
       package: 'tech.bam.flutter_reach_five.android',
       className: 'ReachFiveApi',
     ),
-    objcHeaderOut: '../flutter_reach_five_ios/ios/Classes/reach_five_api.h',
-    objcSourceOut: '../flutter_reach_five_ios/ios/Classes/reach_five_api.m',
+    swiftOut: '../flutter_reach_five_ios/ios/Classes/reach_five_api.swift',
   ),
 )
 class ErrorCodesInterface {
@@ -64,7 +63,7 @@ class ReachFiveKeyInterface {
   });
 
   final SdkConfigInterface sdkConfig;
-  final List<ProviderCreatorInterface?> providerCreators;
+  final List<ProviderCreatorInterface> providerCreators;
 }
 
 class ReachFiveConfigInterface {
@@ -74,7 +73,7 @@ class ReachFiveConfigInterface {
   });
 
   final ReachFiveKeyInterface reachFiveKey;
-  final List<String?> providers;
+  final List<String> providers;
 }
 
 enum ProfileAddressTypeInterface { billing, delivery }
@@ -161,11 +160,11 @@ class ProfileSignupRequestInterface {
   final String? username;
   final String? gender;
   final String? company;
-  final List<ProfileAddressInterface?>? addresses;
+  final List<ProfileAddressInterface>? addresses;
   final String? locale;
   final String? bio;
-  final Map<String?, Object?>? customFields;
-  final Map<String?, ConsentInterface?>? consents;
+  final Map<String, Object?>? customFields;
+  final Map<String, ConsentInterface>? consents;
   final bool? liteOnly;
 }
 
@@ -181,7 +180,7 @@ class SignupRequestInterface {
   final ReachFiveKeyInterface reachFiveKey;
   final ProfileSignupRequestInterface profile;
   final String? redirectUrl;
-  final List<String?>? scope;
+  final List<String>? scope;
   final ErrorCodesInterface errorCodes;
 }
 
@@ -279,7 +278,7 @@ class LoginWithPasswordRequestInterface {
   final String? email;
   final String? phoneNumber;
   final String password;
-  final List<String?>? scope;
+  final List<String>? scope;
   final ErrorCodesInterface errorCodes;
 }
 
@@ -295,7 +294,7 @@ class LoginWithProviderRequestInterface {
   final ReachFiveKeyInterface reachFiveKey;
   final String provider;
   final String origin;
-  final List<String?>? scope;
+  final List<String>? scope;
   final ErrorCodesInterface errorCodes;
 }
 
@@ -324,19 +323,16 @@ class LoginSummaryInterface {
   final double? firstLogin;
   final double? lastLogin;
   final int? total;
-  final List<String?>? origins;
-  final List<String?>? devices;
+  final List<String>? origins;
+  final List<String>? devices;
   final String? lastProvider;
 }
 
 class EmailsInterface {
-  const EmailsInterface({
-    required this.verified,
-    required this.unverified,
-  });
+  const EmailsInterface({required this.verified, required this.unverified});
 
-  final List<String?>? verified;
-  final List<String?>? unverified;
+  final List<String>? verified;
+  final List<String>? unverified;
 }
 
 class ProfileInterface {
@@ -381,7 +377,7 @@ class ProfileInterface {
   final String? profileURL;
   final String? picture;
   final String? externalId;
-  final List<String?>? authTypes;
+  final List<String>? authTypes;
   final LoginSummaryInterface? loginSummary;
   final String? username;
   final String? gender;
@@ -390,11 +386,11 @@ class ProfileInterface {
   final EmailsInterface? emails;
   final String? phoneNumber;
   final bool? phoneNumberVerified;
-  final List<ProfileAddressInterface?>? addresses;
+  final List<ProfileAddressInterface>? addresses;
   final String? locale;
   final String? bio;
-  final Map<String?, Object?>? customFields;
-  final Map<String?, ConsentInterface?>? consents;
+  final Map<String, Object?>? customFields;
+  final Map<String, ConsentInterface>? consents;
   final String? createdAt;
   final String? updatedAt;
   final bool? liteOnly;
@@ -521,14 +517,10 @@ abstract class ReachFiveHostApi {
   void logout(ReachFiveKeyInterface reachFiveKey);
 
   @async
-  ProfileInterface getProfile(
-    GetProfileRequestInterface request,
-  );
+  ProfileInterface getProfile(GetProfileRequestInterface request);
 
   @async
-  ProfileInterface updateProfile(
-    UpdateProfileRequestInterface request,
-  );
+  ProfileInterface updateProfile(UpdateProfileRequestInterface request);
 
   @async
   AuthTokenInterface refreshAccessToken(
@@ -549,9 +541,7 @@ abstract class ReachFiveHostApi {
   );
 
   @async
-  void updatePasswordWithEmail(
-    UpdatePasswordWithEmailRequestInterface request,
-  );
+  void updatePasswordWithEmail(UpdatePasswordWithEmailRequestInterface request);
 
   @async
   void updatePasswordWithPhoneNumber(
