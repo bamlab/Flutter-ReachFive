@@ -2,6 +2,7 @@ name: flutter_reach_five
 
 packages:
   - flutter_reach_five
+  - flutter_reach_five/example
   - flutter_reach_five_android
   - flutter_reach_five_ios
   - flutter_reach_five_platform_interface
