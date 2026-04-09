@@ -3,12 +3,19 @@ import UIKit
 import Reach5
 import AuthenticationServices
 
-public class FlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHostApi {
-    
+public class FlutterReachFivePlugin: NSObject, FlutterPlugin, FlutterSceneLifeCycleDelegate, ReachFiveHostApi {
+
+    var registrar: FlutterPluginRegistrar
+
+    init(registrar: FlutterPluginRegistrar) {
+        self.registrar = registrar
+    }
+
     public static func register(with registrar: any FlutterPluginRegistrar) {
-        let messenger: FlutterBinaryMessenger = registrar.messenger()
-        let api: ReachFiveHostApi & NSObjectProtocol = FlutterReachFivePlugin.init()
-        ReachFiveHostApiSetup.setUp(binaryMessenger: messenger, api: api)
+        let instance = FlutterReachFivePlugin(registrar: registrar)
+        ReachFiveHostApiSetup.setUp(binaryMessenger: registrar.messenger(), api: instance)
+        registrar.addApplicationDelegate(instance)
+        registrar.addSceneDelegate(instance)
     }
 
     var reachFiveInstances = [String: ReachFive]()
@@ -165,7 +172,7 @@ public class FlutterReachFivePlugin: NSObject, FlutterPlugin, ReachFiveHostApi {
             return
         }
 
-        let viewController = ((UIApplication.shared.delegate?.window!)!).rootViewController
+        let viewController = registrar.viewController
 
         guard let provider = reachFive.getProvider(name: request.provider) else {
             completion(.failure(PigeonError(
