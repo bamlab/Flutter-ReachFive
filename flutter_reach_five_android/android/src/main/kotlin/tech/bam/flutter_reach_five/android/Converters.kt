@@ -6,18 +6,11 @@ import co.reachfive.identity.sdk.core.models.requests.*
 import co.reachfive.identity.sdk.facebook.FacebookProvider
 import co.reachfive.identity.sdk.google.GoogleProvider
 import co.reachfive.identity.sdk.webview.WebViewProvider
-import tech.bam.flutter_reach_five.android.ReachFiveApi.ConsentInterface
-import tech.bam.flutter_reach_five.android.ReachFiveApi.EmailsInterface
-import tech.bam.flutter_reach_five.android.ReachFiveApi.LoginSummaryInterface
-import tech.bam.flutter_reach_five.android.ReachFiveApi.ProfileAddressInterface
-import tech.bam.flutter_reach_five.android.ReachFiveApi.ProfileAddressTypeInterface
-import tech.bam.flutter_reach_five.android.ReachFiveApi.ProfileInterface
-
 class Converters {
     companion object {
         fun parseError(
         reachFiveError: ReachFiveError,
-        errorCodesInterface: ReachFiveApi.ErrorCodesInterface,
+        errorCodesInterface: ErrorCodesInterface,
         defaultFlutterError: FlutterError
         ): FlutterError {
             if (reachFiveError.data?.errorMessageKey == "error.email.alreadyInUse") {
@@ -98,23 +91,21 @@ class Converters {
 
         fun authTokenToInterface(
             authToken: AuthToken
-        ): ReachFiveApi.AuthTokenInterface {
+        ): AuthTokenInterface {
             val user = authToken.user
 
-            return ReachFiveApi
-                .AuthTokenInterface
-                .Builder()
-                .setIdToken(authToken.idToken)
-                .setAccessToken(authToken.accessToken)
-                .setRefreshToken(authToken.refreshToken)
-                .setTokenType(authToken.tokenType)
-                .setExpiresIn(authToken.expiresIn?.toLong())
-                .setUser(if (user != null) openIdUserToInterface(user) else null)
-                .build()
+            return AuthTokenInterface(
+                idToken = authToken.idToken,
+                accessToken = authToken.accessToken,
+                refreshToken = authToken.refreshToken,
+                tokenType = authToken.tokenType,
+                expiresIn = authToken.expiresIn?.toLong(),
+                user = if (user != null) openIdUserToInterface(user) else null
+            )
         }
 
         fun authTokenFromInterface(
-            authTokenInterface: ReachFiveApi.AuthTokenInterface
+            authTokenInterface: AuthTokenInterface
         ): AuthToken {
             val user = authTokenInterface.user
 
@@ -130,38 +121,34 @@ class Converters {
 
         fun openIdUserToInterface(
             openIdUser: OpenIdUser
-        ): ReachFiveApi.OpenIdUserInterface {
+        ): OpenIdUserInterface {
             val address = openIdUser.address
 
-            return ReachFiveApi
-                .OpenIdUserInterface
-                .Builder()
-                .setId(openIdUser.id)
-                .setName(openIdUser.name)
-                .setPreferredUsername(openIdUser.preferredUsername)
-                .setGivenName(openIdUser.givenName)
-                .setFamilyName(openIdUser.familyName)
-                .setMiddleName(openIdUser.middleName)
-                .setNickname(openIdUser.nickname)
-                .setPicture(openIdUser.picture)
-                .setWebsite(openIdUser.website)
-                .setEmail(openIdUser.email)
-                .setEmailVerified(openIdUser.emailVerified)
-                .setGender(openIdUser.gender)
-                .setZoneinfo(openIdUser.zoneinfo)
-                .setLocale(openIdUser.locale)
-                .setPhoneNumber(openIdUser.phoneNumber)
-                .setPhoneNumberVerified(openIdUser.phoneNumberVerified)
-                .setAddress(
-                    if (address != null) addressToInterface(address) else null
-                )
-                .setBirthdate(openIdUser.birthdate)
-                .setExternalId(openIdUser.externalId)
-                .build()
+            return OpenIdUserInterface(
+                id = openIdUser.id,
+                name = openIdUser.name,
+                preferredUsername = openIdUser.preferredUsername,
+                givenName = openIdUser.givenName,
+                familyName = openIdUser.familyName,
+                middleName = openIdUser.middleName,
+                nickname = openIdUser.nickname,
+                picture = openIdUser.picture,
+                website = openIdUser.website,
+                email = openIdUser.email,
+                emailVerified = openIdUser.emailVerified,
+                gender = openIdUser.gender,
+                zoneinfo = openIdUser.zoneinfo,
+                locale = openIdUser.locale,
+                phoneNumber = openIdUser.phoneNumber,
+                phoneNumberVerified = openIdUser.phoneNumberVerified,
+                address = if (address != null) addressToInterface(address) else null,
+                birthdate = openIdUser.birthdate,
+                externalId = openIdUser.externalId
+            )
         }
 
         fun openIdUserFromInterface(
-            openIdUserInterface: ReachFiveApi.OpenIdUserInterface
+            openIdUserInterface: OpenIdUserInterface
         ): OpenIdUser {
             val address = openIdUserInterface.address
 
@@ -190,20 +177,19 @@ class Converters {
 
         fun addressToInterface(
             address: Address
-        ): ReachFiveApi.AddressInterface {
-            return ReachFiveApi.AddressInterface
-                .Builder()
-                .setFormatted(address.formatted)
-                .setStreetAddress(address.streetAddress)
-                .setLocality(address.locality)
-                .setRegion(address.region)
-                .setPostalCode(address.postalCode)
-                .setCountry(address.country)
-                .build()
+        ): AddressInterface {
+            return AddressInterface(
+                formatted = address.formatted,
+                streetAddress = address.streetAddress,
+                locality = address.locality,
+                region = address.region,
+                postalCode = address.postalCode,
+                country = address.country
+            )
         }
 
         fun addressFromInterface(
-            addressInterface: ReachFiveApi.AddressInterface
+            addressInterface: AddressInterface
         ): Address {
             return Address(
                 formatted = addressInterface.formatted,
@@ -216,7 +202,7 @@ class Converters {
         }
 
         fun signupRequestFromInterface(
-            profileSignupRequestInterface: ReachFiveApi.ProfileSignupRequestInterface
+            profileSignupRequestInterface: ProfileSignupRequestInterface
         ): ProfileSignupRequest {
             val addresses = profileSignupRequestInterface.addresses?.map { addressRequest ->
                 profileAddressFromInterface(addressRequest)
@@ -244,7 +230,7 @@ class Converters {
                 addresses = addresses,
                 locale = profileSignupRequestInterface.locale,
                 bio = profileSignupRequestInterface.bio,
-                customFields = profileSignupRequestInterface.customFields,
+                customFields = profileSignupRequestInterface.customFields?.filterValues { it != null }?.mapValues { it.value!! },
                 consents = consents,
                 liteOnly = profileSignupRequestInterface.liteOnly
             )
@@ -275,21 +261,21 @@ class Converters {
         ): ProfileAddressInterface {
             val addressType = addressTypeToInterface(profileAddress.addressType)
 
-            return ProfileAddressInterface.Builder()
-                .setTitle(profileAddress.title)
-                .setIsDefault(profileAddress.isDefault)
-                .setAddressType(addressType)
-                .setStreetAddress(profileAddress.streetAddress)
-                .setLocality(profileAddress.locality)
-                .setRegion(profileAddress.region)
-                .setPostalCode(profileAddress.postalCode)
-                .setCountry(profileAddress.country)
-                .setRaw(profileAddress.raw)
-                .setDeliveryNote(profileAddress.deliveryNote)
-                .setRecipient(profileAddress.recipient)
-                .setCompany(profileAddress.company)
-                .setPhoneNumber(profileAddress.phoneNumber)
-                .build()
+            return ProfileAddressInterface(
+                title = profileAddress.title,
+                isDefault = profileAddress.isDefault,
+                addressType = addressType,
+                streetAddress = profileAddress.streetAddress,
+                locality = profileAddress.locality,
+                region = profileAddress.region,
+                postalCode = profileAddress.postalCode,
+                country = profileAddress.country,
+                raw = profileAddress.raw,
+                deliveryNote = profileAddress.deliveryNote,
+                recipient = profileAddress.recipient,
+                company = profileAddress.company,
+                phoneNumber = profileAddress.phoneNumber
+            )
         }
 
         fun profileAddressFromInterface(
@@ -317,18 +303,16 @@ class Converters {
         fun consentToInterface(
             consent: Consent
         ): ConsentInterface {
-
-            return ConsentInterface.Builder()
-                .setGranted(consent.granted)
-                .setConsentType(consent.consentType)
-                .setDate(consent.date)
-                .build()
+            return ConsentInterface(
+                granted = consent.granted,
+                consentType = consent.consentType,
+                date = consent.date
+            )
         }
 
         fun consentFromInterface(
             consentInterface: ConsentInterface
         ): Consent {
-
             return Consent(
                 granted = consentInterface.granted,
                 consentType = consentInterface.consentType,
@@ -337,26 +321,26 @@ class Converters {
         }
 
         fun providerCreatorFromInterface(
-            providerCreatorInterface: ReachFiveApi.ProviderCreatorInterface
+            providerCreatorInterface: ProviderCreatorInterface
         ): ProviderCreator {
             return when (providerCreatorInterface.type) {
-                ReachFiveApi.ProviderCreatorTypeInterface.GOOGLE -> GoogleProvider()
-                ReachFiveApi.ProviderCreatorTypeInterface.FACEBOOK -> FacebookProvider()
-                ReachFiveApi.ProviderCreatorTypeInterface.WEBVIEW -> WebViewProvider()
+                ProviderCreatorTypeInterface.GOOGLE -> GoogleProvider()
+                ProviderCreatorTypeInterface.FACEBOOK -> FacebookProvider()
+                ProviderCreatorTypeInterface.WEBVIEW -> WebViewProvider()
             }
         }
 
         fun loginSummaryToInterface(
             loginSummary: LoginSummary
         ): LoginSummaryInterface {
-            return LoginSummaryInterface.Builder()
-                .setFirstLogin(loginSummary.firstLogin?.toDouble())
-                .setLastLogin(loginSummary.lastLogin?.toDouble())
-                .setTotal(loginSummary.total?.toLong())
-                .setOrigins(loginSummary.origins)
-                .setDevices(loginSummary.devices)
-                .setLastProvider(loginSummary.lastProvider)
-                .build()
+            return LoginSummaryInterface(
+                firstLogin = loginSummary.firstLogin?.toDouble(),
+                lastLogin = loginSummary.lastLogin?.toDouble(),
+                total = loginSummary.total?.toLong(),
+                origins = loginSummary.origins,
+                devices = loginSummary.devices,
+                lastProvider = loginSummary.lastProvider
+            )
         }
 
         fun loginSummaryFromInterface(
@@ -375,10 +359,10 @@ class Converters {
         fun emailsToInterface(
             emails: Emails
         ): EmailsInterface {
-            return EmailsInterface.Builder()
-                .setVerified(emails.verified)
-                .setUnverified(emails.unverified)
-                .build()
+            return EmailsInterface(
+                verified = emails.verified,
+                unverified = emails.unverified
+            )
         }
 
         fun emailsFromInterface(
@@ -394,7 +378,6 @@ class Converters {
             profile: Profile
         ): ProfileInterface {
             val loginSummary = profile.loginSummary
-
             val emails = profile.emails
 
             val addresses = profile.addresses?.map { address ->
@@ -405,43 +388,42 @@ class Converters {
                 consentToInterface(consentMapEntry.value)
             }
 
-            return ProfileInterface.Builder()
-                .setUid(profile.uid)
-                .setGivenName(profile.givenName)
-                .setMiddleName(profile.middleName)
-                .setFamilyName(profile.familyName)
-                .setName(profile.name)
-                .setNickname(profile.nickname)
-                .setBirthdate(profile.birthdate)
-                .setProfileURL(profile.profileURL)
-                .setPicture(profile.picture)
-                .setExternalId(profile.externalId)
-                .setAuthTypes(profile.authTypes)
-                .setLoginSummary(if (loginSummary != null) loginSummaryToInterface(loginSummary) else null)
-                .setUsername(profile.username)
-                .setGender(profile.gender)
-                .setEmail(profile.email)
-                .setEmailVerified(profile.emailVerified)
-                .setEmails(if (emails != null) emailsToInterface(emails) else null)
-                .setPhoneNumber(profile.phoneNumber)
-                .setPhoneNumberVerified(profile.phoneNumberVerified)
-                .setAddresses(addresses)
-                .setLocale(profile.locale)
-                .setBio(profile.bio)
-                .setCustomFields(profile.customFields)
-                .setConsents(consents)
-                .setCreatedAt(profile.createdAt)
-                .setUpdatedAt(profile.updatedAt)
-                .setLiteOnly(profile.liteOnly)
-                .setCompany(profile.company)
-                .build()
+            return ProfileInterface(
+                uid = profile.uid,
+                givenName = profile.givenName,
+                middleName = profile.middleName,
+                familyName = profile.familyName,
+                name = profile.name,
+                nickname = profile.nickname,
+                birthdate = profile.birthdate,
+                profileURL = profile.profileURL,
+                picture = profile.picture,
+                externalId = profile.externalId,
+                authTypes = profile.authTypes,
+                loginSummary = if (loginSummary != null) loginSummaryToInterface(loginSummary) else null,
+                username = profile.username,
+                gender = profile.gender,
+                email = profile.email,
+                emailVerified = profile.emailVerified,
+                emails = if (emails != null) emailsToInterface(emails) else null,
+                phoneNumber = profile.phoneNumber,
+                phoneNumberVerified = profile.phoneNumberVerified,
+                addresses = addresses,
+                locale = profile.locale,
+                bio = profile.bio,
+                customFields = profile.customFields,
+                consents = consents,
+                createdAt = profile.createdAt,
+                updatedAt = profile.updatedAt,
+                liteOnly = profile.liteOnly,
+                company = profile.company
+            )
         }
 
         fun profileFromInterface(
             profileInterface: ProfileInterface
         ): Profile {
             val loginSummaryInterface = profileInterface.loginSummary
-
             val emailsInterface = profileInterface.emails
 
             val addresses = profileInterface.addresses?.map { address ->
@@ -475,7 +457,7 @@ class Converters {
                 addresses = addresses,
                 locale = profileInterface.locale,
                 bio = profileInterface.bio,
-                customFields = profileInterface.customFields,
+                customFields = profileInterface.customFields?.filterValues { it != null }?.mapValues { it.value!! },
                 consents = consents,
                 createdAt = profileInterface.createdAt,
                 updatedAt = profileInterface.updatedAt,
