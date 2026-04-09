@@ -1,3 +1,9 @@
+# 1.0.0
+
+- **BREAKING**: Update Flutter to >=3.38.0
+- **REFACTOR**(pigeon): update pigeon and remove nullable generic types
+- **REFACTOR**(android): remove all java code
+
 ## 0.5.1
 
  - **REFACTOR**(android plugin): improve result type.

@@ -1,3 +1,10 @@
+# 1.0.0
+
+- **BREAKING**: Update Flutter to >=3.38.0
+- **REFACTOR**(ios): remove all objective-c code
+- **REFACTOR**(pigeon): update pigeon and remove nullable generic types
+- **REFACTOR**(android): remove all java code
+
 ## 0.4.2
 
  - **REFACTOR**(platform interface): rename error exception classes.

@@ -1,3 +1,7 @@
+# 1.0.0
+
+- **BREAKING**: Update Flutter to >=3.38.0
+
 ## 0.5.1
 
  - **REFACTOR**(reach_five_repo): rename in reach_five_identity_repo.
