@@ -39,7 +39,7 @@ scripts:
       dependsOn: 'build_runner'
 
   generate:pigeon:
-    run: melos exec -- "flutter pub run pigeon --input ./pigeons/reach_five.dart && dart format lib test"
+    run: melos exec -- "dart run pigeon --input ./pigeons/reach_five.dart && dart format lib test"
     packageFilters:
       fileExists: "pigeons/reach_five.dart"
   
