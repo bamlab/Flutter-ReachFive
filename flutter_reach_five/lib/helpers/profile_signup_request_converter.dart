@@ -48,9 +48,7 @@ class ProfileSignupRequestConverter {
     ProfileSignupRequestInterface profileSignupRequestInterface,
   ) {
     final addresses = profileSignupRequestInterface.addresses
-        ?.where((profileAddressInterface) => profileAddressInterface != null)
-        .cast<ProfileAddressInterface>()
-        .map(ProfileAddressConverter.fromInterface)
+        ?.map(ProfileAddressConverter.fromInterface)
         .toList();
 
     final profileCustomFieldsInterface =
@@ -65,12 +63,13 @@ class ProfileSignupRequestConverter {
     final consentsInterface = profileConsentsInterface != null
         ? Map<String?, ConsentInterface?>.from(profileConsentsInterface)
         : null;
-    consentsInterface
-        ?.removeWhere((key, value) => key == null || value == null);
+    consentsInterface?.removeWhere(
+      (key, value) => key == null || value == null,
+    );
     final consents = consentsInterface?.cast<String, ConsentInterface>().map(
-          (key, consentInterface) =>
-              MapEntry(key, ConsentConverter.fromInterface(consentInterface)),
-        );
+      (key, consentInterface) =>
+          MapEntry(key, ConsentConverter.fromInterface(consentInterface)),
+    );
 
     return ProfileSignupRequest(
       password: profileSignupRequestInterface.password,
