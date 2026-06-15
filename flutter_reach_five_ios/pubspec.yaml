@@ -1,6 +1,6 @@
 name: flutter_reach_five_ios
 description: iOS implementation of the flutter_reach_five plugin
-version: 1.0.1
+version: 1.1.0
 homepage: https://github.com/bamlab/Flutter-ReachFive
 
 environment:
