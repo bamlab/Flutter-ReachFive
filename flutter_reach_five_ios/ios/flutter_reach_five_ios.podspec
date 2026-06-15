@@ -6,14 +6,14 @@ Pod::Spec.new do |s|
   s.version          = '0.0.1'
   s.summary          = 'An iOS implementation of the flutter_reach_five plugin.'
   s.description      = <<-DESC
-  An iOS implementation of the flutter_reach_five plugin.
+  An iOS implementation of the flutter_reach_five plugin for authentication using the ReachFive identity platform.
                        DESC
   s.homepage         = 'http://example.com'
   s.license          = { :type => 'BSD', :file => '../LICENSE' }
   s.author           = { 'Your Company' => 'email@example.com' }
   s.source           = { :path => '.' }  
-  s.source_files = 'Classes/**/*'
-  s.public_header_files = 'Classes/**/*.h'
+  s.source_files = 'flutter_reach_five_ios/Sources/flutter_reach_five_ios/**/*.swift'
+  s.resource_bundles = {'flutter_reach_five_ios_privacy' => ['flutter_reach_five_ios/Sources/flutter_reach_five_ios/PrivacyInfo.xcprivacy']}
   s.dependency 'Flutter'
 
   s.platform = :ios, '13.0'
