@@ -15,9 +15,7 @@ void main() {
     test('fromInterface method', () async {
       expect(
         ProviderCreatorConverter.fromInterface(
-          ProviderCreatorInterface(
-            type: ProviderCreatorTypeInterface.google,
-          ),
+          ProviderCreatorInterface(type: ProviderCreatorTypeInterface.google),
         ),
         ProviderCreator.google,
       );

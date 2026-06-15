@@ -8,10 +8,7 @@ void main() {
     test('toInterface method', () async {
       expect(
         LoginSummaryConverter.toInterface(
-          const LoginSummary(
-            origins: ['origin'],
-            devices: ['device'],
-          ),
+          const LoginSummary(origins: ['origin'], devices: ['device']),
         ),
         isInstanceOf<LoginSummaryInterface>(),
       );
@@ -20,10 +17,7 @@ void main() {
     test('fromInterface method', () async {
       expect(
         LoginSummaryConverter.fromInterface(
-          LoginSummaryInterface(
-            origins: ['origin'],
-            devices: ['device'],
-          ),
+          LoginSummaryInterface(origins: ['origin'], devices: ['device']),
         ),
         isInstanceOf<LoginSummary>(),
       );

@@ -7,9 +7,7 @@ import 'address_converter.dart';
 /// and the [OpenIdUser] exported from this package
 class OpenIdUserConverter {
   /// convert a [OpenIdUser] to a [OpenIdUserInterface]
-  static OpenIdUserInterface toInterface(
-    OpenIdUser openIdUser,
-  ) {
+  static OpenIdUserInterface toInterface(OpenIdUser openIdUser) {
     final address = openIdUser.address;
 
     return OpenIdUserInterface(
@@ -36,9 +34,7 @@ class OpenIdUserConverter {
   }
 
   /// convert a [OpenIdUserInterface] to a [OpenIdUser]
-  static OpenIdUser fromInterface(
-    OpenIdUserInterface openIdUserInterface,
-  ) {
+  static OpenIdUser fromInterface(OpenIdUserInterface openIdUserInterface) {
     final address = openIdUserInterface.address;
 
     return OpenIdUser(

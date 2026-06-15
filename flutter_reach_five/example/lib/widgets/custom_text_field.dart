@@ -34,9 +34,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      decoration: InputDecoration(
-        hintText: widget.hintText,
-      ),
+      decoration: InputDecoration(hintText: widget.hintText),
       controller: textEditingController,
       onChanged: widget.setValue,
     );

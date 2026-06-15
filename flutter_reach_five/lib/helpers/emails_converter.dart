@@ -6,20 +6,12 @@ import '../models/emails.dart';
 /// and the [Emails] exported from this package
 class EmailsConverter {
   /// convert a [Emails] to a [EmailsInterface]
-  static EmailsInterface toInterface(
-    Emails emails,
-  ) =>
-      EmailsInterface(
-        verified: emails.verified,
-        unverified: emails.unverified,
-      );
+  static EmailsInterface toInterface(Emails emails) =>
+      EmailsInterface(verified: emails.verified, unverified: emails.unverified);
 
   /// convert a [EmailsInterface] to a [Emails]
-  static Emails fromInterface(
-    EmailsInterface emailsInterface,
-  ) =>
-      Emails(
-        verified: emailsInterface.verified?.whereType<String>().toList(),
-        unverified: emailsInterface.unverified?.whereType<String>().toList(),
-      );
+  static Emails fromInterface(EmailsInterface emailsInterface) => Emails(
+    verified: emailsInterface.verified?.whereType<String>().toList(),
+    unverified: emailsInterface.unverified?.whereType<String>().toList(),
+  );
 }

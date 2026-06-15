@@ -26,12 +26,12 @@ class UpdatePasswordMethodState extends State<UpdatePasswordMethod> {
   String newPassword = '';
 
   void setVerificationCode(String newVerificationCode) => setState(() {
-        verificationCode = newVerificationCode;
-      });
+    verificationCode = newVerificationCode;
+  });
 
   void setNewPassword(String newNewPassword) => setState(() {
-        newPassword = newNewPassword;
-      });
+    newPassword = newNewPassword;
+  });
 
   Future<void> requestPasswordReset(ReachFive reachFive) async {
     setState(() {

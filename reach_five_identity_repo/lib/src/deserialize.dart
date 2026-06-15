@@ -6,8 +6,11 @@ final _regList = RegExp(r'^List<(.*)>$');
 final _regSet = RegExp(r'^Set<(.*)>$');
 final _regMap = RegExp(r'^Map<String,(.*)>$');
 
-ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
-    {bool growable = true}) {
+ReturnType deserialize<ReturnType, BaseType>(
+  dynamic value,
+  String targetType, {
+  bool growable = true,
+}) {
   switch (targetType) {
     case 'String':
       return '$value' as ReturnType;
@@ -26,37 +29,56 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'SendEmailVerification200Response':
       return SendEmailVerification200Response.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
+            value as Map<String, dynamic>,
+          )
+          as ReturnType;
     case 'SendEmailVerificationRequest':
       return SendEmailVerificationRequest.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
+            value as Map<String, dynamic>,
+          )
+          as ReturnType;
     default:
       RegExpMatch? match;
 
       if (value is List && (match = _regList.firstMatch(targetType)) != null) {
         targetType = match![1]!; // ignore: parameter_assignments
         return value
-            .map<BaseType>((dynamic v) => deserialize<BaseType, BaseType>(
-                v, targetType,
-                growable: growable))
-            .toList(growable: growable) as ReturnType;
+                .map<BaseType>(
+                  (dynamic v) => deserialize<BaseType, BaseType>(
+                    v,
+                    targetType,
+                    growable: growable,
+                  ),
+                )
+                .toList(growable: growable)
+            as ReturnType;
       }
       if (value is Set && (match = _regSet.firstMatch(targetType)) != null) {
         targetType = match![1]!; // ignore: parameter_assignments
         return value
-            .map<BaseType>((dynamic v) => deserialize<BaseType, BaseType>(
-                v, targetType,
-                growable: growable))
-            .toSet() as ReturnType;
+                .map<BaseType>(
+                  (dynamic v) => deserialize<BaseType, BaseType>(
+                    v,
+                    targetType,
+                    growable: growable,
+                  ),
+                )
+                .toSet()
+            as ReturnType;
       }
       if (value is Map && (match = _regMap.firstMatch(targetType)) != null) {
         targetType = match![1]!; // ignore: parameter_assignments
         return Map<dynamic, BaseType>.fromIterables(
-          value.keys,
-          value.values.map((dynamic v) => deserialize<BaseType, BaseType>(
-              v, targetType,
-              growable: growable)),
-        ) as ReturnType;
+              value.keys,
+              value.values.map(
+                (dynamic v) => deserialize<BaseType, BaseType>(
+                  v,
+                  targetType,
+                  growable: growable,
+                ),
+              ),
+            )
+            as ReturnType;
       }
       break;
   }

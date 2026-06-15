@@ -8,11 +8,7 @@ void main() {
   group('$OpenIdUserConverter', () {
     test('toInterface method', () async {
       expect(
-        OpenIdUserConverter.toInterface(
-          const OpenIdUser(
-            address: Address(),
-          ),
-        ),
+        OpenIdUserConverter.toInterface(const OpenIdUser(address: Address())),
         isInstanceOf<OpenIdUserInterface>(),
       );
     });
@@ -20,9 +16,7 @@ void main() {
     test('fromInterface method', () async {
       expect(
         OpenIdUserConverter.fromInterface(
-          OpenIdUserInterface(
-            address: AddressInterface(),
-          ),
+          OpenIdUserInterface(address: AddressInterface()),
         ),
         isInstanceOf<OpenIdUser>(),
       );

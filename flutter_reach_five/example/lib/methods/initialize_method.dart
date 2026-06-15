@@ -34,28 +34,28 @@ class _InitializeMethodState extends State<InitializeMethod> {
   ];
 
   void setDomain(String newDomain) => setState(() {
-        domain = newDomain;
-      });
+    domain = newDomain;
+  });
 
   void setClientId(String newClientId) => setState(() {
-        clientId = newClientId;
-      });
+    clientId = newClientId;
+  });
 
   void setAndroidScheme(String newAndroidScheme) => setState(() {
-        androidScheme = newAndroidScheme;
-      });
+    androidScheme = newAndroidScheme;
+  });
 
   void setIosScheme(String newIosScheme) => setState(() {
-        iosScheme = newIosScheme;
-      });
+    iosScheme = newIosScheme;
+  });
 
   void toggleProviderCreator(ProviderCreator providerCreator) => setState(() {
-        if (selectedProviderCreators.contains(providerCreator)) {
-          selectedProviderCreators.remove(providerCreator);
-        } else {
-          selectedProviderCreators.add(providerCreator);
-        }
-      });
+    if (selectedProviderCreators.contains(providerCreator)) {
+      selectedProviderCreators.remove(providerCreator);
+    } else {
+      selectedProviderCreators.add(providerCreator);
+    }
+  });
 
   Future<void> initializeReachFive() async {
     setState(() {

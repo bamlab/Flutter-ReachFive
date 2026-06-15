@@ -6,10 +6,7 @@ import '../flutter_reach_five.dart';
 /// identify a ReachFive instance on the native side
 class ReachFiveKey extends Equatable {
   /// [ReachFiveKey] default constructor
-  const ReachFiveKey({
-    required this.sdkConfig,
-    required this.providerCreators,
-  });
+  const ReachFiveKey({required this.sdkConfig, required this.providerCreators});
 
   /// sdkConfig of your reachFive instance
   final SdkConfig sdkConfig;
@@ -18,8 +15,5 @@ class ReachFiveKey extends Equatable {
   final List<ProviderCreator> providerCreators;
 
   @override
-  List<Object?> get props => [
-        sdkConfig,
-        providerCreators,
-      ];
+  List<Object?> get props => [sdkConfig, providerCreators];
 }

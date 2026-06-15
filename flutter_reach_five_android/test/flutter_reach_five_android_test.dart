@@ -16,16 +16,17 @@ void main() {
 
       log = <MethodCall>[];
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-          .setMockMethodCallHandler(flutterReachFive.methodChannel,
-              (methodCall) async {
-        log.add(methodCall);
-        switch (methodCall.method) {
-          case 'getPlatformName':
-            return kPlatformName;
-          default:
-            return null;
-        }
-      });
+          .setMockMethodCallHandler(flutterReachFive.methodChannel, (
+            methodCall,
+          ) async {
+            log.add(methodCall);
+            switch (methodCall.method) {
+              case 'getPlatformName':
+                return kPlatformName;
+              default:
+                return null;
+            }
+          });
     });
 
     test('can be registered', () {
@@ -40,8 +41,10 @@ void main() {
         Object? error;
 
         try {
-          FlutterReachFiveAndroid()
-              .parseError(exception, StackTrace.fromString('test'));
+          FlutterReachFiveAndroid().parseError(
+            exception,
+            StackTrace.fromString('test'),
+          );
         } catch (e) {
           error = e;
         }
@@ -55,8 +58,10 @@ void main() {
         Object? error;
 
         try {
-          FlutterReachFiveAndroid()
-              .parseError(exception, StackTrace.fromString('test'));
+          FlutterReachFiveAndroid().parseError(
+            exception,
+            StackTrace.fromString('test'),
+          );
         } catch (e) {
           error = e;
         }
@@ -73,8 +78,10 @@ void main() {
         Object? error;
 
         try {
-          FlutterReachFiveAndroid()
-              .parseError(exception, StackTrace.fromString('test'));
+          FlutterReachFiveAndroid().parseError(
+            exception,
+            StackTrace.fromString('test'),
+          );
         } catch (e) {
           error = e;
         }
@@ -91,8 +98,10 @@ void main() {
         Object? error;
 
         try {
-          FlutterReachFiveAndroid()
-              .parseError(exception, StackTrace.fromString('test'));
+          FlutterReachFiveAndroid().parseError(
+            exception,
+            StackTrace.fromString('test'),
+          );
         } catch (e) {
           error = e;
         }
@@ -109,8 +118,10 @@ void main() {
         Object? error;
 
         try {
-          FlutterReachFiveAndroid()
-              .parseError(exception, StackTrace.fromString('test'));
+          FlutterReachFiveAndroid().parseError(
+            exception,
+            StackTrace.fromString('test'),
+          );
         } catch (e) {
           error = e;
         }
@@ -127,8 +138,10 @@ void main() {
         Object? error;
 
         try {
-          FlutterReachFiveAndroid()
-              .parseError(exception, StackTrace.fromString('test'));
+          FlutterReachFiveAndroid().parseError(
+            exception,
+            StackTrace.fromString('test'),
+          );
         } catch (e) {
           error = e;
         }
@@ -145,8 +158,10 @@ void main() {
         Object? error;
 
         try {
-          FlutterReachFiveAndroid()
-              .parseError(exception, StackTrace.fromString('test'));
+          FlutterReachFiveAndroid().parseError(
+            exception,
+            StackTrace.fromString('test'),
+          );
         } catch (e) {
           error = e;
         }
@@ -164,8 +179,10 @@ void main() {
         Object? error;
 
         try {
-          FlutterReachFiveAndroid()
-              .parseError(exception, StackTrace.fromString('test'));
+          FlutterReachFiveAndroid().parseError(
+            exception,
+            StackTrace.fromString('test'),
+          );
         } catch (e) {
           error = e;
         }
@@ -185,16 +202,15 @@ void main() {
         Object? error;
 
         try {
-          FlutterReachFiveAndroid()
-              .parseError(exception, StackTrace.fromString('test'));
+          FlutterReachFiveAndroid().parseError(
+            exception,
+            StackTrace.fromString('test'),
+          );
         } catch (e) {
           error = e;
         }
 
-        expect(
-          error,
-          isA<SocialAccountEmailAlreadyInUseExceptionInterface>(),
-        );
+        expect(error, isA<SocialAccountEmailAlreadyInUseExceptionInterface>());
       });
 
       test('$UnauthorizedRefreshTokenExceptionInterface', () {
@@ -206,16 +222,15 @@ void main() {
         Object? error;
 
         try {
-          FlutterReachFiveAndroid()
-              .parseError(exception, StackTrace.fromString('test'));
+          FlutterReachFiveAndroid().parseError(
+            exception,
+            StackTrace.fromString('test'),
+          );
         } catch (e) {
           error = e;
         }
 
-        expect(
-          error,
-          isA<UnauthorizedRefreshTokenExceptionInterface>(),
-        );
+        expect(error, isA<UnauthorizedRefreshTokenExceptionInterface>());
       });
     });
   });

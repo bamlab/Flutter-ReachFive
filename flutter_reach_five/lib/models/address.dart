@@ -32,11 +32,11 @@ class Address extends Equatable {
 
   @override
   List<Object?> get props => [
-        formatted,
-        streetAddress,
-        locality,
-        region,
-        postalCode,
-        country,
-      ];
+    formatted,
+    streetAddress,
+    locality,
+    region,
+    postalCode,
+    country,
+  ];
 }

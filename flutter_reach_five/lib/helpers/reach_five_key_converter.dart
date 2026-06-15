@@ -8,9 +8,7 @@ import 'sdk_config_converter.dart';
 /// and the [ReachFiveKey] exported from this package
 class ReachFiveKeyConverter {
   /// convert a [ReachFiveKey] to a [ReachFiveKeyInterface]
-  static ReachFiveKeyInterface toInterface(
-    ReachFiveKey reachFiveKey,
-  ) =>
+  static ReachFiveKeyInterface toInterface(ReachFiveKey reachFiveKey) =>
       ReachFiveKeyInterface(
         sdkConfig: SdkConfigConverter.toInterface(reachFiveKey.sdkConfig),
         providerCreators: reachFiveKey.providerCreators
@@ -21,13 +19,13 @@ class ReachFiveKeyConverter {
   /// convert a [ReachFiveKeyInterface] to a [ReachFiveKey]
   static ReachFiveKey fromInterface(
     ReachFiveKeyInterface reachFiveKeyInterface,
-  ) =>
-      ReachFiveKey(
-        sdkConfig:
-            SdkConfigConverter.fromInterface(reachFiveKeyInterface.sdkConfig),
-        providerCreators: reachFiveKeyInterface.providerCreators
-            .whereType<ProviderCreatorInterface>()
-            .map(ProviderCreatorConverter.fromInterface)
-            .toList(),
-      );
+  ) => ReachFiveKey(
+    sdkConfig: SdkConfigConverter.fromInterface(
+      reachFiveKeyInterface.sdkConfig,
+    ),
+    providerCreators: reachFiveKeyInterface.providerCreators
+        .whereType<ProviderCreatorInterface>()
+        .map(ProviderCreatorConverter.fromInterface)
+        .toList(),
+  );
 }

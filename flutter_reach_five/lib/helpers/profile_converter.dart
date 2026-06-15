@@ -10,9 +10,7 @@ import 'profile_address_converter.dart';
 /// and the [Profile] exported from this package
 class ProfileConverter {
   /// convert a [Profile] to a [ProfileInterface]
-  static ProfileInterface toInterface(
-    Profile profile,
-  ) {
+  static ProfileInterface toInterface(Profile profile) {
     final loginSummary = profile.loginSummary;
     final emails = profile.emails;
 
@@ -38,8 +36,9 @@ class ProfileConverter {
       emails: emails != null ? EmailsConverter.toInterface(emails) : null,
       phoneNumber: profile.phoneNumber,
       phoneNumberVerified: profile.phoneNumberVerified,
-      addresses:
-          profile.addresses?.map(ProfileAddressConverter.toInterface).toList(),
+      addresses: profile.addresses
+          ?.map(ProfileAddressConverter.toInterface)
+          .toList(),
       locale: profile.locale,
       bio: profile.bio,
       customFields: profile.customFields,
@@ -54,9 +53,7 @@ class ProfileConverter {
   }
 
   /// convert a [ProfileInterface] to a [Profile]
-  static Profile fromInterface(
-    ProfileInterface profileInterface,
-  ) {
+  static Profile fromInterface(ProfileInterface profileInterface) {
     final loginSummary = profileInterface.loginSummary;
     final emails = profileInterface.emails;
 
@@ -71,12 +68,13 @@ class ProfileConverter {
     final consentsInterface = profileConsentsInterface != null
         ? Map<String?, ConsentInterface?>.from(profileConsentsInterface)
         : null;
-    consentsInterface
-        ?.removeWhere((key, value) => key == null || value == null);
+    consentsInterface?.removeWhere(
+      (key, value) => key == null || value == null,
+    );
     final consents = consentsInterface?.cast<String, ConsentInterface>().map(
-          (key, consentInterface) =>
-              MapEntry(key, ConsentConverter.fromInterface(consentInterface)),
-        );
+      (key, consentInterface) =>
+          MapEntry(key, ConsentConverter.fromInterface(consentInterface)),
+    );
 
     return Profile(
       uid: profileInterface.uid,

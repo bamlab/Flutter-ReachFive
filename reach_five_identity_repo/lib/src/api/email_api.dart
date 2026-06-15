@@ -58,10 +58,7 @@ class EmailApi {
         if (customLocale != null) r'Custom-Locale': customLocale,
         ...?headers,
       },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
-        ...?extra,
-      },
+      extra: <String, dynamic>{'secure': <Map<String, String>>[], ...?extra},
       contentType: 'application/json',
       validateStatus: validateStatus,
     );
@@ -72,10 +69,7 @@ class EmailApi {
       _bodyData = jsonEncode(sendEmailVerificationRequest);
     } catch (error, stackTrace) {
       throw DioException(
-        requestOptions: _options.compose(
-          _dio.options,
-          _path,
-        ),
+        requestOptions: _options.compose(_dio.options, _path),
         type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
@@ -97,10 +91,10 @@ class EmailApi {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<SendEmailVerification200Response,
-                  SendEmailVerification200Response>(
-              rawData, 'SendEmailVerification200Response',
-              growable: true);
+          : deserialize<
+              SendEmailVerification200Response,
+              SendEmailVerification200Response
+            >(rawData, 'SendEmailVerification200Response', growable: true);
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,

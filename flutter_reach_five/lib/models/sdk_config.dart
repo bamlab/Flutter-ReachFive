@@ -27,10 +27,5 @@ class SdkConfig extends Equatable {
   final String iosScheme;
 
   @override
-  List<Object?> get props => [
-        domain,
-        clientId,
-        androidScheme,
-        iosScheme,
-      ];
+  List<Object?> get props => [domain, clientId, androidScheme, iosScheme];
 }

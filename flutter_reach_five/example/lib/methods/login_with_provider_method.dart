@@ -26,10 +26,7 @@ class LoginWithProviderMethod extends StatefulWidget {
 class LoginWithProviderMethodState extends State<LoginWithProviderMethod> {
   bool areInteractionsDisabled = false;
 
-  Future<void> loginWithProvider(
-    ReachFive reachFive,
-    Provider provider,
-  ) async {
+  Future<void> loginWithProvider(ReachFive reachFive, Provider provider) async {
     setState(() {
       areInteractionsDisabled = true;
     });
@@ -86,7 +83,7 @@ class LoginWithProviderMethodState extends State<LoginWithProviderMethod> {
                 ElevatedButton(
                   onPressed: !isButtonDisabled
                       ? () async =>
-                          loginWithProvider(widget.reachFive, provider)
+                            loginWithProvider(widget.reachFive, provider)
                       : null,
                   child: Text(
                     authToken == null
@@ -94,9 +91,7 @@ class LoginWithProviderMethodState extends State<LoginWithProviderMethod> {
                         : "You're already logged in",
                   ),
                 ),
-                const SizedBox(
-                  height: 16,
-                ),
+                const SizedBox(height: 16),
               ],
             ),
           )

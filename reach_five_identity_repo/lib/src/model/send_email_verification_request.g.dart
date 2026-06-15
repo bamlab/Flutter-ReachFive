@@ -7,26 +7,29 @@ part of 'send_email_verification_request.dart';
 // **************************************************************************
 
 SendEmailVerificationRequest _$SendEmailVerificationRequestFromJson(
-        Map<String, dynamic> json) =>
-    $checkedCreate(
-      'SendEmailVerificationRequest',
-      json,
-      ($checkedConvert) {
-        final val = SendEmailVerificationRequest(
-          redirectUrl: $checkedConvert('redirect_url', (v) => v as String?),
-          returnToAfterEmailConfirmation: $checkedConvert(
-              'return_to_after_email_confirmation', (v) => v as String?),
-        );
-        return val;
-      },
-      fieldKeyMap: const {
-        'redirectUrl': 'redirect_url',
-        'returnToAfterEmailConfirmation': 'return_to_after_email_confirmation'
-      },
+  Map<String, dynamic> json,
+) => $checkedCreate(
+  'SendEmailVerificationRequest',
+  json,
+  ($checkedConvert) {
+    final val = SendEmailVerificationRequest(
+      redirectUrl: $checkedConvert('redirect_url', (v) => v as String?),
+      returnToAfterEmailConfirmation: $checkedConvert(
+        'return_to_after_email_confirmation',
+        (v) => v as String?,
+      ),
     );
+    return val;
+  },
+  fieldKeyMap: const {
+    'redirectUrl': 'redirect_url',
+    'returnToAfterEmailConfirmation': 'return_to_after_email_confirmation',
+  },
+);
 
 Map<String, dynamic> _$SendEmailVerificationRequestToJson(
-    SendEmailVerificationRequest instance) {
+  SendEmailVerificationRequest instance,
+) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -36,7 +39,9 @@ Map<String, dynamic> _$SendEmailVerificationRequestToJson(
   }
 
   writeNotNull('redirect_url', instance.redirectUrl);
-  writeNotNull('return_to_after_email_confirmation',
-      instance.returnToAfterEmailConfirmation);
+  writeNotNull(
+    'return_to_after_email_confirmation',
+    instance.returnToAfterEmailConfirmation,
+  );
   return val;
 }

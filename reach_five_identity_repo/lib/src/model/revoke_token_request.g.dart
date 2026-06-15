@@ -19,15 +19,17 @@ RevokeTokenRequest _$RevokeTokenRequestFromJson(Map<String, dynamic> json) =>
           clientId: $checkedConvert('client_id', (v) => v as String),
           clientSecret: $checkedConvert('client_secret', (v) => v as String),
           token: $checkedConvert('token', (v) => v as String),
-          tokenTypeHint:
-              $checkedConvert('token_type_hint', (v) => v as String?),
+          tokenTypeHint: $checkedConvert(
+            'token_type_hint',
+            (v) => v as String?,
+          ),
         );
         return val;
       },
       fieldKeyMap: const {
         'clientId': 'client_id',
         'clientSecret': 'client_secret',
-        'tokenTypeHint': 'token_type_hint'
+        'tokenTypeHint': 'token_type_hint',
       },
     );
 

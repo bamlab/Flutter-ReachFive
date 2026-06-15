@@ -69,18 +69,18 @@ class ProfileAddress extends Equatable {
 
   @override
   List<Object?> get props => [
-        title,
-        isDefault,
-        addressType,
-        streetAddress,
-        locality,
-        region,
-        postalCode,
-        country,
-        raw,
-        deliveryNote,
-        recipient,
-        company,
-        phoneNumber,
-      ];
+    title,
+    isDefault,
+    addressType,
+    streetAddress,
+    locality,
+    region,
+    postalCode,
+    country,
+    raw,
+    deliveryNote,
+    recipient,
+    company,
+    phoneNumber,
+  ];
 }

@@ -12,24 +12,29 @@ class FlutterReachFiveAndroid extends FlutterReachFivePlatform {
       final errorCode = error.code;
       if (errorCode.contains(errorCodesInterface.emailAlreadyInUseCode)) {
         throw EmailAlreadyInUseExceptionInterface();
-      } else if (errorCode
-          .contains(errorCodesInterface.invalidEmailOrPasswordCode)) {
+      } else if (errorCode.contains(
+        errorCodesInterface.invalidEmailOrPasswordCode,
+      )) {
         throw InvalidEmailOrPasswordExceptionInterface();
-      } else if (errorCode
-          .contains(errorCodesInterface.invalidVerificationCode)) {
+      } else if (errorCode.contains(
+        errorCodesInterface.invalidVerificationCode,
+      )) {
         throw InvalidVerificationCodeExceptionInterface();
       } else if (errorCode.contains(errorCodesInterface.updateSamePassword)) {
         throw UpdateSamePasswordExceptionInterface();
       } else if (errorCode.contains(errorCodesInterface.invalidGrant)) {
         throw InvalidGrantCodeExceptionInterface();
-      } else if (errorCode
-          .contains(errorCodesInterface.userCancelledOrClosedTheWebFlow)) {
+      } else if (errorCode.contains(
+        errorCodesInterface.userCancelledOrClosedTheWebFlow,
+      )) {
         throw UserCancelledOrClosedTheWebFlowCodeExceptionInterface();
-      } else if (errorCode
-          .contains(errorCodesInterface.socialAccountEmailAlreadyInUse)) {
+      } else if (errorCode.contains(
+        errorCodesInterface.socialAccountEmailAlreadyInUse,
+      )) {
         throw SocialAccountEmailAlreadyInUseExceptionInterface();
-      } else if (errorCode
-          .contains(errorCodesInterface.unauthorizedRefreshToken)) {
+      } else if (errorCode.contains(
+        errorCodesInterface.unauthorizedRefreshToken,
+      )) {
         throw UnauthorizedRefreshTokenExceptionInterface();
       }
     }
@@ -38,8 +43,9 @@ class FlutterReachFiveAndroid extends FlutterReachFivePlatform {
 
   /// {@macro flutter_reach_five.methodChannelFlutterReachFive.methodChannel}
   @visibleForTesting
-  final MethodChannel methodChannel =
-      const MethodChannel('flutter_reach_five_android');
+  final MethodChannel methodChannel = const MethodChannel(
+    'flutter_reach_five_android',
+  );
 
   /// Registers this class as the default instance of [FlutterReachFivePlatform]
   static void registerWith() {

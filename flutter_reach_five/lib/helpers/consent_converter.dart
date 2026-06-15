@@ -6,22 +6,16 @@ import '../models/consent.dart';
 /// and the [Consent] exported from this package
 class ConsentConverter {
   /// convert a [Consent] to a [ConsentInterface]
-  static ConsentInterface toInterface(
-    Consent consent,
-  ) =>
-      ConsentInterface(
-        granted: consent.granted,
-        date: consent.date.toIso8601String(),
-        consentType: consent.consentType,
-      );
+  static ConsentInterface toInterface(Consent consent) => ConsentInterface(
+    granted: consent.granted,
+    date: consent.date.toIso8601String(),
+    consentType: consent.consentType,
+  );
 
   /// convert a [ConsentInterface] to a [Consent]
-  static Consent fromInterface(
-    ConsentInterface consentInterface,
-  ) =>
-      Consent(
-        granted: consentInterface.granted,
-        date: DateTime.parse(consentInterface.date),
-        consentType: consentInterface.consentType,
-      );
+  static Consent fromInterface(ConsentInterface consentInterface) => Consent(
+    granted: consentInterface.granted,
+    date: DateTime.parse(consentInterface.date),
+    consentType: consentInterface.consentType,
+  );
 }

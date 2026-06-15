@@ -14,9 +14,7 @@ class ReachFiveInstancesView extends StatelessWidget {
           appBar: AppBar(
             title: Text('Flutter Reach Five Example \n ${dataSet.name}'),
           ),
-          body: ReachFiveMethodsView(
-            dataSet: dataSet,
-          ),
+          body: ReachFiveMethodsView(dataSet: dataSet),
         );
       }).toList(),
     );
