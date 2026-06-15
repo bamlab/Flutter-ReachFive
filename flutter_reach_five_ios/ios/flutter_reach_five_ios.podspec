@@ -4,9 +4,9 @@
 Pod::Spec.new do |s|
   s.name             = 'flutter_reach_five_ios'
   s.version          = '0.0.1'
-  s.summary          = 'An iOS implementation of the flutter_reach_five plugin.'
+  s.summary          = "flutter_reach_five plugin's iOS implementation."
   s.description      = <<-DESC
-  An iOS implementation of the flutter_reach_five plugin for authentication using the ReachFive identity platform.
+  An iOS implementation of the flutter_reach_five plugin.
                        DESC
   s.homepage         = 'http://example.com'
   s.license          = { :type => 'BSD', :file => '../LICENSE' }
