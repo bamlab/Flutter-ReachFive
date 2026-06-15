@@ -25,17 +25,13 @@ class LogoutMethod extends StatefulWidget {
 class LogoutMethodState extends State<LogoutMethod> {
   bool areInteractionsDisabled = false;
 
-  Future<void> logout(
-    ReachFive reachFive,
-  ) async {
+  Future<void> logout(ReachFive reachFive) async {
     setState(() {
       areInteractionsDisabled = true;
     });
 
     try {
-      await reachFive.logout(
-        authToken: widget.authToken,
-      );
+      await reachFive.logout(authToken: widget.authToken);
       widget.resetAuthToken();
       if (mounted) {
         showExampleSnackBar(

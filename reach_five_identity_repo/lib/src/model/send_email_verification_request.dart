@@ -26,9 +26,10 @@ class SendEmailVerificationRequest {
 
   /// Returned in the `redirect_url` as a query parameter, this parameter is used as the post-email confirmation URL. It must be a valid URL.
   @JsonKey(
-      name: r'return_to_after_email_confirmation',
-      required: false,
-      includeIfNull: false)
+    name: r'return_to_after_email_confirmation',
+    required: false,
+    includeIfNull: false,
+  )
   final String? returnToAfterEmailConfirmation;
 
   @override

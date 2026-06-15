@@ -31,12 +31,12 @@ class LoginWithPasswordMethodState extends State<LoginWithPasswordMethod> {
   late String password = widget.dataSet.initialPassword;
 
   void setEmail(String newEmail) => setState(() {
-        email = newEmail;
-      });
+    email = newEmail;
+  });
 
   void setPassword(String newPassword) => setState(() {
-        password = newPassword;
-      });
+    password = newPassword;
+  });
 
   Future<void> signupToReachFive(ReachFive reachFive) async {
     setState(() {
@@ -88,11 +88,7 @@ class LoginWithPasswordMethodState extends State<LoginWithPasswordMethod> {
     return ListView(
       children: [
         if (authToken == null) ...[
-          CustomTextField(
-            value: email,
-            hintText: 'email',
-            setValue: setEmail,
-          ),
+          CustomTextField(value: email, hintText: 'email', setValue: setEmail),
           const SizedBox(height: 16),
           CustomTextField(
             value: password,

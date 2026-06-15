@@ -80,10 +80,7 @@ class ReachFive {
       try {
         _platform.parseError(error, stackTrace);
       } catch (interfaceError, interfaceStackTrace) {
-        adaptErrors(
-          error: interfaceError,
-          stackTrace: interfaceStackTrace,
-        );
+        adaptErrors(error: interfaceError, stackTrace: interfaceStackTrace);
       }
     }
   }
@@ -113,10 +110,7 @@ class ReachFive {
       try {
         _platform.parseError(error, stackTrace);
       } catch (interfaceError, interfaceStackTrace) {
-        adaptErrors(
-          error: interfaceError,
-          stackTrace: interfaceStackTrace,
-        );
+        adaptErrors(error: interfaceError, stackTrace: interfaceStackTrace);
       }
     }
   }
@@ -146,10 +140,7 @@ class ReachFive {
       try {
         _platform.parseError(error, stackTrace);
       } catch (interfaceError, interfaceStackTrace) {
-        adaptErrors(
-          error: interfaceError,
-          stackTrace: interfaceStackTrace,
-        );
+        adaptErrors(error: interfaceError, stackTrace: interfaceStackTrace);
       }
     }
   }
@@ -160,10 +151,7 @@ class ReachFive {
   /// If you give an [authToken] in the prop, it can also revoke your
   /// refreshToken and all associated access token by using [revokeToken]
   /// {@endtemplate}
-  Future<void> logout({
-    AuthToken? authToken,
-    String? clientSecret,
-  }) async {
+  Future<void> logout({AuthToken? authToken, String? clientSecret}) async {
     if (authToken != null) {
       await revokeToken(
         authToken: authToken,
@@ -221,9 +209,7 @@ class ReachFive {
   ///
   /// It needs an authToken with an valid accessToken to succeed
   /// {@endtemplate}
-  Future<Profile> getProfile({
-    required AuthToken authToken,
-  }) async {
+  Future<Profile> getProfile({required AuthToken authToken}) async {
     try {
       final newProfileInterface = await _platform.getProfile(
         reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
@@ -235,10 +221,7 @@ class ReachFive {
       try {
         _platform.parseError(error, stackTrace);
       } catch (interfaceError, interfaceStackTrace) {
-        adaptErrors(
-          error: interfaceError,
-          stackTrace: interfaceStackTrace,
-        );
+        adaptErrors(error: interfaceError, stackTrace: interfaceStackTrace);
       }
     }
   }
@@ -265,10 +248,7 @@ class ReachFive {
       try {
         _platform.parseError(error, stackTrace);
       } catch (interfaceError, interfaceStackTrace) {
-        adaptErrors(
-          error: interfaceError,
-          stackTrace: interfaceStackTrace,
-        );
+        adaptErrors(error: interfaceError, stackTrace: interfaceStackTrace);
       }
     }
   }
@@ -295,10 +275,7 @@ class ReachFive {
       try {
         _platform.parseError(error, stackTrace);
       } catch (interfaceError, interfaceStackTrace) {
-        adaptErrors(
-          error: interfaceError,
-          stackTrace: interfaceStackTrace,
-        );
+        adaptErrors(error: interfaceError, stackTrace: interfaceStackTrace);
       }
     }
   }
@@ -351,13 +328,12 @@ class ReachFive {
     String? email,
     String? phoneNumber,
     String? redirectUrl,
-  }) =>
-      _platform.requestPasswordReset(
-        reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
-        email: email,
-        phoneNumber: phoneNumber,
-        redirectUrl: redirectUrl,
-      );
+  }) => _platform.requestPasswordReset(
+    reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
+    email: email,
+    phoneNumber: phoneNumber,
+    redirectUrl: redirectUrl,
+  );
 
   /// {@template flutter_reach_five.reachFive.updatePassword}
   /// Make request for password reset
@@ -382,7 +358,7 @@ class ReachFive {
         UpdatePasswordRequestWithAccessToken(
           :final authToken,
           :final oldPassword,
-          :final newPassword
+          :final newPassword,
         ) =>
           _platform.updatePasswordWithAccessToken(
             reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
@@ -392,7 +368,7 @@ class ReachFive {
           ),
         UpdatePasswordRequestWithFreshAccessToken(
           :final freshAuthToken,
-          :final newPassword
+          :final newPassword,
         ) =>
           _platform.updatePasswordWithFreshAccessToken(
             reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
@@ -402,7 +378,7 @@ class ReachFive {
         UpdatePasswordRequestWithEmail(
           :final email,
           :final verificationCode,
-          :final newPassword
+          :final newPassword,
         ) =>
           _platform.updatePasswordWithEmail(
             reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
@@ -413,7 +389,7 @@ class ReachFive {
         UpdatePasswordRequestWithPhoneNumber(
           :final phoneNumber,
           :final verificationCode,
-          :final newPassword
+          :final newPassword,
         ) =>
           _platform.updatePasswordWithPhoneNumber(
             reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
@@ -426,10 +402,7 @@ class ReachFive {
       try {
         _platform.parseError(error, stackTrace);
       } catch (interfaceError, interfaceStackTrace) {
-        adaptErrors(
-          error: interfaceError,
-          stackTrace: interfaceStackTrace,
-        );
+        adaptErrors(error: interfaceError, stackTrace: interfaceStackTrace);
       }
     }
   }
@@ -451,10 +424,7 @@ class ReachFiveManager {
   }) async {
     final reachFiveConfigInterface = await _platform.initialize(
       ReachFiveKeyConverter.toInterface(
-        ReachFiveKey(
-          sdkConfig: sdkConfig,
-          providerCreators: providerCreators,
-        ),
+        ReachFiveKey(sdkConfig: sdkConfig, providerCreators: providerCreators),
       ),
     );
 

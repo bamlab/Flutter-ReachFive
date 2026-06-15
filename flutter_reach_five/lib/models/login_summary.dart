@@ -32,11 +32,11 @@ class LoginSummary extends Equatable {
 
   @override
   List<Object?> get props => [
-        firstLogin,
-        lastLogin,
-        total,
-        origins,
-        devices,
-        lastProvider,
-      ];
+    firstLogin,
+    lastLogin,
+    total,
+    origins,
+    devices,
+    lastProvider,
+  ];
 }

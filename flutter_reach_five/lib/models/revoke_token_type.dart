@@ -4,7 +4,7 @@ enum RevokeTokenType {
   refresh,
 
   /// an access token
-  access
+  access,
 }
 
 // coverage:ignore-start
@@ -24,4 +24,5 @@ extension RevokeTokenTypeMap on RevokeTokenType {
     }
   }
 }
+
 // coverage:ignore-end

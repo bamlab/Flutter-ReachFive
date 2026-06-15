@@ -12,10 +12,7 @@ void main() {
       var hasError = false;
 
       try {
-        adaptErrors(
-          error: error,
-          stackTrace: stackTrace,
-        );
+        adaptErrors(error: error, stackTrace: stackTrace);
       } catch (e, st) {
         expect(error, e);
         expect(stackTrace, st);

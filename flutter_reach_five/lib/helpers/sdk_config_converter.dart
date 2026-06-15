@@ -6,9 +6,7 @@ import '../models/sdk_config.dart';
 /// and the [SdkConfig] exported from this package
 class SdkConfigConverter {
   /// convert a [SdkConfig] to a [SdkConfigInterface]
-  static SdkConfigInterface toInterface(
-    SdkConfig sdkConfig,
-  ) =>
+  static SdkConfigInterface toInterface(SdkConfig sdkConfig) =>
       SdkConfigInterface(
         domain: sdkConfig.domain,
         clientId: sdkConfig.clientId,
@@ -17,9 +15,7 @@ class SdkConfigConverter {
       );
 
   /// convert a [SdkConfigInterface] to a [SdkConfig]
-  static SdkConfig fromInterface(
-    SdkConfigInterface sdkConfigInterface,
-  ) =>
+  static SdkConfig fromInterface(SdkConfigInterface sdkConfigInterface) =>
       SdkConfig(
         domain: sdkConfigInterface.domain,
         clientId: sdkConfigInterface.clientId,

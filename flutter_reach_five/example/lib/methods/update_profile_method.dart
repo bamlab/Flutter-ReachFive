@@ -56,28 +56,20 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
   }
 
   void setFamilyName(String newFamilyName) => setState(() {
-        _profile = _profile.copyWith(
-          familyName: newFamilyName,
-        );
-      });
+    _profile = _profile.copyWith(familyName: newFamilyName);
+  });
 
   void setGivenName(String newGivenName) => setState(() {
-        _profile = _profile.copyWith(
-          givenName: newGivenName,
-        );
-      });
+    _profile = _profile.copyWith(givenName: newGivenName);
+  });
 
   void setMiddleName(String newMiddleName) => setState(() {
-        _profile = _profile.copyWith(
-          middleName: newMiddleName,
-        );
-      });
+    _profile = _profile.copyWith(middleName: newMiddleName);
+  });
 
   void setNickname(String newNickname) => setState(() {
-        _profile = _profile.copyWith(
-          nickname: newNickname,
-        );
-      });
+    _profile = _profile.copyWith(nickname: newNickname);
+  });
 
   bool? _convertConsentToBool(Consent? consent) {
     if (consent == null) {
@@ -90,16 +82,16 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
   }
 
   void setConsent({required bool? consentGranted}) => setState(() {
-        _profile = _profile.copyWith(
-          consents: {
-            if (consentGranted != null)
-              consentSupportedKey: Consent(
-                date: DateTime.now(),
-                granted: consentGranted,
-              ),
-          },
-        );
-      });
+    _profile = _profile.copyWith(
+      consents: {
+        if (consentGranted != null)
+          consentSupportedKey: Consent(
+            date: DateTime.now(),
+            granted: consentGranted,
+          ),
+      },
+    );
+  });
 
   static Map<String, Object?> _updateCustomFields({
     required MapEntry<String, Object?> newCustomField,
@@ -120,17 +112,14 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
   }
 
   void setNewCustomFieldKey(String newKey) => setState(() {
-        _newCustomField = MapEntry(newKey, _newCustomField.value);
-      });
+    _newCustomField = MapEntry(newKey, _newCustomField.value);
+  });
 
   void setNewCustomFieldValue(Object? newValue) => setState(() {
-        _newCustomField = MapEntry(_newCustomField.key, newValue);
-      });
+    _newCustomField = MapEntry(_newCustomField.key, newValue);
+  });
 
-  Future<void> updateProfile(
-    ReachFive reachFive,
-    AuthToken authToken,
-  ) async {
+  Future<void> updateProfile(ReachFive reachFive, AuthToken authToken) async {
     setState(() {
       areInteractionsDisabled = true;
     });
@@ -254,10 +243,7 @@ class UpdateProfileMethodState extends State<UpdateProfileMethod> {
                 ),
               ),
             const SizedBox(height: 16),
-            const Text(
-              'New Custom Fields',
-              style: TextStyle(fontSize: 18),
-            ),
+            const Text('New Custom Fields', style: TextStyle(fontSize: 18)),
             const Text(
               'keys must be created in the ReachFive console',
               style: TextStyle(fontStyle: FontStyle.italic),

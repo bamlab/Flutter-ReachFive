@@ -13,5 +13,5 @@ enum ProviderCreator {
   /// Webview provider
   /// It allows you to use in a webview every provider you have defined in your reachFive console
   /// If you want multi-instance of reachFive, it will allow you to use the google and facebook webviews providers
-  webview
+  webview,
 }

@@ -72,31 +72,26 @@ void main() {
     group('initialize', () {
       test('returns correct reachFive instance', () async {
         final reachFiveConfigInterface = ReachFiveConfigInterface(
-          reachFiveKey:
-              ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
-          providers:
-              reachFive.providers.map(ProviderConverter.toInterface).toList(),
+          reachFiveKey: ReachFiveKeyConverter.toInterface(
+            reachFive.reachFiveKey,
+          ),
+          providers: reachFive.providers
+              .map(ProviderConverter.toInterface)
+              .toList(),
         );
 
         registerFallbackValue(
           ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
         );
         when(
-          () => flutterReachFivePlatform.initialize(
-            any(),
-          ),
-        ).thenAnswer(
-          (_) async => reachFiveConfigInterface,
-        );
+          () => flutterReachFivePlatform.initialize(any()),
+        ).thenAnswer((_) async => reachFiveConfigInterface);
 
         final reachFiveReceived = await ReachFiveManager().initialize(
           sdkConfig: reachFive.reachFiveKey.sdkConfig,
         );
 
-        expect(
-          reachFive.reachFiveKey,
-          reachFiveReceived.reachFiveKey,
-        );
+        expect(reachFive.reachFiveKey, reachFiveReceived.reachFiveKey);
       });
     });
 
@@ -106,9 +101,7 @@ void main() {
         const redirectUrl = 'redirectUrl';
         const scope = [ScopeValue.address];
 
-        const authToken = AuthToken(
-          accessToken: 'accessToken',
-        );
+        const authToken = AuthToken(accessToken: 'accessToken');
 
         registerFallbackValue(
           ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
@@ -123,9 +116,7 @@ void main() {
             redirectUrl: redirectUrl,
             scope: scope.map(ScopeValueConverter.toInterface).toList(),
           ),
-        ).thenAnswer(
-          (_) async => AuthTokenConverter.toInterface(authToken),
-        );
+        ).thenAnswer((_) async => AuthTokenConverter.toInterface(authToken));
 
         final signupAuthToken = await reachFive.signup(
           profile: profile,
@@ -133,10 +124,7 @@ void main() {
           scope: scope,
         );
 
-        expect(
-          authToken,
-          signupAuthToken,
-        );
+        expect(authToken, signupAuthToken);
       });
 
       test('parse throw error', () async {
@@ -159,9 +147,7 @@ void main() {
           ),
         ).thenThrow(Exception());
 
-        registerFallbackValue(
-          StackTrace.fromString('test'),
-        );
+        registerFallbackValue(StackTrace.fromString('test'));
         when(
           () => flutterReachFivePlatform.parseError(any(), any()),
         ).thenThrow(Exception());
@@ -174,8 +160,9 @@ void main() {
           );
         } catch (_) {}
 
-        verify(() => flutterReachFivePlatform.parseError(any(), any()))
-            .called(1);
+        verify(
+          () => flutterReachFivePlatform.parseError(any(), any()),
+        ).called(1);
       });
     });
 
@@ -185,9 +172,7 @@ void main() {
         const password = 'password';
         const scope = [ScopeValue.events];
 
-        const authToken = AuthToken(
-          accessToken: 'accessToken',
-        );
+        const authToken = AuthToken(accessToken: 'accessToken');
 
         registerFallbackValue(
           ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
@@ -199,9 +184,7 @@ void main() {
             email: email,
             scope: scope.map(ScopeValueConverter.toInterface).toList(),
           ),
-        ).thenAnswer(
-          (_) async => AuthTokenConverter.toInterface(authToken),
-        );
+        ).thenAnswer((_) async => AuthTokenConverter.toInterface(authToken));
 
         final loginWithPasswordAuthToken = await reachFive.loginWithPassword(
           password: password,
@@ -209,10 +192,7 @@ void main() {
           scope: scope,
         );
 
-        expect(
-          authToken,
-          loginWithPasswordAuthToken,
-        );
+        expect(authToken, loginWithPasswordAuthToken);
       });
 
       test('parse throw error', () async {
@@ -232,9 +212,7 @@ void main() {
           ),
         ).thenThrow(Exception());
 
-        registerFallbackValue(
-          StackTrace.fromString('test'),
-        );
+        registerFallbackValue(StackTrace.fromString('test'));
         when(
           () => flutterReachFivePlatform.parseError(any(), any()),
         ).thenThrow(Exception());
@@ -247,8 +225,9 @@ void main() {
           );
         } catch (_) {}
 
-        verify(() => flutterReachFivePlatform.parseError(any(), any()))
-            .called(1);
+        verify(
+          () => flutterReachFivePlatform.parseError(any(), any()),
+        ).called(1);
       });
     });
 
@@ -258,9 +237,7 @@ void main() {
         const origin = 'origin';
         const scope = [ScopeValue.events];
 
-        const authToken = AuthToken(
-          accessToken: 'accessToken',
-        );
+        const authToken = AuthToken(accessToken: 'accessToken');
 
         registerFallbackValue(
           ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
@@ -275,9 +252,7 @@ void main() {
             origin: origin,
             scope: any(named: 'scope'),
           ),
-        ).thenAnswer(
-          (_) async => AuthTokenConverter.toInterface(authToken),
-        );
+        ).thenAnswer((_) async => AuthTokenConverter.toInterface(authToken));
 
         final loginWithProviderAuthToken = await reachFive.loginWithProvider(
           provider: provider,
@@ -285,10 +260,7 @@ void main() {
           scope: scope,
         );
 
-        expect(
-          authToken,
-          loginWithProviderAuthToken,
-        );
+        expect(authToken, loginWithProviderAuthToken);
       });
 
       test('parse throw error', () async {
@@ -311,9 +283,7 @@ void main() {
           ),
         ).thenThrow(Exception());
 
-        registerFallbackValue(
-          StackTrace.fromString('test'),
-        );
+        registerFallbackValue(StackTrace.fromString('test'));
         when(
           () => flutterReachFivePlatform.parseError(any(), any()),
         ).thenThrow(Exception());
@@ -326,8 +296,9 @@ void main() {
           );
         } catch (_) {}
 
-        verify(() => flutterReachFivePlatform.parseError(any(), any()))
-            .called(1);
+        verify(
+          () => flutterReachFivePlatform.parseError(any(), any()),
+        ).called(1);
       });
     });
 
@@ -380,9 +351,7 @@ void main() {
 
     group('getProfile', () {
       test('returns the expected profile instance', () async {
-        const expectedProfile = Profile(
-          givenName: 'expectedGivenName',
-        );
+        const expectedProfile = Profile(givenName: 'expectedGivenName');
 
         const authToken = AuthToken(accessToken: 'accessToken');
 
@@ -420,32 +389,25 @@ void main() {
           ),
         ).thenThrow(Exception());
 
-        registerFallbackValue(
-          StackTrace.fromString('test'),
-        );
+        registerFallbackValue(StackTrace.fromString('test'));
         when(
           () => flutterReachFivePlatform.parseError(any(), any()),
         ).thenThrow(Exception());
 
         try {
-          await reachFive.getProfile(
-            authToken: authToken,
-          );
+          await reachFive.getProfile(authToken: authToken);
         } catch (_) {}
 
-        verify(() => flutterReachFivePlatform.parseError(any(), any()))
-            .called(1);
+        verify(
+          () => flutterReachFivePlatform.parseError(any(), any()),
+        ).called(1);
       });
     });
 
     group('updateProfile', () {
       test('returns correct profile instance', () async {
-        const firstProfile = Profile(
-          givenName: 'firstGivenName',
-        );
-        const secondProfile = Profile(
-          givenName: 'secondGivenName',
-        );
+        const firstProfile = Profile(givenName: 'firstGivenName');
+        const secondProfile = Profile(givenName: 'secondGivenName');
 
         const authToken = AuthToken(accessToken: 'accessToken');
 
@@ -460,25 +422,18 @@ void main() {
             authToken: any(named: 'authToken'),
             profile: any(named: 'profile'),
           ),
-        ).thenAnswer(
-          (_) async => ProfileConverter.toInterface(secondProfile),
-        );
+        ).thenAnswer((_) async => ProfileConverter.toInterface(secondProfile));
 
         final receivedProfile = await reachFive.updateProfile(
           authToken: authToken,
           profile: firstProfile,
         );
 
-        expect(
-          secondProfile,
-          receivedProfile,
-        );
+        expect(secondProfile, receivedProfile);
       });
 
       test('parse throw error', () async {
-        const profile = Profile(
-          givenName: 'givenName',
-        );
+        const profile = Profile(givenName: 'givenName');
 
         const authToken = AuthToken(accessToken: 'accessToken');
 
@@ -495,33 +450,25 @@ void main() {
           ),
         ).thenThrow(Exception());
 
-        registerFallbackValue(
-          StackTrace.fromString('test'),
-        );
+        registerFallbackValue(StackTrace.fromString('test'));
         when(
           () => flutterReachFivePlatform.parseError(any(), any()),
         ).thenThrow(Exception());
 
         try {
-          await reachFive.updateProfile(
-            authToken: authToken,
-            profile: profile,
-          );
+          await reachFive.updateProfile(authToken: authToken, profile: profile);
         } catch (_) {}
 
-        verify(() => flutterReachFivePlatform.parseError(any(), any()))
-            .called(1);
+        verify(
+          () => flutterReachFivePlatform.parseError(any(), any()),
+        ).called(1);
       });
     });
 
     group('refreshAccessToken', () {
       test('returns correct auth token instance', () async {
-        const firstAuthToken = AuthToken(
-          accessToken: 'firstAccessToken',
-        );
-        const secondAuthToken = AuthToken(
-          accessToken: 'secondAccessToken',
-        );
+        const firstAuthToken = AuthToken(accessToken: 'firstAccessToken');
+        const secondAuthToken = AuthToken(accessToken: 'secondAccessToken');
 
         registerFallbackValue(
           ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
@@ -536,19 +483,15 @@ void main() {
           (_) async => AuthTokenConverter.toInterface(secondAuthToken),
         );
 
-        final refreshAccessTokenAuthToken =
-            await reachFive.refreshAccessToken(firstAuthToken);
-
-        expect(
-          secondAuthToken,
-          refreshAccessTokenAuthToken,
+        final refreshAccessTokenAuthToken = await reachFive.refreshAccessToken(
+          firstAuthToken,
         );
+
+        expect(secondAuthToken, refreshAccessTokenAuthToken);
       });
 
       test('parse throw error', () async {
-        const firstAuthToken = AuthToken(
-          accessToken: 'firstAccessToken',
-        );
+        const firstAuthToken = AuthToken(accessToken: 'firstAccessToken');
 
         registerFallbackValue(
           ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
@@ -561,9 +504,7 @@ void main() {
           ),
         ).thenThrow(Exception());
 
-        registerFallbackValue(
-          StackTrace.fromString('test'),
-        );
+        registerFallbackValue(StackTrace.fromString('test'));
         when(
           () => flutterReachFivePlatform.parseError(any(), any()),
         ).thenThrow(Exception());
@@ -572,8 +513,9 @@ void main() {
           await reachFive.refreshAccessToken(firstAuthToken);
         } catch (_) {}
 
-        verify(() => flutterReachFivePlatform.parseError(any(), any()))
-            .called(1);
+        verify(
+          () => flutterReachFivePlatform.parseError(any(), any()),
+        ).called(1);
       });
     });
 
@@ -622,14 +564,13 @@ void main() {
         when(
           () => mockEmailApi.sendEmailVerification(
             authorization: any(named: 'authorization'),
-            sendEmailVerificationRequest:
-                any(named: 'sendEmailVerificationRequest'),
+            sendEmailVerificationRequest: any(
+              named: 'sendEmailVerificationRequest',
+            ),
           ),
-        ).thenAnswer(
-          (_) async {
-            return Response(requestOptions: RequestOptions(path: 'path'));
-          },
-        );
+        ).thenAnswer((_) async {
+          return Response(requestOptions: RequestOptions(path: 'path'));
+        });
 
         await reachFive.sendEmailVerification(
           accessToken: authToken.accessToken,
@@ -653,15 +594,14 @@ void main() {
         when(
           () => mockEmailApi.sendEmailVerification(
             authorization: any(named: 'authorization'),
-            sendEmailVerificationRequest:
-                any(named: 'sendEmailVerificationRequest'),
+            sendEmailVerificationRequest: any(
+              named: 'sendEmailVerificationRequest',
+            ),
             customLocale: any(named: 'customLocale'),
           ),
-        ).thenAnswer(
-          (_) async {
-            return Response(requestOptions: RequestOptions(path: 'path'));
-          },
-        );
+        ).thenAnswer((_) async {
+          return Response(requestOptions: RequestOptions(path: 'path'));
+        });
 
         await reachFive.sendEmailVerification(
           accessToken: authToken.accessToken,
@@ -711,9 +651,7 @@ void main() {
 
     group('updatePassword', () {
       test('call requestPasswordReset withAccessToken method', () async {
-        const authToken = AuthToken(
-          accessToken: 'accessToken',
-        );
+        const authToken = AuthToken(accessToken: 'accessToken');
 
         const oldPassword = 'oldPassword';
         const newPassword = 'newPassword';
@@ -750,9 +688,7 @@ void main() {
       });
 
       test('call requestPasswordReset withFreshAccessToken method', () async {
-        const freshAuthToken = AuthToken(
-          accessToken: 'accessToken',
-        );
+        const freshAuthToken = AuthToken(accessToken: 'accessToken');
 
         const newPassword = 'newPassword';
 
@@ -871,9 +807,7 @@ void main() {
           ),
         ).thenThrow(Exception());
 
-        registerFallbackValue(
-          StackTrace.fromString('test'),
-        );
+        registerFallbackValue(StackTrace.fromString('test'));
         when(
           () => flutterReachFivePlatform.parseError(any(), any()),
         ).thenThrow(Exception());
@@ -888,8 +822,9 @@ void main() {
           );
         } catch (_) {}
 
-        verify(() => flutterReachFivePlatform.parseError(any(), any()))
-            .called(1);
+        verify(
+          () => flutterReachFivePlatform.parseError(any(), any()),
+        ).called(1);
       });
     });
   });

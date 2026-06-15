@@ -8,14 +8,12 @@ class ProviderCreatorConverter {
   /// convert a [ProviderCreator] to a [ProviderCreatorInterface]
   static ProviderCreatorInterface toInterface(
     ProviderCreator providerCreator,
-  ) =>
-      ProviderCreatorInterface(
-        type: ProviderCreatorTypeInterface.values.byName(providerCreator.name),
-      );
+  ) => ProviderCreatorInterface(
+    type: ProviderCreatorTypeInterface.values.byName(providerCreator.name),
+  );
 
   /// convert a [ProviderCreatorInterface] to a [ProviderCreator]?
   static ProviderCreator fromInterface(
     ProviderCreatorInterface providerCreatorInterface,
-  ) =>
-      ProviderCreator.values.byName(providerCreatorInterface.type.name);
+  ) => ProviderCreator.values.byName(providerCreatorInterface.type.name);
 }

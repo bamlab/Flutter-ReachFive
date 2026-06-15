@@ -5,7 +5,6 @@ import 'auth_token.dart';
 part 'update_password_request.freezed.dart';
 
 @freezed
-
 /// Update password request
 sealed class UpdatePasswordRequest with _$UpdatePasswordRequest {
   /// Update password request model using an access token and the old password

@@ -34,9 +34,7 @@ class ProfileAddressTypeConverter {
 /// and the [ProfileAddress] exported from this package
 class ProfileAddressConverter {
   /// convert a [ProfileAddress] to a [ProfileAddressInterface]
-  static ProfileAddressInterface toInterface(
-    ProfileAddress profileAddress,
-  ) {
+  static ProfileAddressInterface toInterface(ProfileAddress profileAddress) {
     final addressType = profileAddress.addressType;
 
     return ProfileAddressInterface(

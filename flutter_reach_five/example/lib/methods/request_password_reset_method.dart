@@ -27,8 +27,8 @@ class RequestPasswordResetMethodState
   late String email = widget.dataSet.initialEmail;
 
   void setEmail(String newEmail) => setState(() {
-        email = newEmail;
-      });
+    email = newEmail;
+  });
 
   Future<void> requestPasswordReset(ReachFive reachFive) async {
     setState(() {
@@ -70,11 +70,7 @@ class RequestPasswordResetMethodState
     return ListView(
       children: [
         if (!areInteractionsDisabled)
-          CustomTextField(
-            value: email,
-            hintText: 'email',
-            setValue: setEmail,
-          )
+          CustomTextField(value: email, hintText: 'email', setValue: setEmail)
         else
           Text('email : $email'),
         ElevatedButton(

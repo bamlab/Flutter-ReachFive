@@ -7,9 +7,7 @@ import 'open_id_user.dart';
 /// and the [AuthToken] exported from this package
 class AuthTokenConverter {
   /// convert a [AuthToken] to a [AuthTokenInterface]
-  static AuthTokenInterface toInterface(
-    AuthToken authToken,
-  ) {
+  static AuthTokenInterface toInterface(AuthToken authToken) {
     final user = authToken.user;
 
     return AuthTokenInterface(
@@ -23,9 +21,7 @@ class AuthTokenConverter {
   }
 
   /// convert a [AuthTokenInterface] to a [AuthToken]
-  static AuthToken fromInterface(
-    AuthTokenInterface authTokenInterface,
-  ) {
+  static AuthToken fromInterface(AuthTokenInterface authTokenInterface) {
     final user = authTokenInterface.user;
 
     return AuthToken(

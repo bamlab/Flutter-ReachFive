@@ -5,17 +5,11 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('$ProviderConverter', () {
     test('toInterface method', () async {
-      expect(
-        ProviderConverter.toInterface(Provider.apple),
-        'apple',
-      );
+      expect(ProviderConverter.toInterface(Provider.apple), 'apple');
     });
 
     test('fromInterface method', () async {
-      expect(
-        ProviderConverter.fromInterface('apple'),
-        Provider.apple,
-      );
+      expect(ProviderConverter.fromInterface('apple'), Provider.apple);
     });
   });
 }

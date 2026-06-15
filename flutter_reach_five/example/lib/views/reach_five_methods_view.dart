@@ -25,10 +25,7 @@ enum ReachFiveMethod {
 }
 
 class ReachFiveMethodsView extends StatefulWidget {
-  const ReachFiveMethodsView({
-    required this.dataSet,
-    super.key,
-  });
+  const ReachFiveMethodsView({required this.dataSet, super.key});
 
   final DataSet dataSet;
 
@@ -52,16 +49,16 @@ class _ReachFiveMethodsViewState extends State<ReachFiveMethodsView>
   AuthToken? authToken;
 
   void setReachFive(ReachFive newReachFive) => setState(() {
-        reachFive = newReachFive;
-      });
+    reachFive = newReachFive;
+  });
 
   void setAuthToken(AuthToken newAuthToken) => setState(() {
-        authToken = newAuthToken;
-      });
+    authToken = newAuthToken;
+  });
 
   void resetAuthToken() => setState(() {
-        authToken = null;
-      });
+    authToken = null;
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -201,10 +198,7 @@ class _ReachFiveMethodView extends StatelessWidget {
         return const Text('You should initialize Reach Five first');
       case ReachFiveMethod.updatePassword:
         if (reachFive != null) {
-          return UpdatePasswordMethod(
-            dataSet: dataSet,
-            reachFive: reachFive,
-          );
+          return UpdatePasswordMethod(dataSet: dataSet, reachFive: reachFive);
         }
         return const Text('You should initialize Reach Five first');
       case ReachFiveMethod.updateProfile:

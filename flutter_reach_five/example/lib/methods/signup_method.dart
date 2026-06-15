@@ -34,28 +34,28 @@ class SignupMethodState extends State<SignupMethod> {
   late String nickname = widget.dataSet.initialNickame;
 
   void setEmail(String newEmail) => setState(() {
-        email = newEmail;
-      });
+    email = newEmail;
+  });
 
   void setPassword(String newPassword) => setState(() {
-        password = newPassword;
-      });
+    password = newPassword;
+  });
 
   void setFamilyName(String newFamilyName) => setState(() {
-        familyName = newFamilyName;
-      });
+    familyName = newFamilyName;
+  });
 
   void setGivenName(String newGivenName) => setState(() {
-        givenName = newGivenName;
-      });
+    givenName = newGivenName;
+  });
 
   void setMiddleName(String newMiddleName) => setState(() {
-        middleName = newMiddleName;
-      });
+    middleName = newMiddleName;
+  });
 
   void setNickname(String newNickname) => setState(() {
-        nickname = newNickname;
-      });
+    nickname = newNickname;
+  });
 
   Future<void> signupToReachFive(ReachFive reachFive) async {
     setState(() {
@@ -113,11 +113,7 @@ class SignupMethodState extends State<SignupMethod> {
     return ListView(
       children: [
         if (authToken == null) ...[
-          CustomTextField(
-            value: email,
-            hintText: 'email',
-            setValue: setEmail,
-          ),
+          CustomTextField(value: email, hintText: 'email', setValue: setEmail),
           const SizedBox(height: 16),
           CustomTextField(
             value: password,
@@ -166,8 +162,9 @@ class SignupMethodState extends State<SignupMethod> {
           onPressed: !isButtonDisabled
               ? () async => signupToReachFive(widget.reachFive)
               : null,
-          child:
-              Text(authToken == null ? 'Sign up' : "You're already signed in"),
+          child: Text(
+            authToken == null ? 'Sign up' : "You're already signed in",
+          ),
         ),
       ],
     );

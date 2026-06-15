@@ -8,9 +8,7 @@ void main() {
     test('toInterface method', () async {
       expect(
         ProfileAddressConverter.toInterface(
-          const ProfileAddress(
-            addressType: ProfileAddressType.delivery,
-          ),
+          const ProfileAddress(addressType: ProfileAddressType.delivery),
         ),
         isInstanceOf<ProfileAddressInterface>(),
       );

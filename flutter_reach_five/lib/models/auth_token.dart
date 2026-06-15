@@ -34,11 +34,11 @@ class AuthToken extends Equatable {
 
   @override
   List<Object?> get props => [
-        accessToken,
-        idToken,
-        refreshToken,
-        tokenType,
-        expiresIn,
-        user,
-      ];
+    accessToken,
+    idToken,
+    refreshToken,
+    tokenType,
+    expiresIn,
+    user,
+  ];
 }

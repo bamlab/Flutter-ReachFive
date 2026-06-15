@@ -486,7 +486,7 @@ public class FlutterReachFivePlugin: NSObject, FlutterPlugin, FlutterSceneLifeCy
 
 }
 
-extension UIViewController: ASWebAuthenticationPresentationContextProviding {
+extension UIViewController: @retroactive ASWebAuthenticationPresentationContextProviding {
     public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
         view.window!
     }
