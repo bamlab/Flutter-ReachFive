@@ -1,6 +1,6 @@
 name: flutter_reach_five
 description: This package allows you to use the methods from the reachFive android and ios native sdks in Flutter
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/bamlab/Flutter-ReachFive
 repository: https://github.com/bamlab/Flutter-ReachFive
 
@@ -23,7 +23,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_reach_five_android: ^1.0.0
-  flutter_reach_five_ios: ^1.0.0
+  flutter_reach_five_ios: ^1.0.1
   flutter_reach_five_platform_interface: ^1.0.0
   freezed: ^3.2.3
   freezed_annotation: ^3.1.0

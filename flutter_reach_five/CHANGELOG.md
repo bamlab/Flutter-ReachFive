@@ -1,3 +1,7 @@
+# 1.0.1
+
+- Add Swift Package Manager support to the flutter-reach-five-ios plugin
+
 # 1.0.0
 
 - **BREAKING**: Update Flutter to >=3.38.0
