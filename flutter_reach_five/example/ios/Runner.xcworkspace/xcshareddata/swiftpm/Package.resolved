@@ -1,0 +1,77 @@
+{
+  "pins" : [
+    {
+      "identity" : "appauth-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/openid/AppAuth-iOS.git",
+      "state" : {
+        "revision" : "2781038865a80e2c425a1da12cc1327bcd56501f",
+        "version" : "1.7.6"
+      }
+    },
+    {
+      "identity" : "facebook-ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/facebook/facebook-ios-sdk.git",
+      "state" : {
+        "revision" : "619d1772808425faa010d92293b26eeb9bc1d630",
+        "version" : "17.4.0"
+      }
+    },
+    {
+      "identity" : "googlesignin-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/google/GoogleSignIn-iOS.git",
+      "state" : {
+        "revision" : "a7965d134c5d3567026c523e0a8a583f73b62b0d",
+        "version" : "7.1.0"
+      }
+    },
+    {
+      "identity" : "gtm-session-fetcher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/google/gtm-session-fetcher.git",
+      "state" : {
+        "revision" : "a2ab612cb980066ee56d90d60d8462992c07f24b",
+        "version" : "3.5.0"
+      }
+    },
+    {
+      "identity" : "gtmappauth",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/google/GTMAppAuth.git",
+      "state" : {
+        "revision" : "5d7d66f647400952b1758b230e019b07c0b4b22a",
+        "version" : "4.1.1"
+      }
+    },
+    {
+      "identity" : "reachfive-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ReachFive/reachfive-ios.git",
+      "state" : {
+        "revision" : "54d0c278a622eb603453dd2e9c2b4e5eebf71457",
+        "version" : "10.0.0"
+      }
+    },
+    {
+      "identity" : "reachfive-ios-facebook",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ReachFive/reachfive-ios-facebook.git",
+      "state" : {
+        "revision" : "91e90d409fb2d3c82bd8710994d7bae8061bf142",
+        "version" : "8.0.1"
+      }
+    },
+    {
+      "identity" : "reachfive-ios-google",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ReachFive/reachfive-ios-google.git",
+      "state" : {
+        "revision" : "dbce329651e088b720161a2db2693789d3267c4a",
+        "version" : "8.0.1"
+      }
+    }
+  ],
+  "version" : 2
+}
