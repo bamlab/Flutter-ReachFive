@@ -1,4 +1,4 @@
-# 1.1.0
+# 2.0.0
 
 - **BREAKING**: Update Flutter to >=3.41.0
 
