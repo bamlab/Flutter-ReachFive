@@ -142,5 +142,20 @@ void main() {
 
       expect(error, isA<UnauthorizedRefreshTokenException>());
     });
+
+    test('$AccountBlockedAfterMultipleLoginAttemptsException', () async {
+      Object? error;
+
+      try {
+        adaptErrors(
+          error: const AccountBlockedAfterMultipleLoginAttemptsExceptionInterface(),
+          stackTrace: StackTrace.fromString('test'),
+        );
+      } catch (e) {
+        error = e;
+      }
+
+      expect(error, isA<AccountBlockedAfterMultipleLoginAttemptsException>());
+    });
   });
 }

@@ -232,6 +232,29 @@ void main() {
 
         expect(error, isA<UnauthorizedRefreshTokenExceptionInterface>());
       });
+
+      test('$AccountBlockedAfterMultipleLoginAttemptsExceptionInterface', () {
+        final exception = PlatformException(
+          code: 'Error - ${errorCodesInterface.accountBlockedAfterMultipleLoginAttempts}',
+          message: 'FlutterError',
+        );
+
+        Object? error;
+
+        try {
+          FlutterReachFiveAndroid().parseError(
+            exception,
+            StackTrace.fromString('test'),
+          );
+        } catch (e) {
+          error = e;
+        }
+
+        expect(
+          error,
+          isA<AccountBlockedAfterMultipleLoginAttemptsExceptionInterface>(),
+        );
+      });
     });
   });
 }
