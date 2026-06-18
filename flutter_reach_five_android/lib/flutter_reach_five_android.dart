@@ -36,6 +36,12 @@ class FlutterReachFiveAndroid extends FlutterReachFivePlatform {
         errorCodesInterface.unauthorizedRefreshToken,
       )) {
         throw UnauthorizedRefreshTokenExceptionInterface();
+      } else if (errorCode.contains(
+        errorCodesInterface.accountBlockedAfterMultipleLoginAttempts,
+      )) {
+        throw AccountBlockedAfterMultipleLoginAttemptsExceptionInterface(
+          error.message ?? '',
+        );
       }
     }
     return Error.throwWithStackTrace(error, stackTrace);

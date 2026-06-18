@@ -86,6 +86,14 @@ class Converters {
                     details = null
                 )
             }
+            if (reachFiveError.data?.errorMessageKey == "error.accountBlockedAfterMultipleLoginAttempts") {
+                val errorCode = errorCodesInterface.accountBlockedAfterMultipleLoginAttempts
+                return FlutterError(
+                    code= errorCode,
+                    message= reachFiveError.data?.errorUserMsg,
+                    details = null
+                )
+            }
             return defaultFlutterError
         }
 
