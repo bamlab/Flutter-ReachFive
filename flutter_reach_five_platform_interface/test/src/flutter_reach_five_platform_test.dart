@@ -391,6 +391,13 @@ void main() {
           ).called(1);
         },
       );
+
+      test('$AccountBlockedAfterMultipleLoginAttemptsExceptionInterface', () {
+        expect(
+          const AccountBlockedAfterMultipleLoginAttemptsExceptionInterface(),
+          isA<AccountBlockedAfterMultipleLoginAttemptsExceptionInterface>(),
+        );
+      });
     });
   });
 }
