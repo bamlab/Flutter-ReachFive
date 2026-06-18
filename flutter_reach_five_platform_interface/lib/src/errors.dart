@@ -42,8 +42,10 @@ class UnauthorizedRefreshTokenExceptionInterface implements Exception {}
 /// {@macro flutter_reach_five.errors.too_many_login_attemps}
 class AccountBlockedAfterMultipleLoginAttemptsExceptionInterface
     extends FormatException {
+  // coverage:ignore-start
   /// {@macro flutter_reach_five.errors.too_many_login_attemps}
   const AccountBlockedAfterMultipleLoginAttemptsExceptionInterface([
     super.message = '',
   ]);
+  // coverage:ignore-end
 }
