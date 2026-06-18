@@ -88,11 +88,18 @@ public class Converters {
                 message: "Auth was cancelled by the user",
                 details: nil
             )
-        case .TechnicalError(reason: let reason, apiError: _):
+        case .TechnicalError(reason: let reason, apiError: let apiError):
             if (reason == "Response status code was unacceptable: 401.") {
                 return PigeonError(
                     code: errorCodesInterface.unauthorizedRefreshToken,
                     message: nil,
+                    details: nil
+                )
+            }
+            if (apiError?.errorMessageKey == "error.accountBlockedAfterMultipleLoginAttempts") {
+                return PigeonError(
+                    code: errorCodesInterface.accountBlockedAfterMultipleLoginAttempts,
+                    message: apiError?.errorUserMsg,
                     details: nil
                 )
             }
