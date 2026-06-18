@@ -235,7 +235,8 @@ void main() {
 
       test('$AccountBlockedAfterMultipleLoginAttemptsExceptionInterface', () {
         final exception = PlatformException(
-          code: 'Error - ${errorCodesInterface.accountBlockedAfterMultipleLoginAttempts}',
+          code:
+              'Error - ${errorCodesInterface.accountBlockedAfterMultipleLoginAttempts}',
           message: 'FlutterError',
         );
 

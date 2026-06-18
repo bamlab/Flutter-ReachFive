@@ -148,7 +148,8 @@ void main() {
 
       try {
         adaptErrors(
-          error: const AccountBlockedAfterMultipleLoginAttemptsExceptionInterface(),
+          error:
+              const AccountBlockedAfterMultipleLoginAttemptsExceptionInterface(),
           stackTrace: StackTrace.fromString('test'),
         );
       } catch (e) {
