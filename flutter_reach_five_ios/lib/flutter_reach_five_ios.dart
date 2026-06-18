@@ -27,6 +27,11 @@ class FlutterReachFiveIOS extends FlutterReachFivePlatform {
         throw SocialAccountEmailAlreadyInUseExceptionInterface();
       } else if (error.code == errorCodesInterface.unauthorizedRefreshToken) {
         throw UnauthorizedRefreshTokenExceptionInterface();
+      } else if (error.code ==
+          errorCodesInterface.accountBlockedAfterMultipleLoginAttempts) {
+        throw AccountBlockedAfterMultipleLoginAttemptsExceptionInterface(
+          error.message ?? "",
+        );
       }
     }
     return Error.throwWithStackTrace(error, stackTrace);

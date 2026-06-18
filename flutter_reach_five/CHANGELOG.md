@@ -1,3 +1,7 @@
+# 2.0.1
+
+- **FEAT**: Add `AccountBlockedAfterMultipleLoginAttemptsException` thrown when a user is temporarily blocked after multiple consecutive failed login attempts
+
 # 2.0.0
 
 - **BREAKING**: Update Flutter to >=3.41.0

@@ -11,6 +11,7 @@ final errorCodesInterface = ErrorCodesInterface(
   userCancelledOrClosedTheWebFlow: 'user_cancelled_or_closed_the_web_flow',
   socialAccountEmailAlreadyInUse: 'social_account_email_already_in_use',
   unauthorizedRefreshToken: 'unauthorized_refresh_token',
+  accountBlockedAfterMultipleLoginAttempts: 'too_many_login_attemps',
 );
 
 /// {@macro flutter_reach_five.errors.email_already_in_use}
@@ -37,3 +38,14 @@ class SocialAccountEmailAlreadyInUseExceptionInterface implements Exception {}
 
 /// {@macro flutter_reach_five.errors.unauthorized_refresh_token}
 class UnauthorizedRefreshTokenExceptionInterface implements Exception {}
+
+/// {@macro flutter_reach_five.errors.too_many_login_attemps}
+class AccountBlockedAfterMultipleLoginAttemptsExceptionInterface
+    extends FormatException {
+  // coverage:ignore-start
+  /// {@macro flutter_reach_five.errors.too_many_login_attemps}
+  const AccountBlockedAfterMultipleLoginAttemptsExceptionInterface([
+    super.message = '',
+  ]);
+  // coverage:ignore-end
+}

@@ -8,7 +8,8 @@ import 'package:pigeon/pigeon.dart';
     kotlinOptions: KotlinOptions(
       package: 'tech.bam.flutter_reach_five.android',
     ),
-    swiftOut: '../flutter_reach_five_ios/ios/Classes/reach_five_api.swift',
+    swiftOut:
+        '../flutter_reach_five_ios/ios/flutter_reach_five_ios/Sources/flutter_reach_five_ios/reach_five_api.swift',
   ),
 )
 class ErrorCodesInterface {
@@ -21,6 +22,7 @@ class ErrorCodesInterface {
     required this.userCancelledOrClosedTheWebFlow,
     required this.socialAccountEmailAlreadyInUse,
     required this.unauthorizedRefreshToken,
+    required this.accountBlockedAfterMultipleLoginAttempts,
   });
 
   final String emailAlreadyInUseCode;
@@ -31,6 +33,7 @@ class ErrorCodesInterface {
   final String userCancelledOrClosedTheWebFlow;
   final String socialAccountEmailAlreadyInUse;
   final String unauthorizedRefreshToken;
+  final String accountBlockedAfterMultipleLoginAttempts;
 }
 
 class SdkConfigInterface {

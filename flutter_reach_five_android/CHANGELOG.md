@@ -1,3 +1,7 @@
+# 2.0.1
+
+- **FEAT**: Handle `AccountBlockedAfterMultipleLoginAttempts` error (HTTP 403)
+
 # 2.0.0
 
 - **BREAKING**: Update Flutter to >=3.41.0
