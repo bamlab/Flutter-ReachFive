@@ -28,5 +28,8 @@ Never adaptErrors({required Object error, required StackTrace stackTrace}) {
   if (error is UnauthorizedRefreshTokenExceptionInterface) {
     throw UnauthorizedRefreshTokenException();
   }
+  if (error is AccountBlockedAfterMultipleLoginAttemptsExceptionInterface) {
+    throw AccountBlockedAfterMultipleLoginAttemptsException(error.message);
+  }
   Error.throwWithStackTrace(error, stackTrace);
 }
