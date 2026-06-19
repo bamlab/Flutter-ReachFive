@@ -31,5 +31,8 @@ Never adaptErrors({required Object error, required StackTrace stackTrace}) {
   if (error is AccountBlockedAfterMultipleLoginAttemptsExceptionInterface) {
     throw AccountBlockedAfterMultipleLoginAttemptsException(error.message);
   }
+  if (error is TooManyAttemptsExceptionInterface) {
+    throw TooManyAttemptsException(error.message);
+  }
   Error.throwWithStackTrace(error, stackTrace);
 }

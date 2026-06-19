@@ -57,3 +57,12 @@ class AccountBlockedAfterMultipleLoginAttemptsException
   /// {@macro flutter_reach_five.errors.too_many_login_attemps}
   const AccountBlockedAfterMultipleLoginAttemptsException([super.message = '']);
 }
+
+/// {@template flutter_reach_five.errors.too_many_attempts}
+/// Error thrown when too many attempts are made in a short period of time
+/// and the request is blocked by the rate limiter
+/// {@endtemplate}
+class TooManyAttemptsException extends FormatException {
+  /// {@macro flutter_reach_five.errors.too_many_attempts}
+  const TooManyAttemptsException([super.message = '']);
+}
