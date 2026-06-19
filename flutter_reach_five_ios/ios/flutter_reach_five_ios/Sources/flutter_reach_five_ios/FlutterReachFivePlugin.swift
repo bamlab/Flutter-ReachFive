@@ -347,9 +347,19 @@ public class FlutterReachFivePlugin: NSObject, FlutterPlugin, FlutterSceneLifeCy
                     redirectUrl: request.redirectUrl
                 )
                 completion(.success(()))
+            } catch let error as ReachFiveError {
+                completion(.failure(Converters.parseError(
+                    reachFiveError: error,
+                    errorCodesInterface: request.errorCodes,
+                    defaultFlutterError: PigeonError(
+                        code: "request_password_reset_error_code",
+                        message: error.message(),
+                        details: nil
+                    )
+                )))
             } catch {
                 completion(.failure(PigeonError(
-                    code: "request_password_reset_error_code",
+                    code: "request_password_reset_error_code ",
                     message: error.localizedDescription,
                     details: nil
                 )))
