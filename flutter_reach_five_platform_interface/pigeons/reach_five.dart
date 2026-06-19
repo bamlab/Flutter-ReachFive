@@ -23,6 +23,7 @@ class ErrorCodesInterface {
     required this.socialAccountEmailAlreadyInUse,
     required this.unauthorizedRefreshToken,
     required this.accountBlockedAfterMultipleLoginAttempts,
+    required this.tooManyAttempts,
   });
 
   final String emailAlreadyInUseCode;
@@ -34,6 +35,7 @@ class ErrorCodesInterface {
   final String socialAccountEmailAlreadyInUse;
   final String unauthorizedRefreshToken;
   final String accountBlockedAfterMultipleLoginAttempts;
+  final String tooManyAttempts;
 }
 
 class SdkConfigInterface {

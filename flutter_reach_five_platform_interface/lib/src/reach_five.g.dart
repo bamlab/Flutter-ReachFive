@@ -112,6 +112,7 @@ class ErrorCodesInterface {
     required this.socialAccountEmailAlreadyInUse,
     required this.unauthorizedRefreshToken,
     required this.accountBlockedAfterMultipleLoginAttempts,
+    required this.tooManyAttempts,
   });
 
   String emailAlreadyInUseCode;
@@ -132,6 +133,8 @@ class ErrorCodesInterface {
 
   String accountBlockedAfterMultipleLoginAttempts;
 
+  String tooManyAttempts;
+
   List<Object?> _toList() {
     return <Object?>[
       emailAlreadyInUseCode,
@@ -143,6 +146,7 @@ class ErrorCodesInterface {
       socialAccountEmailAlreadyInUse,
       unauthorizedRefreshToken,
       accountBlockedAfterMultipleLoginAttempts,
+      tooManyAttempts,
     ];
   }
 
@@ -162,6 +166,7 @@ class ErrorCodesInterface {
       socialAccountEmailAlreadyInUse: result[6]! as String,
       unauthorizedRefreshToken: result[7]! as String,
       accountBlockedAfterMultipleLoginAttempts: result[8]! as String,
+      tooManyAttempts: result[9]! as String,
     );
   }
 
@@ -194,7 +199,8 @@ class ErrorCodesInterface {
         _deepEquals(
           accountBlockedAfterMultipleLoginAttempts,
           other.accountBlockedAfterMultipleLoginAttempts,
-        );
+        ) &&
+        _deepEquals(tooManyAttempts, other.tooManyAttempts);
   }
 
   @override

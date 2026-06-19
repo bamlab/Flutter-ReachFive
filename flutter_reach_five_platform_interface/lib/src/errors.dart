@@ -12,6 +12,7 @@ final errorCodesInterface = ErrorCodesInterface(
   socialAccountEmailAlreadyInUse: 'social_account_email_already_in_use',
   unauthorizedRefreshToken: 'unauthorized_refresh_token',
   accountBlockedAfterMultipleLoginAttempts: 'too_many_login_attemps',
+  tooManyAttempts: 'rate_limiter_too_many_attempts',
 );
 
 /// {@macro flutter_reach_five.errors.email_already_in_use}
@@ -47,5 +48,13 @@ class AccountBlockedAfterMultipleLoginAttemptsExceptionInterface
   const AccountBlockedAfterMultipleLoginAttemptsExceptionInterface([
     super.message = '',
   ]);
+  // coverage:ignore-end
+}
+
+/// {@macro flutter_reach_five.errors.too_many_attempts}
+class TooManyAttemptsExceptionInterface extends FormatException {
+  // coverage:ignore-start
+  /// {@macro flutter_reach_five.errors.too_many_attempts}
+  const TooManyAttemptsExceptionInterface([super.message = '']);
   // coverage:ignore-end
 }
