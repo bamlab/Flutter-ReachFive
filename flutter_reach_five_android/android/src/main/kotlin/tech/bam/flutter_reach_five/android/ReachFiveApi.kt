@@ -225,7 +225,8 @@ data class ErrorCodesInterface (
   val userCancelledOrClosedTheWebFlow: String,
   val socialAccountEmailAlreadyInUse: String,
   val unauthorizedRefreshToken: String,
-  val accountBlockedAfterMultipleLoginAttempts: String
+  val accountBlockedAfterMultipleLoginAttempts: String,
+  val tooManyAttempts: String
 )
  {
   companion object {
@@ -239,7 +240,8 @@ data class ErrorCodesInterface (
       val socialAccountEmailAlreadyInUse = pigeonVar_list[6] as String
       val unauthorizedRefreshToken = pigeonVar_list[7] as String
       val accountBlockedAfterMultipleLoginAttempts = pigeonVar_list[8] as String
-      return ErrorCodesInterface(emailAlreadyInUseCode, invalidEmailOrPasswordCode, invalidVerificationCode, updateSamePassword, invalidGrant, userCancelledOrClosedTheWebFlow, socialAccountEmailAlreadyInUse, unauthorizedRefreshToken, accountBlockedAfterMultipleLoginAttempts)
+      val tooManyAttempts = pigeonVar_list[9] as String
+      return ErrorCodesInterface(emailAlreadyInUseCode, invalidEmailOrPasswordCode, invalidVerificationCode, updateSamePassword, invalidGrant, userCancelledOrClosedTheWebFlow, socialAccountEmailAlreadyInUse, unauthorizedRefreshToken, accountBlockedAfterMultipleLoginAttempts, tooManyAttempts)
     }
   }
   fun toList(): List<Any?> {
@@ -253,6 +255,7 @@ data class ErrorCodesInterface (
       socialAccountEmailAlreadyInUse,
       unauthorizedRefreshToken,
       accountBlockedAfterMultipleLoginAttempts,
+      tooManyAttempts,
     )
   }
   override fun equals(other: Any?): Boolean {
@@ -263,7 +266,7 @@ data class ErrorCodesInterface (
       return true
     }
     val other = other as ErrorCodesInterface
-    return ReachFiveApiPigeonUtils.deepEquals(this.emailAlreadyInUseCode, other.emailAlreadyInUseCode) && ReachFiveApiPigeonUtils.deepEquals(this.invalidEmailOrPasswordCode, other.invalidEmailOrPasswordCode) && ReachFiveApiPigeonUtils.deepEquals(this.invalidVerificationCode, other.invalidVerificationCode) && ReachFiveApiPigeonUtils.deepEquals(this.updateSamePassword, other.updateSamePassword) && ReachFiveApiPigeonUtils.deepEquals(this.invalidGrant, other.invalidGrant) && ReachFiveApiPigeonUtils.deepEquals(this.userCancelledOrClosedTheWebFlow, other.userCancelledOrClosedTheWebFlow) && ReachFiveApiPigeonUtils.deepEquals(this.socialAccountEmailAlreadyInUse, other.socialAccountEmailAlreadyInUse) && ReachFiveApiPigeonUtils.deepEquals(this.unauthorizedRefreshToken, other.unauthorizedRefreshToken) && ReachFiveApiPigeonUtils.deepEquals(this.accountBlockedAfterMultipleLoginAttempts, other.accountBlockedAfterMultipleLoginAttempts)
+    return ReachFiveApiPigeonUtils.deepEquals(this.emailAlreadyInUseCode, other.emailAlreadyInUseCode) && ReachFiveApiPigeonUtils.deepEquals(this.invalidEmailOrPasswordCode, other.invalidEmailOrPasswordCode) && ReachFiveApiPigeonUtils.deepEquals(this.invalidVerificationCode, other.invalidVerificationCode) && ReachFiveApiPigeonUtils.deepEquals(this.updateSamePassword, other.updateSamePassword) && ReachFiveApiPigeonUtils.deepEquals(this.invalidGrant, other.invalidGrant) && ReachFiveApiPigeonUtils.deepEquals(this.userCancelledOrClosedTheWebFlow, other.userCancelledOrClosedTheWebFlow) && ReachFiveApiPigeonUtils.deepEquals(this.socialAccountEmailAlreadyInUse, other.socialAccountEmailAlreadyInUse) && ReachFiveApiPigeonUtils.deepEquals(this.unauthorizedRefreshToken, other.unauthorizedRefreshToken) && ReachFiveApiPigeonUtils.deepEquals(this.accountBlockedAfterMultipleLoginAttempts, other.accountBlockedAfterMultipleLoginAttempts) && ReachFiveApiPigeonUtils.deepEquals(this.tooManyAttempts, other.tooManyAttempts)
   }
 
   override fun hashCode(): Int {
@@ -277,6 +280,7 @@ data class ErrorCodesInterface (
     result = 31 * result + ReachFiveApiPigeonUtils.deepHash(this.socialAccountEmailAlreadyInUse)
     result = 31 * result + ReachFiveApiPigeonUtils.deepHash(this.unauthorizedRefreshToken)
     result = 31 * result + ReachFiveApiPigeonUtils.deepHash(this.accountBlockedAfterMultipleLoginAttempts)
+    result = 31 * result + ReachFiveApiPigeonUtils.deepHash(this.tooManyAttempts)
     return result
   }
 }

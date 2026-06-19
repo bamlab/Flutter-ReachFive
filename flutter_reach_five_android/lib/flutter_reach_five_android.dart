@@ -42,6 +42,10 @@ class FlutterReachFiveAndroid extends FlutterReachFivePlatform {
         throw AccountBlockedAfterMultipleLoginAttemptsExceptionInterface(
           error.message ?? '',
         );
+      } else if (errorCode.contains(errorCodesInterface.tooManyAttempts)) {
+        throw TooManyAttemptsExceptionInterface(
+          error.message ?? '',
+        );
       }
     }
     return Error.throwWithStackTrace(error, stackTrace);
