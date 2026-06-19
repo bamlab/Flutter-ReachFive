@@ -158,5 +158,20 @@ void main() {
 
       expect(error, isA<AccountBlockedAfterMultipleLoginAttemptsException>());
     });
+
+    test('$TooManyAttemptsException', () async {
+      Object? error;
+
+      try {
+        adaptErrors(
+          error: const TooManyAttemptsExceptionInterface(),
+          stackTrace: StackTrace.fromString('test'),
+        );
+      } catch (e) {
+        error = e;
+      }
+
+      expect(error, isA<TooManyAttemptsException>());
+    });
   });
 }

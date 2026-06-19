@@ -112,6 +112,7 @@ class ErrorCodesInterface {
     required this.socialAccountEmailAlreadyInUse,
     required this.unauthorizedRefreshToken,
     required this.accountBlockedAfterMultipleLoginAttempts,
+    required this.tooManyAttempts,
   });
 
   String emailAlreadyInUseCode;
@@ -132,6 +133,8 @@ class ErrorCodesInterface {
 
   String accountBlockedAfterMultipleLoginAttempts;
 
+  String tooManyAttempts;
+
   List<Object?> _toList() {
     return <Object?>[
       emailAlreadyInUseCode,
@@ -143,6 +146,7 @@ class ErrorCodesInterface {
       socialAccountEmailAlreadyInUse,
       unauthorizedRefreshToken,
       accountBlockedAfterMultipleLoginAttempts,
+      tooManyAttempts,
     ];
   }
 
@@ -162,6 +166,7 @@ class ErrorCodesInterface {
       socialAccountEmailAlreadyInUse: result[6]! as String,
       unauthorizedRefreshToken: result[7]! as String,
       accountBlockedAfterMultipleLoginAttempts: result[8]! as String,
+      tooManyAttempts: result[9]! as String,
     );
   }
 
@@ -194,7 +199,8 @@ class ErrorCodesInterface {
         _deepEquals(
           accountBlockedAfterMultipleLoginAttempts,
           other.accountBlockedAfterMultipleLoginAttempts,
-        );
+        ) &&
+        _deepEquals(tooManyAttempts, other.tooManyAttempts);
   }
 
   @override
@@ -1666,6 +1672,7 @@ class RequestPasswordResetRequestInterface {
     this.email,
     this.phoneNumber,
     this.redirectUrl,
+    required this.errorCodes,
   });
 
   ReachFiveKeyInterface reachFiveKey;
@@ -1676,8 +1683,10 @@ class RequestPasswordResetRequestInterface {
 
   String? redirectUrl;
 
+  ErrorCodesInterface errorCodes;
+
   List<Object?> _toList() {
-    return <Object?>[reachFiveKey, email, phoneNumber, redirectUrl];
+    return <Object?>[reachFiveKey, email, phoneNumber, redirectUrl, errorCodes];
   }
 
   Object encode() {
@@ -1691,6 +1700,7 @@ class RequestPasswordResetRequestInterface {
       email: result[1] as String?,
       phoneNumber: result[2] as String?,
       redirectUrl: result[3] as String?,
+      errorCodes: result[4]! as ErrorCodesInterface,
     );
   }
 
@@ -1707,7 +1717,8 @@ class RequestPasswordResetRequestInterface {
     return _deepEquals(reachFiveKey, other.reachFiveKey) &&
         _deepEquals(email, other.email) &&
         _deepEquals(phoneNumber, other.phoneNumber) &&
-        _deepEquals(redirectUrl, other.redirectUrl);
+        _deepEquals(redirectUrl, other.redirectUrl) &&
+        _deepEquals(errorCodes, other.errorCodes);
   }
 
   @override

@@ -436,10 +436,14 @@ class FlutterReachFivePlugin : FlutterPlugin, PluginRegistry.ActivityResultListe
             redirectUrl = request.redirectUrl,
             success = { callback(Result.success(Unit)) },
             failure = { error ->
-                callback(Result.failure(FlutterError(
-                    code= "request_password_reset_error_code",
-                    message= error.message,
-                    details= null
+                callback(Result.failure(Converters.parseError(
+                    reachFiveError = error,
+                    errorCodesInterface = request.errorCodes,
+                    defaultFlutterError = FlutterError(
+                        code= "request_password_reset_error_code",
+                        message= error.message,
+                        details= null
+                    )
                 )))
             }
         )

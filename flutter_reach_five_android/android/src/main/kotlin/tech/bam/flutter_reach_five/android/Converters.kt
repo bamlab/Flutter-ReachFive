@@ -94,6 +94,14 @@ class Converters {
                     details = null
                 )
             }
+            if (reachFiveError.data?.errorMessageKey == "error.tooManyAttempts") {
+                val errorCode = errorCodesInterface.tooManyAttempts
+                return FlutterError(
+                    code= errorCode,
+                    message= reachFiveError.data?.errorUserMsg,
+                    details = null
+                )
+            }
             return defaultFlutterError
         }
 

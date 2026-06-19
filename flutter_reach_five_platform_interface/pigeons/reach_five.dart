@@ -23,6 +23,7 @@ class ErrorCodesInterface {
     required this.socialAccountEmailAlreadyInUse,
     required this.unauthorizedRefreshToken,
     required this.accountBlockedAfterMultipleLoginAttempts,
+    required this.tooManyAttempts,
   });
 
   final String emailAlreadyInUseCode;
@@ -34,6 +35,7 @@ class ErrorCodesInterface {
   final String socialAccountEmailAlreadyInUse;
   final String unauthorizedRefreshToken;
   final String accountBlockedAfterMultipleLoginAttempts;
+  final String tooManyAttempts;
 }
 
 class SdkConfigInterface {
@@ -431,12 +433,14 @@ class RequestPasswordResetRequestInterface {
     required this.email,
     required this.phoneNumber,
     required this.redirectUrl,
+    required this.errorCodes,
   });
 
   final ReachFiveKeyInterface reachFiveKey;
   final String? email;
   final String? phoneNumber;
   final String? redirectUrl;
+  final ErrorCodesInterface errorCodes;
 }
 
 class UpdatePasswordWithAccessTokenRequestInterface {

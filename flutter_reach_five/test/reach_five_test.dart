@@ -647,6 +647,38 @@ void main() {
           ),
         ).called(1);
       });
+
+      test('parse throw error', () async {
+        const email = 'email';
+        const redirectUrl = 'redirectUrl';
+
+        registerFallbackValue(
+          ReachFiveKeyConverter.toInterface(reachFive.reachFiveKey),
+        );
+        when(
+          () => flutterReachFivePlatform.requestPasswordReset(
+            reachFiveKey: any(named: 'reachFiveKey'),
+            email: email,
+            redirectUrl: redirectUrl,
+          ),
+        ).thenThrow(Exception());
+
+        registerFallbackValue(StackTrace.fromString('test'));
+        when(
+          () => flutterReachFivePlatform.parseError(any(), any()),
+        ).thenThrow(Exception());
+
+        try {
+          await reachFive.requestPasswordReset(
+            email: email,
+            redirectUrl: redirectUrl,
+          );
+        } catch (_) {}
+
+        verify(
+          () => flutterReachFivePlatform.parseError(any(), any()),
+        ).called(1);
+      });
     });
 
     group('updatePassword', () {

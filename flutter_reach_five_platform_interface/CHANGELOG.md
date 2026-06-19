@@ -1,3 +1,8 @@
+# 2.0.2
+
+- **FEAT**: Add `tooManyAttempts` error code to `ErrorCodesInterface`
+- **FEAT**: Add `errorCodes` to `RequestPasswordResetRequestInterface`
+
 # 2.0.1
 
 - **FEAT**: Add `accountBlockedAfterMultipleLoginAttempts` error code to `ErrorCodesInterface`

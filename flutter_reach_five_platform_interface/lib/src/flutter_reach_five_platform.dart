@@ -161,6 +161,7 @@ abstract class FlutterReachFivePlatform extends PlatformInterface {
       email: email,
       phoneNumber: phoneNumber,
       redirectUrl: redirectUrl,
+      errorCodes: errorCodesInterface,
     ),
   );
 
