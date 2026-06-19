@@ -245,6 +245,28 @@ void main() {
           isA<AccountBlockedAfterMultipleLoginAttemptsExceptionInterface>(),
         );
       });
+
+      test('$TooManyAttemptsExceptionInterface', () {
+        final exception = PlatformException(
+          code: errorCodesInterface.tooManyAttempts,
+        );
+
+        Object? error;
+
+        try {
+          FlutterReachFiveIOS().parseError(
+            exception,
+            StackTrace.fromString('test'),
+          );
+        } catch (e) {
+          error = e;
+        }
+
+        expect(
+          error,
+          isA<TooManyAttemptsExceptionInterface>(),
+        );
+      });
     });
   });
 }
