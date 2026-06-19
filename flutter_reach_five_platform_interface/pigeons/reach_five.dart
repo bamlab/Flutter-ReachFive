@@ -433,12 +433,14 @@ class RequestPasswordResetRequestInterface {
     required this.email,
     required this.phoneNumber,
     required this.redirectUrl,
+    required this.errorCodes,
   });
 
   final ReachFiveKeyInterface reachFiveKey;
   final String? email;
   final String? phoneNumber;
   final String? redirectUrl;
+  final ErrorCodesInterface errorCodes;
 }
 
 class UpdatePasswordWithAccessTokenRequestInterface {

@@ -1451,6 +1451,7 @@ struct RequestPasswordResetRequestInterface: Hashable {
   var email: String? = nil
   var phoneNumber: String? = nil
   var redirectUrl: String? = nil
+  var errorCodes: ErrorCodesInterface
 
 
   // swift-format-ignore: AlwaysUseLowerCamelCase
@@ -1459,12 +1460,14 @@ struct RequestPasswordResetRequestInterface: Hashable {
     let email: String? = nilOrValue(pigeonVar_list[1])
     let phoneNumber: String? = nilOrValue(pigeonVar_list[2])
     let redirectUrl: String? = nilOrValue(pigeonVar_list[3])
+    let errorCodes = pigeonVar_list[4] as! ErrorCodesInterface
 
     return RequestPasswordResetRequestInterface(
       reachFiveKey: reachFiveKey,
       email: email,
       phoneNumber: phoneNumber,
-      redirectUrl: redirectUrl
+      redirectUrl: redirectUrl,
+      errorCodes: errorCodes
     )
   }
   func toList() -> [Any?] {
@@ -1473,13 +1476,14 @@ struct RequestPasswordResetRequestInterface: Hashable {
       email,
       phoneNumber,
       redirectUrl,
+      errorCodes,
     ]
   }
   static func == (lhs: RequestPasswordResetRequestInterface, rhs: RequestPasswordResetRequestInterface) -> Bool {
     if Swift.type(of: lhs) != Swift.type(of: rhs) {
       return false
     }
-    return deepEqualsreach_five_api(lhs.reachFiveKey, rhs.reachFiveKey) && deepEqualsreach_five_api(lhs.email, rhs.email) && deepEqualsreach_five_api(lhs.phoneNumber, rhs.phoneNumber) && deepEqualsreach_five_api(lhs.redirectUrl, rhs.redirectUrl)
+    return deepEqualsreach_five_api(lhs.reachFiveKey, rhs.reachFiveKey) && deepEqualsreach_five_api(lhs.email, rhs.email) && deepEqualsreach_five_api(lhs.phoneNumber, rhs.phoneNumber) && deepEqualsreach_five_api(lhs.redirectUrl, rhs.redirectUrl) && deepEqualsreach_five_api(lhs.errorCodes, rhs.errorCodes)
   }
 
   func hash(into hasher: inout Hasher) {
@@ -1488,6 +1492,7 @@ struct RequestPasswordResetRequestInterface: Hashable {
     deepHashreach_five_api(value: email, hasher: &hasher)
     deepHashreach_five_api(value: phoneNumber, hasher: &hasher)
     deepHashreach_five_api(value: redirectUrl, hasher: &hasher)
+    deepHashreach_five_api(value: errorCodes, hasher: &hasher)
   }
 }
 

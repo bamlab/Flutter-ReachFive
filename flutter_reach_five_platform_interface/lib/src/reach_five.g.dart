@@ -1672,6 +1672,7 @@ class RequestPasswordResetRequestInterface {
     this.email,
     this.phoneNumber,
     this.redirectUrl,
+    required this.errorCodes,
   });
 
   ReachFiveKeyInterface reachFiveKey;
@@ -1682,8 +1683,10 @@ class RequestPasswordResetRequestInterface {
 
   String? redirectUrl;
 
+  ErrorCodesInterface errorCodes;
+
   List<Object?> _toList() {
-    return <Object?>[reachFiveKey, email, phoneNumber, redirectUrl];
+    return <Object?>[reachFiveKey, email, phoneNumber, redirectUrl, errorCodes];
   }
 
   Object encode() {
@@ -1697,6 +1700,7 @@ class RequestPasswordResetRequestInterface {
       email: result[1] as String?,
       phoneNumber: result[2] as String?,
       redirectUrl: result[3] as String?,
+      errorCodes: result[4]! as ErrorCodesInterface,
     );
   }
 
@@ -1713,7 +1717,8 @@ class RequestPasswordResetRequestInterface {
     return _deepEquals(reachFiveKey, other.reachFiveKey) &&
         _deepEquals(email, other.email) &&
         _deepEquals(phoneNumber, other.phoneNumber) &&
-        _deepEquals(redirectUrl, other.redirectUrl);
+        _deepEquals(redirectUrl, other.redirectUrl) &&
+        _deepEquals(errorCodes, other.errorCodes);
   }
 
   @override

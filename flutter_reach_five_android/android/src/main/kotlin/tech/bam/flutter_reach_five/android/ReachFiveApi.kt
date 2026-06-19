@@ -1412,7 +1412,8 @@ data class RequestPasswordResetRequestInterface (
   val reachFiveKey: ReachFiveKeyInterface,
   val email: String? = null,
   val phoneNumber: String? = null,
-  val redirectUrl: String? = null
+  val redirectUrl: String? = null,
+  val errorCodes: ErrorCodesInterface
 )
  {
   companion object {
@@ -1421,7 +1422,8 @@ data class RequestPasswordResetRequestInterface (
       val email = pigeonVar_list[1] as String?
       val phoneNumber = pigeonVar_list[2] as String?
       val redirectUrl = pigeonVar_list[3] as String?
-      return RequestPasswordResetRequestInterface(reachFiveKey, email, phoneNumber, redirectUrl)
+      val errorCodes = pigeonVar_list[4] as ErrorCodesInterface
+      return RequestPasswordResetRequestInterface(reachFiveKey, email, phoneNumber, redirectUrl, errorCodes)
     }
   }
   fun toList(): List<Any?> {
@@ -1430,6 +1432,7 @@ data class RequestPasswordResetRequestInterface (
       email,
       phoneNumber,
       redirectUrl,
+      errorCodes,
     )
   }
   override fun equals(other: Any?): Boolean {
@@ -1440,7 +1443,7 @@ data class RequestPasswordResetRequestInterface (
       return true
     }
     val other = other as RequestPasswordResetRequestInterface
-    return ReachFiveApiPigeonUtils.deepEquals(this.reachFiveKey, other.reachFiveKey) && ReachFiveApiPigeonUtils.deepEquals(this.email, other.email) && ReachFiveApiPigeonUtils.deepEquals(this.phoneNumber, other.phoneNumber) && ReachFiveApiPigeonUtils.deepEquals(this.redirectUrl, other.redirectUrl)
+    return ReachFiveApiPigeonUtils.deepEquals(this.reachFiveKey, other.reachFiveKey) && ReachFiveApiPigeonUtils.deepEquals(this.email, other.email) && ReachFiveApiPigeonUtils.deepEquals(this.phoneNumber, other.phoneNumber) && ReachFiveApiPigeonUtils.deepEquals(this.redirectUrl, other.redirectUrl) && ReachFiveApiPigeonUtils.deepEquals(this.errorCodes, other.errorCodes)
   }
 
   override fun hashCode(): Int {
@@ -1449,6 +1452,7 @@ data class RequestPasswordResetRequestInterface (
     result = 31 * result + ReachFiveApiPigeonUtils.deepHash(this.email)
     result = 31 * result + ReachFiveApiPigeonUtils.deepHash(this.phoneNumber)
     result = 31 * result + ReachFiveApiPigeonUtils.deepHash(this.redirectUrl)
+    result = 31 * result + ReachFiveApiPigeonUtils.deepHash(this.errorCodes)
     return result
   }
 }
