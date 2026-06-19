@@ -328,12 +328,22 @@ class ReachFive {
     String? email,
     String? phoneNumber,
     String? redirectUrl,
-  }) => _platform.requestPasswordReset(
-    reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
-    email: email,
-    phoneNumber: phoneNumber,
-    redirectUrl: redirectUrl,
-  );
+  }) async {
+    try {
+      await _platform.requestPasswordReset(
+        reachFiveKey: ReachFiveKeyConverter.toInterface(reachFiveKey),
+        email: email,
+        phoneNumber: phoneNumber,
+        redirectUrl: redirectUrl,
+      );
+    } catch (error, stackTrace) {
+      try {
+        _platform.parseError(error, stackTrace);
+      } catch (interfaceError, interfaceStackTrace) {
+        adaptErrors(error: interfaceError, stackTrace: interfaceStackTrace);
+      }
+    }
+  }
 
   /// {@template flutter_reach_five.reachFive.updatePassword}
   /// Make request for password reset
