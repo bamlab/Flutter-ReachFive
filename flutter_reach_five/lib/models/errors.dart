@@ -47,14 +47,12 @@ class SocialAccountEmailAlreadyInUseException implements Exception {}
 /// {@endtemplate}
 class UnauthorizedRefreshTokenException implements Exception {}
 
-/// {@template flutter_reach_five.errors.too_many_login_attemps}
+/// {@template flutter_reach_five.errors.account_blocked_too_many_login_attempts}
 /// Error thrown when a user fails to connect too many times
-/// in a row using the same IP adress
-/// for example)
 /// {@endtemplate}
 class AccountBlockedAfterMultipleLoginAttemptsException
     extends FormatException {
-  /// {@macro flutter_reach_five.errors.too_many_login_attemps}
+  /// {@macro flutter_reach_five.errors.account_blocked_too_many_login_attempts}
   const AccountBlockedAfterMultipleLoginAttemptsException([super.message = '']);
 }
 
