@@ -103,6 +103,13 @@ public class Converters {
                     details: nil
                 )
             }
+            if (apiError?.errorMessageKey == "error.tooManyAttempts") {
+                return PigeonError(
+                    code: errorCodesInterface.tooManyAttempts,
+                    message: apiError?.errorUserMsg,
+                    details: nil
+                )
+            }
             return defaultFlutterError
         }
     }
