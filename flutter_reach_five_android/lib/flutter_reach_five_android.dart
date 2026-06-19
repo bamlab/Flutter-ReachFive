@@ -43,9 +43,7 @@ class FlutterReachFiveAndroid extends FlutterReachFivePlatform {
           error.message ?? '',
         );
       } else if (errorCode.contains(errorCodesInterface.tooManyAttempts)) {
-        throw TooManyAttemptsExceptionInterface(
-          error.message ?? '',
-        );
+        throw TooManyAttemptsExceptionInterface(error.message ?? '');
       }
     }
     return Error.throwWithStackTrace(error, stackTrace);

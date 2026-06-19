@@ -274,10 +274,7 @@ void main() {
           error = e;
         }
 
-        expect(
-          error,
-          isA<TooManyAttemptsExceptionInterface>(),
-        );
+        expect(error, isA<TooManyAttemptsExceptionInterface>());
       });
     });
   });
