@@ -1,3 +1,8 @@
+# 2.0.2
+
+- **FEAT**: Add `TooManyAttemptsException` thrown when a request is blocked by the rate limiter (too many attempts)
+- **FIX**: Surface mapped errors thrown by `requestPasswordReset`
+
 # 2.0.1
 
 - **FEAT**: Add `AccountBlockedAfterMultipleLoginAttemptsException` thrown when a user is temporarily blocked after multiple consecutive failed login attempts

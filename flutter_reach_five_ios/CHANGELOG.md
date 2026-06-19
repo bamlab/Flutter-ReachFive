@@ -1,3 +1,8 @@
+# 2.0.2
+
+- **FEAT**: Handle `tooManyAttempts` error (rate limiter)
+- **FIX**: Convert errors thrown by `requestPasswordReset` through `parseError`
+
 # 2.0.1
 
 - **FEAT**: Handle `AccountBlockedAfterMultipleLoginAttempts` error (HTTP 403)
