@@ -118,6 +118,14 @@ class Converters {
                     details = null
                 )
             }
+            if (reachFiveError.data?.error == "password_too_weak") {
+                val errorCode = errorCodesInterface.passwordTooWeakError
+                return FlutterError(
+                    code= errorCode,
+                    message= null,
+                    details = null
+                )
+            }
             return defaultFlutterError
         }
 
