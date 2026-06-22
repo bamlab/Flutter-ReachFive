@@ -115,6 +115,7 @@ class ErrorCodesInterface {
     required this.tooManyAttempts,
     required this.passwordPolicyError,
     required this.accountTemporarilySuspended,
+    required this.passwordTooWeakError,
   });
 
   String emailAlreadyInUseCode;
@@ -141,6 +142,8 @@ class ErrorCodesInterface {
 
   String accountTemporarilySuspended;
 
+  String passwordTooWeakError;
+
   List<Object?> _toList() {
     return <Object?>[
       emailAlreadyInUseCode,
@@ -155,6 +158,7 @@ class ErrorCodesInterface {
       tooManyAttempts,
       passwordPolicyError,
       accountTemporarilySuspended,
+      passwordTooWeakError,
     ];
   }
 
@@ -177,6 +181,7 @@ class ErrorCodesInterface {
       tooManyAttempts: result[9]! as String,
       passwordPolicyError: result[10]! as String,
       accountTemporarilySuspended: result[11]! as String,
+      passwordTooWeakError: result[12]! as String,
     );
   }
 
@@ -215,7 +220,8 @@ class ErrorCodesInterface {
         _deepEquals(
           accountTemporarilySuspended,
           other.accountTemporarilySuspended,
-        );
+        ) &&
+        _deepEquals(passwordTooWeakError, other.passwordTooWeakError);
   }
 
   @override
