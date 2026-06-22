@@ -173,5 +173,20 @@ void main() {
 
       expect(error, isA<TooManyAttemptsException>());
     });
+
+    test('$PasswordPolicyException', () async {
+      Object? error;
+
+      try {
+        adaptErrors(
+          error: const PasswordPolicyExceptionInterface(),
+          stackTrace: StackTrace.fromString('test'),
+        );
+      } catch (e) {
+        error = e;
+      }
+
+      expect(error, isA<PasswordPolicyException>());
+    });
   });
 }

@@ -51,6 +51,13 @@ public class Converters {
                         details: nil
                 )
             }
+            if (apiError.errorMessageKey == "error.password.policy") {
+                return PigeonError(
+                        code: errorCodesInterface.passwordPolicyError,
+                        message: apiError.errorUserMsg,
+                        details: nil
+                )
+            }
             return defaultFlutterError
         case .AuthFailure(reason: _, apiError: let apiError):
             if (apiError?.errorMessageKey == "error.invalidEmailOrPassword") {

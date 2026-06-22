@@ -14,6 +14,7 @@ final errorCodesInterface = ErrorCodesInterface(
   accountBlockedAfterMultipleLoginAttempts:
       'account_blocked_too_many_login_attempts',
   tooManyAttempts: 'rate_limiter_too_many_attempts',
+  passwordPolicyError: 'password_policy',
 );
 
 /// {@macro flutter_reach_five.errors.email_already_in_use}
@@ -57,5 +58,13 @@ class TooManyAttemptsExceptionInterface extends FormatException {
   // coverage:ignore-start
   /// {@macro flutter_reach_five.errors.too_many_attempts}
   const TooManyAttemptsExceptionInterface([super.message = '']);
+  // coverage:ignore-end
+}
+
+/// {@macro flutter_reach_five.errors.password_policy}
+class PasswordPolicyExceptionInterface extends FormatException {
+  // coverage:ignore-start
+  /// {@macro flutter_reach_five.errors.password_policy}
+  const PasswordPolicyExceptionInterface([super.message = '']);
   // coverage:ignore-end
 }

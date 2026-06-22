@@ -1,3 +1,7 @@
+# 2.0.3
+
+- **FEAT**: Add `passwordPolicyError` error code to `ErrorCodesInterface`
+
 # 2.0.2
 
 - **FEAT**: Add `tooManyAttempts` error code to `ErrorCodesInterface`
