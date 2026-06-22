@@ -64,3 +64,12 @@ class TooManyAttemptsException extends FormatException {
   /// {@macro flutter_reach_five.errors.too_many_attempts}
   const TooManyAttemptsException([super.message = '']);
 }
+
+/// {@template flutter_reach_five.errors.password_policy}
+/// Error thrown when trying to set a password that does not meet
+/// the password policy requirements (length, composition or strength)
+/// {@endtemplate}
+class PasswordPolicyException extends FormatException {
+  /// {@macro flutter_reach_five.errors.password_policy}
+  const PasswordPolicyException([super.message = '']);
+}

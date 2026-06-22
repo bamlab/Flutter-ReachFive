@@ -34,5 +34,8 @@ Never adaptErrors({required Object error, required StackTrace stackTrace}) {
   if (error is TooManyAttemptsExceptionInterface) {
     throw TooManyAttemptsException(error.message);
   }
+  if (error is PasswordPolicyExceptionInterface) {
+    throw PasswordPolicyException(error.message);
+  }
   Error.throwWithStackTrace(error, stackTrace);
 }
