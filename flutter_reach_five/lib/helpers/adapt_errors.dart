@@ -37,5 +37,8 @@ Never adaptErrors({required Object error, required StackTrace stackTrace}) {
   if (error is PasswordPolicyExceptionInterface) {
     throw PasswordPolicyException(error.message);
   }
+  if (error is AccountTemporarilySuspendedExceptionInterface) {
+    throw AccountTemporarilySuspendedException(error.message);
+  }
   Error.throwWithStackTrace(error, stackTrace);
 }
