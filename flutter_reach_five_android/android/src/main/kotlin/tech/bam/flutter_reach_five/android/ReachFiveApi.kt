@@ -227,7 +227,8 @@ data class ErrorCodesInterface (
   val unauthorizedRefreshToken: String,
   val accountBlockedAfterMultipleLoginAttempts: String,
   val tooManyAttempts: String,
-  val passwordPolicyError: String
+  val passwordPolicyError: String,
+  val accountTemporarilySuspended: String
 )
  {
   companion object {
@@ -243,7 +244,8 @@ data class ErrorCodesInterface (
       val accountBlockedAfterMultipleLoginAttempts = pigeonVar_list[8] as String
       val tooManyAttempts = pigeonVar_list[9] as String
       val passwordPolicyError = pigeonVar_list[10] as String
-      return ErrorCodesInterface(emailAlreadyInUseCode, invalidEmailOrPasswordCode, invalidVerificationCode, updateSamePassword, invalidGrant, userCancelledOrClosedTheWebFlow, socialAccountEmailAlreadyInUse, unauthorizedRefreshToken, accountBlockedAfterMultipleLoginAttempts, tooManyAttempts, passwordPolicyError)
+      val accountTemporarilySuspended = pigeonVar_list[11] as String
+      return ErrorCodesInterface(emailAlreadyInUseCode, invalidEmailOrPasswordCode, invalidVerificationCode, updateSamePassword, invalidGrant, userCancelledOrClosedTheWebFlow, socialAccountEmailAlreadyInUse, unauthorizedRefreshToken, accountBlockedAfterMultipleLoginAttempts, tooManyAttempts, passwordPolicyError, accountTemporarilySuspended)
     }
   }
   fun toList(): List<Any?> {
@@ -259,6 +261,7 @@ data class ErrorCodesInterface (
       accountBlockedAfterMultipleLoginAttempts,
       tooManyAttempts,
       passwordPolicyError,
+      accountTemporarilySuspended,
     )
   }
   override fun equals(other: Any?): Boolean {
@@ -269,7 +272,7 @@ data class ErrorCodesInterface (
       return true
     }
     val other = other as ErrorCodesInterface
-    return ReachFiveApiPigeonUtils.deepEquals(this.emailAlreadyInUseCode, other.emailAlreadyInUseCode) && ReachFiveApiPigeonUtils.deepEquals(this.invalidEmailOrPasswordCode, other.invalidEmailOrPasswordCode) && ReachFiveApiPigeonUtils.deepEquals(this.invalidVerificationCode, other.invalidVerificationCode) && ReachFiveApiPigeonUtils.deepEquals(this.updateSamePassword, other.updateSamePassword) && ReachFiveApiPigeonUtils.deepEquals(this.invalidGrant, other.invalidGrant) && ReachFiveApiPigeonUtils.deepEquals(this.userCancelledOrClosedTheWebFlow, other.userCancelledOrClosedTheWebFlow) && ReachFiveApiPigeonUtils.deepEquals(this.socialAccountEmailAlreadyInUse, other.socialAccountEmailAlreadyInUse) && ReachFiveApiPigeonUtils.deepEquals(this.unauthorizedRefreshToken, other.unauthorizedRefreshToken) && ReachFiveApiPigeonUtils.deepEquals(this.accountBlockedAfterMultipleLoginAttempts, other.accountBlockedAfterMultipleLoginAttempts) && ReachFiveApiPigeonUtils.deepEquals(this.tooManyAttempts, other.tooManyAttempts) && ReachFiveApiPigeonUtils.deepEquals(this.passwordPolicyError, other.passwordPolicyError)
+    return ReachFiveApiPigeonUtils.deepEquals(this.emailAlreadyInUseCode, other.emailAlreadyInUseCode) && ReachFiveApiPigeonUtils.deepEquals(this.invalidEmailOrPasswordCode, other.invalidEmailOrPasswordCode) && ReachFiveApiPigeonUtils.deepEquals(this.invalidVerificationCode, other.invalidVerificationCode) && ReachFiveApiPigeonUtils.deepEquals(this.updateSamePassword, other.updateSamePassword) && ReachFiveApiPigeonUtils.deepEquals(this.invalidGrant, other.invalidGrant) && ReachFiveApiPigeonUtils.deepEquals(this.userCancelledOrClosedTheWebFlow, other.userCancelledOrClosedTheWebFlow) && ReachFiveApiPigeonUtils.deepEquals(this.socialAccountEmailAlreadyInUse, other.socialAccountEmailAlreadyInUse) && ReachFiveApiPigeonUtils.deepEquals(this.unauthorizedRefreshToken, other.unauthorizedRefreshToken) && ReachFiveApiPigeonUtils.deepEquals(this.accountBlockedAfterMultipleLoginAttempts, other.accountBlockedAfterMultipleLoginAttempts) && ReachFiveApiPigeonUtils.deepEquals(this.tooManyAttempts, other.tooManyAttempts) && ReachFiveApiPigeonUtils.deepEquals(this.passwordPolicyError, other.passwordPolicyError) && ReachFiveApiPigeonUtils.deepEquals(this.accountTemporarilySuspended, other.accountTemporarilySuspended)
   }
 
   override fun hashCode(): Int {
@@ -285,6 +288,7 @@ data class ErrorCodesInterface (
     result = 31 * result + ReachFiveApiPigeonUtils.deepHash(this.accountBlockedAfterMultipleLoginAttempts)
     result = 31 * result + ReachFiveApiPigeonUtils.deepHash(this.tooManyAttempts)
     result = 31 * result + ReachFiveApiPigeonUtils.deepHash(this.passwordPolicyError)
+    result = 31 * result + ReachFiveApiPigeonUtils.deepHash(this.accountTemporarilySuspended)
     return result
   }
 }
