@@ -15,6 +15,7 @@ final errorCodesInterface = ErrorCodesInterface(
       'account_blocked_too_many_login_attempts',
   tooManyAttempts: 'rate_limiter_too_many_attempts',
   passwordPolicyError: 'password_policy',
+  accountTemporarilySuspended: 'account_temporarily_suspended',
 );
 
 /// {@macro flutter_reach_five.errors.email_already_in_use}
@@ -66,5 +67,13 @@ class PasswordPolicyExceptionInterface extends FormatException {
   // coverage:ignore-start
   /// {@macro flutter_reach_five.errors.password_policy}
   const PasswordPolicyExceptionInterface([super.message = '']);
+  // coverage:ignore-end
+}
+
+/// {@macro flutter_reach_five.errors.account_temporarily_suspended}
+class AccountTemporarilySuspendedExceptionInterface extends FormatException {
+  // coverage:ignore-start
+  /// {@macro flutter_reach_five.errors.account_temporarily_suspended}
+  const AccountTemporarilySuspendedExceptionInterface([super.message = '']);
   // coverage:ignore-end
 }

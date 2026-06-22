@@ -1,3 +1,7 @@
+# 2.0.4
+
+- **FEAT**: Add `AccountTemporarilySuspendedException` thrown when an account is temporarily suspended (for example because of a detected usage of leaked credentials)
+
 # 2.0.3
 
 - **FEAT**: Add `PasswordPolicyException` thrown when a password does not meet the password policy requirements (length, composition or strength)

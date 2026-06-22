@@ -25,6 +25,7 @@ class ErrorCodesInterface {
     required this.accountBlockedAfterMultipleLoginAttempts,
     required this.tooManyAttempts,
     required this.passwordPolicyError,
+    required this.accountTemporarilySuspended,
   });
 
   final String emailAlreadyInUseCode;
@@ -38,6 +39,7 @@ class ErrorCodesInterface {
   final String accountBlockedAfterMultipleLoginAttempts;
   final String tooManyAttempts;
   final String passwordPolicyError;
+  final String accountTemporarilySuspended;
 }
 
 class SdkConfigInterface {

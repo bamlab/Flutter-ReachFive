@@ -73,3 +73,13 @@ class PasswordPolicyException extends FormatException {
   /// {@macro flutter_reach_five.errors.password_policy}
   const PasswordPolicyException([super.message = '']);
 }
+
+/// {@template flutter_reach_five.errors.account_temporarily_suspended}
+/// Error thrown when a user tries to log in but their account has been
+/// temporarily suspended (for example because of a detected usage of
+/// leaked credentials)
+/// {@endtemplate}
+class AccountTemporarilySuspendedException extends FormatException {
+  /// {@macro flutter_reach_five.errors.account_temporarily_suspended}
+  const AccountTemporarilySuspendedException([super.message = '']);
+}

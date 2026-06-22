@@ -110,6 +110,14 @@ class Converters {
                     details = null
                 )
             }
+            if (reachFiveError.data?.errorMessageKey?.startsWith("error.account.temporarilySuspended") == true) {
+                val errorCode = errorCodesInterface.accountTemporarilySuspended
+                return FlutterError(
+                    code= errorCode,
+                    message= reachFiveError.data?.errorUserMsg,
+                    details = null
+                )
+            }
             return defaultFlutterError
         }
 
