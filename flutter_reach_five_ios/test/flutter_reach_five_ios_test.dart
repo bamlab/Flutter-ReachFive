@@ -302,6 +302,25 @@ void main() {
 
         expect(error, isA<AccountTemporarilySuspendedExceptionInterface>());
       });
+
+      test('$PasswordTooWeakExceptionInterface', () {
+        final exception = PlatformException(
+          code: errorCodesInterface.passwordTooWeakError,
+        );
+
+        Object? error;
+
+        try {
+          FlutterReachFiveIOS().parseError(
+            exception,
+            StackTrace.fromString('test'),
+          );
+        } catch (e) {
+          error = e;
+        }
+
+        expect(error, isA<PasswordTooWeakExceptionInterface>());
+      });
     });
   });
 }
