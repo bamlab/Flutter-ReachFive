@@ -1,3 +1,7 @@
+# 2.0.3
+
+- **FEAT**: Handle password policy error (`error.password.policy`)
+
 # 2.0.2
 
 - **FEAT**: Handle `tooManyAttempts` error (rate limiter)

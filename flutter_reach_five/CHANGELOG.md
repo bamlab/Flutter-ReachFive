@@ -1,3 +1,7 @@
+# 2.0.3
+
+- **FEAT**: Add `PasswordPolicyException` thrown when a password does not meet the password policy requirements (length, composition or strength)
+
 # 2.0.2
 
 - **FEAT**: Add `TooManyAttemptsException` thrown when a request is blocked by the rate limiter (too many attempts)
