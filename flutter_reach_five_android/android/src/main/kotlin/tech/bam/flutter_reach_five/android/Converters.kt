@@ -102,6 +102,14 @@ class Converters {
                     details = null
                 )
             }
+            if (reachFiveError.data?.errorMessageKey == "error.password.policy") {
+                val errorCode = errorCodesInterface.passwordPolicyError
+                return FlutterError(
+                    code= errorCode,
+                    message= reachFiveError.data?.errorUserMsg,
+                    details = null
+                )
+            }
             return defaultFlutterError
         }
 

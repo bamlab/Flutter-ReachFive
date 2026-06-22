@@ -44,6 +44,8 @@ class FlutterReachFiveAndroid extends FlutterReachFivePlatform {
         );
       } else if (errorCode.contains(errorCodesInterface.tooManyAttempts)) {
         throw TooManyAttemptsExceptionInterface(error.message ?? '');
+      } else if (errorCode.contains(errorCodesInterface.passwordPolicyError)) {
+        throw PasswordPolicyExceptionInterface(error.message ?? '');
       }
     }
     return Error.throwWithStackTrace(error, stackTrace);
