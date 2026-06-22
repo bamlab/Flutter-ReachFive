@@ -83,3 +83,8 @@ class AccountTemporarilySuspendedException extends FormatException {
   /// {@macro flutter_reach_five.errors.account_temporarily_suspended}
   const AccountTemporarilySuspendedException([super.message = '']);
 }
+
+/// {@template flutter_reach_five.errors.password_too_weak}
+/// Error thrown when trying to set a password that is too weak or that has leaked
+/// {@endtemplate}
+class PasswordTooWeakException implements Exception {}
