@@ -1,3 +1,7 @@
+# 2.0.4
+
+- **FEAT**: Handle account temporarily suspended error (`error.account.temporarilySuspended`)
+
 # 2.0.3
 
 - **FEAT**: Handle password policy error (`error.password.policy`)
