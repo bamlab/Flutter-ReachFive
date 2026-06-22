@@ -24,6 +24,7 @@ class ErrorCodesInterface {
     required this.unauthorizedRefreshToken,
     required this.accountBlockedAfterMultipleLoginAttempts,
     required this.tooManyAttempts,
+    required this.passwordPolicyError,
   });
 
   final String emailAlreadyInUseCode;
@@ -36,6 +37,7 @@ class ErrorCodesInterface {
   final String unauthorizedRefreshToken;
   final String accountBlockedAfterMultipleLoginAttempts;
   final String tooManyAttempts;
+  final String passwordPolicyError;
 }
 
 class SdkConfigInterface {
