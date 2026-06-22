@@ -276,6 +276,26 @@ void main() {
 
         expect(error, isA<TooManyAttemptsExceptionInterface>());
       });
+
+      test('$PasswordPolicyExceptionInterface', () {
+        final exception = PlatformException(
+          code: 'Error - ${errorCodesInterface.passwordPolicyError}',
+          message: 'FlutterError',
+        );
+
+        Object? error;
+
+        try {
+          FlutterReachFiveAndroid().parseError(
+            exception,
+            StackTrace.fromString('test'),
+          );
+        } catch (e) {
+          error = e;
+        }
+
+        expect(error, isA<PasswordPolicyExceptionInterface>());
+      });
     });
   });
 }
