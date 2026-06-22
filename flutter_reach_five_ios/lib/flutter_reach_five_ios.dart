@@ -41,6 +41,8 @@ class FlutterReachFiveIOS extends FlutterReachFivePlatform {
         throw AccountTemporarilySuspendedExceptionInterface(
           error.message ?? "",
         );
+      } else if (error.code == errorCodesInterface.passwordTooWeakError) {
+        throw PasswordTooWeakExceptionInterface();
       }
     }
     return Error.throwWithStackTrace(error, stackTrace);
