@@ -188,5 +188,20 @@ void main() {
 
       expect(error, isA<PasswordPolicyException>());
     });
+
+    test('$AccountTemporarilySuspendedException', () async {
+      Object? error;
+
+      try {
+        adaptErrors(
+          error: const AccountTemporarilySuspendedExceptionInterface(),
+          stackTrace: StackTrace.fromString('test'),
+        );
+      } catch (e) {
+        error = e;
+      }
+
+      expect(error, isA<AccountTemporarilySuspendedException>());
+    });
   });
 }

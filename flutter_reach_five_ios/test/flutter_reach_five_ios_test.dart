@@ -283,6 +283,25 @@ void main() {
 
         expect(error, isA<PasswordPolicyExceptionInterface>());
       });
+
+      test('$AccountTemporarilySuspendedExceptionInterface', () {
+        final exception = PlatformException(
+          code: errorCodesInterface.accountTemporarilySuspended,
+        );
+
+        Object? error;
+
+        try {
+          FlutterReachFiveIOS().parseError(
+            exception,
+            StackTrace.fromString('test'),
+          );
+        } catch (e) {
+          error = e;
+        }
+
+        expect(error, isA<AccountTemporarilySuspendedExceptionInterface>());
+      });
     });
   });
 }
