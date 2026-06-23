@@ -1,3 +1,7 @@
+# 2.0.5
+
+- **FEAT**: Handle password too weak error (`password_too_weak`)
+
 # 2.0.4
 
 - **FEAT**: Handle account temporarily suspended error (`error.account.temporarilySuspended`)
