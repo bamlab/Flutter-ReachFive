@@ -203,5 +203,20 @@ void main() {
 
       expect(error, isA<AccountTemporarilySuspendedException>());
     });
+
+    test('$PasswordTooWeakException', () async {
+      Object? error;
+
+      try {
+        adaptErrors(
+          error: PasswordTooWeakExceptionInterface(),
+          stackTrace: StackTrace.fromString('test'),
+        );
+      } catch (e) {
+        error = e;
+      }
+
+      expect(error, isA<PasswordTooWeakException>());
+    });
   });
 }

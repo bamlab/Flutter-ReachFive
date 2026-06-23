@@ -1,3 +1,7 @@
+# 2.0.5
+
+- **FEAT**: Add `PasswordTooWeakException` thrown when trying to set a password that is too weak or that has leaked
+
 # 2.0.4
 
 - **FEAT**: Add `AccountTemporarilySuspendedException` thrown when an account is temporarily suspended (for example because of a detected usage of leaked credentials)

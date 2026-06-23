@@ -40,5 +40,8 @@ Never adaptErrors({required Object error, required StackTrace stackTrace}) {
   if (error is AccountTemporarilySuspendedExceptionInterface) {
     throw AccountTemporarilySuspendedException(error.message);
   }
+  if (error is PasswordTooWeakExceptionInterface) {
+    throw PasswordTooWeakException();
+  }
   Error.throwWithStackTrace(error, stackTrace);
 }

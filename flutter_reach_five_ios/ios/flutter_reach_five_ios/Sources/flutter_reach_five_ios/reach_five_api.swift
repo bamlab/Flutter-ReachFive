@@ -199,6 +199,7 @@ struct ErrorCodesInterface: Hashable {
   var tooManyAttempts: String
   var passwordPolicyError: String
   var accountTemporarilySuspended: String
+  var passwordTooWeakError: String
 
 
   // swift-format-ignore: AlwaysUseLowerCamelCase
@@ -215,6 +216,7 @@ struct ErrorCodesInterface: Hashable {
     let tooManyAttempts = pigeonVar_list[9] as! String
     let passwordPolicyError = pigeonVar_list[10] as! String
     let accountTemporarilySuspended = pigeonVar_list[11] as! String
+    let passwordTooWeakError = pigeonVar_list[12] as! String
 
     return ErrorCodesInterface(
       emailAlreadyInUseCode: emailAlreadyInUseCode,
@@ -228,7 +230,8 @@ struct ErrorCodesInterface: Hashable {
       accountBlockedAfterMultipleLoginAttempts: accountBlockedAfterMultipleLoginAttempts,
       tooManyAttempts: tooManyAttempts,
       passwordPolicyError: passwordPolicyError,
-      accountTemporarilySuspended: accountTemporarilySuspended
+      accountTemporarilySuspended: accountTemporarilySuspended,
+      passwordTooWeakError: passwordTooWeakError
     )
   }
   func toList() -> [Any?] {
@@ -245,13 +248,14 @@ struct ErrorCodesInterface: Hashable {
       tooManyAttempts,
       passwordPolicyError,
       accountTemporarilySuspended,
+      passwordTooWeakError,
     ]
   }
   static func == (lhs: ErrorCodesInterface, rhs: ErrorCodesInterface) -> Bool {
     if Swift.type(of: lhs) != Swift.type(of: rhs) {
       return false
     }
-    return deepEqualsreach_five_api(lhs.emailAlreadyInUseCode, rhs.emailAlreadyInUseCode) && deepEqualsreach_five_api(lhs.invalidEmailOrPasswordCode, rhs.invalidEmailOrPasswordCode) && deepEqualsreach_five_api(lhs.invalidVerificationCode, rhs.invalidVerificationCode) && deepEqualsreach_five_api(lhs.updateSamePassword, rhs.updateSamePassword) && deepEqualsreach_five_api(lhs.invalidGrant, rhs.invalidGrant) && deepEqualsreach_five_api(lhs.userCancelledOrClosedTheWebFlow, rhs.userCancelledOrClosedTheWebFlow) && deepEqualsreach_five_api(lhs.socialAccountEmailAlreadyInUse, rhs.socialAccountEmailAlreadyInUse) && deepEqualsreach_five_api(lhs.unauthorizedRefreshToken, rhs.unauthorizedRefreshToken) && deepEqualsreach_five_api(lhs.accountBlockedAfterMultipleLoginAttempts, rhs.accountBlockedAfterMultipleLoginAttempts) && deepEqualsreach_five_api(lhs.tooManyAttempts, rhs.tooManyAttempts) && deepEqualsreach_five_api(lhs.passwordPolicyError, rhs.passwordPolicyError) && deepEqualsreach_five_api(lhs.accountTemporarilySuspended, rhs.accountTemporarilySuspended)
+    return deepEqualsreach_five_api(lhs.emailAlreadyInUseCode, rhs.emailAlreadyInUseCode) && deepEqualsreach_five_api(lhs.invalidEmailOrPasswordCode, rhs.invalidEmailOrPasswordCode) && deepEqualsreach_five_api(lhs.invalidVerificationCode, rhs.invalidVerificationCode) && deepEqualsreach_five_api(lhs.updateSamePassword, rhs.updateSamePassword) && deepEqualsreach_five_api(lhs.invalidGrant, rhs.invalidGrant) && deepEqualsreach_five_api(lhs.userCancelledOrClosedTheWebFlow, rhs.userCancelledOrClosedTheWebFlow) && deepEqualsreach_five_api(lhs.socialAccountEmailAlreadyInUse, rhs.socialAccountEmailAlreadyInUse) && deepEqualsreach_five_api(lhs.unauthorizedRefreshToken, rhs.unauthorizedRefreshToken) && deepEqualsreach_five_api(lhs.accountBlockedAfterMultipleLoginAttempts, rhs.accountBlockedAfterMultipleLoginAttempts) && deepEqualsreach_five_api(lhs.tooManyAttempts, rhs.tooManyAttempts) && deepEqualsreach_five_api(lhs.passwordPolicyError, rhs.passwordPolicyError) && deepEqualsreach_five_api(lhs.accountTemporarilySuspended, rhs.accountTemporarilySuspended) && deepEqualsreach_five_api(lhs.passwordTooWeakError, rhs.passwordTooWeakError)
   }
 
   func hash(into hasher: inout Hasher) {
@@ -268,6 +272,7 @@ struct ErrorCodesInterface: Hashable {
     deepHashreach_five_api(value: tooManyAttempts, hasher: &hasher)
     deepHashreach_five_api(value: passwordPolicyError, hasher: &hasher)
     deepHashreach_five_api(value: accountTemporarilySuspended, hasher: &hasher)
+    deepHashreach_five_api(value: passwordTooWeakError, hasher: &hasher)
   }
 }
 

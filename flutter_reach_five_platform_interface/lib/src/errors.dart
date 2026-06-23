@@ -16,6 +16,7 @@ final errorCodesInterface = ErrorCodesInterface(
   tooManyAttempts: 'rate_limiter_too_many_attempts',
   passwordPolicyError: 'password_policy',
   accountTemporarilySuspended: 'account_temporarily_suspended',
+  passwordTooWeakError: 'password_too_weak',
 );
 
 /// {@macro flutter_reach_five.errors.email_already_in_use}
@@ -77,3 +78,6 @@ class AccountTemporarilySuspendedExceptionInterface extends FormatException {
   const AccountTemporarilySuspendedExceptionInterface([super.message = '']);
   // coverage:ignore-end
 }
+
+/// {@macro flutter_reach_five.errors.password_too_weak}
+class PasswordTooWeakExceptionInterface implements Exception {}

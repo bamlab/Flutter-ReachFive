@@ -58,6 +58,13 @@ public class Converters {
                         details: nil
                 )
             }
+            if (apiError.error == "password_too_weak") {
+                return PigeonError(
+                        code: errorCodesInterface.passwordTooWeakError,
+                        message: nil,
+                        details: nil
+                )
+            }
             return defaultFlutterError
         case .AuthFailure(reason: _, apiError: let apiError):
             if (apiError?.errorMessageKey == "error.invalidEmailOrPassword") {
