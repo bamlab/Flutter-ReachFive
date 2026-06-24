@@ -91,10 +91,10 @@ class EmailApi {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<
-              SendEmailVerification200Response,
-              SendEmailVerification200Response
-            >(rawData, 'SendEmailVerification200Response', growable: true);
+          : deserialize<SendEmailVerification200Response,
+                  SendEmailVerification200Response>(
+              rawData, 'SendEmailVerification200Response',
+              growable: true);
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,

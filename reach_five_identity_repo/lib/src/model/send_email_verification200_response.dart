@@ -36,7 +36,8 @@ class SendEmailVerification200Response {
 
   factory SendEmailVerification200Response.fromJson(
     Map<String, dynamic> json,
-  ) => _$SendEmailVerification200ResponseFromJson(json);
+  ) =>
+      _$SendEmailVerification200ResponseFromJson(json);
 
   Map<String, dynamic> toJson() =>
       _$SendEmailVerification200ResponseToJson(this);

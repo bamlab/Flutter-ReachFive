@@ -8,20 +8,21 @@ part of 'send_email_verification200_response.dart';
 
 SendEmailVerification200Response _$SendEmailVerification200ResponseFromJson(
   Map<String, dynamic> json,
-) => $checkedCreate(
-  'SendEmailVerification200Response',
-  json,
-  ($checkedConvert) {
-    final val = SendEmailVerification200Response(
-      verificationEmailSent: $checkedConvert(
-        'verification_email_sent',
-        (v) => v as bool?,
-      ),
+) =>
+    $checkedCreate(
+      'SendEmailVerification200Response',
+      json,
+      ($checkedConvert) {
+        final val = SendEmailVerification200Response(
+          verificationEmailSent: $checkedConvert(
+            'verification_email_sent',
+            (v) => v as bool?,
+          ),
+        );
+        return val;
+      },
+      fieldKeyMap: const {'verificationEmailSent': 'verification_email_sent'},
     );
-    return val;
-  },
-  fieldKeyMap: const {'verificationEmailSent': 'verification_email_sent'},
-);
 
 Map<String, dynamic> _$SendEmailVerification200ResponseToJson(
   SendEmailVerification200Response instance,
