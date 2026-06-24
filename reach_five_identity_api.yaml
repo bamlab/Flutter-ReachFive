@@ -336,7 +336,88 @@ paths:
                 "redirect_url": "https://example-email-verification.com"
             }'
 
+  /identity/v1/config:
+    get:
+      security:
+        - OAuth2:
+            - "none"
+      summary: Get the client SDK configuration
+      tags:
+        - Config
+      description: |
+        Returns the public SDK configuration of a ReachFive client, including its password policy.
+
+        This endpoint is public and only requires the `client_id` as a query parameter.
+      operationId: getConfig
+      parameters:
+        - name: client_id
+          in: query
+          required: true
+          description: Your client ID.
+          schema:
+            type: string
+          example: slNIt...yKzQM
+      responses:
+        "200":
+          description: The client SDK configuration.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientConfigResponse"
+      x-codeSamples:
+        - lang: "cURL"
+          source: |
+            curl --request GET \
+              --url 'https://YOUR_DOMAIN/identity/v1/config?client_id=slNIt...yKzQM'
+
 components:
+  schemas:
+    PasswordPolicy:
+      type: object
+      description: The password policy configured for the client.
+      properties:
+        minLength:
+          type: integer
+          description: The minimum number of characters a password must contain.
+          example: 8
+        minStrength:
+          type: integer
+          description: The minimum strength a password must reach (0 to 4).
+          example: 1
+        specialCharacters:
+          type: integer
+          nullable: true
+          description: The minimum number of special characters a password must contain, or `null` if not enforced.
+          example: 1
+        uppercaseCharacters:
+          type: integer
+          nullable: true
+          description: The minimum number of uppercase characters a password must contain, or `null` if not enforced.
+          example: 1
+        lowercaseCharacters:
+          type: integer
+          nullable: true
+          description: The minimum number of lowercase characters a password must contain, or `null` if not enforced.
+          example: 1
+        digitCharacters:
+          type: integer
+          nullable: true
+          description: The minimum number of digit characters a password must contain, or `null` if not enforced.
+          example: 1
+        allowUpdateWithAccessTokenOnly:
+          type: boolean
+          description: Whether the password can be updated with only an access token (without the old password).
+          example: true
+      required:
+        - minLength
+        - minStrength
+        - allowUpdateWithAccessTokenOnly
+    ClientConfigResponse:
+      type: object
+      description: The public SDK configuration of a ReachFive client.
+      properties:
+        password_policy:
+          $ref: "#/components/schemas/PasswordPolicy"
   responses:
     303redirect:
       description: |
