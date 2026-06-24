@@ -2,7 +2,7 @@ import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platfor
 
 import '../models/emails.dart';
 
-/// Used to be the link between the [EmailsInterface]
+/// Link between the [EmailsInterface]
 /// and the [Emails] exported from this package
 class EmailsConverter {
   /// convert a [Emails] to a [EmailsInterface]

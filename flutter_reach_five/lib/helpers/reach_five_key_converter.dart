@@ -4,7 +4,7 @@ import '../models/reach_five_key.dart';
 import 'provider_creator_converter.dart';
 import 'sdk_config_converter.dart';
 
-/// Used to be the link between the [ReachFiveKeyInterface]
+/// Link between the [ReachFiveKeyInterface]
 /// and the [ReachFiveKey] exported from this package
 class ReachFiveKeyConverter {
   /// convert a [ReachFiveKey] to a [ReachFiveKeyInterface]

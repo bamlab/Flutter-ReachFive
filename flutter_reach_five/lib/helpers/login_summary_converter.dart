@@ -2,7 +2,7 @@ import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platfor
 
 import '../models/login_summary.dart';
 
-/// Used to be the link between the [LoginSummaryInterface]
+/// Link between the [LoginSummaryInterface]
 /// and the [LoginSummary] exported from this package
 class LoginSummaryConverter {
   /// convert a [LoginSummary] to a [LoginSummaryInterface]

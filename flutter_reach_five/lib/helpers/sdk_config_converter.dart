@@ -2,7 +2,7 @@ import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platfor
 
 import '../models/sdk_config.dart';
 
-/// Used to be the link between the [SdkConfigInterface]
+/// Link between the [SdkConfigInterface]
 /// and the [SdkConfig] exported from this package
 class SdkConfigConverter {
   /// convert a [SdkConfig] to a [SdkConfigInterface]

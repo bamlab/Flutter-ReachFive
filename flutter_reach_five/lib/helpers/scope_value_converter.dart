@@ -1,6 +1,6 @@
 import '../models/scope_value.dart';
 
-/// Used to be the link between a [String]
+/// Link between a [String]
 /// and the [ScopeValue] exported from this package
 class ScopeValueConverter {
   /// convert a [ScopeValue] to a [String]
