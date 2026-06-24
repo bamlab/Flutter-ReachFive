@@ -7,6 +7,7 @@ export 'models/emails.dart';
 export 'models/errors.dart';
 export 'models/login_summary.dart';
 export 'models/open_id_user.dart';
+export 'models/password_policy.dart';
 export 'models/profile.dart';
 export 'models/profile_address.dart';
 export 'models/profile_signup_request.dart';
