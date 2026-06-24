@@ -11,8 +11,7 @@ import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platfor
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'package:reach_five_identity_repo/reach_five_identity_repo.dart'
-    hide PasswordPolicy;
+import 'package:reach_five_identity_repo/reach_five_identity_repo.dart';
 
 mixin PlatformInterfaceMockMixin on Mock
     implements MockPlatformInterfaceMixin {}

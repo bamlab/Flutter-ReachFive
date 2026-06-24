@@ -17,7 +17,7 @@ ClientConfigResponse _$ClientConfigResponseFromJson(
         'password_policy',
         (v) => v == null
             ? null
-            : PasswordPolicy.fromJson(v as Map<String, dynamic>),
+            : PasswordPolicyResponse.fromJson(v as Map<String, dynamic>),
       ),
     );
     return val;

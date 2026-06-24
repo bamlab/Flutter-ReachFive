@@ -1,5 +1,5 @@
 import 'package:reach_five_identity_repo/src/model/client_config_response.dart';
-import 'package:reach_five_identity_repo/src/model/password_policy.dart';
+import 'package:reach_five_identity_repo/src/model/password_policy_response.dart';
 import 'package:reach_five_identity_repo/src/model/revoke_token_request.dart';
 import 'package:reach_five_identity_repo/src/model/send_email_verification200_response.dart';
 import 'package:reach_five_identity_repo/src/model/send_email_verification_request.dart';
@@ -29,64 +29,59 @@ ReturnType deserialize<ReturnType, BaseType>(
     case 'ClientConfigResponse':
       return ClientConfigResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'PasswordPolicy':
-      return PasswordPolicy.fromJson(value as Map<String, dynamic>)
+    case 'PasswordPolicyResponse':
+      return PasswordPolicyResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'RevokeTokenRequest':
       return RevokeTokenRequest.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'SendEmailVerification200Response':
       return SendEmailVerification200Response.fromJson(
-            value as Map<String, dynamic>,
-          )
-          as ReturnType;
+        value as Map<String, dynamic>,
+      ) as ReturnType;
     case 'SendEmailVerificationRequest':
       return SendEmailVerificationRequest.fromJson(
-            value as Map<String, dynamic>,
-          )
-          as ReturnType;
+        value as Map<String, dynamic>,
+      ) as ReturnType;
     default:
       RegExpMatch? match;
 
       if (value is List && (match = _regList.firstMatch(targetType)) != null) {
         targetType = match![1]!; // ignore: parameter_assignments
         return value
-                .map<BaseType>(
-                  (dynamic v) => deserialize<BaseType, BaseType>(
-                    v,
-                    targetType,
-                    growable: growable,
-                  ),
-                )
-                .toList(growable: growable)
-            as ReturnType;
+            .map<BaseType>(
+              (dynamic v) => deserialize<BaseType, BaseType>(
+                v,
+                targetType,
+                growable: growable,
+              ),
+            )
+            .toList(growable: growable) as ReturnType;
       }
       if (value is Set && (match = _regSet.firstMatch(targetType)) != null) {
         targetType = match![1]!; // ignore: parameter_assignments
         return value
-                .map<BaseType>(
-                  (dynamic v) => deserialize<BaseType, BaseType>(
-                    v,
-                    targetType,
-                    growable: growable,
-                  ),
-                )
-                .toSet()
-            as ReturnType;
+            .map<BaseType>(
+              (dynamic v) => deserialize<BaseType, BaseType>(
+                v,
+                targetType,
+                growable: growable,
+              ),
+            )
+            .toSet() as ReturnType;
       }
       if (value is Map && (match = _regMap.firstMatch(targetType)) != null) {
         targetType = match![1]!; // ignore: parameter_assignments
         return Map<dynamic, BaseType>.fromIterables(
-              value.keys,
-              value.values.map(
-                (dynamic v) => deserialize<BaseType, BaseType>(
-                  v,
-                  targetType,
-                  growable: growable,
-                ),
-              ),
-            )
-            as ReturnType;
+          value.keys,
+          value.values.map(
+            (dynamic v) => deserialize<BaseType, BaseType>(
+              v,
+              targetType,
+              growable: growable,
+            ),
+          ),
+        ) as ReturnType;
       }
       break;
   }

@@ -1,6 +1,6 @@
 # 2.1.0
 
-- **FEAT**: Add `ConfigApi` with the `getConfig` endpoint (`GET /identity/v1/config`) returning the client `ClientConfigResponse` and its `PasswordPolicy`
+- **FEAT**: Add `ConfigApi` with the `getConfig` endpoint (`GET /identity/v1/config`) returning the client `ClientConfigResponse` and its `PasswordPolicyResponse`
 
 # 2.0.0
 

@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platform_interface.dart';
-import 'package:reach_five_identity_repo/reach_five_identity_repo.dart'
-    hide PasswordPolicy;
+import 'package:reach_five_identity_repo/reach_five_identity_repo.dart';
 
 import 'flutter_reach_five.dart';
 import 'helpers/adapt_errors.dart';

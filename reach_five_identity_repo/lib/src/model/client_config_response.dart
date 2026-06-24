@@ -3,7 +3,7 @@
 //
 
 // ignore_for_file: unused_element
-import 'package:reach_five_identity_repo/src/model/password_policy.dart';
+import 'package:reach_five_identity_repo/src/model/password_policy_response.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'client_config_response.g.dart';
@@ -20,7 +20,7 @@ class ClientConfigResponse {
 
   /// The password policy configured for the client.
   @JsonKey(name: r'password_policy', required: false, includeIfNull: false)
-  final PasswordPolicy? passwordPolicy;
+  final PasswordPolicyResponse? passwordPolicy;
 
   @override
   bool operator ==(Object other) =>

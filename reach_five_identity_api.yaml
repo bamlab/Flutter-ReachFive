@@ -372,7 +372,7 @@ paths:
 
 components:
   schemas:
-    PasswordPolicy:
+    PasswordPolicyResponse:
       type: object
       description: The password policy configured for the client.
       properties:
@@ -417,7 +417,7 @@ components:
       description: The public SDK configuration of a ReachFive client.
       properties:
         password_policy:
-          $ref: "#/components/schemas/PasswordPolicy"
+          $ref: "#/components/schemas/PasswordPolicyResponse"
   responses:
     303redirect:
       description: |

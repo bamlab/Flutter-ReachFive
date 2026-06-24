@@ -5,7 +5,7 @@
 // ignore_for_file: unused_element
 import 'package:json_annotation/json_annotation.dart';
 
-part 'password_policy.g.dart';
+part 'password_policy_response.g.dart';
 
 @JsonSerializable(
   checked: true,
@@ -13,9 +13,9 @@ part 'password_policy.g.dart';
   disallowUnrecognizedKeys: false,
   explicitToJson: true,
 )
-class PasswordPolicy {
-  /// Returns a new [PasswordPolicy] instance.
-  PasswordPolicy({
+class PasswordPolicyResponse {
+  /// Returns a new [PasswordPolicyResponse] instance.
+  PasswordPolicyResponse({
     required this.minLength,
     required this.minStrength,
     this.specialCharacters,
@@ -60,7 +60,7 @@ class PasswordPolicy {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is PasswordPolicy &&
+      other is PasswordPolicyResponse &&
           other.minLength == minLength &&
           other.minStrength == minStrength &&
           other.specialCharacters == specialCharacters &&
@@ -80,10 +80,10 @@ class PasswordPolicy {
       digitCharacters.hashCode +
       allowUpdateWithAccessTokenOnly.hashCode;
 
-  factory PasswordPolicy.fromJson(Map<String, dynamic> json) =>
-      _$PasswordPolicyFromJson(json);
+  factory PasswordPolicyResponse.fromJson(Map<String, dynamic> json) =>
+      _$PasswordPolicyResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$PasswordPolicyToJson(this);
+  Map<String, dynamic> toJson() => _$PasswordPolicyResponseToJson(this);
 
   @override
   String toString() {
