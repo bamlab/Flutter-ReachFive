@@ -1,3 +1,7 @@
+# 2.1.0
+
+- **FEAT**: Add `ConfigApi` with the `getConfig` endpoint (`GET /identity/v1/config`) returning the client `ClientConfigResponse` and its `PasswordPolicy`
+
 # 2.0.0
 
 - **BREAKING**: Update Flutter to >=3.41.0

@@ -1,3 +1,5 @@
+import 'package:reach_five_identity_repo/src/model/client_config_response.dart';
+import 'package:reach_five_identity_repo/src/model/password_policy_response.dart';
 import 'package:reach_five_identity_repo/src/model/revoke_token_request.dart';
 import 'package:reach_five_identity_repo/src/model/send_email_verification200_response.dart';
 import 'package:reach_five_identity_repo/src/model/send_email_verification_request.dart';
@@ -24,6 +26,12 @@ ReturnType deserialize<ReturnType, BaseType>(
       return (valueString == 'true' || valueString == '1') as ReturnType;
     case 'double':
       return (value is double ? value : double.parse('$value')) as ReturnType;
+    case 'ClientConfigResponse':
+      return ClientConfigResponse.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'PasswordPolicyResponse':
+      return PasswordPolicyResponse.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'RevokeTokenRequest':
       return RevokeTokenRequest.fromJson(value as Map<String, dynamic>)
           as ReturnType;

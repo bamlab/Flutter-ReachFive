@@ -6,6 +6,7 @@ import 'package:reach_five_identity_repo/reach_five_identity_repo.dart';
 import 'flutter_reach_five.dart';
 import 'helpers/adapt_errors.dart';
 import 'helpers/auth_token.dart';
+import 'helpers/password_policy_converter.dart';
 import 'helpers/profile_converter.dart';
 import 'helpers/profile_signup_request_converter.dart';
 import 'helpers/provider_converter.dart';
@@ -56,6 +57,12 @@ class ReachFive {
   /// reachFive api methods that needs it
   /// {@endtemplate}
   EmailApi get emailApi => identityRepo.getEmailApi();
+
+  /// {@template flutter_reach_five.reachFive.configApi}
+  /// [ConfigApi] instance from [identityRepo] to be given in every
+  /// reachFive api methods that needs it
+  /// {@endtemplate}
+  ConfigApi get configApi => identityRepo.getConfigApi();
 
   /// {@template flutter_reach_five.reachFive.signup}
   /// Create and authenticate a new user with the specified data.
@@ -343,6 +350,29 @@ class ReachFive {
         adaptErrors(error: interfaceError, stackTrace: interfaceStackTrace);
       }
     }
+  }
+
+  /// {@template flutter_reach_five.reachFive.passwordPolicy}
+  /// Get the password policy configured for the ReachFive client.
+  ///
+  /// These are the values configured on the `Password policy` page of the
+  /// ReachFive console (minimum length, minimum strength, required character
+  /// classes, ...).
+  /// {@endtemplate}
+  Future<PasswordPolicy> passwordPolicy() async {
+    final response = await configApi.getConfig(
+      clientId: reachFiveKey.sdkConfig.clientId,
+    );
+
+    final passwordPolicy = response.data?.passwordPolicy;
+
+    if (passwordPolicy == null) {
+      throw const FormatException(
+        'The ReachFive config response did not contain a password policy.',
+      );
+    }
+
+    return PasswordPolicyConverter.fromInterface(passwordPolicy);
   }
 
   /// {@template flutter_reach_five.reachFive.updatePassword}

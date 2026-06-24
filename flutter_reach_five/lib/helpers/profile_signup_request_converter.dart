@@ -4,7 +4,7 @@ import '../models/profile_signup_request.dart';
 import 'consent_converter.dart';
 import 'profile_address_converter.dart';
 
-/// Used to be the link between the [ProfileSignupRequestInterface]
+/// Link between the [ProfileSignupRequestInterface]
 /// and the [ProfileSignupRequest] exported from this package
 class ProfileSignupRequestConverter {
   /// convert a [ProfileSignupRequest] to a [ProfileSignupRequestInterface]

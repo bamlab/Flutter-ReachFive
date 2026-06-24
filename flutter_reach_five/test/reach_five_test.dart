@@ -22,6 +22,8 @@ class MockOAuthApi extends Mock implements OAuthApi {}
 
 class MockEmailApi extends Mock implements EmailApi {}
 
+class MockConfigApi extends Mock implements ConfigApi {}
+
 class MockFlutterReachFivePlatform extends Mock
     with PlatformInterfaceMockMixin
     implements FlutterReachFivePlatform {}
@@ -34,6 +36,7 @@ void main() {
     late MockReackFiveIdentityRepo mockReachFiveIdentityRepo;
     late MockOAuthApi mockOAuthApi;
     late MockEmailApi mockEmailApi;
+    late MockConfigApi mockConfigApi;
 
     late ReachFive reachFive;
 
@@ -44,9 +47,11 @@ void main() {
       mockReachFiveIdentityRepo = MockReackFiveIdentityRepo();
       mockOAuthApi = MockOAuthApi();
       mockEmailApi = MockEmailApi();
+      mockConfigApi = MockConfigApi();
 
       when(mockReachFiveIdentityRepo.getOAuthApi).thenReturn(mockOAuthApi);
       when(mockReachFiveIdentityRepo.getEmailApi).thenReturn(mockEmailApi);
+      when(mockReachFiveIdentityRepo.getConfigApi).thenReturn(mockConfigApi);
 
       const sdkConfig = SdkConfig(
         domain: 'domain',
@@ -615,6 +620,91 @@ void main() {
             customLocale: 'en-US',
           ),
         ).called(1);
+      });
+    });
+
+    group('passwordPolicy', () {
+      test('returns the password policy from the config api', () async {
+        when(
+          () => mockConfigApi.getConfig(clientId: any(named: 'clientId')),
+        ).thenAnswer((_) async {
+          return Response(
+            requestOptions: RequestOptions(path: 'path'),
+            data: ClientConfigResponse.fromJson(const {
+              'password_policy': {
+                'minLength': 8,
+                'minStrength': 1,
+                'specialCharacters': null,
+                'uppercaseCharacters': null,
+                'lowercaseCharacters': null,
+                'digitCharacters': null,
+                'allowUpdateWithAccessTokenOnly': true,
+              },
+            }),
+          );
+        });
+
+        final passwordPolicy = await reachFive.passwordPolicy();
+
+        expect(
+          passwordPolicy,
+          const PasswordPolicy(
+            minLength: 8,
+            minStrength: 1,
+            allowUpdateWithAccessTokenOnly: true,
+          ),
+        );
+
+        verify(() => mockConfigApi.getConfig(clientId: 'clientId')).called(1);
+      });
+
+      test('maps enforced character counts', () async {
+        when(
+          () => mockConfigApi.getConfig(clientId: any(named: 'clientId')),
+        ).thenAnswer((_) async {
+          return Response(
+            requestOptions: RequestOptions(path: 'path'),
+            data: ClientConfigResponse.fromJson(const {
+              'password_policy': {
+                'minLength': 10,
+                'minStrength': 2,
+                'specialCharacters': 1,
+                'uppercaseCharacters': 1,
+                'lowercaseCharacters': 1,
+                'digitCharacters': 1,
+                'allowUpdateWithAccessTokenOnly': false,
+              },
+            }),
+          );
+        });
+
+        final passwordPolicy = await reachFive.passwordPolicy();
+
+        expect(
+          passwordPolicy,
+          const PasswordPolicy(
+            minLength: 10,
+            minStrength: 2,
+            specialCharacters: 1,
+            uppercaseCharacters: 1,
+            lowercaseCharacters: 1,
+            digitCharacters: 1,
+            allowUpdateWithAccessTokenOnly: false,
+          ),
+        );
+      });
+
+      test('throws when the config has no password policy', () async {
+        when(
+          () => mockConfigApi.getConfig(clientId: any(named: 'clientId')),
+        ).thenAnswer((_) async {
+          return Response(
+            requestOptions: RequestOptions(path: 'path'),
+            data: ClientConfigResponse.fromJson(const {}),
+          );
+        });
+
+        expect(reachFive.passwordPolicy(), throwsA(isA<FormatException>()));
       });
     });
 

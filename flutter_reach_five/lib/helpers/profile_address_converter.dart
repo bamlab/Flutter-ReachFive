@@ -2,7 +2,7 @@ import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platfor
 
 import '../models/profile_address.dart';
 
-/// Used to be the link between the [ProfileAddressTypeInterface]
+/// Link between the [ProfileAddressTypeInterface]
 /// and the [ProfileAddressType] exported from this package
 class ProfileAddressTypeConverter {
   /// convert a [ProfileAddressType] to a [ProfileAddressTypeInterface]
@@ -30,7 +30,7 @@ class ProfileAddressTypeConverter {
   }
 }
 
-/// Used to be the link between the [ProfileAddressInterface]
+/// Link between the [ProfileAddressInterface]
 /// and the [ProfileAddress] exported from this package
 class ProfileAddressConverter {
   /// convert a [ProfileAddress] to a [ProfileAddressInterface]

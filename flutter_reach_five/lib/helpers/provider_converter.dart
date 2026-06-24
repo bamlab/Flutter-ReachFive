@@ -1,6 +1,6 @@
 import '../models/provider.dart';
 
-/// Used to be the link between a [String]
+/// Link between a [String]
 /// and the [Provider] exported from this package
 class ProviderConverter {
   /// convert a [Provider] to a [String]

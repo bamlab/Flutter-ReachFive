@@ -1,3 +1,7 @@
+# 2.1.0
+
+- **FEAT**: Add `passwordPolicy` method returning the `PasswordPolicy` configured for the ReachFive client (minimum length, minimum strength, required character classes and whether the password can be updated with only an access token)
+
 # 2.0.5
 
 - **FEAT**: Add `PasswordTooWeakException` thrown when trying to set a password that is too weak or that has leaked

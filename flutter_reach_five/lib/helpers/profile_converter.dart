@@ -6,7 +6,7 @@ import 'emails_converter.dart';
 import 'login_summary_converter.dart';
 import 'profile_address_converter.dart';
 
-/// Used to be the link between the [ProfileInterface]
+/// Link between the [ProfileInterface]
 /// and the [Profile] exported from this package
 class ProfileConverter {
   /// convert a [Profile] to a [ProfileInterface]

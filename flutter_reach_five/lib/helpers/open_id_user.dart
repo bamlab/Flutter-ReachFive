@@ -3,7 +3,7 @@ import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platfor
 import '../models/open_id_user.dart';
 import 'address_converter.dart';
 
-/// Used to be the link between the [OpenIdUserInterface]
+/// Link between the [OpenIdUserInterface]
 /// and the [OpenIdUser] exported from this package
 class OpenIdUserConverter {
   /// convert a [OpenIdUser] to a [OpenIdUserInterface]

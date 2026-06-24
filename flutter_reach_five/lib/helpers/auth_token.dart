@@ -3,7 +3,7 @@ import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platfor
 import '../models/auth_token.dart';
 import 'open_id_user.dart';
 
-/// Used to be the link between the [AuthTokenInterface]
+/// Link between the [AuthTokenInterface]
 /// and the [AuthToken] exported from this package
 class AuthTokenConverter {
   /// convert a [AuthToken] to a [AuthTokenInterface]

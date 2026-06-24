@@ -2,7 +2,7 @@ import 'package:flutter_reach_five_platform_interface/flutter_reach_five_platfor
 
 import '../models/address.dart';
 
-/// Used to be the link between the [AddressInterface]
+/// Link between the [AddressInterface]
 /// and the [Address] exported from this package
 class AddressConverter {
   /// convert a [Address] to a [AddressInterface]
