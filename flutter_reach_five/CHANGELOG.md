@@ -1,3 +1,7 @@
+# 2.1.1
+
+- **FIX**: Also handle account temporarily suspended error (`error.account.temporarilySuspended`) as a RequestError not only TechnicalError in the iOS version
+
 # 2.1.0
 
 - **FEAT**: Add `passwordPolicy` method returning the `PasswordPolicy` configured for the ReachFive client (minimum length, minimum strength, required character classes and whether the password can be updated with only an access token)
