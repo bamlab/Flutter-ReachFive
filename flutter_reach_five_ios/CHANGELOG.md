@@ -1,3 +1,7 @@
+# 2.0.6
+
+- **FIX**: Also handle account temporarily suspended error (`error.account.temporarilySuspended`) as a RequestError not only TechnicalError
+
 # 2.0.5
 
 - **FEAT**: Handle password too weak error (`password_too_weak`)
