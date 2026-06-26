@@ -65,6 +65,13 @@ public class Converters {
                         details: nil
                 )
             }
+            if (apiError.errorMessageKey?.hasPrefix("error.account.temporarilySuspended") == true) {
+                return PigeonError(
+                    code: errorCodesInterface.accountTemporarilySuspended,
+                    message: apiError.errorUserMsg,
+                    details: nil
+                )
+            }
             return defaultFlutterError
         case .AuthFailure(reason: _, apiError: let apiError):
             if (apiError?.errorMessageKey == "error.invalidEmailOrPassword") {
